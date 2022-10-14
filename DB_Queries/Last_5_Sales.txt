@@ -1,0 +1,6 @@
+CREATE OR REPLACE  PROCEDURE `Last_5_Sales`()
+BEGIN
+	
+	select t.invoiceNo ,tc.fullName ,tc.contactNo ,id.subTotal ,t.`date` , t.status  from tallies t left join invoiceDetails id on t.invoiceNo = id.invoiceNo left join tallyCustomers tc on t.tallyCustomerId=tc.id group by t.invoiceNo order by t.`date`  desc limit 5;
+
+END;

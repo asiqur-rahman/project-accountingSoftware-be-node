@@ -1,0 +1,4 @@
+2022.07.29, 14:28:12 --> Sms Send Failed (To - +8801799089893). Result:TypeError: Cannot read properties of undefined (reading 'MessageErrorCode')
+2022.07.29, 14:29:46 --> Sms Send Failed (To - +8801799089893). Result:TypeError: Cannot read properties of undefined (reading 'MessageErrorCode')
+2022.07.29, 14:41:44 --> Sms Send Success (To - 8801799089893). MessageId: 000c54b3-536f-4003-a396-0b8f8c3b5736
+2022.07.29, 23:27:35 --> Sms Send Success (To - 01999089893). MessageId: 7f9c0e73-579a-4700-ac52-17bee91abfd0
