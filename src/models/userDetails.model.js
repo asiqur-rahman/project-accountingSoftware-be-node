@@ -44,12 +44,7 @@ module.exports = (sequelize, Sequelize) => {
       description: {
         type: Sequelize.STRING(),
         allowNull:true,
-      },
-      isActive: {
-        type: Sequelize.BOOLEAN(),
-        allowNull:false,
-        defaultValue: true
-      } 
+      }
     },
     
     {

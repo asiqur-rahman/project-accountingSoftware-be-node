@@ -38,6 +38,9 @@ db.UserDetails = require("./userDetails.model")(sequelize, Sequelize);
 db.SendMail = require("./sendMail.model")(sequelize, Sequelize);
 db.SendSms = require("./sendSms.model")(sequelize, Sequelize);
 
+db.Currency = require("./currency.model")(sequelize, Sequelize);
+db.LiabilityAccount = require("./liabilityAccount.model")(sequelize, Sequelize);
+
 //Associations
 
 //userTable
@@ -59,6 +62,16 @@ db.User.hasMany(db.SendMail);
 db.SendSms.belongsTo(db.User,{ foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
 db.User.hasMany(db.SendSms);
 
+//LiabilityAccountTable
+db.LiabilityAccount.belongsTo(db.User,{ foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
+db.User.hasMany(db.LiabilityAccount);
+
+db.LiabilityAccount.belongsTo(db.Currency,{ foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
+db.Currency.hasMany(db.LiabilityAccount);
+
+db.LiabilityAccount.hasMany(db.LiabilityAccount, { foreignKey: { name:'parentId' }});
+db.LiabilityAccount.belongsTo(db.LiabilityAccount,{ foreignKey: { name:'parentId', allowNull: false }, onDelete: 'CASCADE' });
+
 // db.sequelize.sync();
 
 //force: true will drop the table if it already exists
@@ -79,16 +92,19 @@ function initial() {
 
     db.Branch.create({
       name: "Principal",
-      description: "Main Branch"
+      description: "Main Branch",
+      isActive:true
     });
   
     db.Role.create({
       name: "SuperUser",
-      code: enumm.Role.SuperUser
+      code: enumm.Role.SuperUser,
+      isActive:true
     });
     db.Role.create({
       name: "Admin",
-      code: enumm.Role.Admin
+      code: enumm.Role.Admin,
+      isActive:true
     });
   
     db.UserDetails.create({
@@ -106,7 +122,12 @@ function initial() {
       username:'asiq',
       password:'$2a$08$oDOBw2EEQ6UbtLLe0TuDguGez0rY4xJNt5KbMoVY659Kd4E3poZTi',
       userDetailId:1,
-      status:true
+      isActive:true
+    });
+
+    db.Currency.create({
+      name:'USD',
+      isActive:true
     });
 
   }
