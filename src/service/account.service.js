@@ -3,9 +3,6 @@ const Logger = require('../externalService/console.log.service');
 var path = require('path');
 const log = new Logger(path.basename(__filename));
 const bcrypt = require('bcryptjs');
-const {
-    resolve
-} = require('path');
 const Op = require('sequelize').Op;
 
 const service = {};
@@ -16,31 +13,27 @@ service.getById = async (id) => {
             where: {
                 id: id
             },
-            // include: [{
-            //     model: db.UserDetails,
-            //     attributes: ['firstName', 'lastName', 'contactNo', 'email', 'address', 'description'],
-            //     include: {
-            //         model: db.Role,
-            //         as: "role",
-            //         attributes: ['code', 'name']
-            //     }
-            // }],
             raw: true
         }).then(data => {
             if (data) {
                 resolve(data);
             } else {
-                reject({
+                resolve({
                     status: 404,
-                    message: "Data not found !"
+                    message: "User not found !"
                 })
             }
+        }).catch(function (err) {
+            reject({
+                status: 502,
+                message: err.message
+            })
         });
     }).catch(function (err) {
-        reject({
-            status: 502,
-            message: err.message
+        log.debug('Error', {
+            error: err.message,
         });
+        throw err;
     });
 };
 
@@ -57,17 +50,22 @@ service.getByName = async (value) => {
             if (data) {
                 resolve(data);
             } else {
-                reject({
+                resolve({
                     status: 404,
-                    message: "Data not found !"
+                    message: "User not found !"
                 })
             }
+        }).catch(function (err) {
+            reject({
+                status: 502,
+                message: err.message
+            })
         });
     }).catch(function (err) {
-        reject({
-            status: 502,
-            message: err.message
+        log.debug('Error', {
+            error: err.message,
         });
+        throw err;
     });
 };
 
@@ -75,8 +73,7 @@ service.create = async (req) => {
     return new Promise(async (resolve, reject) => {
         await service.getByName(req.body.name)
         .then(async data => {
-            console.log(data)
-            if (data) {
+            if (data && data.status != 404) {
                 reject({
                     status: 303,
                     message: "Account already exists by this name"

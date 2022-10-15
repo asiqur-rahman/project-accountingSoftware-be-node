@@ -11,7 +11,7 @@ const service = {};
 //     return next();
 // };
 
-service.getUserById = async (id) => {
+service.getById = async (id) => {
     return new Promise(async (resolve, reject) => {
         await db.User.findOne({
             where: {
@@ -27,9 +27,9 @@ service.getUserById = async (id) => {
                 }
             }],
             raw: true
-        }).then(user => {
-            if (user) {
-                resolve(user);
+        }).then(data => {
+            if (data) {
+                resolve(data);
             } else {
                 resolve({
                     status: 404,
@@ -37,7 +37,7 @@ service.getUserById = async (id) => {
                 })
             }
         }).catch(function (err) {
-            resolve({
+            reject({
                 status: 502,
                 message: err.message
             })
@@ -50,7 +50,7 @@ service.getUserById = async (id) => {
     });
 };
 
-service.getUserByName = async (value) => {
+service.getByName = async (value) => {
     return new Promise(async (resolve, reject) => {
         await db.User.findOne({
             where: {
@@ -68,15 +68,20 @@ service.getUserByName = async (value) => {
                 }
             }],
             raw: true
-        }).then(user => {
-            if (user) {
-                resolve(user);
+        }).then(data => {
+            if (data) {
+                resolve(data);
             } else {
                 resolve({
                     status: 404,
                     message: "User not found !"
                 })
             }
+        }).catch(function (err) {
+            reject({
+                status: 502,
+                message: err.message
+            })
         });
     })
     .catch(function (err) {
@@ -87,12 +92,12 @@ service.getUserByName = async (value) => {
     });
 };
 
-service.createUser = async (req) => {
+service.create = async (req) => {
     return new Promise(async (resolve, reject) => {
-        await service.getUserByName(req.body.username)
+        await service.getByName(req.body.username)
         .then(async data => {
-            if (data) {
-                reject({
+            if (data && data.status != 404) {
+                resolve({
                     status: 303,
                     message: "User already exists by this username"
                 })

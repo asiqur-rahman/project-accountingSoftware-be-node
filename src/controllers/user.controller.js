@@ -5,8 +5,8 @@ const jwt = require('jsonwebtoken');
 const Op = require('sequelize').Op;
 const userService = require('../service/user.service');
 
-module.exports.getUserById = async(req, res, next) => {
-    await userService.getUserById(req.params.id)
+module.exports.getById = async(req, res, next) => {
+    await userService.getById(req.params.id)
     .then(user=>{
         return res.status(200).send(user);
     }).catch(e=>{
@@ -14,8 +14,8 @@ module.exports.getUserById = async(req, res, next) => {
     })
 };
 
-module.exports.createUser = async(req, res, next) => {
-    await userService.createUser(req)
+module.exports.create = async(req, res, next) => {
+    await userService.create(req)
     .then(user=>{
         return res.status(200).send(user);
     }).catch(e=>{
@@ -23,11 +23,11 @@ module.exports.createUser = async(req, res, next) => {
     })
 };
 
-module.exports.updateUser = async(req, res, next) => {
+module.exports.update = async(req, res, next) => {
     
 };
 
-module.exports.deleteUser = async(req, res, next) => {
+module.exports.delete = async(req, res, next) => {
     
 };
 
