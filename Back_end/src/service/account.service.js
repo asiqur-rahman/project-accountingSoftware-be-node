@@ -9,7 +9,7 @@ const service = {};
 
 service.getById = async (id) => {
     return new Promise(async (resolve, reject) => {
-        await db.LiabilityAccount.findOne({
+        await db.AccountingHead.findOne({
             where: {
                 id: id
             },
@@ -39,7 +39,7 @@ service.getById = async (id) => {
 
 service.getByName = async (value) => {
     return new Promise(async (resolve, reject) => {
-        await db.LiabilityAccount.findOne({
+        await db.AccountingHead.findOne({
             where: {
                 [Op.or]: [{
                     name: value
@@ -81,7 +81,7 @@ service.create = async (req) => {
             } 
             else {
                 req.body.userId=req.currentUser;
-                await db.LiabilityAccount.create(req.body).then(user => {
+                await db.AccountingHead.create(req.body).then(user => {
                     resolve({
                         status: 201,
                         message: 'Account was created, Id:' + user.id

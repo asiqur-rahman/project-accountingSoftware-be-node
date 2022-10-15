@@ -39,7 +39,8 @@ db.SendMail = require("./sendMail.model")(sequelize, Sequelize);
 db.SendSms = require("./sendSms.model")(sequelize, Sequelize);
 
 db.Currency = require("./currency.model")(sequelize, Sequelize);
-db.LiabilityAccount = require("./liabilityAccount.model")(sequelize, Sequelize);
+db.AccountingHead = require("./accountingHead.model")(sequelize, Sequelize);
+db.Transaction = require("./transaction.model")(sequelize, Sequelize);
 
 //Associations
 
@@ -62,15 +63,22 @@ db.User.hasMany(db.SendMail);
 db.SendSms.belongsTo(db.User,{ foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
 db.User.hasMany(db.SendSms);
 
-//LiabilityAccountTable
-db.LiabilityAccount.belongsTo(db.User,{ foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
-db.User.hasMany(db.LiabilityAccount);
+//AccountingHeadTable
+db.AccountingHead.belongsTo(db.User,{ foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
+db.User.hasMany(db.AccountingHead);
 
-db.LiabilityAccount.belongsTo(db.Currency,{ foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
-db.Currency.hasMany(db.LiabilityAccount);
+db.AccountingHead.belongsTo(db.Currency,{ foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
+db.Currency.hasMany(db.AccountingHead);
 
-db.LiabilityAccount.hasMany(db.LiabilityAccount, { foreignKey: { name:'parentId' }});
-db.LiabilityAccount.belongsTo(db.LiabilityAccount,{ foreignKey: { name:'parentId', allowNull: false }, onDelete: 'CASCADE' });
+db.AccountingHead.hasMany(db.AccountingHead, { foreignKey: { name:'parentId' }});
+db.AccountingHead.belongsTo(db.AccountingHead,{ foreignKey: { name:'parentId', allowNull: false }, onDelete: 'CASCADE' });
+
+//Transaction
+db.Transaction.belongsTo(db.User,{ foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
+db.User.hasMany(db.Transaction);
+
+db.Transaction.belongsTo(db.AccountingHead,{ foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
+db.AccountingHead.hasMany(db.Transaction);
 
 // db.sequelize.sync();
 
@@ -130,7 +138,7 @@ function initial() {
       isActive:true
     });
 
-    db.LiabilityAccount.create({
+    db.AccountingHead.create({
       name:enumm.AccountHead.Assets.key,
       currencyId:1,
       userId:1,
@@ -138,7 +146,7 @@ function initial() {
       code:enumm.AccountHead.Assets.value
     });
 
-    db.LiabilityAccount.create({
+    db.AccountingHead.create({
       name:enumm.AccountHead.Equity.key,
       currencyId:1,
       userId:1,
@@ -146,7 +154,7 @@ function initial() {
       code:enumm.AccountHead.Equity.value
     });
 
-    db.LiabilityAccount.create({
+    db.AccountingHead.create({
       name:enumm.AccountHead.Expenses.key,
       currencyId:1,
       userId:1,
@@ -154,7 +162,7 @@ function initial() {
       code:enumm.AccountHead.Expenses.value
     });
 
-    db.LiabilityAccount.create({
+    db.AccountingHead.create({
       name:enumm.AccountHead.Income.key,
       currencyId:1,
       userId:1,
@@ -162,7 +170,7 @@ function initial() {
       code:enumm.AccountHead.Income.value
     });
 
-    db.LiabilityAccount.create({
+    db.AccountingHead.create({
       name:enumm.AccountHead.Liabilities.key,
       currencyId:1,
       userId:1,
