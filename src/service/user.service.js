@@ -1,8 +1,8 @@
 const db = require('../models/model');
 const bcrypt = require('bcryptjs');
-const {
-    resolve
-} = require('path');
+const Logger = require('../externalService/console.log.service');
+var path = require('path');
+const log = new Logger(path.basename(__filename));
 const Op = require('sequelize').Op;
 
 const service = {};
@@ -31,17 +31,22 @@ service.getUserById = async (id) => {
             if (user) {
                 resolve(user);
             } else {
-                reject({
+                resolve({
                     status: 404,
                     message: "User not found !"
                 })
             }
+        }).catch(function (err) {
+            resolve({
+                status: 502,
+                message: err.message
+            })
         });
     }).catch(function (err) {
-        reject({
-            status: 502,
-            message: err.message
+        log.debug('Error', {
+            error: err.message,
         });
+        throw err;
     });
 };
 
@@ -67,17 +72,18 @@ service.getUserByName = async (value) => {
             if (user) {
                 resolve(user);
             } else {
-                reject({
+                resolve({
                     status: 404,
                     message: "User not found !"
                 })
             }
         });
-    }).catch(function (err) {
-        reject({
-            status: 502,
-            message: err.message
+    })
+    .catch(function (err) {
+        log.debug('Error', {
+            error: err.message,
         });
+        throw err;
     });
 };
 
@@ -117,12 +123,11 @@ service.createUser = async (req) => {
                 });
             }
         });
-
     }).catch(function (err) {
-        reject({
-            status: 502,
-            message: err.message
+        log.debug('Error', {
+            error: err.message,
         });
+        throw err;
     });
 };
 

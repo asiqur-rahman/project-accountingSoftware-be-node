@@ -11,12 +11,11 @@ module.exports = function (app) {
 
     // 404 error
     app.all(['*'], (req, res, next) => {
-        res.json({
+        return res.json({
             statusCode:404,
             message:"Endpoint Not Found !",
             url:req.protocol + '://' + req.get('host') + req.originalUrl
         });
-        next(err);
     });
 
     app.use(errorMiddleware);

@@ -41,12 +41,7 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.BOOLEAN(100),
       allowNull:false,
       defaultValue: false
-    },
-    status: {
-      type: Sequelize.BOOLEAN(100),
-      allowNull:false,
-      defaultValue: false
-    } 
+    }
   },{
     defaultScope: {
       attributes: {

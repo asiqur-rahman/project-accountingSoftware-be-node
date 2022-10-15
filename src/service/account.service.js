@@ -1,4 +1,7 @@
 const db = require('../models/model');
+const Logger = require('../externalService/console.log.service');
+var path = require('path');
+const log = new Logger(path.basename(__filename));
 const bcrypt = require('bcryptjs');
 const {
     resolve
@@ -74,7 +77,7 @@ service.create = async (req) => {
         .then(async data => {
             console.log(data)
             if (data) {
-                resolve({
+                reject({
                     status: 303,
                     message: "Account already exists by this name"
                 })
