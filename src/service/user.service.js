@@ -37,6 +37,11 @@ service.getUserById = async (id) => {
                 })
             }
         });
+    }).catch(function (err) {
+        reject({
+            status: 502,
+            message: err.message
+        });
     });
 };
 
@@ -67,6 +72,11 @@ service.getUserByName = async (value) => {
                     message: "User not found !"
                 })
             }
+        });
+    }).catch(function (err) {
+        reject({
+            status: 502,
+            message: err.message
         });
     });
 };
@@ -108,7 +118,11 @@ service.createUser = async (req) => {
             }
         });
 
-
+    }).catch(function (err) {
+        reject({
+            status: 502,
+            message: err.message
+        });
     });
 };
 

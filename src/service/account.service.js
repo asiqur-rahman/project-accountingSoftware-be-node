@@ -29,71 +29,62 @@ service.getById = async (id) => {
             } else {
                 reject({
                     status: 404,
-                    message: "User not found !"
+                    message: "Data not found !"
                 })
             }
+        });
+    }).catch(function (err) {
+        reject({
+            status: 502,
+            message: err.message
         });
     });
 };
 
 service.getByName = async (value) => {
     return new Promise(async (resolve, reject) => {
-        await db.User.findOne({
+        await db.LiabilityAccount.findOne({
             where: {
                 [Op.or]: [{
-                    username: value
+                    name: value
                 }]
             },
-            include: [{
-                model: db.UserDetails,
-                attributes: ['firstName', 'lastName', 'contactNo', 'email', 'address', 'description'],
-                include: {
-                    model: db.Role,
-                    as: "role",
-                    attributes: ['code', 'name']
-                }
-            }],
             raw: true
-        }).then(user => {
-            if (user) {
-                resolve(user);
+        }).then(data => {
+            if (data) {
+                resolve(data);
             } else {
                 reject({
                     status: 404,
-                    message: "User not found !"
+                    message: "Data not found !"
                 })
             }
+        });
+    }).catch(function (err) {
+        reject({
+            status: 502,
+            message: err.message
         });
     });
 };
 
 service.create = async (req) => {
     return new Promise(async (resolve, reject) => {
-        await service.getUserByName(req.body.username)
+        await service.getByName(req.body.name)
         .then(async data => {
+            console.log(data)
             if (data) {
-                reject({
+                resolve({
                     status: 303,
-                    message: "User already exists by this username"
+                    message: "Account already exists by this name"
                 })
-            } else {
-                var customerData = {};
-                req.body.password = await bcrypt.hash(req.body.password, 8);
-                await db.UserDetails.create(req.body)
-                    .then(customer => {
-                        customerData = customer;
-                    })
-                    .catch(function (err) {
-                        reject({
-                            status: 502,
-                            message: err.message
-                        });
-                    });
-                req.body.userDetailId = customerData.id;
-                await db.User.create(req.body).then(user => {
+            } 
+            else {
+                req.body.userId=req.currentUser;
+                await db.LiabilityAccount.create(req.body).then(user => {
                     resolve({
                         status: 201,
-                        message: 'User was created, Id:' + user.id
+                        message: 'Account was created, Id:' + user.id
                     });
                 }).catch(function (err) {
                     reject({
@@ -102,6 +93,11 @@ service.create = async (req) => {
                     });
                 });
             }
+        }).catch(function (err) {
+            reject({
+                status: 502,
+                message: err.message
+            });
         });
     });
 };
