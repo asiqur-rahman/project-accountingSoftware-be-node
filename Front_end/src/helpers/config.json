@@ -1,6 +1,0 @@
-{
-    "talukdermortgage": {
-      "baseurl_": "http://localhost:3333/talukdermortgage/api/",
-      "baseurl": "https://tmb-backend.braintechsolution.com/talukdermortgage/api/"
-    }
-}
