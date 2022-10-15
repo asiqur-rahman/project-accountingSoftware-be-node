@@ -1,0 +1,464 @@
+<%- contentFor('HeaderCss') %>
+
+<!-- DataTables -->
+<link href="/public/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet"
+    type="text/css" />
+<link href="/public/assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet"
+    type="text/css" />
+
+<!-- Responsive datatable examples -->
+<link href="/public/assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet"
+    type="text/css" />
+
+    <style>
+        .alert-validate::before {
+        right: 60px;
+    }
+    .alert-validate::after {
+        right: 63px;
+    }
+    
+    .true-validate::after {
+        right: 63px;
+    }
+</style>
+
+<%- contentFor('breadcrumb') %>
+
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <h4 class="mb-0">Attendance</h4>
+
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Employee</a></li>
+                    <li class="breadcrumb-item active">Attendance</li>
+                </ol>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- end page title -->
+
+<%- contentFor('body') %>
+
+<!-- end row -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <%if(typeof roleCode!='undefined' && roleCode != adminCode && roleCode != superUserCode){%>
+                    <div class="row justify-content-center mt-4">
+                        <div class="col-lg-5">
+                            <div class="text-center">
+                                <h5>Face Recognition Based Attendance System</h5>
+                                <!-- <p class="text-muted">If several languages coalesce, the grammar of the resulting language is more simple and regular than that of the individual</p> -->
+                                <div>
+                                    <% if(getAttendanceTypeDD) {for(var i=0; i<getAttendanceTypeDD.length; i++){%>
+                                        <button type="button" class="face_btn btn btn-primary mt-2 me-2 waves-effect waves-light" id="Btn_<%=getAttendanceTypeDD[i].id%>" onclick="employee_attendance(<%=currentEmployeeCode%>,<%=getAttendanceTypeDD[i].id%>,<%=faceVerificationConfidence%>)" ><%=getAttendanceTypeDD[i].name%></button>
+                                    <%}}%>
+                                    <!-- <button type="button" class="btn btn-primary mt-2 me-2 waves-effect waves-light" >Day In</button>
+                                    <button type="button" class="btn btn-success mt-2 waves-effect waves-light">Day Out</button> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <form class="validate-this-form" method="post" style="margin-top:5%">
+                        <div class="row justify-content-center mt-4">
+                            <div class="col-lg-4">
+                                <div class="text-center">
+                                    <h5>Today Cash</h5>
+                                    <!-- <p class="text-muted">If several languages coalesce, the grammar of the resulting language is more simple and regular than that of the individual</p> -->
+                                    <div>
+                                        <div class="input-group" data-validate="Cash is required">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">$</span>
+                                            </div>
+                                            <input class="form-control validate_this" placeholder="0" type="number" name="cash" id="cash" value="<%= typeof dailyCash!='undefined' ? dailyCash.cash : '' %>">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-primary" type="submit">Save</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <%}else{%>
+                        <div class="row" id="searchDiv">
+                            <div class="col-md-5">
+                                <div class="mb-3 row">
+                                    <label for="date" class="col-md-4 col-form-label">From Date</label>
+                                    <div class="col-md-8">
+                                        <div class="input-group" data-validate="From Date is required">
+                                            <input class="form-control validate_this" type="date" id="fromDate" onchange="loadTableData()">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-5">
+                                <div class="mb-3 row">
+                                    <label for="date" class="col-md-4 col-form-label">To Date</label>
+                                    <div class="col-md-8">
+                                        <div class="input-group" data-validate="To Date is required">
+                                            <input class="form-control validate_this" type="date" id="toDate" onchange="loadTableData()">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <div class="col-md-2">
+                                <div class="col-md-12">
+                                    <button class="btn btn-primary" style="float: right;" type="button" onclick="loadTableData(true)">All Data</button>
+                                </div>
+                            </div>
+                        </div>
+                    <%}%>
+                    <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap"
+                        style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                        <thead></thead>
+                        <tbody></tbody>
+                    </table>
+            </div>
+        </div>
+    </div> <!-- end col -->
+</div> <!-- end row -->
+
+<div class="modal fade" id="attendanceUpdateModal" tabindex="-1" role="dialog" aria-labelledby="attendanceUpdateModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="attendanceUpdateModalLabel">Employee Attendance Update</h5>
+        </div>
+        <div class="modal-body">
+            <table id="datatable-buttons-editable" class="table table-striped table-bordered dt-responsive nowrap"
+                    style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                    <thead></thead>
+                    <tbody></tbody>
+            </table>
+            <div class="col-md-12">
+                <button class="btn btn-danger" style="float: right; margin-left: 2%;" data-bs-dismiss="modal">Close</button>
+                <button class="btn btn-info" style="float: right;" id="addNewBtn" onclick="addNewRow()">Add New</button>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<%- contentFor('FooterJs') %>
+<input type="hidden" id="updateUserId" value="">
+<select id="dummyAttendanceOptions" style="display: none;">
+    <option value="" disabled selected>Select</option>
+    <% if(locals.getAttendanceTypeDD) {for(var i=0; i<getAttendanceTypeDD.length; i++){%>
+        <option value="<%=getAttendanceTypeDD[i].id%>"><%=getAttendanceTypeDD[i].name%></option>
+    <%}}%>
+</select>
+<!-- Required datatable js -->
+<script src="/public/assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="/public/assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<!-- Buttons examples -->
+<script src="/public/assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="/public/assets/libs/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
+<script src="/public/assets/libs/jszip/jszip.min.js"></script>
+<script src="/public/assets/libs/pdfmake/build/pdfmake.min.js"></script>
+<script src="/public/assets/libs/pdfmake/build/vfs_fonts.js"></script>
+<script src="/public/assets/libs/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="/public/assets/libs/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script src="/public/assets/libs/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+
+<!-- Responsive examples -->
+<script src="/public/assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="/public/assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+<!-- Datatable init js -->
+<script src="/public/assets/js/pages/datatables.init.js"></script>
+
+<script src="/public/assets/js/face-verification.js"></script>
+<script>
+    var coloum = [];
+    var url = "";
+    $(document).ready(function () {
+        coloum=[
+            {
+                "data": "sl",
+                "title": "#SL",
+            },
+            {
+                "data": "dateTime",
+                "title": "Date",
+            },
+            {
+                "data": "userName",
+                "title": "Employee",
+                "render": function (data, type, row, meta) {
+                    return row.userName.toUpperCase()
+                }
+            },
+            {
+                "data": "dayIn",
+                "title": "Clock In",
+                "render": function (data, type, row, meta) {
+                    // return new Date(row['dayIn']).toISOString().split('T')[1].replace('.000Z','')
+                    return row['dayIn']//new Date(row['dayIn']).toLocaleTimeString("en-US", {timeZone: "Australia/Sydney"}, "hh:mm")
+                }
+            },
+            {
+                "data": "dayOut",
+                "title": "Clock Out",
+                "render": function (data, type, row, meta) {
+                    // return new Date(row['dayOut']).toISOString().split('T')[1].replace('.000Z','')
+                    return row['dayOut']//new Date(row['dayOut']).toLocaleTimeString("en-US", {timeZone: "Australia/Sydney"}, "hh:mm")
+                }
+            },
+            {
+                "data": "workingHours",
+                "title": "Working Hour",
+            },
+            {
+                "data": "totalBreak",
+                "title": "Break",
+                // "render": function (data, type, row, meta) {
+                //     return row.totalBreak + " Hour/s"
+                // }
+            },
+            {
+                "data": "actualWorkingHours",
+                "title": "Actual Working Hour",
+            },
+            {
+                "data": "userId",
+                "title": "Action",
+                "render": function (data, type, row, meta) {
+                    return `<button class="btn btn-sm btn-info btn-soft-info waves-effect waves-light" onclick="attendanceUpdate('${row['userId']}','${row['realDateTime']}')" >Update</button>`
+                }
+            }
+        ];
+
+    });
+
+    function loadTableData(showAll=false){
+        const fromDate=$("#fromDate").val();
+        const toDate=$("#toDate").val();
+        if(fromDate && toDate){
+            $("#searchDiv").hide(500);
+            get_table_data("datatable-buttons",`get-portal-employee-attendance-approved-data/${fromDate}&${toDate}`,coloum);
+        }
+        else if(showAll){
+            $("#searchDiv").hide(500);
+            get_table_data("datatable-buttons",`get-portal-employee-attendance-approved-data`,coloum);
+        }
+    }
+    
+    
+    function attendanceUpdate(userId, dateTime){
+        $("#updateUserId").val(userId);
+        var newTable=[
+            {
+                "data": "sl",
+                "title": "#SL",
+            },
+            {
+                "data": "dateTime",
+                "title": "Date",
+                "render": function (data, type, row, meta) {
+                    return row['ausDate']
+                }
+            },
+            {
+                "data": "sl",
+                "title": "Username",
+                "render": function (data, type, row, meta) {
+                    return row['user.username'].toUpperCase()
+                }
+            },
+            {
+                "data": "sl",
+                "title": "Type",
+                "render": function (data, type, row, meta) {
+                    return row['attendanceType.name']
+                }
+            },
+            {
+                "data": "dateTime",
+                "title": "Time",
+                "render": function (data, type, row, meta) { //.replace(/\//g, "-")//.toTimeString("hh:mm")
+                    return `<span id="editedDateTimeSpan_${row['sl']}">${row['ausTime']}</span> 
+                    <input type="datetime-local" id="editedDateTimeInput_${row['sl']}" class="form-control" value="${row['ausDateTime']}" style="display:none">`
+                }
+            },
+            {
+                "data": "userId",
+                "title": "Action",
+                "render": function (data, type, row, meta) {
+                    return `<button class="btn btn-sm btn-info btn-soft-info waves-effect waves-light" id="editedDateTimeBtn_${row['sl']}" value="edit" onclick="attendanceEdit('${row['sl']}',this.value,'${row['id']}')" >Edit</button>
+                    <button class="btn btn-sm btn-danger btn-soft-danger waves-effect waves-light" id="editedDateTimeDltBtn_${row['sl']}" onclick="attendanceEdit('${row['sl']}',this.value)" style="display:none">Cancel</button>`
+                }
+            }
+        ];
+        get_table_data("datatable-buttons-editable",`get-portal-employee-attendance-entry/${userId}&${dateTime}`,newTable,[],false,false,false,false);
+        // get_table_data("datatable-buttons-editable",`get-portal-employee-attendance-pending-data`,coloum);
+        $("#attendanceUpdateModal").modal("show");
+        $("#attendanceUpdateModal .dt-buttons.btn-group.flex-wrap").hide()
+    }
+    
+    function attendanceEdit(sl,value,id){
+        if(value){
+            $("#editedDateTimeBtn_"+sl).val(value=='edit'?'update':'edit');
+            $("#editedDateTimeBtn_"+sl).html(value=='edit'?'Update':'Edit');
+        }else{
+            $("#editedDateTimeBtn_"+sl).val('edit');
+        }
+        // $("#editedDateTimeBtn_"+sl).attr("onclick",`attendanceUpdate(${sl})`);
+        if(value=='edit'){
+            $("#editedDateTimeSpan_"+sl).hide();
+            $("#editedDateTimeInput_"+sl).show();
+            $("#editedDateTimeDltBtn_"+sl).show();
+        }else if(value=='update'){
+            $("#editedDateTimeSpan_"+sl).show();
+            $("#editedDateTimeInput_"+sl).hide();
+            $("#editedDateTimeDltBtn_"+sl).hide();
+            updateAttendanceTime(id,$("#editedDateTimeInput_"+sl).val());
+        }else{
+            $("#editedDateTimeBtn_"+sl).html('Edit');
+            $("#editedDateTimeSpan_"+sl).show();
+            $("#editedDateTimeInput_"+sl).hide();
+            $("#editedDateTimeDltBtn_"+sl).hide();
+        }
+    }
+
+    async function updateAttendanceTime(id,newDateTime){
+        await $.ajax({
+                type: 'POST',
+                url: `/portal-employee-attendance-update/${id}&${newDateTime}`,
+                beforeSend: function () {
+                    Spinner.Show();
+                },
+                complete:function(){
+                    Spinner.Hide();
+                },
+                success: function (jsondata) {
+                    debugger;
+                    if (jsondata.status==true) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Data updated successfully.'
+                        })
+                        // location.reload();
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Internal Error ! '
+                        })
+                    }
+                },
+                error: function (request, status, error) {
+                    debugger;
+                    Spinner.Hide();
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Internal error !'
+                    })
+                }
+            })
+    }
+
+    var countForNewAttendanceEntry=0;
+    function addNewRow(){
+        countForNewAttendanceEntry++;
+        $("#addNewBtn").attr("disabled",true)
+        var table = document.getElementById("datatable-buttons-editable");
+        var customRow="";
+        customRow+="<tr>";
+        customRow+="<td>";
+        customRow+="----";
+        customRow+="</td>";
+        customRow+="<td>";
+        customRow+="----"//GetCellValue(1,1);
+        customRow+="</td>";
+        customRow+="<td>";
+        customRow+=GetCellValue(1,2);
+        customRow+="</td>";
+        customRow+="<td>";
+        customRow+=`<div class="input-group">`;
+        customRow+=`<select class="form-select" id="newAttendanceType_${countForNewAttendanceEntry}">`;
+        document.getElementById("dummyAttendanceOptions").options.forEach(element => {
+            if(element.value!="") customRow+=`<option value="${element.value}">${element.text}</option>`;
+            else customRow+=`<option value="${element.value}" disabled selected>${element.text}</option>`;
+        });
+        customRow+=`</select>`;
+        customRow+="</div>";
+        customRow+="</td>";
+        customRow+="<td>";
+        customRow+=`<input type="datetime-local" id="newDateTime_${countForNewAttendanceEntry}" class="form-control">`;
+        customRow+="</td>";
+        customRow+="<td>";
+        customRow+=`<button class="btn btn-sm btn-primary btn-soft-primary waves-effect waves-light" value="${countForNewAttendanceEntry}" onclick="addNewAttendanceEntry(this.value)" >Add</button>`;
+        customRow+="</td>";
+        customRow+="</tr>";
+        $("#datatable-buttons-editable").find('tbody').append(customRow);
+    }
+
+    async function addNewAttendanceEntry(id){
+        var data = {};
+        data.attendanceTypeId=$(`#newAttendanceType_${id}`).val();;
+        data.employeeId=$("#updateUserId").val();
+        data.attendanceDate=$(`#newDateTime_${id}`).val();
+        data.isApproved=1;
+        await $.ajax({
+            type: 'POST',
+            url: `/portal-attendance-addNew`,
+            data:JSON.stringify(data),
+            processData: false,
+            contentType: 'application/json',
+            dataType: 'json',
+            beforeSend: function () {
+                Spinner.Show();
+            },
+            complete: function () {
+                Spinner.Hide();
+            },
+            success: function (jsondata) {
+                if (jsondata.status == true) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'New attendance added successfully'
+                    })
+                } else {
+                    Spinner.Hide();
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'New attendance added failed ! '
+                    })
+                }
+            },
+            error: function (request, status, error) {
+                Spinner.Hide();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Internal error !'
+                })
+            }
+        })
+    }
+
+    function GetCellValue(row,coloum,tableId="datatable-buttons-editable") {
+        // var table = document.getElementById(tableId);
+        // for (var r = 0, n = table.rows.length; r < n; r++) {
+        //     for (var c = 0, m = table.rows[r].cells.length; c < m; c++) {
+        //         alert(table.rows[r].cells[c].innerHTML);
+        //     }
+        // }
+        try {
+            var table = document.getElementById(tableId);
+            return table.rows[row].cells[coloum].innerHTML;
+        } catch (error) {
+            return "";
+        }
+    }
+</script>
+
+<%- contentFor('BottomJs') %>

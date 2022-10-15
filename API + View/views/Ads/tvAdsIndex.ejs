@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%- title %> | Chicken Man</title>
+    <style type="text/css">
+        .container{
+            width: 90%;
+            padding: 20px;
+            margin: 100px auto;
+            
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+
+        .box{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            text-align:center;
+            width: 250px;
+            height: 300px;
+            background: #ddd;
+            /* background: orange; */
+            margin: 0px 10px;
+            transition: 1s;
+            align-items:center;
+        }
+        .box:hover{
+            transform: scale(1.1);
+            /* background: #ff800a; */
+            z-index: 2;
+            box-shadow: 2px 2px 2px #000;
+        }
+        a{
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <% if(allAds.length>0) { for (var j = 0; j < allAds.length; j++) { %>
+            <a href="<%=allAds[j].adsLink%>" target="_blank" class="box"><%=allAds[j].name%></a>
+        <% }} else { %>
+            <a href="#" class="box">No ADS Found</a>
+        <% } %>
+    </div>
+    <script src="/public/assets/js/key-disable.js"></script>
+</body>
+</html>

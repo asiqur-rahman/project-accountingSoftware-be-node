@@ -1,0 +1,104 @@
+<%- contentFor('HeaderCss') %>
+
+<%- contentFor('breadcrumb') %>
+
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <h4 class="mb-0">Profile</h4>
+
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">User</a></li>
+                    <li class="breadcrumb-item active">Profile</li>
+                </ol>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- end page title -->
+
+<%- contentFor('body') %>
+
+<div class="row mb-4">
+    <div class="col-xl-12">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="text-center">
+                    <div class="dropdown float-end">
+                        <a class="text-body dropdown-toggle font-size-18" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true">
+                          <i class="uil uil-ellipsis-v"></i>
+                        </a>
+                      
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <button class="dropdown-item" onclick="makeEditable()">Update Profile</button>
+                            <button class="dropdown-item" onclick="confirmationCheck(`/portal-profile-password-reset/<%= typeof userDetails!='undefined' ? userDetails.id : '0' %>&1`,`Are you sure to reset your password ?`,`Reset password will be sent to this email : <%= typeof userDetails!='undefined' ? userDetails['detailsInfo.email'] : '' %>`)">Change Password</button>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div>
+                        <img src="public/assets/images/users/avatar.png" alt="Profile Picture" class="avatar-lg rounded-circle img-thumbnail">
+                    </div>
+                    <!-- <div class="mt-1 editable" style="display: none;">
+                        <button type="button" class="btn btn-light btn-sm"><i class="uil uil-pen me-2"></i> Change</button>
+                    </div> -->
+                    <!-- <h5 class="mt-3 mb-1 nonEditable">Marcus</h5> -->
+                    <!-- <p class="text-muted mt-1"><%= typeof userDetails!='undefined' ? userDetails['role.name'] : '' %></p> -->
+                </div>
+
+                <form class="validate-this-form card-body" method="post">
+                    <input type="hidden" value="<%= typeof userDetails!='undefined' ? userDetails.id : '' %>" name="id">
+                    <input type="hidden" value="<%= typeof userDetails!='undefined' ? userDetails['detailsInfo.id'] : '' %>" name="detailsInfoId">
+                    <div class="mb-3 row">
+                        <label for="name" class="col-md-2 col-form-label">Full Name</label>
+                        <div class="col-md-10">
+                            <label class="form-control nonEditable" class="col-form-label"><%= typeof userDetails!='undefined' ? userDetails['detailsInfo.name'] : '' %></label>
+                            <input class="form-control editable validate_this" type="text" name="name" value="<%= typeof userDetails!='undefined' ? userDetails['detailsInfo.name'] : '' %>" id="name" style="display: none;">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="contactNo" class="col-md-2 col-form-label">Phone</label>
+                        <div class="col-md-10">
+                            <label class="form-control nonEditable" class="col-form-label"><%= typeof userDetails!='undefined' ? userDetails['detailsInfo.contactNo'] : '' %></label>
+                            <input class="form-control editable validate_this" type="text" name="contactNo" value="<%= typeof userDetails!='undefined' ? userDetails['detailsInfo.contactNo'] : '' %>" id="contactNo" style="display: none;">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="email" class="col-md-2 col-form-label">Email</label>
+                        <div class="col-md-10">
+                            <label class="form-control nonEditable" class="col-form-label"><%= typeof userDetails!='undefined' ? userDetails['detailsInfo.email'] : '' %></label>
+                            <input class="form-control editable validate_this" type="email" name="email" value="<%= typeof userDetails!='undefined' ? userDetails['detailsInfo.email'] : '' %>" id="email" style="display: none;">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="address" class="col-md-2 col-form-label">Address</label>
+                        <div class="col-md-10">
+                            <label class="form-control nonEditable" class="col-form-label"><%= typeof userDetails!='undefined' ? userDetails['detailsInfo.address'] : '' %></label>
+                            <input class="form-control editable validate_this" type="text" name="address" value="<%= typeof userDetails!='undefined' ? userDetails['detailsInfo.address'] : '' %>" id="address" style="display: none;">
+                        </div>
+                    </div>
+                    
+
+                    <div class="col-md-12 editable" style="display: none;">
+                        <a class="btn btn-danger" style="float: right; margin-left: 1%;" type="button" href="/portal-user-profile">Cancel</a>
+                        <button class="btn btn-primary" style="float: right;" type="submit" >Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end row -->
+
+<%- contentFor('FooterJs') %>
+
+<%- contentFor('BottomJs') %>
+
+<script>
+    function makeEditable(){
+        $(".nonEditable").hide();
+        $(".editable").show(100);
+    }
+</script>

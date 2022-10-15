@@ -1,0 +1,129 @@
+<%- contentFor('HeaderCss') %>
+
+<!-- DataTables -->
+<link href="/public/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet"
+    type="text/css" />
+<link href="/public/assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet"
+    type="text/css" />
+
+<!-- Responsive datatable examples -->
+<link href="/public/assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet"
+    type="text/css" />
+
+<%- contentFor('breadcrumb') %>
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <h4 class="mb-0">Attendance Update</h4>
+
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Attendance</a></li>
+                    <li class="breadcrumb-item active">Update</li>
+                </ol>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- end page title -->
+
+<%- contentFor('body') %>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap"
+                    style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                    <thead></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div> <!-- end col -->
+</div> <!-- end row -->
+
+<%- contentFor('FooterJs') %>
+
+<!-- Required datatable js -->
+<script src="/public/assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="/public/assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<!-- Buttons examples -->
+<script src="/public/assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="/public/assets/libs/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
+<script src="/public/assets/libs/jszip/jszip.min.js"></script>
+<script src="/public/assets/libs/pdfmake/build/pdfmake.min.js"></script>
+<script src="/public/assets/libs/pdfmake/build/vfs_fonts.js"></script>
+<script src="/public/assets/libs/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="/public/assets/libs/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script src="/public/assets/libs/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+
+<!-- Responsive examples -->
+<script src="/public/assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="/public/assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+<!-- Datatable init js -->
+<script src="/public/assets/js/pages/datatables.init.js"></script>
+
+<script src="/public/assets/js/face-verification.js"></script>
+<script>
+    $(document).ready(function () {
+        const coloum=[
+            {
+                "data": "sl",
+                "title": "#SL",
+            },
+            {
+                "data": "detailsInfo.name",
+                "title": "Full Name",
+                "render": function (data, type, row, meta) {
+                    return `${row['detailsInfo.name']}`;
+                }
+            },
+            {
+                "data": "username",
+                "title": "Username",
+            },
+            {
+                "data": "role.name",
+                "title": "Role",
+                "render": function (data, type, row, meta) {
+                    return `${row['role.name']}`;
+                }
+            },
+            {
+                "data": "detailsInfo.email",
+                "title": "Email",
+                "render": function (data, type, row, meta) {
+                    return `${row['detailsInfo.email']}`;
+                }
+            },
+            {
+                "data": "id",
+                "title": "Action",
+                "render": function (data, type, row, meta) {
+                    if(row['role.code']==2){
+                        return `<a class="btn btn-sm btn-success btn-soft-success waves-effect waves-light" href="/portal-user-create/${row['id']}">Update</a> 
+                        <button class="btn btn-sm btn-warning btn-soft-warning waves-effect waves-light" onclick='confirmationCheck("/portal-user-password-reset/${row['id']}","Are you sure to reset this password ?","Reset password will be sent to this email : ${row['detailsInfo.email']}")'>Reset Password</button>
+                        <button class="btn btn-sm btn-${row['isActive']==1?'primary':'danger'} btn-soft-${row['isActive']==1?'primary':'danger'} waves-effect waves-light" onclick='confirmationCheck("/portal-user-change-status/${row['id']}","Are you sure ?","This user will be in ${row['isActive']==1?'inactive':'active'} status from now on.")'>${row['isActive']==1?'Active':'InActive'}</button>
+                        <button class="btn btn-sm btn-danger btn-soft-danger waves-effect waves-light" onclick='confirmationCheck("/portal-employee-delete/${row['id']}","Admin delete confirmation !","Are you sure about this deletion ?")'>Delete</button>`
+                    }else{
+                        return `<a class="btn btn-sm btn-success btn-soft-success waves-effect waves-light" href="/portal-user-create/${row['id']}">Update</a> 
+                        <button class="btn btn-sm btn-warning btn-soft-warning waves-effect waves-light" onclick='confirmationCheck("/portal-user-password-reset/${row['id']}","Are you sure to reset this password ?","Reset password will be sent to this email : ${row['detailsInfo.email']}")'>Reset Password</button>
+                        <button class="btn btn-sm btn-${row['isActive']==1?'primary':'danger'} btn-soft-${row['isActive']==1?'primary':'danger'} waves-effect waves-light" onclick='confirmationCheck("/portal-user-change-status/${row['id']}","Are you sure ?","This user will be in ${row['isActive']==1?'inactive':'active'} status from now on.")'>${row['isActive']==1?'Active':'InActive'}</button>`
+                    }
+                    
+                    
+                }
+            }
+        ]
+        get_table_data("datatable-buttons","get-portal-user-list-data",coloum,[],true,true);
+    });
+
+    // <button class="btn btn-sm btn-danger btn-soft-danger waves-effect waves-light" onclick='deleteEmployeeFaces("/portal-user-delete/${data}",${data})'>Delete</button>
+    
+</script>
+
+<%- contentFor('BottomJs') %>

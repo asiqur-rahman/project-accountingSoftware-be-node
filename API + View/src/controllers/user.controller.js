@@ -2,61 +2,61 @@ const db = require('../models/model');
 const StatusEnum = require('../utils/enum.utils');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const { appConfig } = require('../config/config');
 const Op = require('sequelize').Op;
-const userService = require('../service/user.service');
+var express = require('express');
+var router = express.Router();
 
-module.exports.getById = async(req, res, next) => {
-    await userService.getById(req.params.id)
-    .then(user=>{
-        return res.status(200).send(user);
-    }).catch(e=>{
-        return res.status(e.status).send(e);
-    })
+module.exports.dashboard = async(req, res, next) => {
+    res.locals = { 
+        metaTitle: 'Brain Tech Solution | Serving IT to Served you',
+        metaDescription:'Brain Tech Solution(BT Solution) is a global information technology firm, BT Solution offers IT solutions, technology consulting and outsourcing services.',
+        homepage: 'true' 
+    };
+    res.render('Dashboard/dashboard');
 };
 
-module.exports.create = async(req, res, next) => {
-    await userService.create(req)
-    .then(user=>{
-        return res.status(200).send(user);
-    }).catch(e=>{
-        return res.status(e.status).send(e);
-    })
+module.exports.contactUs = async(req, res, next) => {
+    res.locals = { 
+        metaTitle: 'Contact US | Brain Tech Solution',
+        metaDescription:'Brain Tech Solution(BT Solution) is a global information technology firm, BT Solution offers IT solutions, technology consulting and outsourcing services.',
+    };
+    res.render('ContactUS/contactUS');
 };
 
-module.exports.update = async(req, res, next) => {
-    // await db.routine.update(req.body,{ 
-    //     where:{id:req.params.id}
-    //     }).then(routine => {
-    //         res.status(200).json({
-    //             status:200,
-    //             message:'Routine successfully Updated !'
-    //         });
-    //     }).catch(function (err) {
-    //         res.status(502).json({
-    //             status:502,
-    //             message:err.message
-    //         });
-    //     });
+module.exports.aboutUS = async(req, res, next) => {
+    res.locals = { 
+        metaTitle: 'About US | Brain Tech Solution',
+        metaDescription:'Brain Tech Solution(BT Solution) is a global information technology firm, BT Solution offers IT solutions, technology consulting and outsourcing services.',
+    };
+    res.render('AboutUS/aboutUS');
 };
 
-module.exports.delete = async(req, res, next) => {
-    // await db.routine.destroy({ 
-    //     where:{id:req.params.id}
-    //     }).then(routine => {
-    //         res.status(200).json({
-    //             status:200,
-    //             message:'Routine successfully Deleted !'
-    //         });
-    //     }).catch(function (err) {
-    //         res.status(502).json({
-    //             status:502,
-    //             message:err.message
-    //         });
-    //     });
+module.exports.privacyPolicy = async(req, res, next) => {
+    res.locals = { 
+        metaTitle: 'Privacy Policy | Brain Tech Solution',
+        metaDescription:'Brain Tech Solution(BT Solution) is a global information technology firm, BT Solution offers IT solutions, technology consulting and outsourcing services.',
+    };
+    res.render('PrivacyPolicy/privacyPolicy');
 };
 
-hashPassword = async (req) => {
-    if (req.body.password) {
-        req.body.password = await bcrypt.hash(req.body.password, 8);
-    }
-}
+module.exports.termsAndConditions = async(req, res, next) => {
+    res.locals = { 
+        metaTitle: 'Terms & Conditions | Brain Tech Solution',
+        metaDescription:'Brain Tech Solution(BT Solution) is a global information technology firm, BT Solution offers IT solutions, technology consulting and outsourcing services.',
+    };
+    res.render('TermsAndConditions/termsAndConditions');
+};
+
+module.exports.sitemap = async(req, res, next) => {
+    res.render('Sitemap/sitemap',{layout: false});
+};
+
+module.exports.notExist = async (req, res, next) => {
+    res.redirect('/404');
+};
+
+module.exports.notFound = async (req, res, next) => {
+    res.locals = { metaTitle: '404 | Page not found' };
+    res.render('Error/error');
+};

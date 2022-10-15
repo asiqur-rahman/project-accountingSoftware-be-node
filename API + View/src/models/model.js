@@ -1,20 +1,20 @@
-const config = require("../../config/config.json");
-const enumm = require('../utils/enum.utils');
+const config = require("../config/config.js");
+const mysql2 = require('mysql2');
+
 const Sequelize = require("sequelize");
 const sequelize = new Sequelize(
-    config.development.database,
-    config.development.username,
-    config.development.password, 
-    {
-        host: config.development.host,
-        dialect: config.development.dialect,
+    config.dbConfig.dbname,
+    config.dbConfig.user,
+    config.dbConfig.pass, {
+        host: config.dbConfig.host,
+        dialect: config.dbConfig.dialect,
         operatorsAliases: 0,
 
         pool: {
-            max: config.development.pool.max,
-            min: config.development.pool.min,
-            acquire: config.development.pool.acquire,
-            idle: config.development.pool.idle
+            max: config.dbConfig.pool.max,
+            min: config.dbConfig.pool.min,
+            acquire: config.dbConfig.pool.acquire,
+            idle: config.dbConfig.pool.idle
         }
     }
 );
@@ -31,153 +31,69 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.User = require("./user.model.js")(sequelize, Sequelize);
-db.Role = require("./role.model.js")(sequelize, Sequelize);
-db.Branch = require("./branch.model.js")(sequelize, Sequelize);
-db.UserDetails = require("./userDetails.model")(sequelize, Sequelize);
-db.SendMail = require("./sendMail.model")(sequelize, Sequelize);
-db.SendSms = require("./sendSms.model")(sequelize, Sequelize);
-
-db.Currency = require("./currency.model")(sequelize, Sequelize);
-db.AccountingHead = require("./accountingHead.model")(sequelize, Sequelize);
-db.Transaction = require("./transaction.model")(sequelize, Sequelize);
+db.user = require("./user.model.js")(sequelize, Sequelize);
+db.role = require("./role.model.js")(sequelize, Sequelize);
+db.attendance = require("./attendance.model")(sequelize, Sequelize);
+db.attendanceType = require("./attendanceType.model")(sequelize, Sequelize);
+db.detailsInfo = require("./detailsInfo.model")(sequelize, Sequelize);
+db.expense = require("./expense.model")(sequelize, Sequelize);
+db.paymentType = require("./paymentType.model")(sequelize, Sequelize);
+db.supply = require("./supply.model")(sequelize, Sequelize);
+db.sale = require("./sale.model")(sequelize, Sequelize);
+db.employeeWage = require("./employeeWage.model")(sequelize, Sequelize);
+db.dailyCash = require("./dailyCash.model")(sequelize, Sequelize);
+db.sendMail = require("./sendMail.model")(sequelize, Sequelize);
+db.tallyCustomer = require("./tallyCustomer.model")(sequelize, Sequelize);
+db.tally = require("./tally.model")(sequelize, Sequelize);
 
 //Associations
 
 //userTable
-db.User.belongsTo(db.UserDetails,{ foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
-db.UserDetails.hasOne(db.User);
+db.user.belongsTo(db.role,{ foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
+db.role.hasMany(db.user);
 
-//UserDetailsTable
-db.UserDetails.belongsTo(db.Role,{ foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
-db.Role.hasMany(db.UserDetails);
+//detailsInfoTable
+db.user.belongsTo(db.detailsInfo,{ foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
+db.detailsInfo.hasOne(db.user);
 
-db.UserDetails.belongsTo(db.Branch,{ foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
-db.Branch.hasMany(db.UserDetails);
+db.detailsInfo.belongsTo(db.role,{ foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
+db.role.hasMany(db.detailsInfo);
 
-//sendMailTable
-db.SendMail.belongsTo(db.User,{ foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
-db.User.hasMany(db.SendMail);
+//attendanceTable
+db.attendance.belongsTo(db.user,{ foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
+db.user.hasMany(db.attendance);
+db.attendance.belongsTo(db.attendanceType,{ foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
+db.attendanceType.hasMany(db.attendance);
 
-//sendSmsTable
-db.SendSms.belongsTo(db.User,{ foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
-db.User.hasMany(db.SendSms);
+//supplyTable
+db.supply.belongsTo(db.detailsInfo,{ foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
+db.detailsInfo.hasMany(db.supply);
 
-//AccountingHeadTable
-db.AccountingHead.belongsTo(db.User,{ foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
-db.User.hasMany(db.AccountingHead);
+//employeeWageTable
+db.employeeWage.belongsTo(db.detailsInfo,{ foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
+db.detailsInfo.hasMany(db.employeeWage);
 
-db.AccountingHead.belongsTo(db.Currency,{ foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
-db.Currency.hasMany(db.AccountingHead);
+//dailyCashTable
+db.dailyCash.belongsTo(db.user,{ foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
+db.user.hasMany(db.dailyCash);
 
-db.AccountingHead.hasMany(db.AccountingHead, { foreignKey: { name:'parentId' }});
-db.AccountingHead.belongsTo(db.AccountingHead,{ foreignKey: { name:'parentId', allowNull: false }, onDelete: 'CASCADE' });
+//supply
+db.supply.belongsTo(db.paymentType,{ foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
+db.paymentType.hasMany(db.supply);
 
-//Transaction
-db.Transaction.belongsTo(db.User,{ foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
-db.User.hasMany(db.Transaction);
-
-db.Transaction.belongsTo(db.AccountingHead,{ foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
-db.AccountingHead.hasMany(db.Transaction);
-
-// db.sequelize.sync();
-
-//force: true will drop the table if it already exists
-// db.sequelize.sync({force: true}).then(() => {
-//   console.log('Drop and Resync Database with { force: true }');
-//   initial();
+//tallyTable
+db.tally.belongsTo(db.tallyCustomer,{ foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
+db.tallyCustomer.hasMany(db.tally);
+// db.role.belongsToMany(db.user, {
+//   through: "user_roles",
+//   foreignKey: "roleId",
+//   otherKey: "userId"
 // });
-//
-// db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0', { raw: true }).then ( function () {
-//   db.sequelize.sync ({ force: true }).then ( function () {
-//     console.log('Drop and Resync Database with { force: true }');
-//     initial();
-//   });
+// db.user.belongsToMany(db.role, {
+//   through: "user_roles",
+//   foreignKey: "userId",
+//   otherKey: "roleId"
 // });
 
-
-function initial() {
-
-    db.Branch.create({
-      name: "Principal",
-      description: "Main Branch",
-      isActive:true
-    });
-  
-    db.Role.create({
-      name: "SuperUser",
-      code: enumm.Role.SuperUser,
-      isActive:true
-    });
-    db.Role.create({
-      name: "Admin",
-      code: enumm.Role.Admin,
-      isActive:true
-    });
-  
-    db.UserDetails.create({
-        firstName: "Brain Tech",
-        userId:1,
-        roleId:1,
-        branchId:1,
-        lastName:"Solution",
-        email:"braintechsoln@gmail.com",
-        contactNo: "01799089893",
-        address:"Dhaka, Bangladesh"
-    });
-
-    db.User.create({
-      username:'asiq',
-      password:'$2a$08$oDOBw2EEQ6UbtLLe0TuDguGez0rY4xJNt5KbMoVY659Kd4E3poZTi',
-      userDetailId:1,
-      isActive:true
-    });
-
-    db.Currency.create({
-      name:'USD',
-      isActive:true
-    });
-
-    db.AccountingHead.create({
-      name:enumm.AccountHead.Assets.key,
-      currencyId:1,
-      userId:1,
-      isActive:true,
-      code:enumm.AccountHead.Assets.value
-    });
-
-    db.AccountingHead.create({
-      name:enumm.AccountHead.Equity.key,
-      currencyId:1,
-      userId:1,
-      isActive:true,
-      code:enumm.AccountHead.Equity.value
-    });
-
-    db.AccountingHead.create({
-      name:enumm.AccountHead.Expenses.key,
-      currencyId:1,
-      userId:1,
-      isActive:true,
-      code:enumm.AccountHead.Expenses.value
-    });
-
-    db.AccountingHead.create({
-      name:enumm.AccountHead.Income.key,
-      currencyId:1,
-      userId:1,
-      isActive:true,
-      code:enumm.AccountHead.Income.value
-    });
-
-    db.AccountingHead.create({
-      name:enumm.AccountHead.Liabilities.key,
-      currencyId:1,
-      userId:1,
-      isActive:true,
-      code:enumm.AccountHead.Liabilities.value
-    });
-
-  }
 
 module.exports = db;

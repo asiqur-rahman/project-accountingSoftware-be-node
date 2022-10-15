@@ -1,0 +1,150 @@
+<%- contentFor('HeaderCss') %>
+
+<%- contentFor('breadcrumb') %>
+
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <h4 class="mb-0">Supply <%= typeof supply=='undefined' ? 'Create' : typeof viewMode!='undefined' ? 'Details': 'Update' %></h4>
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Supply</a></li>
+                    <li class="breadcrumb-item active"><%= typeof supply=='undefined' ? 'Create' : typeof viewMode!='undefined' ? 'Details': 'Update' %></li>
+                </ol>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- end page title -->
+
+<%- contentFor('body') %>
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <form class="validate-this-form" method="post" enctype="multipart/form-data">
+                    <div class="row">
+                        <input class="form-control" type="number" name="id" id="id" value="<%= typeof supply!='undefined' ? supply.id : '0' %>" readonly hidden>
+                        <div class="col-md-12">
+                            <div class="mb-3 row">
+                                <label for="detailsInfoId" class="col-md-2 col-form-label">Supplier Name</label>
+                                <div class="col-md-10">
+                                    <div class="input-group" data-validate="Supplier is required">
+                                        <select class="form-select validate_this select2" name="detailsInfoId" id="detailsInfoId" <%= typeof supply!='undefined' ? 'disabled="disabled"': '' %>>
+                                            <option value="" disabled selected>Select</option>
+                                            <% if(locals.supplierDD) {for(var i=0; i<supplierDD.length; i++){%>
+                                                <option value="<%=supplierDD[i].id%>" <%=typeof supply!='undefined' ? supplierDD[i].id==supply.detailsInfoId ? 'selected':'' : ''%>><%=supplierDD[i].name%></option>
+                                            <%}}%>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="col-md-6">
+                            <div class="mb-3 row">
+                                <label for="date" class="col-md-4 col-form-label">Date</label>
+                                <div class="col-md-8">
+                                    <div class="input-group" data-validate="Date is required">
+                                        <input class="form-control validate_this" type="date" name="date" id="date" value="<%= typeof supply!='undefined' ? supply.date : '' %>" <%= typeof viewMode!='undefined' ? 'disabled="disabled"': '' %>>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="col-md-6">
+                            <div class="mb-3 row">
+                                <label for="date" class="col-md-4 col-form-label">Date</label>
+                                <div class="col-md-8" id="datepicker1">
+                                    <div class="input-group" id="datepicker2" data-validate="Date is required">
+                                        <input type="text" class="form-control validate_this" placeholder="Date"
+                                            data-date-format="mm/dd/yyyy" data-date-container='#datepicker2' data-provide="datepicker"
+                                            data-date-autoclose="true" autocomplete="off"
+                                            name="date" id="date" value="<%= typeof supply!='undefined' ? supply.date : '' %>">
+        
+                                        <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3 row">
+                                <label for="paymentTypeId" class="col-md-4 col-form-label">Payment Type</label>
+                                <div class="col-md-8">
+                                    <div class="input-group" data-validate="Payment Type is required">
+                                        <select class="form-select validate_this select2" name="paymentTypeId" id="paymentTypeId" <%= typeof viewMode!='undefined' ? 'disabled="disabled" readonly': '' %>>
+                                            <option value=0 disabled selected>Select</option>
+                                            <% if(locals.paymentTypeDD) {for(var i=0; i<paymentTypeDD.length; i++){%>
+                                                <option value="<%=paymentTypeDD[i].id%>" <%=typeof supply!='undefined' ? paymentTypeDD[i].id==supply.paymentTypeId ? 'selected':'' : ''%>><%=paymentTypeDD[i].name%></option>
+                                            <%}}%>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3 row">
+                                <label for="amount" class="col-md-4 col-form-label">Amount</label>
+                                <div class="col-md-8">
+                                    <div class="input-group" data-validate="Amount is required">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">$</span>
+                                        </div>
+                                        <input class="form-control validate_this number_only" placeholder="0" type="text" name="amount" id="amount" value="<%= typeof supply!='undefined' ? supply.amount : '' %>" <%= typeof viewMode!='undefined' ? 'disabled="disabled" readonly': '' %>>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3 row">
+                                <label for="file" class="col-md-4 col-form-label">Files</label>
+                                <div class="col-md-8">
+                                    <input type="file" name="file" id="file" class="inner form-control" accept="application/pdf,image/*" multiple <%= typeof viewMode!='undefined' ? 'disabled="disabled" readonly': '' %>/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="mb-3 row">
+                                <label for="description" class="col-md-2 col-form-label">Description</label>
+                                <div class="col-md-10">
+                                    <input class="form-control" type="text" name="description" id="description" value="<%= typeof supply!='undefined' ? supply.description : '' %>" <%= typeof viewMode!='undefined' ? 'disabled="disabled" readonly': '' %>>
+                                </div>
+                            </div>
+                        </div>
+                        <%if(typeof files!='undefined') {%>
+                            <div class="col-md-12">
+                                <div class="mb-3 row">
+                                    <label for="description" class="col-md-2 col-form-label">Uploaded files</label>
+                                    <div class="col-md-10">
+                                        <%if(files.length>0){%>
+                                            <%for(var i=0; i<files.length; i++){%>
+                                                <!-- <button class="btn btn-sm btn-info btn-soft-info waves-effect waves-light" style="margin-right: 2%;" type="button" onclick="go_link_new_page('<%=hostName%>\<%=files[i].link%>')" target="_blank"><%=files[i].link%></button> -->
+                                                <a class="btn btn-sm btn-info btn-soft-info waves-effect waves-light" style="margin: 0 2% 1% 0;" type="button" href="/portal-supply-file-download/<%=supply.id%>&<%=files[i].name%>" target="_blank"><%=files[i].name%></a>
+                                            <%}%>
+                                        <%}else{%>
+                                            <p class="form-control">No Invoice Found !</p> 
+                                        <%}%>
+                                    </div>
+                                </div>
+                            </div>
+                        <%}%>
+                    </div>
+                    <div class="col-md-12">
+                        <a class="btn btn-danger" style="float: right; margin-left: 2%;" type="button" href="/portal-supply-list">Cancel</a>
+                        <%if(typeof viewMode=='undefined'){%>
+                            <button style="float: right;" class="btn btn-primary" type="submit"><%= typeof supply=='undefined' ? 'Create' : 'Update' %></button>
+                        <%}%>
+                        <!-- <button class="btn btn-primary" type="button" id="faceScanBtn" style="display: none;">Face Scan</button> -->
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- end card -->
+    </div> <!-- end col -->
+</div>
+<!-- end row -->
+
+<%- contentFor('FooterJs') %>
+
+<%- contentFor('BottomJs') %>

@@ -1,0 +1,52 @@
+CREATE DEFINER=`drtechma_chickenman`@`%.%.%.%` PROCEDURE `drtechma_chickenman_live`.`Dashboard`(
+	days INT
+)
+BEGIN
+	DECLARE totalSale INT DEFAULT 0;
+	DECLARE preTotalSale INT DEFAULT 0;
+	DECLARE totalExpense INT DEFAULT 0;
+	DECLARE preTotalExpense INT DEFAULT 0;
+	DECLARE totalSupply INT DEFAULT 0;
+	DECLARE preTotalSupply INT DEFAULT 0;
+	-- DROP PROCEDURE IF EXISTS `Dashboard`;
+	
+	select IFNULL((s.cash+s.card+s.cheque),0) INTO totalSale from sales s where s.`date`=CURDATE();
+	
+	select IFNULL((s.cash+s.card+s.cheque),0) INTO preTotalSale from sales s where s.`date`= DATE_SUB(CURDATE(), INTERVAL 1 DAY);
+	
+	select IFNULL(SUM(e.shopRent+e.accountantFee+e.bankFee+e.gst+e.electricityBill+e.mobileBill+e.truckBill+e.insuranceFee+e.`others`),0) into totalExpense from expenses e where e.`date`=CURDATE();
+
+	select IFNULL(SUM(e.shopRent+e.accountantFee+e.bankFee+e.gst+e.electricityBill+e.mobileBill+e.truckBill+e.insuranceFee+e.`others`),0) into preTotalExpense from expenses e where e.`date`= DATE_SUB(CURDATE(), INTERVAL 1 DAY);
+
+	select IFNULL(SUM(s.amount),0) into totalSupply from supplies s where s.`date`=CURDATE();
+   	
+	select IFNULL(SUM(s.amount),0) into preTotalSupply from supplies s where s.`date`= DATE_SUB(CURDATE(), INTERVAL 1 DAY);
+
+	IF days > 0 THEN
+        select 
+        	totalSale AS Total_Sales,
+			preTotalSale AS Today_Sales_Pre,
+			totalExpense AS Today_Expense,
+			preTotalExpense AS Today_Expense_Pre,
+			totalSupply AS Today_Supplies,
+			preTotalSupply AS Today_Supplies_Pre,
+			GROUP_CONCAT(DATE_FORMAT(s.`date`, "%d/%m/%Y") ORDER BY s.`date` ASC  SEPARATOR ',') as dates,
+			GROUP_CONCAT(s.cash ORDER BY s.`date` ASC SEPARATOR ',') as cashes,
+			GROUP_CONCAT(s.cheque ORDER BY s.`date` ASC SEPARATOR ',') as cheques ,
+			GROUP_CONCAT(s.card ORDER BY s.`date` ASC SEPARATOR ',') as cards 
+		from sales s where (s.`date` BETWEEN  DATE_SUB(CURDATE(), INTERVAL days DAY) AND CURDATE()) order by DATE(s.`date`) desc;
+   	ELSE
+        select 
+        	totalSale AS Total_Sales,
+			preTotalSale AS Today_Sales_Pre,
+			totalOrder AS Today_Orders,
+			preTotalOrder AS Today_Orders_Pre,
+			totalSupply AS Today_Supplies,
+			preTotalSupply AS Today_Supplies_Pre,
+			GROUP_CONCAT(DATE_FORMAT(s.`date`, "%d/%m/%Y") ORDER BY s.`date` ASC  SEPARATOR ',') as dates,
+			GROUP_CONCAT(s.cash ORDER BY s.`date` ASC SEPARATOR ',') as cashes,
+			GROUP_CONCAT(s.cheque ORDER BY s.`date` ASC SEPARATOR ',') as cheques ,
+			GROUP_CONCAT(s.card ORDER BY s.`date` ASC SEPARATOR ',') as cards 
+		from sales s where (s.`date` BETWEEN  DATE_SUB(CURDATE(), INTERVAL 7 DAY) AND CURDATE()) order by DATE(s.`date`) desc;
+    END IF;
+END

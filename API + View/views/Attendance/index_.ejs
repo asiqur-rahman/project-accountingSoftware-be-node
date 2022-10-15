@@ -1,0 +1,187 @@
+<%- contentFor('HeaderCss') %>
+
+<!-- DataTables -->
+<link href="/public/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet"
+    type="text/css" />
+<link href="/public/assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet"
+    type="text/css" />
+
+<!-- Responsive datatable examples -->
+<link href="/public/assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet"
+    type="text/css" />
+
+    <style>
+        .alert-validate::before {
+        right: 60px;
+    }
+    .alert-validate::after {
+        right: 63px;
+    }
+    
+    .true-validate::after {
+        right: 63px;
+    }
+</style>
+
+<%- contentFor('breadcrumb') %>
+
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <h4 class="mb-0">Attendance</h4>
+
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Employee</a></li>
+                    <li class="breadcrumb-item active">Attendance</li>
+                </ol>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- end page title -->
+
+<%- contentFor('body') %>
+
+<!-- end row -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <input type="hidden" id="roleCode_j" value="<%=typeof roleCode!='undefined' && roleCode != adminCode && roleCode != superUserCode ? '1' : '0'%>">
+                <%if(typeof roleCode!='undefined' && roleCode != adminCode && roleCode != superUserCode){%>
+                    <div class="row justify-content-center mt-4">
+                        <div class="col-lg-5">
+                            <div class="text-center">
+                                <h5>Face Recognition Based Attendance System</h5>
+                                <!-- <p class="text-muted">If several languages coalesce, the grammar of the resulting language is more simple and regular than that of the individual</p> -->
+                                <div>
+                                    <% if(locals.getAttendanceTypeDD) {for(var i=0; i<getAttendanceTypeDD.length; i++){%>
+                                        <button type="button" class="face_btn btn btn-primary mt-2 me-2 waves-effect waves-light" onclick="employee_attendance(<%=currentEmployeeCode%>,<%=getAttendanceTypeDD[i].id%>,<%=faceVerificationConfidence%>)" ><%=getAttendanceTypeDD[i].name%></button>
+                                    <%}}%>
+                                    <!-- <button type="button" class="btn btn-primary mt-2 me-2 waves-effect waves-light" >Day In</button>
+                                    <button type="button" class="btn btn-success mt-2 waves-effect waves-light">Day Out</button> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <form class="validate-this-form" method="post" style="margin-top:5%">
+                        <div class="row justify-content-center mt-4">
+                            <div class="col-lg-4">
+                                <div class="text-center">
+                                    <h5>Today Cash</h5>
+                                    <!-- <p class="text-muted">If several languages coalesce, the grammar of the resulting language is more simple and regular than that of the individual</p> -->
+                                    <div>
+                                        <div class="input-group" data-validate="Cash is required">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">$</span>
+                                            </div>
+                                            <input class="form-control validate_this" placeholder="0" type="number" name="cash" id="cash" value="<%= typeof dailyCash!='undefined' ? dailyCash.cash : '' %>">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-primary" type="submit">Save</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                <%}%>
+            </div>
+            <div class="card-body">
+
+                <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap"
+                    style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                    <thead></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div> <!-- end col -->
+</div> <!-- end row -->
+
+<%- contentFor('FooterJs') %>
+
+<!-- Required datatable js -->
+<script src="/public/assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="/public/assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<!-- Buttons examples -->
+<script src="/public/assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="/public/assets/libs/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
+<script src="/public/assets/libs/jszip/jszip.min.js"></script>
+<script src="/public/assets/libs/pdfmake/build/pdfmake.min.js"></script>
+<script src="/public/assets/libs/pdfmake/build/vfs_fonts.js"></script>
+<script src="/public/assets/libs/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="/public/assets/libs/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script src="/public/assets/libs/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+
+<!-- Responsive examples -->
+<script src="/public/assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="/public/assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+<!-- Datatable init js -->
+<script src="/public/assets/js/pages/datatables.init.js"></script>
+
+<script src="/public/assets/js/face-verification.js"></script>
+<script>
+    // "render": function (data, type, row, meta) {
+    //                 return new Date(row['dateTime']).toISOString().split('T')[0]
+    //             }
+    $(document).ready(function () {
+        const coloum_A=[
+            {
+                "data": "sl",
+                "title": "#SL",
+            },
+            {
+                "data": "dateTime",
+                "title": "Date",
+            },
+            {
+                "data": "userName",
+                "title": "Employee",
+                "render": function (data, type, row, meta) {
+                    return row.userName.toUpperCase()
+                }
+            },
+            {
+                "data": "dayIn",
+                "title": "Clock In",
+                "render": function (data, type, row, meta) {
+                    return new Date(row['dayIn']).toISOString().split('T')[1].replace('.000Z','')
+                }
+            },
+            {
+                "data": "dayOut",
+                "title": "Clock Out",
+                "render": function (data, type, row, meta) {
+                    return new Date(row['dayOut']).toISOString().split('T')[1].replace('.000Z','')
+                }
+            },
+            {
+                "data": "workingHours",
+                "title": "Working Hour",
+            },
+            {
+                "data": "totalBreak",
+                "title": "Break",
+                // "render": function (data, type, row, meta) {
+                //     return row.totalBreak + " Hour/s"
+                // }
+            },
+            {
+                "data": "actualWorkingHours",
+                "title": "Actual Working Hour",
+            }
+        ];
+        get_table_data("datatable-buttons","get-portal-employee-attendance-data",coloum);
+    });
+
+    
+</script>
+
+<%- contentFor('BottomJs') %>
+
+<script src="/public/assets/js/face-verification.js"></script>

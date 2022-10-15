@@ -1,0 +1,55 @@
+<ul class="metismenu list-unstyled" id="side-menu">
+
+    <li class="menu-title"><%=translation.Menu%></li>
+    
+    <!---------Attendance Start------------->
+    <li class="menu-title"><%=translation.Attendance%></li>
+    <!-- <li>
+        <a href="/portal-employee-attendance">
+            <i class="fa fa-id-badge"></i>
+            <span><%=translation.EmployeeAttendance%></span>
+        </a>
+    </li> -->
+    <li>
+        <a href="javascript: void(0);" class="has-arrow waves-effect">
+            <i class="fa fa-id-badge"></i>
+            <span><%=translation.MyAttendance%></span>
+        </a>
+        <ul class="sub-menu" aria-expanded="false">
+            <li><a href="/portal-attendance-entry"><%=translation.AttendanceEntry%></a></li>
+            <li><a href="/portal-attendance-history"><%=translation.AttendanceHistory%></a></li>
+        </ul>
+    </li>
+    
+    <!---------Attendance End------------->
+    
+    <!---------Tally Start------------->
+    <li class="menu-title"><%=translation.Tally%></li>
+    <li>
+        <a href="javascript: void(0);" class="has-arrow waves-effect">
+            <i class="fas fa-list-alt"></i>
+            <span><%=translation.TallyKhata%></span>
+        </a>
+        <ul class="sub-menu" aria-expanded="false">
+            <li><a href="/portal-tally-customer-create"><%=translation.TallyCustomerCreate%></a></li>
+            <li><a href="/portal-tally-customer-list"><%=translation.TallyCustomerList%></a></li>
+            <li><a href="/portal-tally-create"><%=translation.TallyCreate%></a></li>
+            <li><a href="/portal-tally-list"><%=translation.TallyList%></a></li>
+        </ul>
+    </li>
+    <!---------Tally End------------->
+    
+    <!---------ADS Start------------->
+    <li class="menu-title"><%=translation.Ads%></li>
+    <li>
+        <a href="javascript: void(0);" class="has-arrow waves-effect">
+            <i class="uil-airplay"></i>
+            <span><%=translation.TVAds%></span>
+        </a>
+        <ul class="sub-menu" aria-expanded="false">
+            <li><a href="/portal-set-tv-ads"><%=translation.TVAdsList%></a></li>
+            <li><a href="/portal-tv-ads-create"><%=translation.TVAdsCreate%></a></li>
+        </ul>
+    </li>
+    <!---------ADS End------------->
+</ul>

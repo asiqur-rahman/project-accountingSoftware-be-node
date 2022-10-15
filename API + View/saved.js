@@ -1,0 +1,1 @@
+CONCAT(IFNULL(cheque1,0),',',IFNULL(cheque2,0),',',',',IFNULL(cheque3,0),',',IFNULL(cheque4,0),',',IFNULL(cheque5,0),',',IFNULL(cheque6,0),',',IFNULL(cheque7,0)) AS ToTal_Cheque_7

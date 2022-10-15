@@ -1,0 +1,104 @@
+
+<%- contentFor('HeaderCss') %>
+
+
+<%- contentFor('breadcrumb') %>
+
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <h4 class="mb-0">Create New Ads</h4>
+
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Ads</a></li>
+                    <li class="breadcrumb-item active">Create</li>
+                </ol>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- end page title -->
+
+<%- contentFor('body') %>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <form class="card-body" id="form" method="post" action="" enctype="multipart/form-data">
+                <input hidden="true" type="text" id="actionUrl" value="<%=actionUrl%>">
+                <div class="mb-3 row">
+                    <label for="adsName" class="col-md-2 col-form-label">Ads Name</label>
+                    <div class="col-md-10">
+                        <input class="form-control" type="text" name="adsName" id="adsName" placeholder="Ex: TV 1" required>
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="file" class="col-md-2 col-form-label">Files</label>
+                    <div class="col-md-10">
+                        <input type="file" name="file" id="file" class="inner form-control" accept="image/*" multiple disabled/>
+                    </div>
+                </div>
+                <button type="submit" id="submitBtn" class="btn btn-primary" disabled="disabled">Create</button>
+            </form>
+        </div>
+    </div> <!-- end col -->
+</div>
+<!-- end row -->
+<!-- 
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <form class="outer-repeater" method="post" enctype="multipart/form-data">
+                    <div data-repeater-list="outer-group" class="outer">
+                        <div data-repeater-item class="outer">
+
+                            <div class="inner-repeater mb-4">
+                                <div data-repeater-list="inner-group" class="inner form-group">
+                                    <label class="form-label">Image/ Ads :</label>
+                                    <div data-repeater-item class="inner mb-3 row">
+                                        <div class="col-md-10 col-8">
+                                            <input type="file" name="file" class="inner form-control" accept="image/*" multiple/>
+                                        </div>
+                                        <div class="col-md-2 col-4 d-grid">
+                                            <input data-repeater-delete type="button" class="btn btn-primary btn-block inner" value="Delete"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <input data-repeater-create type="button" class="btn btn-success inner" value="Add New Image"/>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Create</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div> -->
+<!-- end row -->
+<%- contentFor('FooterJs') %>
+<!-- form repeater js -->
+<!-- <script src="/public/assets/libs/jquery.repeater/jquery.repeater.min.js"></script>
+
+<script src="/public/assets/js/pages/form-repeater.int.js"></script> -->
+
+<script>
+    $("#adsName").keyup(function(){
+        const adsName=$("#adsName").val();
+        if(adsName!=""){
+            $("#form").attr("action",$("#actionUrl").val()+adsName);
+            $("#file").attr("disabled",false);
+            $("#submitBtn").attr("disabled",false);
+        }else{
+            $("#form").attr("action","")
+            $("#file").attr("disabled",true);
+            $("#submitBtn").attr("disabled",true);
+        }
+    });
+
+</script>
+<%- contentFor('BottomJs') %>

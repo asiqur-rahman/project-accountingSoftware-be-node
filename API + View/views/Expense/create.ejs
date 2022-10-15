@@ -1,0 +1,213 @@
+<%- contentFor('HeaderCss') %>
+
+<%- contentFor('breadcrumb') %>
+
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <h4 class="mb-0">Expense <%= typeof expense=='undefined' ? 'Create' : 'Update' %></h4>
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Expense</a></li>
+                    <li class="breadcrumb-item active"><%= typeof expense=='undefined' ? 'Create' : 'Update' %></li>
+                </ol>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- end page title -->
+
+<%- contentFor('body') %>
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <form class="validate-this-form" method="post">
+                    <div class="row">
+                        <input class="form-control" type="number" name="id" id="id" value="<%= typeof expense!='undefined' ? expense.id : '0' %>" readonly hidden>
+                        <!-- <div class="col-md-6">
+                            <div class="mb-3 row">
+                                <label for="date" class="col-md-4 col-form-label">Date</label>
+                                <div class="col-md-8">
+                                    <div class="input-group" data-validate="Date is required">
+                                        <input class="form-control validate_this" placeholder="0" type="date" name="date" id="date" value="<%= typeof expense!='undefined' ? expense.date : '' %>">
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="col-md-6">
+                            <div class="mb-3 row">
+                                <label for="date" class="col-md-4 col-form-label">Date</label>
+                                <div class="col-md-8" id="datepicker1">
+                                    <div class="input-group" id="datepicker2" data-validate="Date is required">
+                                        <input type="text" class="form-control validate_this" placeholder="Date"
+                                            data-date-format="mm/dd/yyyy" data-date-container='#datepicker2' data-provide="datepicker"
+                                            data-date-autoclose="true" autocomplete="off"
+                                            name="date" id="date" value="<%= typeof expense!='undefined' ? expense.date : '' %>">
+        
+                                        <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3 row">
+                                <label for="description" class="col-md-4 col-form-label">Description</label>
+                                <div class="col-md-8">
+                                    <input class="form-control" type="text" name="description" id="description" value="<%= typeof expense!='undefined' ? expense.description : '' %>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3 row">
+                                <label for="shopRent" class="col-md-4 col-form-label">Shop Rent</label>
+                                <div class="col-md-8">
+                                    <div class="input-group" data-validate="Shop Rent is required">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">$</span>
+                                        </div>
+                                        <input class="form-control validate_this number_only" placeholder="0" type="text" name="shopRent" id="shopRent" value="<%= typeof expense!='undefined' ? expense.shopRent : '0' %>">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3 row">
+                                <label for="accountFee" class="col-md-4 col-form-label">Accountant Fee</label>
+                                <div class="col-md-8">
+                                    <div class="input-group" data-validate="Account Fee is required">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">$</span>
+                                        </div>
+                                        <input class="form-control validate_this number_only" placeholder="0" type="text" name="accountantFee" id="accountantFee" value="<%= typeof expense!='undefined' ? expense.accountantFee : '0' %>">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3 row">
+                                <label for="bankFee" class="col-md-4 col-form-label">Bank Fee</label>
+                                <div class="col-md-8">
+                                    <div class="input-group" data-validate="Bank Fee is required">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">$</span>
+                                        </div>
+                                        <input class="form-control validate_this number_only" placeholder="0" type="text" name="bankFee" id="bankFee" value="<%= typeof expense!='undefined' ? expense.bankFee : '0' %>">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3 row">
+                                <label for="gst" class="col-md-4 col-form-label">GST</label>
+                                <div class="col-md-8">
+                                    <div class="input-group" data-validate="GST is required">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">$</span>
+                                        </div>
+                                        <input class="form-control validate_this number_only" placeholder="0" type="text" name="gst" id="gst" value="<%= typeof expense!='undefined' ? expense.gst : '0' %>">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3 row">
+                                <label for="electricityBill" class="col-md-4 col-form-label">Electricity Bill</label>
+                                <div class="col-md-8">
+                                    <div class="input-group" data-validate="Electricity Bill is required">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">$</span>
+                                        </div>
+                                        <input class="form-control validate_this number_only" placeholder="0" type="text" name="electricityBill" id="electricityBill" value="<%= typeof expense!='undefined' ? expense.electricityBill : '0' %>">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3 row">
+                                <label for="mobileBill" class="col-md-4 col-form-label">Mobile Bill</label>
+                                <div class="col-md-8">
+                                    <div class="input-group" data-validate="Mobile Bill is required">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">$</span>
+                                        </div>
+                                        <input class="form-control validate_this number_only" placeholder="0" type="text" name="mobileBill" id="mobileBill" value="<%= typeof expense!='undefined' ? expense.mobileBill : '0' %>">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3 row">
+                                <label for="truckBill" class="col-md-4 col-form-label">Truck Bill</label>
+                                <div class="col-md-8">
+                                    <div class="input-group" data-validate="Truck Bill is required">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">$</span>
+                                        </div>
+                                        <input class="form-control validate_this number_only" placeholder="0" type="text" name="truckBill" id="truckBill" value="<%= typeof expense!='undefined' ? expense.truckBill : '0' %>">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3 row">
+                                <label for="insuranceFee" class="col-md-4 col-form-label">Insurance Fee</label>
+                                <div class="col-md-8">
+                                    <div class="input-group" data-validate="Insurance Fee is required">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">$</span>
+                                        </div>
+                                        <input class="form-control validate_this number_only" placeholder="0" type="text" name="insuranceFee" id="insuranceFee" value="<%= typeof expense!='undefined' ? expense.insuranceFee : '0' %>">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3 row">
+                                <label for="othersSourceName" class="col-md-4 col-form-label">Others (if any)</label>
+                                <div class="col-md-8">
+                                    <input class="form-control" placeholder="Others" type="text" name="othersSourceName" id="othersSourceName" value="<%= typeof expense!='undefined' ? expense.othersSourceName : '0' %>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3 row">
+                                <label for="others" class="col-md-4 col-form-label">Amount of Others</label>
+                                <div class="col-md-8" data-validate="Amount is required">
+                                    <input class="form-control number_only" placeholder="0" type="text" name="others" id="others" value="<%= typeof expense!='undefined' ? expense.others : '0' %>">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="col-md-12">
+                            <div class="mb-3 row">
+                                <label for="description" class="col-md-2 col-form-label">Description</label>
+                                <div class="col-md-10">
+                                    <input class="form-control" type="text" name="description" id="description" value="<%= typeof expense!='undefined' ? expense.description : '' %>">
+                                </div>
+                            </div>
+                        </div> -->
+                        
+                    </div>
+                    <div class="col-md-12">
+                        <a class="btn btn-danger" style="float: right; margin-left: 2%;" type="button" href="/portal-expense-list">Cancel</a>
+                        <button class="btn btn-primary" style="float: right;" type="submit" ><%= typeof expense=='undefined' ? 'Create' : 'Update' %></button>
+                        <!-- <button class="btn btn-primary" type="button" id="faceScanBtn" style="display: none;">Face Scan</button> -->
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- end card -->
+    </div> <!-- end col -->
+</div>
+<!-- end row -->
+
+<%- contentFor('FooterJs') %>
+
+<!-- parsleyjs -->
+<script src="/public/assets/libs/parsleyjs/parsley.min.js"></script>
+<script src="/public/assets/js/pages/form-validation.init.js"></script>
+
+<%- contentFor('BottomJs') %>

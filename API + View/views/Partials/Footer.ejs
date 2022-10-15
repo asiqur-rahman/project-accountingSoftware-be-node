@@ -1,0 +1,14 @@
+<footer class="footer">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <script>document.write(new Date().getFullYear())</script> © <%= typeof orgName=='undefined' ? 'Brain Tech Solution' : orgName%>.
+            </div>
+            <div class="col-sm-6">
+                <div class="text-sm-end d-none d-sm-block">
+                    Developed & Maintained by <a href="<%= typeof devOrgLink=='undefined' ? 'https://www.jmtechaustralia.com.au/' : devOrgLink %>" target="_blank" class="text-reset"><span style="color: #fd7014;"><%= typeof devOrgName=='undefined' ? 'Brain Tech Solution' : devOrgName %>.</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>

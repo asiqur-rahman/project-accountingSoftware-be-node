@@ -1,0 +1,395 @@
+<!-- ========== Left Sidebar Start ========== -->
+<div class="vertical-menu">
+
+    <!-- LOGO -->
+    <div class="navbar-brand-box">
+        <a href="/portal-get-dashboard" class="logo logo-dark">
+            <span class="logo-sm">
+                <img src="/public/assets/images/logo-sm.png" alt="" height="22">
+            </span>
+            <span class="logo-lg">
+                <img src="/public/assets/images/logo-dark.png" alt="" height="50">
+            </span>
+        </a>
+
+        <a href="/portal-get-dashboard" class="logo logo-light">
+            <span class="logo-sm">
+                <img src="/public/assets/images/logo-sm.png" alt="" height="22">
+            </span>
+            <span class="logo-lg">
+                <img src="/public/assets/images/logo-light.png" alt="" height="50">
+            </span>
+        </a>
+    </div>
+
+    <button type="button" class="btn btn-sm px-3 font-size-16 header-item waves-effect vertical-menu-btn">
+        <i class="fa fa-fw fa-bars"></i>
+    </button>
+
+    <div data-simplebar class="sidebar-menu-scroll">
+
+        <!--- Sidemenu -->
+        <div id="sidebar-menu">
+            <!-- Left Menu Start -->
+            <ul class="metismenu list-unstyled" id="side-menu">
+
+                <li class="menu-title"><%=translation.Menu%></li>
+
+                <li>
+                    <a href="/portal-get-dashboard">
+                        <i class="uil-home-alt"></i><span class="badge rounded-pill bg-primary float-end">full details</span>
+                        <span><%=translation.Dashboard%></span>
+                    </a>
+                </li>
+
+                <!---------Registration Start------------->
+                <li class="menu-title"><%=translation.Registration%></li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="uil-chat-bubble-user"></i>
+                        <span><%=translation.User%></span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="/portal-user-list"><%=translation.UserList%></a></li>
+                        <li><a href="/portal-user-create"><%=translation.UserCreate%></a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="uil-chat-bubble-user"></i>
+                        <span><%=translation.Employee%></span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="/portal-employee-list"><%=translation.EmployeesList%></a></li>
+                        <li><a href="/portal-employee-create"><%=translation.EmployeeCreate%></a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="fas fa-people-arrows"></i>
+                        <span><%=translation.Supplier%></span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="/portal-supplier-list"><%=translation.SupplierList%></a></li>
+                        <li><a href="/portal-supplier-create"><%=translation.SupplierCreate%></a></li>
+                    </ul>
+                </li>
+                <!---------Registration End------------->
+
+                
+                <!---------CostEntry Start------------->
+                <li class="menu-title"><%=translation.CostEntry%></li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="fas fa-atlas"></i>
+                        <span><%=translation.Sales%></span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="/portal-sales-create"><%=translation.SalesCreate%></a></li>
+                        <li><a href="/portal-sales-list"><%=translation.SalesList%></a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="fas fa-atlas"></i>
+                        <span><%=translation.Supply%></span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="/portal-supply-create"><%=translation.SupplyCreate%></a></li>
+                        <li><a href="/portal-supply-list"><%=translation.SupplyList%></a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="fas fa-atlas"></i>
+                        <span><%=translation.Wages%></span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="/portal-wages-create"><%=translation.WagesCreate%></a></li>
+                        <li><a href="/portal-wages-list"><%=translation.WagesList%></a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="fas fa-atlas"></i>
+                        <span><%=translation.Expense%></span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="/portal-expense-create"><%=translation.ExpenseCreate%></a></li>
+                        <li><a href="/portal-expense-list"><%=translation.ExpenseList%></a></li>
+                    </ul>
+                </li>
+                <!---------CostEntry End------------->
+
+
+                <!---------Report Start------------->
+                <li class="menu-title"><%=translation.Reports%></li>
+                <li>
+                    <a href="/portal-master-report">
+                        <i class="far fa-list-alt"></i>
+                        <span><%=translation.MasterReport%></span>
+                    </a>
+                </li>
+                
+                <!---------Report End------------->
+
+                <!---------Attendance Start------------->
+                <li class="menu-title"><%=translation.Attendance%></li>
+                <li>
+                    <a href="/portal-employee-attendance">
+                        <i class="far fa-list-alt"></i>
+                        <span><%=translation.EmployeeAttendance%></span>
+                    </a>
+                </li>
+                
+                <!---------Attendance End------------->
+                
+                <!---------ADS Start------------->
+                <li class="menu-title"><%=translation.Ads%></li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="uil-airplay"></i>
+                        <span><%=translation.TVAds%></span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="/portal-set-tv-ads"><%=translation.TVAdsList%></a></li>
+                        <li><a href="/portal-tv-ads-create"><%=translation.TVAdsCreate%></a></li>
+                    </ul>
+                </li>
+                <!---------ADS End------------->
+
+                <!---------Software Download Start------------->
+                <li class="menu-title"><%=translation.RequiredSoftwares%></li>
+                <li>
+                    <a href="/public/">
+                        <i class="uil-home-alt"></i><span class="badge rounded-pill bg-primary float-end"><%=translation.Download%></span>
+                        <span><%=translation.FaceRecognition%></span>
+                    </a>
+                </li>
+                <!---------Software Download End------------->
+
+                <li class="menu-title"><%=translation.Apps%></li>
+
+                <li>
+                    <a href="/portal-calendar" class="waves-effect">
+                        <i class="uil-calender"></i>
+                        <span><%=translation.Calendar%></span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/portal-chat" class=" waves-effect">
+                        <i class="uil-comments-alt"></i>
+                        <span class="badge rounded-pill bg-warning float-end"><%=translation.New%></span>
+                        <span><%=translation.Chat%></span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="uil-store"></i>
+                        <span><%=translation.Ecommerce%></span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="/portal-ecommerce-products"><%=translation.Products%></a></li>
+                        <li><a href="/portal-ecommerce-product-detail"><%=translation.Product_Detail%></a></li>
+                        <li><a href="/portal-ecommerce-orders"><%=translation.Orders%></a></li>
+                        <li><a href="/portal-ecommerce-customers"><%=translation.Customers%></a></li>
+                        <li><a href="/portal-ecommerce-cart"><%=translation.Cart%></a></li>
+                        <li><a href="/portal-ecommerce-checkout"><%=translation.Checkout%></a></li>
+                        <li><a href="/portal-ecommerce-shops"><%=translation.Shops%></a></li>
+                        <li><a href="/portal-ecommerce-add-product"><%=translation.Add_Product%></a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="uil-envelope"></i>
+                        <span><%=translation.Email%></span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="/portal-email-inbox"><%=translation.Inbox%></a></li>
+                        <li><a href="/portal-email-read"><%=translation.Read_Email%></a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="uil-invoice"></i>
+                        <span><%=translation.Invoices%></span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="/portal-invoices-list"><%=translation.Invoice_List%></a></li>
+                        <li><a href="/portal-invoices-detail"><%=translation.Invoice_Detail%></a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="uil-book-alt"></i>
+                        <span><%=translation.Contacts%></span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="/portal-contacts-grid"><%=translation.User_Grid%></a></li>
+                        <li><a href="/portal-contacts-list"><%=translation.User_List%></a></li>
+                        <li><a href="/portal-contacts-profile"><%=translation.Profile%></a></li>
+                    </ul>
+                </li>
+
+                <li class="menu-title"><%=translation.Pages%></li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="uil-user-circle"></i>
+                        <span><%=translation.Authentication%></span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="/auth-login"><%=translation.Login%></a></li>
+                        <li><a href="/auth-register"><%=translation.Register%></a></li>
+                        <li><a href="/auth-recoverpw"><%=translation.Recover_Password%></a></li>
+                        <li><a href="/auth-lock-screen"><%=translation.Lock_Screen%></a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="uil-file-alt"></i>
+                        <span><%=translation.Utility%></span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="/portal-pages-starter"><%=translation.Starter_Page%></a></li>
+                        <li><a href="/portal-pages-maintenance"><%=translation.Maintenance%></a></li>
+                        <li><a href="/portal-pages-comingsoon"><%=translation.Coming_Soon%></a></li>
+                        <li><a href="/portal-pages-timeline"><%=translation.Timeline%></a></li>
+                        <li><a href="/portal-pages-faqs"><%=translation.FAQs%></a></li>
+                        <li><a href="/portal-pages-pricing"><%=translation.Pricing%></a></li>
+                        <li><a href="/portal-pages-404"><%=translation.Error_404%></a></li>
+                        <li><a href="/portal-pages-500"><%=translation.Error_500%></a></li>
+                    </ul>
+                </li>
+
+                <li class="menu-title"><%=translation.Components%></li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="uil-flask"></i>
+                        <span><%=translation.UI_Elements%></span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="/portal-ui-alerts"><%=translation.Alerts%></a></li>
+                        <li><a href="/portal-ui-buttons"><%=translation.Buttons%></a></li>
+                        <li><a href="/portal-ui-cards"><%=translation.Cards%></a></li>
+                        <li><a href="/portal-ui-carousel"><%=translation.Carousel%></a></li>
+                        <li><a href="/portal-ui-dropdowns"><%=translation.Dropdowns%></a></li>
+                        <li><a href="/portal-ui-grid"><%=translation.Grid%></a></li>
+                        <li><a href="/portal-ui-images"><%=translation.Images%></a></li>
+                        <li><a href="/portal-ui-lightbox"><%=translation.Lightbox%></a></li>
+                        <li><a href="/portal-ui-modals"><%=translation.Modals%></a></li>
+                        <li><a href="/portal-ui-rangeslider"><%=translation.Range_Slider%></a></li>
+                        <li><a href="/portal-ui-session-timeout"><%=translation.Session_Timeout%></a></li>
+                        <li><a href="/portal-ui-progressbars"><%=translation.Progress_Bars%></a></li>
+                        <li><a href="/portal-ui-sweet-alert"><%=translation.Sweet_Alert%></a></li>
+                        <li><a href="/portal-ui-tabs-accordions"><%=translation.Tabs_and_Accordions%></a></li>
+                        <li><a href="/portal-ui-typography"><%=translation.Typography%></a></li>
+                        <li><a href="/portal-ui-video"><%=translation.Video%></a></li>
+                        <li><a href="/portal-ui-general"><%=translation.General%></a></li>
+                        <li><a href="/portal-ui-colors"><%=translation.Colors%></a></li>
+                        <li><a href="/portal-ui-rating"><%=translation.Rating%></a></li>
+                        <li><a href="/portal-ui-notifications"><%=translation.Notifications%></a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="waves-effect">
+                        <i class="uil-shutter-alt"></i>
+                        <span class="badge rounded-pill bg-info float-end">6</span>
+                        <span><%=translation.Forms%></span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="/portal-form-elements"><%=translation.Basic_Elements%></a></li>
+                        <li><a href="/portal-form-validation"><%=translation.Validation%></a></li>
+                        <li><a href="/portal-form-advanced"><%=translation.Advanced_Plugins%></a></li>
+                        <li><a href="/portal-form-editors"><%=translation.Editors%></a></li>
+                        <li><a href="/portal-form-uploads"><%=translation.File_Upload%></a></li>
+                        <li><a href="/portal-form-xeditable"><%=translation.Xeditable%></a></li>
+                        <li><a href="/portal-form-repeater"><%=translation.Repeater%></a></li>
+                        <li><a href="/portal-form-wizard"><%=translation.Wizard%></a></li>
+                        <li><a href="/portal-form-mask"><%=translation.Mask%></a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="uil-list-ul"></i>
+                        <span><%=translation.Tables%></span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="/portal-tables-basic"><%=translation.Bootstrap_Basic%></a></li>
+                        <li><a href="/portal-tables-datatable"><%=translation.Datatables%></a></li>
+                        <li><a href="/portal-tables-responsive"><%=translation.Responsive%></a></li>
+                        <li><a href="/portal-tables-editable"><%=translation.Editable%></a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="uil-chart"></i>
+                        <span><%=translation.Charts%></span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="/portal-charts-apex"><%=translation.Apex%></a></li>
+                        <li><a href="/portal-charts-chartjs"><%=translation.Chartjs%></a></li>
+                        <li><a href="/portal-charts-flot"><%=translation.Flot%></a></li>
+                        <li><a href="/portal-charts-knob"><%=translation.Jquery_Knob%></a></li>
+                        <li><a href="/portal-charts-sparkline"><%=translation.Sparkline%></a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="uil-streering"></i>
+                        <span><%=translation.Icons%></span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="/portal-icons-unicons"><%=translation.Unicons%></a></li>
+                        <li><a href="/portal-icons-boxicons"><%=translation.Boxicons%></a></li>
+                        <li><a href="/portal-icons-materialdesign"><%=translation.Material_Design%></a></li>
+                        <li><a href="/portal-icons-dripicons"><%=translation.Dripicons%></a></li>
+                        <li><a href="/portal-icons-fontawesome"><%=translation.Font_Awesome%></a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="uil-location-point"></i>
+                        <span><%=translation.Maps%></span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="/portal-maps-google"><%=translation.Google%></a></li>
+                        <li><a href="/portal-maps-vector"><%=translation.Vector%></a></li>
+                        <li><a href="/portal-maps-leaflet"><%=translation.Leaflet%></a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="uil-share-alt"></i>
+                        <span><%=translation.Multi_Level%></span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="true">
+                        <li><a href="javascript: void(0);"><%=translation.Level_1_1%></a></li>
+                        <li><a href="javascript: void(0);" class="has-arrow"><%=translation.Level_1_2%></a>
+                            <ul class="sub-menu" aria-expanded="true">
+                                <li><a href="javascript: void(0);"><%=translation.Level_2_1%></a></li>
+                                <li><a href="javascript: void(0);"><%=translation.Level_2_2%></a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+
+            </ul>
+        </div>
+        <!-- Sidebar -->
+    </div>
+</div>
+<!-- Left Sidebar End -->

@@ -1,12 +1,9 @@
 const db = require('../models/model');
+const StatusEnum = require('../utils/enum.utils');
+const {appConfig}=require('../config/config');
+const Op = require('sequelize').Op;
 
-
-module.exports.landing = async (req, res, next) => {
-  res.locals = { title: 'Video KYC' };
-  res.render('Landing/index',{layout:false});
-};
-
-module.exports.customer = async (req, res, next) => {
-  res.locals = { title: 'Video KYC Registration' };
-  res.render('Customer/index',{layout:false});
+module.exports.dashboard = async (req, res, next) => {
+    res.locals = { title: 'Home' };
+    res.render('Landing/index',{layout: false});
 };
