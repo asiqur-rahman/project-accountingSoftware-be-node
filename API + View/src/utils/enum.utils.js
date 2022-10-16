@@ -12,14 +12,6 @@ var Enum = require('enum');
         user:'5'
     }
 
-    module.exports.salesStatus=new Enum({
-        Pending: '0',
-        Processing: '1',
-        Completed: '2',
-        Rejected: '3',
-        Cancelled: '4'
-    });
-
     module.exports.paymentType={
         Cash: '1',
         Cheque: '2',
@@ -33,8 +25,10 @@ var Enum = require('enum');
         Success: 'succMsg'
     }
 
-    module.exports.logFor={
-        backOffice: {folderName:"backOffice",fileName:new Date().toDateString()},
-        videoConference: {folderName:"videoConference",fileName:new Date().toDateString()},
-        customerRegistration: {folderName:"customerRegistration",fileName:new Date().toDateString()},
-    }
+    module.exports.AccountHead=new Enum({
+        Assets: '101',
+        Equity: '201',
+        Expenses: '301',
+        Income: 401,
+        Liabilities: 501
+    });
