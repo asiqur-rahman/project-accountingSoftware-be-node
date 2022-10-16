@@ -1,12 +1,12 @@
-const config = require("../config/config.js");
+const config = require("../../config/config.json");
 const mysql2 = require('mysql2');
 
 module.exports.query = async (sql, values) => {
     const db = mysql2.createPool({
-        host: config.dbConfig.host,
-        user: config.dbConfig.user,
-        password: config.dbConfig.pass,
-        database: config.dbConfig.dbname
+        host: config.development.host,
+        user: config.development.username,
+        password: config.development.password,
+        database: config.development.database
     });
     return new Promise((resolve, reject) => {
         const callback = (error, result,fields) => {

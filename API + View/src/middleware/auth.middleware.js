@@ -1,134 +1,133 @@
 const db = require('../models/model');
 const jwt = require('jsonwebtoken');
 const enumm = require('../utils/enum.utils');
-const {
-    appConfig
-} = require('../config/config');
+const appConfig = require('../../config/config.json');
 
 module.exports.auth = (...roles) => {
     return async function (req, res, next) {
         try {
-            req.session.returnUrl = req.originalUrl;
-            // sess = req.session;
-            if (!req.session && !req.session.user) {
-                req.session.notification=[enumm.notification.Error,'Access denied. No credentials sent !'];
-                console.log('Access denied. No credentials sent !')
-                res.redirect('/logout');
+            const authHeader = req.headers.authorization;
+            const bearer = 'Bearer ';
+            if (!authHeader || !authHeader.startsWith(bearer)) {
+                return res.status(200).json({
+                    status:401,
+                    message:"Access denied. No credentials sent !"
+                });
             }
-            const token = req.session.user;
-            const secretKey = appConfig.SECRET_JWT || "";
+
+            const token = authHeader.replace(bearer, '');
+            const secretKey = appConfig.appSettings.SECRET_JWT;
+
             // Verify Token
             const decoded = jwt.verify(token, secretKey);
+            // const user = await UserModel.findOne({ id: decoded.user_id });
+            // const user = await db.user.scope('authPurpose').findOne({ 
+            //     where:{id:decoded.user_id},
+            //     include:db.role,
+            //     raw:true
+            //  });
+            //console.log(user);
+
             if (!decoded.user_id && !decoded.roleId) {
-                req.session.notification=[enumm.notification.Error,"Authentication failed !"];
-                res.redirect('/logout');
+                return res.status(200).json({
+                    status:401,
+                    message:"Authentication failed !"
+                });
             }
 
             // if the current user is not the owner and
             // if the user role don't have the permission to do this action.
             // the user will get this error
-
-            if (roles.length && !roles.includes(decoded.role_code)) {
-                req.session.notification=[enumm.notification.Error,"Unauthorized Access! Don't try to do this again !"];
-                // req.flash('error', "Unauthorized Access! Don't try to do this again !");
-                res.redirect('/logout');
-            }
-            req.currentUser = decoded.user_id;
-            req.roleCode = decoded.role_code;
-            req.roleName = decoded.role_name;
-            req.forceChangePassword = decoded.force_change_password;
-            req.currentEmployeeCode = decoded.employee_code;
-
-            //check Client IP
-            // console.log(decoded.clientIp);
-            var clientIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress || null;
-            // console.log(clientIp);
-            // if (clientIp.toString() == decoded.clientIp) {
-                next();
-            // } else {
-            //     req.session.notification=[enumm.notification.Error,'Unauthorized IP Address !'];
-            //     res.redirect('/logout');
-            // }
-        } catch (e) {
-            // req.flash('error', 'Session Expired !');
-            req.session.notification=[enumm.notification.Error,'Session not found !'];
-            res.redirect('/login');
-        }
-    }
-}
-
-
-module.exports.isLogedIn = (...roles) => {
-    return async function (req, res, next) {
-        try {
-            sess = req.session;
-            if (!sess && !sess.user) {
-                req.currentUser = -1;
-                next()
-            }
-            const token = sess.user;
-            const secretKey = appConfig.SECRET_JWT || "";
-
-            // Verify Token
-            const decoded = jwt.verify(token, secretKey);
-
-            if (!decoded.user_id && !decoded.roleId) {
-                req.currentUser = -1;
-                next();
-            }
-
-            // if the current user is not the owner and
-            // if the user role don't have the permission to do this action.
-            // the user will get this error
-            if (roles.length && !roles.includes(decoded.role_id)) {
-                req.currentUser = -1;
-                next();
+            if ( roles && roles.length && !roles.includes(decoded.role_id)) {
+                return res.status(200).json({
+                    status:401,
+                    message:"Unauthorized !"
+                });
             }
             // if the user has permissions
             req.currentUser = decoded.user_id;
-            req.currentEmployeeCode = decoded.employee_code;
-            req.roleCode = decoded.role_code;
-            // //check Client IP
+            req.currentBranchId = decoded.branchId;
+            req.currentRoleId = decoded.role_id;
+            
+            //check Client IP
             // console.log(decoded.clientIp);
-            var clientIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress || null;
+            var clientIp= req.headers['x-forwarded-for'] || req.socket.remoteAddress || null;
             // console.log(clientIp);
-            if (clientIp.toString() == decoded.clientIp) {
-                res.redirect('/portal-get-dashboard');
-            } else {
-                req.currentUser = -1;
+            
+            if(clientIp.toString()==decoded.clientIp){
                 next();
+            }else{
+                next();
+                // res.json({
+                //     status:401,
+                //     message:"Unauthorized IP Address ! --"+clientIp.toString()+"--"+decoded.clientIp+"--"
+                // });
             }
+
         } catch (e) {
-            // console.log("Catch : ",e)
-            req.currentUser = -1;
-            next();
+            e.status = 401;
+            next(e);
         }
     }
 }
 
-module.exports.getDetailsFromSess = (req) => {
-    try {
-        sess = req.session;
-        if (!sess && !sess.user) {
-            return null;
-        }
-        const token = sess.user;
-        const secretKey = appConfig.SECRET_JWT || "";
 
-        // Verify Token
-        const decoded = jwt.verify(token, secretKey);
+module.exports.getSessionDetails = () => {
+    return async function (req, res, next) {
+        try {
+            //#region Notifications
+            if(req.session.notification){
+                const notification = req.session.notification;
+                if(notification[0]==enumm.notification.Error){
+                    res.locals.error_Msg= notification[1];
+                }
+                else if(notification[0]==enumm.notification.Warning){
+                    res.locals.war_Msg= notification[1];
+                }
+                else if(notification[0]==enumm.notification.Info){
+                    res.locals.info_Msg= notification[1];
+                }
+                else if(notification[0]==enumm.notification.Success){
+                    res.locals.succ_Msg= notification[1];
+                }
+                req.session.notification=null;
+            }else{
+                res.locals.error_Msg= undefined;
+                res.locals.info_Msg= undefined;
+                res.locals.war_Msg= undefined;
+                res.locals.succ_Msg= undefined;
+            }
+            //#endregion
 
-        if (!decoded.user_id && !decoded.roleId) {
-            return null;
+            sess = req.session;
+            if (!sess || !sess.user) {
+                next();
+            }
+            else{
+                const token = sess.user;
+                const secretKey = appConfig.appSettings.SECRET_JWT;
+
+                // Verify Token
+                const decoded = jwt.verify(token, secretKey);
+
+                if (!decoded.user_id && !decoded.roleId) {
+                    next();
+                }
+                else{
+                    req.locals.roleCode = decoded?decoded.roleCode:undefined;
+                    req.locals.userName = decoded?decoded.userName:undefined;
+                    req.locals.roleName = decoded?decoded.roleName:undefined;
+                    req.locals.orgName = appConfig.organizationInfo.orgName;
+                    req.locals.devOrgName = appConfig.organizationInfo.devOrgName;
+                    req.locals.devOrgLink = appConfig.organizationInfo.devOrgLink;
+                    req.locals.hostName= req.protocol + '://' + req.get('host');
+                    next();
+                }
+            }
+        } catch (e) {
+            console.log(e)
+            next();
+            // res.redirect('/auth/logout');
         }
-        return {
-            roleCode: decoded.role_code,
-            userName: decoded.user_name,
-            roleName: decoded.role_name,
-            currentEmployeeCode: decoded.employee_code,
-            dashboard: decoded.dashboard
-        };
-    } catch (e) {
-        return null;
     }
 }
