@@ -1,6 +1,0 @@
-CREATE OR REPLACE VIEW Get_Sales_List AS
-select s.id , s.`date`,GROUP_CONCAT(pt.name SEPARATOR ',') as paymentTypes,
-GROUP_CONCAT(t.amount  SEPARATOR ', ') as amounts
-from sales s , transactions t, paymentTypes pt  
-where t.code = s.transactionCode and pt.id =t.paymentTypeId  
-GROUP by s.`date`  

@@ -1,0 +1,20 @@
+[2022.09.18, 17:26:22] [index.js] [S:_KQwQea6oHlCwitgAAAB] Connection Lost/Disconnect transport close
+[2022.09.18, 17:26:24] [index.js] [S:cczEa4OQxy-k9NgtAAAD | R:asiq] Joining request.
+[2022.09.18, 17:26:24] [index.js] [S:cczEa4OQxy-k9NgtAAAD | R:asiq] User connected by roomId. {"asiq":{"cczEa4OQxy-k9NgtAAAD":{"peer_id":"cczEa4OQxy-k9NgtAAAD","peer_name":"Asiq","peer_video":false,"peer_audio":false,"peer_hand":false,"peer_rec":false,"peer_public_ip":"::1"}}}
+  [2022.09.18, 17:27:02] [index.js] [S:CJ7NkIWJLHVb4xHnAAAB | R:asiq] Joining request.
+[2022.09.18, 17:27:02] [index.js] [S:CJ7NkIWJLHVb4xHnAAAB | R:asiq] Request accepted and user connected. {"asiq":{"CJ7NkIWJLHVb4xHnAAAB":{"peer_id":"CJ7NkIWJLHVb4xHnAAAB","peer_name":"Asiq","peer_video":false,"peer_audio":false,"peer_hand":false,"peer_rec":false,"peer_public_ip":"::1"}}}
+[2022.09.18, 17:27:03] [index.js] [S:CJ7NkIWJLHVb4xHnAAAB] Connection Lost/Disconnect transport close
+[2022.09.18, 17:27:04] [index.js] [S:pHBW2EQnLCPYr6qcAAAD | R:asiq] Joining request.
+[2022.09.18, 17:27:04] [index.js] [S:pHBW2EQnLCPYr6qcAAAD | R:asiq] Request accepted and user connected. {"asiq":{"pHBW2EQnLCPYr6qcAAAD":{"peer_id":"pHBW2EQnLCPYr6qcAAAD","peer_name":"Asiq","peer_video":false,"peer_audio":false,"peer_hand":false,"peer_rec":false,"peer_public_ip":"::1"}}}
+[2022.09.18, 17:27:19] [index.js] [S:sI2JdW_y1NrqS7TtAAAB | R:asiq] Joining request.
+[2022.09.18, 17:27:19] [index.js] [S:sI2JdW_y1NrqS7TtAAAB | R:asiq] Request accept and user connected. {"asiq":{"sI2JdW_y1NrqS7TtAAAB":{"peer_id":"sI2JdW_y1NrqS7TtAAAB","peer_name":"Asiq","peer_video":false,"peer_audio":false,"peer_hand":false,"peer_rec":false,"peer_public_ip":"::1"}}}
+[2022.09.18, 17:27:37] [index.js] [S:bEtd54Xacfe8LiflAAAB | R:asiq] Request accepted and user connected. {"asiq":{"bEtd54Xacfe8LiflAAAB":{"peer_id":"bEtd54Xacfe8LiflAAAB","peer_name":"Asiq","peer_video":false,"peer_audio":false,"peer_hand":false,"peer_rec":false,"peer_public_ip":"::1"}}}
+[2022.09.18, 17:27:37] [index.js] [S:bEtd54Xacfe8LiflAAAB | R:asiq] Joining request.
+[2022.09.18, 17:42:34] [index.js] [S:RclOIiFwFXlIiUQGAAAB | R:asiq] Joining request from user.
+[2022.09.18, 17:42:34] [index.js] [S:RclOIiFwFXlIiUQGAAAB | R:asiq] Joining Request accepted. {"asiq":{"RclOIiFwFXlIiUQGAAAB":{"peer_id":"RclOIiFwFXlIiUQGAAAB","peer_name":"Asiq","peer_video":false,"peer_audio":false,"peer_hand":false,"peer_rec":false,"peer_public_ip":"::1"}}}
+[2022.09.18, 17:45:52] [index.js] [S:IxBFre76QSu4PXcXAAAB | R:asiq] Joining request from user.
+[2022.09.18, 17:45:52] [index.js] [S:IxBFre76QSu4PXcXAAAB | R:asiq] Joining Request accepted. {"asiq":{"IxBFre76QSu4PXcXAAAB":{"peer_id":"IxBFre76QSu4PXcXAAAB","peer_name":"Asiq","peer_video":false,"peer_audio":false,"peer_hand":false,"peer_rec":false,"peer_public_ip":"::1"}}}
+[2022.09.18, 17:46:58:912] [index.js] [S:j5OsDVNm1akwhpnJAAAB | R:asiq] Joining Request accepted. {"asiq":{"j5OsDVNm1akwhpnJAAAB":{"peer_id":"j5OsDVNm1akwhpnJAAAB","peer_name":"Asiq","peer_video":false,"peer_audio":false,"peer_hand":false,"peer_rec":false,"peer_public_ip":"::1"}}}
+[2022.09.18, 17:46:58:912] [index.js] [S:j5OsDVNm1akwhpnJAAAB | R:asiq] Joining request from user.
+[2022.09.18, 17:47:31:963] [index.js] [S:Ik8mH1RVG50R63aNAAAB | R:asiq] Joining request from user.
+[2022.09.18, 17:47:31:964] [index.js] [S:Ik8mH1RVG50R63aNAAAB | R:asiq] Joining Request accepted. {"asiq":{"Ik8mH1RVG50R63aNAAAB":{"peer_id":"Ik8mH1RVG50R63aNAAAB","peer_name":"Asiq","peer_video":false,"peer_audio":false,"peer_hand":false,"peer_rec":false,"peer_public_ip":"::1"}}}

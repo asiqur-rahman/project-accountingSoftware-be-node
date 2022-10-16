@@ -1,3 +1,4 @@
+var Enum = require('enum');
 
     module.exports.status={
         UA: 'Unauthorize Access',
@@ -5,26 +6,24 @@
         Failed:'Failed'
     }
 
-    module.exports.role={
+    module.exports.Role={
         SuperUser: '1',
         Admin: '2',
-        Employee:'3',
-        Supplier:'4',
-        Manager:'5'
+        user:'5'
     }
 
-    module.exports.attendanceType={
-        In: '1',
-        Out: '2',
-        BreakStart: '3',
-        BreakEnd: '4'
-    }
+    module.exports.salesStatus=new Enum({
+        Pending: '0',
+        Processing: '1',
+        Completed: '2',
+        Rejected: '3',
+        Cancelled: '4'
+    });
 
     module.exports.paymentType={
         Cash: '1',
         Cheque: '2',
-        BankTransfer: '3',
-        Card: '4'
+        BankTransfer: '3'
     }
 
     module.exports.notification={
@@ -32,4 +31,10 @@
         Info: 'infoMsg',
         Warning: 'warMsg',
         Success: 'succMsg'
+    }
+
+    module.exports.logFor={
+        backOffice: {folderName:"backOffice",fileName:new Date().toDateString()},
+        videoConference: {folderName:"videoConference",fileName:new Date().toDateString()},
+        customerRegistration: {folderName:"customerRegistration",fileName:new Date().toDateString()},
     }

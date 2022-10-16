@@ -1,5 +1,4 @@
 const dbQuery = require('../db/database');
-const { multipleColumnSet } = require('../utils/common.utils');
 const tableName="users";
 module.exports = (sequelize, Sequelize) => {
   const User = sequelize.define(tableName, {
@@ -42,22 +41,17 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.BOOLEAN(100),
       allowNull:false,
       defaultValue: false
-    },
-    status: {
-      type: Sequelize.BOOLEAN(100),
-      allowNull:false,
-      defaultValue: false
-    } 
+    }
   },{
     defaultScope: {
       attributes: {
-         exclude: ['status','password','createdAt','updatedAt']
+         exclude: ['isActive','password','createdAt','updatedAt']
       }
     },
     scopes: {
       loginPurpose: {
         attributes: {
-          exclude: ['status','createdAt','updatedAt']
+          exclude: ['createdAt','updatedAt']
         }
       },
       authPurpose: {

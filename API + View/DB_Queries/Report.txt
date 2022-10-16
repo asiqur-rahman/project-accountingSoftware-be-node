@@ -4,18 +4,14 @@ CREATE OR REPLACE  PROCEDURE SP_Master_Report(
 	toDate date
 )
 BEGIN
-	select r.date as Date, SUM(r.Cash) as Cash,SUM(r.Card) as Card,SUM(r.Cheque) as Cheque,SUM(r.Supplier) as Supplier,SUM(r.salary) as Salary ,SUM(r.expense) as Expense from (
-	select CONCAT('Expense.id', ':', e.id),e.`date`,null as Cash,null as Card,null as Cheque,null as Supplier, null as Salary, e.shopRent+e.accountantFee+e.bankFee+e.gst+e.electricityBill+e.mobileBill+e.truckBill+e.insuranceFee+e.`others` as Expense 
-	from expenses e where e.date BETWEEN fromdate and toDate
+	select r.date as Date, SUM(r.Cash) as Cash,SUM(r.Supplier) as Supplier,SUM(r.salary) as Salary ,SUM(r.expense) as Expense from (
+	select CONCAT('Expense.id', ':', e.id),e.`date`,null as Cash,null as Supplier, null as Salary, e.shopRent+e.gst+e.electricityBill+e.mobileBill+e.insuranceFee+e.`others` as Expense from expenses e where e.date BETWEEN fromdate and toDate
 	union all 
-	select CONCAT('Supply.id', ':', s.id),s.`date` ,null, null, null, s.amount  ,null,null 
-	from supplies s where s.date BETWEEN fromdate and toDate
+	-- select CONCAT('Sale.id', ':', t.id),t.`date`,id.subTotal-id.total ,null,null,null from tallies t left join invoiceDetails id on t.invoiceNo = id.invoiceNo where t.status =2 and t.date BETWEEN fromdate and toDate Group by t.invoiceNo
+	select CONCAT('Sale.id', ':', t.id),t.`date`,id.subTotal-SUM((p.buyprice * t.quantity)) ,null,null,null from tallies t left join products p on p.id =t.productId left join invoiceDetails id on t.invoiceNo =id.invoiceNo where t.status =2 and t.date BETWEEN fromdate and toDate GROUP by t.invoiceNo
 	union all 
-	select CONCAT('Sale.id', ':', sa.id),sa.`date` ,sa.cash,sa.card+sa.card2,sa.cheque,null,null,null  
-	from sales sa where sa.date BETWEEN fromdate and toDate
+	select CONCAT('Supply.id', ':', s.id),s.`date` ,null, s.amount  ,null,null from supplies s where s.date BETWEEN fromdate and toDate
 	union  all 
-	select CONCAT('Wages.id', ':', ew.id),ew.`dateFrom`,null, null, null,null,ew.salary+ew.payg+ew.super+ew.annual+ew.cash  ,null 
-	from employeeWages ew where ew.dateFrom BETWEEN fromdate and toDate
+	select CONCAT('Wages.id', ':', ew.id),ew.`date`,null,null,ew.salary ,null from employeeWages ew where ew.`date` BETWEEN fromdate and toDate
 	) As r where r.date IS NOT NULL group by date ;
-
 END

@@ -1,10 +1,10 @@
-<link rel="stylesheet" type="text/css" href="public/assets/libs/toastr/build/toastr.min.css">
+<link rel="stylesheet" type="text/css" href="/public/assets/libs/toastr/build/toastr.min.css">
 <input type="hidden" id="error_Msg" value="<%=typeof error_Msg!='undefined' && error_Msg.length> 0 ? error_Msg: ''%>">
 <input type="hidden" id="info_Msg" value="<%=typeof info_Msg!='undefined' && info_Msg.length> 0 ? info_Msg: ''%>">
 <input type="hidden" id="war_Msg" value="<%=typeof war_Msg!='undefined' && war_Msg.length> 0 ? war_Msg: ''%>">
 <input type="hidden" id="succ_Msg" value="<%=typeof succ_Msg!='undefined' && succ_Msg.length> 0 ? succ_Msg: ''%>">
 <!-- toastr plugin -->
-<script src="public/assets/libs/toastr/build/toastr.min.js"></script>
+<script src="/public/assets/libs/toastr/build/toastr.min.js"></script>
 
 <script>
     toastr.options = {
@@ -31,7 +31,6 @@
         const succMsg=$("#succ_Msg").val();
         if(errorMsg){
             toastr["error"](errorMsg)
-            // alert(errorMsg)
         }
         else if(infoMsg){
             toastr["info"](infoMsg)

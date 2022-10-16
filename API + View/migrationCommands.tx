@@ -1,2 +1,2 @@
-npx sequelize-cli migration:create --name Add Attendance add new field code
+npx sequelize-cli migration:create --name Add Total Field to Bazar
 npx sequelize-cli db:migrate
