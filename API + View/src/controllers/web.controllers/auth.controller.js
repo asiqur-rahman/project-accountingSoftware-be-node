@@ -4,6 +4,7 @@ const appConfig = require('../../../config/config.json');
 const Op = require('sequelize').Op;
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const userService = require('../../service/user.service');
 
 module.exports.login_Get = async (req, res, next) => {
   res.render('Auth/auth-login', {
@@ -18,83 +19,86 @@ module.exports.login_Post = async (req, res, next) => {
     username,
     password
   } = req.body;
-  const user = await db.User.scope('loginPurpose').findOne({
-    where: {
-      [Op.or]: [{
-        username: username
-      }]
-    },
-    include: [{
-      model: db.UserDetails,
-      attributes: ['firstName', 'lastName', 'contactNo', 'email', 'address', 'description'],
-      include: {
-        model: db.Role,
-        as: "role",
-        attributes: ['code', 'name']
-      }
-    }],
-    raw: true
-  });
-  if (!user) {
-    req.session.notification = [enumm.notification.Error, 'Unable to login !'];
-    res.redirect('/auth/login');
-  } else if (user.isActive != 1) {
-    req.session.notification = [enumm.notification.Error, 'You access was revoked by admin! Please contact with admin.'];
-    res.redirect('/');
-  } else {
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      var dashboard = "";
-      req.session.notification = [enumm.notification.Error, 'Incorrect password !'];
+  // const user = await db.User.scope('loginPurpose').findOne({
+  //   where: {
+  //     [Op.or]: [{
+  //       username: username
+  //     }]
+  //   },
+  //   include: [{
+  //     model: db.UserDetails,
+  //     attributes: ['firstName', 'lastName', 'contactNo', 'email', 'address', 'description'],
+  //     include: {
+  //       model: db.Role,
+  //       as: "role",
+  //       attributes: ['code', 'name']
+  //     }
+  //   }],
+  //   raw: true
+  // });
+  userService.getByName(username).then(async (user) => {
+    if (!user) {
+      req.session.notification = [enumm.notification.Error, 'Unable to login !'];
+      res.redirect('/auth/login');
+    } else if (user.isActive != 1) {
+      req.session.notification = [enumm.notification.Error, 'You access was revoked by admin! Please contact with admin.'];
       res.redirect('/');
     } else {
-      // user matched!
-      const secretKey = appConfig.appSettings.SECRET_JWT;
-      // if (user['userDetail.role.code'] == enumm.Role.SuperUser || user['role.code'] == enumm.Role.Admin) {
-        dashboard = '/portal/dashboard';
-      // }
-
-      const token = jwt.sign({
-        user_name: user.username,
-        full_name: `${user['userDetail.firstName']} ${user['userDetail.lastName']}`,
-        user_id: user.id.toString(),
-        role_id: user['userDetail.role.id'].toString(),
-        role_code: user['userDetail.role.code'].toString(),
-        role_name: user['userDetail.role.name'].toString(),
-        force_change_password: user.forceChangePassword,
-        clientIp: clientIp.toString(),
-        dashboard: dashboard
-      }, secretKey, {
-        expiresIn: appConfig.appSettings.SessionTimeOut
-      });
-      req.session.user = token;
-      if (user.forceChangePassword == 1) {
-        req.session.notification = [enumm.notification.Warning, 'Hi,  ' + user['detailsInfo.name'] + '</br>Please change your password !'];
-        // req.flash(enumm.notification.Info, 'Hi,  '+user['detailsInfo.name']+'</br>Please change your password');
+      const isMatch = await bcrypt.compare(password, user.password);
+      if (!isMatch) {
+        var dashboard = "";
+        req.session.notification = [enumm.notification.Error, 'Incorrect password !'];
+        res.redirect('/');
       } else {
-        req.session.notification = [enumm.notification.Info, 'Hi,  ' + user['detailsInfo.name'] + '</br>Welcome to Chicken man.'];
-        // req.flash(enumm.notification.Success, 'Hi,  '+user['detailsInfo.name']+'</br>Welcome to Chicken man.');
-      }
-
-      const returnUrl = req.session.returnUrl;
-      if (returnUrl) {
-        req.session.returnUrl = null;
-        res.redirect(returnUrl);
-      } else {
-        // if (user['role.code'] == enumm.role.SuperUser || user['role.code'] == enumm.role.Admin) {
-        //   res.redirect('/portal-get-dashboard');
-        // } else if (user['role.code'] == enumm.role.Manager) {
-        //   res.redirect('/portal-attendance-entry');
-        // } else if (user['role.code'] == enumm.role.Employee) {
-        //   res.redirect('/portal-attendance-entry');
-        // } else {
-        //   req.flash('error', 'Sorry, You Have No Access !');
-        //   res.redirect('/logout');
+        // user matched!
+        const secretKey = appConfig.appSettings.SECRET_JWT;
+        // if (user['userDetail.role.code'] == enumm.Role.SuperUser || user['role.code'] == enumm.Role.Admin) {
+          dashboard = '/portal/dashboard';
         // }
-        res.redirect(dashboard);
+  
+        const token = jwt.sign({
+          user_name: user.username,
+          full_name: `${user['userDetail.firstName']} ${user['userDetail.lastName']}`,
+          user_id: user.id.toString(),
+          role_id: user['userDetail.role.id'].toString(),
+          role_code: user['userDetail.role.code'].toString(),
+          role_name: user['userDetail.role.name'].toString(),
+          force_change_password: user.forceChangePassword,
+          clientIp: clientIp.toString(),
+          dashboard: dashboard
+        }, secretKey, {
+          expiresIn: appConfig.appSettings.SessionTimeOut
+        });
+        req.session.user = token;
+        if (user.forceChangePassword == 1) {
+          req.session.notification = [enumm.notification.Warning, 'Hi,  ' + user['detailsInfo.name'] + '</br>Please change your password !'];
+          // req.flash(enumm.notification.Info, 'Hi,  '+user['detailsInfo.name']+'</br>Please change your password');
+        } else {
+          req.session.notification = [enumm.notification.Info, 'Hi,  ' + user['detailsInfo.name'] + '</br>Welcome to Chicken man.'];
+          // req.flash(enumm.notification.Success, 'Hi,  '+user['detailsInfo.name']+'</br>Welcome to Chicken man.');
+        }
+  
+        const returnUrl = req.session.returnUrl;
+        if (returnUrl) {
+          req.session.returnUrl = null;
+          res.redirect(returnUrl);
+        } else {
+          // if (user['role.code'] == enumm.role.SuperUser || user['role.code'] == enumm.role.Admin) {
+          //   res.redirect('/portal-get-dashboard');
+          // } else if (user['role.code'] == enumm.role.Manager) {
+          //   res.redirect('/portal-attendance-entry');
+          // } else if (user['role.code'] == enumm.role.Employee) {
+          //   res.redirect('/portal-attendance-entry');
+          // } else {
+          //   req.flash('error', 'Sorry, You Have No Access !');
+          //   res.redirect('/logout');
+          // }
+          res.redirect(dashboard);
+        }
       }
     }
-  }
+  })
+  
 };
 
 module.exports.logout = async (req, res, next) => {

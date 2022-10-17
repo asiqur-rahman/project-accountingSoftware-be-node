@@ -12,9 +12,9 @@ module.exports.dashboard = async (req, res, next) => {
   res.render('Dashboard/index');
 }
 
-module.exports.accountingHead = async (req, res, next) => {
+module.exports.chartOfAccount = async (req, res, next) => {
   res.locals = {
       title: 'Dashboard'
   };
-  res.render('AccountingHead/index');
+  res.render('ChartOfAccount/index');
 }

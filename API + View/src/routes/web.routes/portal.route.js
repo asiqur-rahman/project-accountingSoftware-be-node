@@ -7,6 +7,6 @@ const {Role} = require('../../utils/enum.utils');
 const { loginValidator,userCreateValidator } = require('../../middleware/validators/userValidator.middleware');
 
 router.get('/dashboard', awaitHandlerFactory(portalController.dashboard));
-router.get('/accounting-heads', awaitHandlerFactory(portalController.accountingHead));
+router.get('/chartOfAccount', awaitHandlerFactory(portalController.chartOfAccount));
 
 module.exports = router;

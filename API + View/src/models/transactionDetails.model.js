@@ -1,34 +1,18 @@
 module.exports = (sequelize, Sequelize) => {
-  const Table = sequelize.define("accountingHead", {
+  const Table = sequelize.define("transactionDetails", {
     id: {
       type: Sequelize.INTEGER(11),
       allownull:false,
       autoIncrement:true,
       primaryKey: true
     },
-    name: {
-      type: Sequelize.STRING(),
+    amount: {
+      type: Sequelize.DOUBLE(),
       allowNull:false,
       validate:{
-        notNull:{ args: true, msg: "Name cannot be empty !!"}
+        notNull:{ args: true, msg: "Amount cannot be empty !!"}
       }
     },
-    decimalPlaces: {
-      type: Sequelize.INTEGER(2),
-      defaultValue:2
-    },
-    code: {
-      type: Sequelize.STRING(5),
-      allowNull:true,
-    },
-    // parentId: {
-    //   type: Sequelize.INTEGER(11),
-    //   references: {
-    //     model: "AccountingHead",
-    //     key: 'id',
-    //   },
-    //   allownull:true
-    // },
     isActive: {
       type: Sequelize.BOOLEAN(),
       allowNull:false,

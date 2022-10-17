@@ -52,7 +52,7 @@ service.getById = async (id) => {
 
 service.getByName = async (value) => {
     return new Promise(async (resolve, reject) => {
-        await db.User.findOne({
+        await db.User.scope('loginPurpose').findOne({
             where: {
                 [Op.or]: [{
                     username: value
