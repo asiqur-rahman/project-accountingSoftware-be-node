@@ -9,49 +9,9 @@
             <span><%=translation.Dashboard%></span>
         </a>
     </li>
-
-    <!-- <li>
-        <a href="javascript: void(0);" class="has-arrow waves-effect">
-            <i class="uil-window-section"></i>
-            <span><%=translation.Layouts%></span>
-        </a>
-        <ul class="sub-menu" aria-expanded="true">
-            <li>
-                <a href="javascript: void(0);" class="has-arrow"><%=translation.Vertical%></a>
-                <ul class="sub-menu" aria-expanded="true">
-                    <li><a href="/portal-layouts-dark-sidebar"><%=translation.Dark_Sidebar%></a></li>
-                    <li><a href="/portal-layouts-compact-sidebar"><%=translation.Compact_Sidebar%></a></li>
-                    <li><a href="/portal-layouts-icon-sidebar"><%=translation.Icon_Sidebar%></a></li>
-                    <li><a href="/portal-layouts-boxed"><%=translation.Boxed_Width%></a></li>
-                    <li><a href="/portal-layouts-preloader"><%=translation.Preloader%></a></li>
-                    <li><a href="/portal-layouts-colored-sidebar"><%=translation.Colored_Sidebar%></a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="javascript: void(0);" class="has-arrow"><%=translation.Horizontal%></a>
-                <ul class="sub-menu" aria-expanded="true">
-                    <li><a href="/portal-layouts-horizontal"><%=translation.Horizontal%></a></li>
-                    <li><a href="/portal-layouts-hori-topbar-dark"><%=translation.Topbar_Dark%></a></li>
-                    <li><a href="/portal-layouts-hori-boxed-width"><%=translation.Boxed_Width%></a></li>
-                    <li><a href="/portal-layouts-hori-preloader"><%=translation.Preloader%></a></li>
-                </ul>
-            </li>
-        </ul>
-    </li> -->
-
-
+    
     <!---------Registration Start------------->
     <li class="menu-title"><%=translation.Registration%></li>
-    <!-- <li>
-        <a href="javascript: void(0);" class="has-arrow waves-effect">
-            <i class="uil-chat-bubble-user"></i>
-            <span><%=translation.Employee%></span>
-        </a>
-        <ul class="sub-menu" aria-expanded="false">
-            <li><a href="/portal-employee-create"><%=translation.EmployeeCreate%></a></li>
-            <li><a href="/portal-employee-list"><%=translation.EmployeesList%></a></li>
-        </ul>
-    </li> -->
     <li>
         <a href="javascript: void(0);" class="has-arrow waves-effect">
             <i class="uil-users-alt"></i>
@@ -62,72 +22,26 @@
             <li><a href="/users-list"><%=translation.UserList%></a></li>
         </ul>
     </li>
-    <li>
-        <a href="javascript: void(0);" class="has-arrow waves-effect">
-            <i class="fas fa-people-arrows"></i>
-            <span><%=translation.Supplier%></span>
-        </a>
-        <ul class="sub-menu" aria-expanded="false">
-            <li><a href="/portal-supplier-create"><%=translation.SupplierCreate%></a></li>
-            <li><a href="/portal-supplier-list"><%=translation.SupplierList%></a></li>
-        </ul>
-    </li>
-    <li>
-        <a href="/portal/chartOfAccount">
-            <i class="uil-chat-bubble-user"></i>
-            <span><%=translation.ChartOfAccount%></span>
-        </a>
-    </li>
-
-    <li>
-        <a href="#" onclick="trainEmployeeFaces()">
-            <i class="uil-play"></i>
-            <span><%=translation.TrainModals%></span>
-        </a>
-    </li>
+    
     <!---------Registration End------------->
 
     
     <!---------CostEntry Start------------->
     <li class="menu-title"><%=translation.CostEntry%></li>
     <li>
-        <a href="javascript: void(0);" class="has-arrow waves-effect">
-            <i class="fas fa-atlas"></i>
-            <span><%=translation.Sales%></span>
+        <a href="/portal/chartOfAccount">
+            <i class="uil-chat-bubble-user"></i>
+            <span><%=translation.ChartOfAccount%></span>
         </a>
-        <ul class="sub-menu" aria-expanded="false">
-            <li><a href="/portal-sales-create"><%=translation.SalesCreate%></a></li>
-            <li><a href="/portal-sales-list"><%=translation.SalesList%></a></li>
-        </ul>
     </li>
     <li>
         <a href="javascript: void(0);" class="has-arrow waves-effect">
-            <i class="fas fa-atlas"></i>
-            <span><%=translation.Supply%></span>
+            <i class="fas fa-people-arrows"></i>
+            <span><%=translation.Transaction%></span>
         </a>
         <ul class="sub-menu" aria-expanded="false">
-            <li><a href="/portal-supply-create"><%=translation.SupplyCreate%></a></li>
-            <li><a href="/portal-supply-list"><%=translation.SupplyList%></a></li>
-        </ul>
-    </li>
-    <li>
-        <a href="javascript: void(0);" class="has-arrow waves-effect">
-            <i class="fas fa-atlas"></i>
-            <span><%=translation.Wages%></span>
-        </a>
-        <ul class="sub-menu" aria-expanded="false">
-            <li><a href="/portal-wages-create"><%=translation.WagesCreate%></a></li>
-            <li><a href="/portal-wages-list"><%=translation.WagesList%></a></li>
-        </ul>
-    </li>
-    <li>
-        <a href="javascript: void(0);" class="has-arrow waves-effect">
-            <i class="fas fa-atlas"></i>
-            <span><%=translation.Expense%></span>
-        </a>
-        <ul class="sub-menu" aria-expanded="false">
-            <li><a href="/portal-expense-create"><%=translation.ExpenseCreate%></a></li>
-            <li><a href="/portal-expense-list"><%=translation.ExpenseList%></a></li>
+            <li><a href="/portal/new-transaction"><%=translation.NewTransaction%></a></li>
+            <li><a href="/portal/transaction-list"><%=translation.TransactionList%></a></li>
         </ul>
     </li>
     <!---------CostEntry End------------->
@@ -141,20 +55,5 @@
             <span><%=translation.MasterReport%></span>
         </a>
     </li>
-
-    <!---------Software Download Start------------->
-    <li class="menu-title"><%=translation.RequiredSoftwares%></li>
-    <li>
-        <a href="javascript: void(0);" class="has-arrow waves-effect">
-            <i class="uil-airplay"></i>
-            <span><%=translation.FaceRecognition%></span>
-        </a>
-        <ul class="sub-menu" aria-expanded="false">
-            <!-- <li><a onclick="go_link_new_page('https://asiqur-rahman.github.io/face-recognition-by-asiq/Face_Recognition_By_ASIQ.zip')" href="#"><%=translation.Download%></a></li> -->
-            <li><a href="/portal-software-download" target="_blank"><%=translation.Download%></a></li>
-            <!-- <li><a onclick="go_link_new_page('https://asiqur-rahman.github.io/face-recognition-by-asiq/Installation_Guide/Installation Guide.pdf')" href="#"><%=translation.InstallationGuide%></a></li> -->
-            <li><a href="/portal-documentation-download" target="_blank"><%=translation.InstallationGuide%></a></li>
-        </ul>
-    </li>
-    <!---------Software Download End------------->
+    <!---------Report End------------->
 </ul>

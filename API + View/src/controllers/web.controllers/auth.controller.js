@@ -19,23 +19,6 @@ module.exports.login_Post = async (req, res, next) => {
     username,
     password
   } = req.body;
-  // const user = await db.User.scope('loginPurpose').findOne({
-  //   where: {
-  //     [Op.or]: [{
-  //       username: username
-  //     }]
-  //   },
-  //   include: [{
-  //     model: db.UserDetails,
-  //     attributes: ['firstName', 'lastName', 'contactNo', 'email', 'address', 'description'],
-  //     include: {
-  //       model: db.Role,
-  //       as: "role",
-  //       attributes: ['code', 'name']
-  //     }
-  //   }],
-  //   raw: true
-  // });
   userService.getByName(username).then(async (user) => {
     if (!user) {
       req.session.notification = [enumm.notification.Error, 'Unable to login !'];

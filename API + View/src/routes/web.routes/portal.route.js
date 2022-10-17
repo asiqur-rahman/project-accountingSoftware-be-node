@@ -8,5 +8,7 @@ const { loginValidator,userCreateValidator } = require('../../middleware/validat
 
 router.get('/dashboard', awaitHandlerFactory(portalController.dashboard));
 router.get('/chartOfAccount', awaitHandlerFactory(portalController.chartOfAccount));
+router.get('/new-transaction', awaitHandlerFactory(portalController.newTransaction));
+router.get('/transaction-list', awaitHandlerFactory(portalController.chartOfAccount));
 
 module.exports = router;

@@ -1,0 +1,169 @@
+<%- contentFor('HeaderCss') %>
+
+<%- contentFor('breadcrumb') %>
+
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <h4 class="mb-0">Transaction <%= typeof model=='undefined' ? 'Create' : 'Update' %></h4>
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Sales</a></li>
+                    <li class="breadcrumb-item active"><%= typeof model=='undefined' ? 'Create' : 'Update' %></li>
+                </ol>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- end page title -->
+
+<%- contentFor('body') %>
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <form class="validate-this-form" method="post">
+                    <div class="row">
+                        <input class="form-control" type="number" name="id" id="id" value="<%= typeof model!='undefined' ? model.id : '0' %>" readonly hidden>
+                        <div class="col-md-6">
+                            <div class="mb-3 row">
+                                <label for="detailsInfoId" class="col-md-4 col-form-label">Chart of Account</label>
+                                <div class="col-md-8">
+                                    <div class="input-group" data-validate="Chart of Account is required">
+                                        <select class="form-select validate_this select2" name="roleId" id="roleId">
+                                            <option value="" disabled selected>Select</option>
+                                            <% if(locals.chartOfAccounts) {for(var i=0; i<chartOfAccounts.length; i++){%>
+                                                <option value="<%=chartOfAccounts[i].id%>" <%=typeof detailsInfo!='undefined' ? chartOfAccounts[i].id==detailsInfo.roleId ? 'selected':'' : ''%>><%=chartOfAccounts[i].name%></option>
+                                            <%}}%>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3 row">
+                                <label for="detailsInfoId" class="col-md-4 col-form-label">Payment Media</label>
+                                <div class="col-md-8">
+                                    <div class="input-group" data-validate="Role is required">
+                                        <select class="form-select validate_this select2" name="roleId" id="roleId">
+                                            <option value="" disabled selected>Select</option>
+                                            <% if(locals.chartOfAccounts) {for(var i=0; i<chartOfAccounts.length; i++){%>
+                                                <option value="<%=chartOfAccounts[i].id%>" <%=typeof detailsInfo!='undefined' ? chartOfAccounts[i].id==detailsInfo.roleId ? 'selected':'' : ''%>><%=chartOfAccounts[i].name%></option>
+                                            <%}}%>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3 row">
+                                <label for="detailsInfoId" class="col-md-4 col-form-label">Payment Media</label>
+                                <div class="col-md-8">
+                                    <div class="input-group" data-validate="Role is required">
+                                        <select class="form-select validate_this select2" name="roleId" id="roleId">
+                                            <option value="" disabled selected>Select</option>
+                                            <% if(locals.chartOfAccounts) {for(var i=0; i<chartOfAccounts.length; i++){%>
+                                                <option value="<%=chartOfAccounts[i].id%>" <%=typeof detailsInfo!='undefined' ? chartOfAccounts[i].id==detailsInfo.roleId ? 'selected':'' : ''%>><%=chartOfAccounts[i].name%></option>
+                                            <%}}%>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3 row">
+                                <label for="date" class="col-md-4 col-form-label">Date</label>
+                                <div class="col-md-8" id="datepicker1">
+                                    <div class="input-group" id="datepicker2" data-validate="Date is required">
+                                        <!-- <input class="form-control validate_this" placeholder="Date" type="date" name="date" id="date" value="<%= typeof model!='undefined' ? model.date : '' %>"> -->
+                                        <input type="text" class="form-control validate_this" placeholder="Date"
+                                            data-date-format="mm/dd/yyyy" data-date-container='#datepicker2' data-provide="datepicker"
+                                            data-date-autoclose="true" autocomplete="off"
+                                            name="date" id="date" value="<%= typeof model!='undefined' ? model.date : '' %>">
+        
+                                        <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="mb-3 row">
+                                <label for="cash" class="col-md-4 col-form-label">Cash</label>
+                                <div class="col-md-8">
+                                    <div class="input-group" data-validate="Cash is required">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">$</span>
+                                        </div>
+                                        <input class="form-control validate_this number_only" placeholder="0" type="text" name="cash" id="cash" value="<%= typeof model!='undefined' ? model.cash : '0' %>">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3 row">
+                                <label for="card" class="col-md-4 col-form-label">Card 1</label>
+                                <div class="col-md-8">
+                                    <div class="input-group" data-validate="Card 1 is required">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">$</span>
+                                        </div>
+                                        <input class="form-control validate_this number_only" placeholder="0" type="text" name="card" id="card" value="<%= typeof model!='undefined' ? model.card : '0' %>">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3 row">
+                                <label for="card" class="col-md-4 col-form-label">Card 2</label>
+                                <div class="col-md-8">
+                                    <div class="input-group" data-validate="Card 2 is required">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">$</span>
+                                        </div>
+                                        <input class="form-control validate_this number_only" placeholder="0" type="text" name="card2" id="card2" value="<%= typeof model!='undefined' ? model.card2 : '0' %>">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3 row">
+                                <label for="appose" class="col-md-4 col-form-label">Cheque</label>
+                                <div class="col-md-8">
+                                    <div class="input-group" data-validate="Cheque is required">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">$</span>
+                                        </div>
+                                        <input class="form-control validate_this number_only" placeholder="0" type="text" name="cheque" id="cheque" value="<%= typeof model!='undefined' ? model.cheque : '0' %>">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3 row">
+                                <label for="description" class="col-md-4 col-form-label">Description</label>
+                                <div class="col-md-8">
+                                    <input class="form-control" placeholder="Description" type="text" name="description" id="description" value="<%= typeof model!='undefined' ? model.description : '' %>">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <a class="btn btn-danger" style="float: right; margin-left: 2%;" type="button" href="/portal/transaction-list">Cancel</a>
+                        <button class="btn btn-primary" style="float: right;" type="submit" ><%= typeof model=='undefined' ? 'Create' : 'Update' %></button>
+                        <!-- <button class="btn btn-primary" type="button" id="faceScanBtn" style="display: none;">Face Scan</button> -->
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- end card -->
+    </div> <!-- end col -->
+</div>
+<!-- end row -->
+
+<%- contentFor('FooterJs') %>
+
+<%- contentFor('BottomJs') %>

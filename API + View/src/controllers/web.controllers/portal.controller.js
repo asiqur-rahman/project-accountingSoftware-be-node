@@ -18,3 +18,10 @@ module.exports.chartOfAccount = async (req, res, next) => {
   };
   res.render('ChartOfAccount/index');
 }
+
+module.exports.newTransaction = async (req, res, next) => {
+  res.locals = {
+      title: 'Transaction'
+  };
+  res.render('Transaction/create');
+}
