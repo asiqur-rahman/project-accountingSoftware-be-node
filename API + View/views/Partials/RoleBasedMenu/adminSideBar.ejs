@@ -3,8 +3,9 @@
     <li class="menu-title"><%=translation.Menu%></li>
 
     <li>
-        <a href="/portal-get-dashboard">
-            <i class="uil-home-alt"></i><span class="badge rounded-pill bg-primary float-end">full details</span>
+        <a href="/portal/dashboard">
+            <i class="uil-home-alt"></i>
+            <!-- <span class="badge rounded-pill bg-primary float-end">full details</span> -->
             <span><%=translation.Dashboard%></span>
         </a>
     </li>
@@ -57,8 +58,8 @@
             <span><%=translation.User%></span>
         </a>
         <ul class="sub-menu" aria-expanded="false">
-            <li><a href="/portal-user-create"><%=translation.UserCreate%></a></li>
-            <li><a href="/portal-user-list"><%=translation.UserList%></a></li>
+            <li><a href="/user"><%=translation.UserCreate%></a></li>
+            <li><a href="/users-list"><%=translation.UserList%></a></li>
         </ul>
     </li>
     <li>
@@ -72,9 +73,9 @@
         </ul>
     </li>
     <li>
-        <a href="/portal-employee-list">
+        <a href="/portal/accounting-heads">
             <i class="uil-chat-bubble-user"></i>
-            <span><%=translation.EmployeesList%></span>
+            <span><%=translation.AccountingHeads%></span>
         </a>
     </li>
 
@@ -140,104 +141,6 @@
             <span><%=translation.MasterReport%></span>
         </a>
     </li>
-    <!-- <li>
-        <a href="/portal-custom-invoice-create">
-            <i class="far fa-list-alt"></i>
-            <span><%=translation.CustomInvoice%></span>
-        </a>
-    </li> -->
-    <!-- <li>
-        <a href="/portal-sales-report">
-            <i class="uil-home-alt"></i>
-            <span><%=translation.Sales%></span>
-        </a>
-    </li>
-    <li>
-        <a href="/portal-supply-report">
-            <i class="uil-home-alt"></i>
-            <span><%=translation.Supply%></span>
-        </a>
-    </li>
-    <li>
-        <a href="/portal-wages-report">
-            <i class="uil-home-alt"></i>
-            <span><%=translation.Wages%></span>
-        </a>
-    </li>
-    <li>
-        <a href="/portal-expense-report">
-            <i class="uil-home-alt"></i>
-            <span><%=translation.Expense%></span>
-        </a>
-    </li> -->
-    <!---------Report End------------->
-
-    
-    <!---------Tally Start------------->
-    <li class="menu-title"><%=translation.Tally%></li>
-    <li>
-        <a href="javascript: void(0);" class="has-arrow waves-effect">
-            <i class="fas fa-list-alt"></i>
-            <span><%=translation.TallyKhata%></span>
-        </a>
-        <ul class="sub-menu" aria-expanded="false">
-            <li><a href="/portal-tally-customer-create"><%=translation.TallyCustomerCreate%></a></li>
-            <li><a href="/portal-tally-customer-list"><%=translation.TallyCustomerList%></a></li>
-            <li><a href="/portal-tally-create"><%=translation.TallyCreate%></a></li>
-            <li><a href="/portal-tally-list"><%=translation.TallyList%></a></li>
-        </ul>
-    </li>
-    <!---------Tally End------------->
-
-    <!---------Custom Invoice Start------------->
-    <li class="menu-title"><%=translation.Invoice%></li>
-    <li>
-        <a href="/portal-custom-invoice-create">
-            <i class="far fa-list-alt"></i>
-            <span><%=translation.GenerateInvoice%></span>
-        </a>
-    </li>
-    <!---------Custom Invoice End------------->
-
-    <!---------ADS Start------------->
-    <li class="menu-title"><%=translation.Ads%></li>
-    <li>
-        <a href="javascript: void(0);" class="has-arrow waves-effect">
-            <i class="uil-airplay"></i>
-            <span><%=translation.TVAds%></span>
-        </a>
-        <ul class="sub-menu" aria-expanded="false">
-            <li><a href="/portal-set-tv-ads"><%=translation.TVAdsList%></a></li>
-            <li><a href="/portal-tv-ads-create"><%=translation.TVAdsCreate%></a></li>
-        </ul>
-    </li>
-    <!---------ADS End------------->
-
-    <!---------Attendance Start------------->
-    <li class="menu-title"><%=translation.Attendance%></li>
-    <li>
-        <a href="javascript: void(0);" class="has-arrow waves-effect">
-            <i class="fa fa-id-badge"></i>
-            <span><%=translation.MyAttendance%></span>
-        </a>
-        <ul class="sub-menu" aria-expanded="false">
-            <li><a href="/portal-attendance-entry"><%=translation.AttendanceEntry%></a></li>
-            <li><a href="/portal-attendance-history"><%=translation.AttendanceHistory%></a></li>
-        </ul>
-    </li>
-    <li>
-        <a href="javascript: void(0);" class="has-arrow waves-effect">
-            <i class="fa fa-id-badge"></i>
-            <span><%=translation.EmployeeAttendance%></span>
-        </a>
-        <ul class="sub-menu" aria-expanded="false">
-            <li><a href="/portal-attendance-addNew"><%=translation.AddNew%></a></li>
-            <li><a href="/portal-employee-attendance/0"><%=translation.PendingList%></a></li>
-            <li><a href="/portal-employee-attendance/1"><%=translation.ApprovedList%></a></li>
-        </ul>
-    </li>
-    <!---------Attendance End------------->
-    
 
     <!---------Software Download Start------------->
     <li class="menu-title"><%=translation.RequiredSoftwares%></li>

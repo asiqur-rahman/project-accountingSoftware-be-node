@@ -31,13 +31,7 @@
         <!--- Sidemenu -->
         <div id="sidebar-menu">
             <!-- Left Menu Start -->
-            <%if(typeof roleCode!='undefined' && (roleCode == adminCode|| roleCode == superUserCode)){%>
-                <%- include ('./RoleBasedMenu/adminSideBar')  %>
-            <%}else if(typeof roleCode!='undefined' &&  roleCode == managerCode ){%>
-                <%- include ('./RoleBasedMenu/managerSideBar')  %>
-            <%}else if(typeof roleCode!='undefined' && roleCode == employeeCode ){%>
-                <%- include ('./RoleBasedMenu/employeeSideBar')  %>
-            <%}%>
+            <%- include ('./RoleBasedMenu/adminSideBar')  %>
         </div>
         <!-- Sidebar -->
     </div>

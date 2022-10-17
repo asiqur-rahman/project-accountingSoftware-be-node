@@ -50,15 +50,15 @@ module.exports.login_Post = async (req, res, next) => {
     } else {
       // user matched!
       const secretKey = appConfig.appSettings.SECRET_JWT;
-      console.log(user)
       // if (user['userDetail.role.code'] == enumm.Role.SuperUser || user['role.code'] == enumm.Role.Admin) {
-        dashboard = '/portal-get-dashboard';
+        dashboard = '/portal/dashboard';
       // }
 
       const token = jwt.sign({
         user_name: user.username,
         full_name: `${user['userDetail.firstName']} ${user['userDetail.lastName']}`,
         user_id: user.id.toString(),
+        role_id: user['userDetail.role.id'].toString(),
         role_code: user['userDetail.role.code'].toString(),
         role_name: user['userDetail.role.name'].toString(),
         force_change_password: user.forceChangePassword,
@@ -97,34 +97,10 @@ module.exports.login_Post = async (req, res, next) => {
   }
 };
 
-
-module.exports.whoAmI = async (req, res, next) => {
-  await db.User.findOne({
-    where: {
-      id: req.currentUser
-    },
-    include: [{
-      model: db.UserDetails,
-      attributes: ['firstName', 'lastName', 'contactNo', 'email', 'address', 'description'],
-      include: {
-        model: db.Role,
-        as: "role",
-        attributes: ['code', 'name']
-      }
-    }],
-    raw: true
-  }).then(user => {
-    return res.status(200).send(user);
-  }).catch(e => {
-    return res.status(204).send();
-  })
-}
-
 module.exports.logout = async (req, res, next) => {
   // Assign  null value in session
   // sess = req.session;
   // sess.user = null;
-  console.log("Logout");
   const notification = req.session.notification;
   req.session.returnUrl = null;
   req.session.user = null;
