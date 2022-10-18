@@ -72,11 +72,10 @@
 <div class="row">
     <div class="col-12">
         <div class="page-title-box d-flex align-items-center justify-content-between">
-            <h4 class="mb-0">TV Ads</h4>
-
+            <h4 class="mb-0">Chart of Account</h4>
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
-                    <li class="breadcrumb-item"><a href="javascript: void(0);">Ads</a></li>
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Chart of Account</a></li>
                     <li class="breadcrumb-item active">Index</li>
                 </ol>
             </div>
@@ -91,6 +90,24 @@
 
 <div class="col-md-4">
     <ul id="tree1">
+        <% if(locals.data)
+        {for(var i=0; i<data.length; i++){%>
+            <li><a href="#"><%=data[i].name%></a>
+                <ul>
+                    <% if(data[i].childs) {for(var j=0; j<data[i].childs.length; j++){%>
+                        <li><%=data[i].childs[j].name%></li>
+                        <% if(data[i].childs[j].childs){%>
+                            <ul>
+                                <% for(var k=0; k<data[i].childs[j].childs.length; k++){%>
+                                    <li><%=data[i].childs[j].childs[k].name%></li>
+                                <%}%>
+                            </ul>
+                        <%}%>
+                    <%}}%>
+                </ul>
+            </li>
+        <%}}%>
+
         <li><a href="#">TECH</a>
 
             <ul>
@@ -110,7 +127,7 @@
                 <li>Human Resources</li>
             </ul>
         </li>
-        <li>XRP
+        <!-- <li>XRP
             <ul>
                 <li>Company Maintenance</li>
                 <li>Employees
@@ -127,7 +144,7 @@
                 </li>
                 <li>Human Resources</li>
             </ul>
-        </li>
+        </li> -->
     </ul>
 </div>
 <!-- end row -->
@@ -135,7 +152,12 @@
 <%- contentFor('FooterJs') %>
 
 <script>
-    $.fn.extend({
+    
+
+
+//Initialization of treeviews
+$(function(){
+$.fn.extend({
     treed: function (o) {
       
       var openedClass = 'glyphicon-minus-sign';
@@ -188,10 +210,8 @@
         });
     }
 });
-
-//Initialization of treeviews
-
-$('#tree1').treed({openedClass:'uil-play', closedClass:'uil-play'});
+    $('#tree1').treed({openedClass:'uil-play', closedClass:'uil-play'});
+})
 
 </script>
 

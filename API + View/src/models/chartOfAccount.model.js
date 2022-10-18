@@ -21,6 +21,15 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING(5),
       allowNull:true,
     },
+    baseCode: {
+      type: Sequelize.STRING(5),
+      allowNull:true,
+    },
+    level: {
+      type: Sequelize.INTEGER(2),
+      allowNull:false,
+      defaultValue:0
+    },
     // parentId: {
     //   type: Sequelize.INTEGER(11),
     //   references: {

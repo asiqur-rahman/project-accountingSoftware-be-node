@@ -38,10 +38,11 @@ module.exports.login_Post = async (req, res, next) => {
         // if (user['userDetail.role.code'] == enumm.Role.SuperUser || user['role.code'] == enumm.Role.Admin) {
           dashboard = '/portal/dashboard';
         // }
-  
+        
+        const fullName=`${user['userDetail.firstName']} ${user['userDetail.lastName']}`;
         const token = jwt.sign({
           user_name: user.username,
-          full_name: `${user['userDetail.firstName']} ${user['userDetail.lastName']}`,
+          full_name: fullName,
           user_id: user.id.toString(),
           role_id: user['userDetail.role.id'].toString(),
           role_code: user['userDetail.role.code'].toString(),
@@ -53,12 +54,10 @@ module.exports.login_Post = async (req, res, next) => {
           expiresIn: appConfig.appSettings.SessionTimeOut
         });
         req.session.user = token;
-        if (user.forceChangePassword == 1) {
-          req.session.notification = [enumm.notification.Warning, 'Hi,  ' + user['detailsInfo.name'] + '</br>Please change your password !'];
-          // req.flash(enumm.notification.Info, 'Hi,  '+user['detailsInfo.name']+'</br>Please change your password');
+        if (user.forceChangePassword != 1) {
+          req.session.notification = [enumm.notification.Warning, 'Hi,  ' + fullName + '</br>Please change your password !'];
         } else {
-          req.session.notification = [enumm.notification.Info, 'Hi,  ' + user['detailsInfo.name'] + '</br>Welcome to Chicken man.'];
-          // req.flash(enumm.notification.Success, 'Hi,  '+user['detailsInfo.name']+'</br>Welcome to Chicken man.');
+          req.session.notification = [enumm.notification.Info, 'Hi,  ' + fullName + '</br>Welcome to Accounting Software.'];
         }
   
         const returnUrl = req.session.returnUrl;

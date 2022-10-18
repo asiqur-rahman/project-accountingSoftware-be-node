@@ -78,8 +78,11 @@ db.ChartOfAccount.belongsTo(db.ChartOfAccount,{ foreignKey: { name:'parentId', a
 db.Transaction.belongsTo(db.User,{ foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
 db.User.hasMany(db.Transaction);
 
-db.Transaction.belongsTo(db.ChartOfAccount,{ foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
-db.ChartOfAccount.hasMany(db.Transaction);
+db.Transaction.belongsTo(db.ChartOfAccount,{ foreignKey: { name:'debitAccountId' }, onDelete: 'CASCADE' });
+db.ChartOfAccount.hasMany(db.Transaction, { foreignKey: { name:'debitAccountId' }});
+
+db.Transaction.belongsTo(db.ChartOfAccount,{ foreignKey: { name:'creditAccountId' }, onDelete: 'CASCADE' });
+db.ChartOfAccount.hasMany(db.Transaction, { foreignKey: { name:'creditAccountId' }});
 
 //TransactionDetails
 db.TransactionDetails.belongsTo(db.Transaction,{ foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
@@ -151,7 +154,8 @@ function initial() {
       currencyId:1,
       userId:1,
       isActive:true,
-      code:enumm.AccountHead.Assets.value
+      code:enumm.AccountHead.Assets.value,
+      baseCode:enumm.AccountHead.Assets.value
     });
 
     db.ChartOfAccount.create({
@@ -159,15 +163,17 @@ function initial() {
       currencyId:1,
       userId:1,
       isActive:true,
-      code:enumm.AccountHead.Equity.value
+      code:enumm.AccountHead.Equity.value,
+      baseCode:enumm.AccountHead.Equity.value
     });
 
     db.ChartOfAccount.create({
-      name:enumm.AccountHead.Expenses.key,
+      name:enumm.AccountHead.Expense.key,
       currencyId:1,
       userId:1,
       isActive:true,
-      code:enumm.AccountHead.Expenses.value
+      code:enumm.AccountHead.Expense.value,
+      baseCode:enumm.AccountHead.Expense.value
     });
 
     db.ChartOfAccount.create({
@@ -175,7 +181,8 @@ function initial() {
       currencyId:1,
       userId:1,
       isActive:true,
-      code:enumm.AccountHead.Income.value
+      code:enumm.AccountHead.Income.value,
+      baseCode:enumm.AccountHead.Income.value
     });
 
     db.ChartOfAccount.create({
@@ -183,7 +190,8 @@ function initial() {
       currencyId:1,
       userId:1,
       isActive:true,
-      code:enumm.AccountHead.Liabilities.value
+      code:enumm.AccountHead.Liabilities.value,
+      baseCode:enumm.AccountHead.Liabilities.value
     });
 
   }

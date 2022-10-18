@@ -74,10 +74,9 @@ module.exports.apiAuth = (...roles) => {
 module.exports.webAuth = (...roles) => {
     return async function (req, res, next) {
         try {
-            getSessionDetails(req,res);
-
             // res.session.returnUrl = req.originalUrl;
             // sess = req.session;
+            // console.log(req.session.user)
             if (!req.session || !req.session.user) {
                 req.session.notification=[enumm.notification.Error,'Access denied. No credentials sent !'];
                 console.log('Access denied. No credentials sent !')
@@ -107,9 +106,9 @@ module.exports.webAuth = (...roles) => {
                 return res.redirect('/auth/logout');
             }
             // if the user has permissions
-            res.currentUser = decoded.user_id;
-            res.currentBranchId = decoded.branchId;
-            res.currentRoleId = decoded.role_id;
+            req.currentUser = decoded.user_id;
+            req.currentBranchId = decoded.branchId;
+            req.currentRoleId = decoded.role_id;
             
             //check Client IP
             // console.log(decoded.clientIp);
@@ -137,7 +136,30 @@ module.exports.webAuth = (...roles) => {
 
 module.exports.notification = () => {
     return function (req, res, next) {
-        getSessionDetails(req,res);
+        //#region Notifications
+        if(req.session.notification){
+            const notification = req.session.notification;
+            res.locals.toast_Msg=notification;
+            // if(notification[0]==enumm.notification.Error){
+            //     res.locals.error_Msg= notification[1];
+            // }
+            // else if(notification[0]==enumm.notification.Warning){
+            //     res.locals.war_Msg= notification[1];
+            // }
+            // else if(notification[0]==enumm.notification.Info){
+            //     res.locals.info_Msg= notification[1];
+            // }
+            // else if(notification[0]==enumm.notification.Success){
+            //     res.locals.succ_Msg= notification[1];
+            // }
+            req.session.notification=null;
+        }else{
+            res.locals.error_Msg= undefined;
+            res.locals.info_Msg= undefined;
+            res.locals.war_Msg= undefined;
+            res.locals.succ_Msg= undefined;
+        }
+        //#endregion
         next();
     }
 }
@@ -215,6 +237,7 @@ const getSessionDetails = (req,res) => {
         }
         //#endregion
     } catch (e) {
+        console.log(e)
         req.session.notification=null;
     }
 }

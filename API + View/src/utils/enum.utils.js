@@ -19,16 +19,16 @@ var Enum = require('enum');
     }
 
     module.exports.notification={
-        Error: 'errorMsg',
-        Info: 'infoMsg',
-        Warning: 'warMsg',
-        Success: 'succMsg'
+        Error: 'error|',
+        Info: 'info|',
+        Warning: 'warning|',
+        Success: 'success|'
     }
 
     module.exports.AccountHead=new Enum({
-        Assets: '101',
-        Equity: '201',
-        Expenses: '301',
+        Assets: 101,
+        Equity: 201,
+        Expense: 301,
         Income: 401,
         Liabilities: 501
     });

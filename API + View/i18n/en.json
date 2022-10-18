@@ -125,6 +125,8 @@
   "Extra_pages" : "Extra pages",
   "-----------":"-----------",
   "ChartOfAccount":"Chart Of Account",
+  "NewChartOfAccount":"New Chart Of Account",
+  "ChartOfAccountList":"Chart Of Account List",
   "Transaction":"Transaction",
   "NewTransaction":"New Transaction",
   "TransactionList":"Transaction List",

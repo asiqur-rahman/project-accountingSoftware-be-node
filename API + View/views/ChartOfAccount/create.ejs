@@ -1,6 +1,4 @@
-
 <%- contentFor('HeaderCss') %>
-
 
 <%- contentFor('breadcrumb') %>
 
@@ -8,12 +6,11 @@
 <div class="row">
     <div class="col-12">
         <div class="page-title-box d-flex align-items-center justify-content-between">
-            <h4 class="mb-0">Create New Ads</h4>
-
+            <h4 class="mb-0">Chart Of Account <%= typeof model=='undefined' ? 'Create' : 'Update' %></h4>
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
-                    <li class="breadcrumb-item"><a href="javascript: void(0);">Ads</a></li>
-                    <li class="breadcrumb-item active">Create</li>
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Sales</a></li>
+                    <li class="breadcrumb-item active"><%= typeof model=='undefined' ? 'Create' : 'Update' %></li>
                 </ol>
             </div>
 
@@ -27,78 +24,80 @@
 <div class="row">
     <div class="col-12">
         <div class="card">
-            <form class="card-body" id="form" method="post" action="" enctype="multipart/form-data">
-                <input hidden="true" type="text" id="actionUrl" value="<%=actionUrl%>">
-                <div class="mb-3 row">
-                    <label for="adsName" class="col-md-2 col-form-label">Ads Name</label>
-                    <div class="col-md-10">
-                        <input class="form-control" type="text" name="adsName" id="adsName" placeholder="Ex: TV 1" required>
-                    </div>
-                </div>
-
-                <div class="mb-3 row">
-                    <label for="file" class="col-md-2 col-form-label">Files</label>
-                    <div class="col-md-10">
-                        <input type="file" name="file" id="file" class="inner form-control" accept="image/*" multiple disabled/>
-                    </div>
-                </div>
-                <button type="submit" id="submitBtn" class="btn btn-primary" disabled="disabled">Create</button>
-            </form>
-        </div>
-    </div> <!-- end col -->
-</div>
-<!-- end row -->
-<!-- 
-<div class="row">
-    <div class="col-lg-12">
-        <div class="card">
             <div class="card-body">
-                <form class="outer-repeater" method="post" enctype="multipart/form-data">
-                    <div data-repeater-list="outer-group" class="outer">
-                        <div data-repeater-item class="outer">
-
-                            <div class="inner-repeater mb-4">
-                                <div data-repeater-list="inner-group" class="inner form-group">
-                                    <label class="form-label">Image/ Ads :</label>
-                                    <div data-repeater-item class="inner mb-3 row">
-                                        <div class="col-md-10 col-8">
-                                            <input type="file" name="file" class="inner form-control" accept="image/*" multiple/>
-                                        </div>
-                                        <div class="col-md-2 col-4 d-grid">
-                                            <input data-repeater-delete type="button" class="btn btn-primary btn-block inner" value="Delete"/>
-                                        </div>
-                                    </div>
-                                </div>
-                                <input data-repeater-create type="button" class="btn btn-success inner" value="Add New Image"/>
+                <!-- <h4 class="card-title mb-4">Invoice Details</h4> enctype="multipart/form-data" --> 
+                <form class="repeater validate-this-form row" method="post">
+                    <input class="form-control" type="number" name="id" id="id" value="<%= typeof model!='undefined' ? model.id : '0' %>" readonly hidden>
+                    
+                    <div class="col-md-6">
+                        <div class="mb-3 row">
+                            <label for="name" class="col-md-4 col-form-label">Name</label>
+                            <div class="col-md-8" data-validate="Name is required">
+                                <input class="form-control validate_this" placeholder="Ex. Assets" type="text" name="name" id="name" value="<%= typeof model!='undefined' ? model.name : '' %>">
                             </div>
-                            <button type="submit" class="btn btn-primary">Create</button>
                         </div>
                     </div>
-                </form>
+
+                    <div class="col-md-6">
+                        <div class="mb-3 row">
+                            <label for="currencyId" class="col-md-4 col-form-label">Currency</label>
+                            <div class="col-md-8">
+                                <div class="input-group" data-validate="Currency is required">
+                                    <select class="form-select validate_this select2" name="currencyId" id="currencyId">
+                                        <option value="" disabled selected>Select an option</option>
+                                        <% if(locals.currencyDD) {for(var i=0; i<currencyDD.length; i++){%>
+                                            <option value="<%=currencyDD[i].id%>" <%=typeof detailsInfo!='undefined' ? currencyDD[i].id==detailsInfo.currencyId ? 'selected':'' : ''%>><%=currencyDD[i].name%></option>
+                                        <%}}%>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="mb-3 row">
+                            <label for="parentId" class="col-md-4 col-form-label">Parent Account</label>
+                            <div class="col-md-8">
+                                <div class="input-group" data-validate="Parent Account is required">
+                                    <select class="form-select validate_this select2" name="parentId" id="parentId">
+                                        <option value="" disabled selected>Select an option</option>
+                                        <% if(locals.chartOfAccountDD) {for(var i=0; i<chartOfAccountDD.length; i++){%>
+                                            <option value="<%=chartOfAccountDD[i].id%>" <%=typeof detailsInfo!='undefined' ? chartOfAccountDD[i].id==detailsInfo.parentId ? 'selected':'' : ''%>><%=chartOfAccountDD[i].name%></option>
+                                        <%}}%>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3 row">
+                            <label for="decimalPlaces" class="col-md-4 col-form-label">Decimal Places</label>
+                            <div class="col-md-8" data-validate="Decimal Places is required">
+                                <input class="form-control validate_this number_only" placeholder="Ex. 2" type="text" name="decimalPlaces" id="decimalPlaces" value="<%= typeof model!='undefined' ? model.decimalPlaces : '' %>">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-3 text-end">
+                        <button class="btn btn-primary w-sm waves-effect waves-light" type="submit">Submit</button>
+                    </div>
+                </div>
+            </form>
             </div>
         </div>
     </div>
-</div> -->
+</div>
 <!-- end row -->
-<%- contentFor('FooterJs') %>
-<!-- form repeater js -->
-<!-- <script src="/public/assets/libs/jquery.repeater/jquery.repeater.min.js"></script>
 
-<script src="/public/assets/js/pages/form-repeater.int.js"></script> -->
+<%- contentFor('FooterJs') %>
+
+<%- contentFor('BottomJs') %>
 
 <script>
-    $("#adsName").keyup(function(){
-        const adsName=$("#adsName").val();
-        if(adsName!=""){
-            $("#form").attr("action",$("#actionUrl").val()+adsName);
-            $("#file").attr("disabled",false);
-            $("#submitBtn").attr("disabled",false);
-        }else{
-            $("#form").attr("action","")
-            $("#file").attr("disabled",true);
-            $("#submitBtn").attr("disabled",true);
-        }
-    });
 
+    function numberOnly(e){
+        if(e.value!='-')
+        while(isNaN(e.value))
+        e.value = e.value.split('').reverse().join('').replace(/[\D]/i,'')
+                               .split('').reverse().join('');
+    };
 </script>
-<%- contentFor('BottomJs') %>

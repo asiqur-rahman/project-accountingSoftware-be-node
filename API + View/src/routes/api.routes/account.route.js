@@ -9,5 +9,7 @@ router.get('/:id', apiAuth(), awaitHandlerFactory(accountController.getById));
 router.post('/', apiAuth(),accountCreateValidator, awaitHandlerFactory(accountController.create));
 router.patch('/:id', apiAuth(), awaitHandlerFactory(accountController.update));
 router.delete('/:id', apiAuth(), awaitHandlerFactory(accountController.delete));
+router.get('/byParentId/:id', awaitHandlerFactory(accountController.byParentId));
+
 
 module.exports = router;

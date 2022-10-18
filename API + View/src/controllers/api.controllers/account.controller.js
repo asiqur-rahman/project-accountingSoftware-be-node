@@ -23,6 +23,15 @@ module.exports.create = async(req, res, next) => {
     })
 };
 
+module.exports.byParentId = async (req, res, next) => {
+    await accountService.chartOfAccountDDByParentId(req.params.id)
+    .then(data=>{
+        return res.status(200).send(data);
+    }).catch(e=>{
+        return res.status(e.status).send(e);
+    })
+  }
+
 module.exports.update = async(req, res, next) => {
     
 };

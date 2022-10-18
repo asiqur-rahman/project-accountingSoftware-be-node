@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const {notification,webAuth} = require('../../middleware/auth.middleware');
+const {isLogedIn,webAuth} = require('../../middleware/auth.middleware');
 
 const authRouter = require('./auth.route');
 const portalRouter = require('./portal.route');
 
-router.use('/auth', notification(), authRouter);
+router.use('/auth', isLogedIn(), authRouter);
 router.use('/portal', webAuth(), portalRouter);
 
 // Route all to login page

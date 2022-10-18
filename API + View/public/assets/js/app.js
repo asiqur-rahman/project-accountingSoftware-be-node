@@ -171,7 +171,7 @@ File: Main Js File
     function initPreloader() {
         $(window).on('load', function () {
             $('#status').fadeOut();
-            $('#preloader').delay(350).fadeOut('slow');
+            $('#preloader').delay(50).fadeOut('fast');
         });
     }
     
@@ -214,7 +214,7 @@ File: Main Js File
         },
         Hide() {
             $('#status').fadeOut();
-            $('#preloader').delay(350).fadeOut('slow');
+            $('#preloader').delay(50).fadeOut('fast');
         }
     };
     
