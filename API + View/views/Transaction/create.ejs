@@ -26,17 +26,18 @@
         <div class="card">
             <div class="card-body">
                 <!-- <h4 class="card-title mb-4">Invoice Details</h4> enctype="multipart/form-data" --> 
-                <form class="repeater validate-this-form" method="post">
-                    <div data-repeater-list="group-a" class="row">
+                <form class="repeater validate-this-form transactionForm" method="post">
+                    <div data-repeater-list="transactionDetails" class="row">
                         <input class="form-control" type="number" name="id" id="id" value="<%= typeof model!='undefined' ? model.id : '0' %>" readonly hidden>
                         <input class="form-control" type="number" name="parentId" id="parentId" value="<%= typeof model!='undefined' ? model.parentId : '0' %>" readonly hidden>
+                        <input class="form-control" type="number" name="isItIncome" id="isItIncome" value="<%= typeof model!='undefined' ? model.isItIncome : '0' %>" readonly hidden>
                         <div class="col-md-6 motherParent0">
                             <div class="mb-3 row">
                                 <label for="detailsInfoId" class="col-md-4 col-form-label">Transaction Type</label>
                                 <div class="col-md-8">
-                                    <div class="input-group" data-validate="Chart of Account is required">
+                                    <div class="input-group" data-validate="Transaction Type is required">
                                         <select class="form-select validate_this select2" onchange="chartOfAccountChange(this)">
-                                            <option value="" disabled selected>Select</option>
+                                            <option value="0" disabled selected>Select</option>
                                             <% if(locals.transactionType) {for(var i=0; i<transactionType.length; i++){%>
                                                 <option value="<%=transactionType[i].baseCode%>" <%=typeof detailsInfo!='undefined' ? transactionType[i].id==model.roleId ? 'selected':'' : ''%>><%=transactionType[i].name%></option>
                                             <%}}%>
@@ -50,10 +51,9 @@
                             <div class="mb-3 row">
                                 <label class="col-md-4 col-form-label">Accounting Head</label>
                                 <div class="col-md-8">
-                                    <div class="input-group" data-validate="Account is required">
-                                        <select class="form-select validate_this select2" id="accountFromId" name="accountFromId">
+                                    <div class="input-group" data-validate="Accounting Head is required">
+                                        <select class="form-select validate_this select2" id="accountFromId" name="accountFromId" onchange="accountFromIdChange(this)">
                                             <option value="" disabled selected>Select</option>
-                                            
                                         </select>
                                     </div>
                                 </div>
@@ -64,10 +64,12 @@
                             <div class="mb-3 row">
                                 <label class="col-md-4 col-form-label">How did you pay</label>
                                 <div class="col-md-8">
-                                    <div class="input-group" data-validate="Account is required">
-                                        <select class="form-select validate_this select2" id="accountToId" name="accountToId">
-                                            <option value="" disabled selected>Select</option>
-                                            
+                                    <div class="input-group" data-validate="This Field is Required">
+                                        <select class="form-select validate_this select2" id="accountToId" name="accountToId" onchange="accountToIdChange(this)">
+                                            <option value="0" disabled selected>Select</option>
+                                            <% if(locals.assets) {for(var i=0; i<assets.length; i++){%>
+                                                <option value="<%=assets[i].id%>" <%=typeof detailsInfo!='undefined' ? assets[i].id==model.roleId ? 'selected':'' : ''%>><%=assets[i].name%></option>
+                                            <%}}%>
                                         </select>
                                     </div>
                                 </div>
@@ -95,11 +97,11 @@
                             <div class="mb-3 row">
                                 <label for="cash" class="col-md-4 col-form-label">Amount</label>
                                 <div class="col-md-8">
-                                    <div class="input-group" data-validate="Cash is required">
+                                    <div class="input-group" data-validate="Amount is required">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">$</span>
                                         </div>
-                                        <input class="form-control validate_this number_only" placeholder="0" type="text" name="cash" id="cash" value="<%= typeof model!='undefined' ? model.cash : '0' %>">
+                                        <input class="form-control validate_this number_only" placeholder="0" type="text" name="amount" id="amount" value="<%= typeof model!='undefined' ? model.amount : '' %>" onkeyup="calculateTransaction()">
                                     </div>
                                 </div>
                             </div>
@@ -114,23 +116,23 @@
                         </div>
                         <br/>
                         
-                        <div data-repeater-item class="row">
+                        <div data-repeater-item class="row transactionDetailsPart">
                             <div  class="mb-3 col-lg-5">
                                 <label class="form-label" for="name">Account</label>
                                 <select class="form-select itemName" name="itemName">
-                                    <option value="" disabled selected>Select</option>
-                                    <% if(locals.chartOfAccountDD) {for(var i=0; i<chartOfAccountDD.length; i++){%>
-                                        <option value="<%=chartOfAccountDD[i].id%>" <%=typeof detailsInfo!='undefined' ? chartOfAccountDD[i].id==detailsInfo.roleId ? 'selected':'' : ''%>><%=chartOfAccountDD[i].name%></option>
+                                    <option value="0" disabled selected>Select</option>
+                                    <% if(locals.coaAll) {for(var i=0; i<coaAll.length; i++){%>
+                                        <option value="<%=coaAll[i].id%>" <%=typeof detailsInfo!='undefined' ? coaAll[i].id==model.roleId ? 'selected':'' : ''%>><%=coaAll[i].name%></option>
                                     <%}}%>
                                 </select>
                             </div>
                             <div  class="mb-3 col-lg-3">
                                 <label class="form-label" for="email">Debit</label>
-                                <input type="text" name="itemQuantity" class="form-control debit" onkeyup="numberOnly(this)" onchange="multiply(this.name)"/>
+                                <input type="text" name="debit" class="form-control debit" onkeyup="numberOnly(this)" onchange="multiply(this.name)"/>
                             </div>
                             <div  class="mb-3 col-lg-3">
                                 <label class="form-label" for="subject">Credit</label>
-                                <input type="text" name="itemPrice" class="form-control credit" onkeyup="numberOnly(this)" onchange="multiply(this.name)"/>
+                                <input type="text" name="credit" class="form-control credit" onkeyup="numberOnly(this)" onchange="multiply(this.name)"/>
                             </div>
                             <div class="col-lg-1 align-self-center d-grid" style="margin-top: 14px;">
                                 <button data-repeater-delete class="btn btn-danger btn-block"><i class="fas fa-trash-alt"></i></button>
@@ -138,7 +140,7 @@
                         </div>
 
                     </div>
-                    <input data-repeater-create type="button" class="btn btn-success" value="Add New Item"/>
+                    <input data-repeater-create type="button" class="btn btn-success" value="Add New Item" id="addNewItem"/>
                     
                     <div class="mt-3 col-md-12">
                             <div class="mb-3 row">
@@ -149,7 +151,7 @@
                             </div>
                         </div>
                         <div class="mt-3 text-end">
-                            <button class="btn btn-primary w-sm waves-effect waves-light" type="submit">Submit</button>
+                            <button class="btn btn-primary w-sm waves-effect waves-light" type="button" onclick="transactionFormSubmit()">Submit</button>
                         </div>
                     </div>
                 </form>
@@ -169,7 +171,7 @@
 <%- contentFor('BottomJs') %>
 
 <script>
-
+    const incomeCode='<%=incomeCode%>';
     function multiply(name){
         const id = name.split("][")[0].split("group-a[")[1];
         const itemQuantity=$(`input[name="group-a[${id}][itemQuantity]"]`).val();
@@ -186,8 +188,11 @@
     };
 
     function chartOfAccountChange(e){
-        // alert(this.options[this.selectedIndex].value);
-        console.log($(e).val());
+        if(incomeCode==$(e).val()){
+            $("#isItIncome").val(0)
+        }else{
+            $("#isItIncome").val(1)
+        }
         $('#accountFromId')
             .empty()
             .append('<option value="" disabled selected>Select</option>')
@@ -223,8 +228,35 @@
                 //             </div>
                 //         </div>`   
                 // $( `.motherParent0` ).after( html );
-                console.log(data)
             }
         });
     }
+
+    const accountFromIdChange =(e)=>{
+        calculateTransaction();
+        $("select[name='transactionDetails[0][itemName]']").val($(e).val())
+    }
+
+    const accountToIdChange =(e)=>{
+        $("#addNewItem").click();
+        $("select[name='transactionDetails[1][itemName]']").val($(e).val())
+    }
+
+    const calculateTransaction =()=>{
+        const totalTransactions=$(".transactionDetailsPart").length;
+        if($("#isItIncome").val()==0){
+            $("input[name='transactionDetails[0][credit]']").val($("#amount").val())
+            $("input[name='transactionDetails[1][debit]']").val($("#amount").val())
+        }else{
+            $("input[name='transactionDetails[0][debit]']").val($("#amount").val())
+            $("input[name='transactionDetails[1][credit]']").val($("#amount").val())
+        }
+    }
+
+    const transactionFormSubmit = ( ) => {
+        if(validateThisForm(true)){
+            // $(".transactionForm").submit();
+        }
+        
+    };
 </script>

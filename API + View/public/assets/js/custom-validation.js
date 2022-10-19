@@ -1,4 +1,8 @@
 $('.validate-this-form').on('submit', function () {
+    return validateThisForm();
+});
+
+const validateThisForm=(hasCallback=false)=>{
     var input = $('.validate-this-form .validate_this');
     var check = true;
     for (var i = 0; i < input.length; i++) {
@@ -8,11 +12,12 @@ $('.validate-this-form').on('submit', function () {
             check = false;
         }
     }
-    if(check){
+    
+    if(check && !hasCallback){
         Spinner.Show();
     }
     return check;
-});
+}
 
 $('.validate_this').each(function () {
     $(this).on('blur',

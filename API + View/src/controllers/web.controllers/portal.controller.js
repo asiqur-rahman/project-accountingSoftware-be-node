@@ -104,14 +104,20 @@ module.exports.newchartOfAccount_Post = async (req, res, next) => {
 }
 
 module.exports.newTransaction = async (req, res, next) => {
-    accountService.transactionType().then(types=>{
-      console.log(types)
-      res.locals = {
-        title: 'Transaction',
-        toast_Msg:res.locals.toast_Msg,
-        transactionType:types
-      };
-      res.render('Transaction/create');
+    await accountService.transactionType().then(async types=>{
+      await accountService.chartOfAccountDDByBaseCode(enumm.AccountHead.Assets.value).then(async assets=>{
+        await accountService.chartOfAccountDD().then(coaAll=>{
+          res.locals = {
+            title: 'Transaction',
+            toast_Msg:res.locals.toast_Msg,
+            transactionType:types,
+            assets:assets,
+            coaAll:coaAll,
+            incomeCode:enumm.AccountHead.Income.value
+          };
+          res.render('Transaction/create');
+        })
+      })
     })
 }
 

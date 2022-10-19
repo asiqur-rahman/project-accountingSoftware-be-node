@@ -63,6 +63,9 @@ service.chartOfAccountDD =async ()=> {
                 }
             }]
         },
+        order: [
+            ['name', 'ASC'],
+        ],
         attributes: ['id','name','parentId'],
         raw: true
     }).then(data => {

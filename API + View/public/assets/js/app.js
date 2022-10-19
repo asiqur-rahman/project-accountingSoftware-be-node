@@ -171,7 +171,8 @@ File: Main Js File
     function initPreloader() {
         $(window).on('load', function () {
             $('#status').fadeOut();
-            $('#preloader').delay(50).fadeOut('fast');
+            // $('#preloader').delay(50).fadeOut('fast');
+            $('#preloader').hide();
         });
     }
     
@@ -210,11 +211,13 @@ File: Main Js File
     const Spinner = {
         Show() {
             $('#status').fadeIn();
-            $('#preloader').fadeIn();
+            // $('#preloader').fadeIn();
+            $('#preloader').show();
         },
         Hide() {
             $('#status').fadeOut();
-            $('#preloader').delay(50).fadeOut('fast');
+            // $('#preloader').delay(50).fadeOut('fast');
+            $('#preloader').hide();
         }
     };
     
