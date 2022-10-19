@@ -119,9 +119,9 @@
                         <br/>
                         <h5>Transaction Details</h5>
                         <div data-repeater-item class="row transactionDetailsPart">
-                            <div  class="mb-3 col-lg-5">
+                            <div  class="mb-3 col-lg-4">
                                 <label class="form-label" for="name">Account</label>
-                                <select class="form-select itemName" name="itemName">
+                                <select class="form-select chartOfAccountId" name="chartOfAccountId">
                                     <option value="0" disabled selected>Select</option>
                                     <% if(locals.coaAll) {for(var i=0; i<coaAll.length; i++){%>
                                         <option value="<%=coaAll[i].id%>" <%=typeof detailsInfo!='undefined' ? coaAll[i].id==model.roleId ? 'selected':'' : ''%>><%=coaAll[i].name%></option>
@@ -129,10 +129,19 @@
                                 </select>
                             </div>
                             <div  class="mb-3 col-lg-3">
+                                <label class="form-label" for="name">Tax</label>
+                                <select class="form-select taxId" name="taxId">
+                                    <option value="0" disabled selected>Select</option>
+                                    <% if(locals.taxAll) {for(var i=0; i<taxAll.length; i++){%>
+                                        <option value="<%=taxAll[i].id%>" <%=typeof detailsInfo!='undefined' ? taxAll[i].id==model.roleId ? 'selected':'' : ''%>><%=taxAll[i].name%></option>
+                                    <%}}%>
+                                </select>
+                            </div>
+                            <div  class="mb-3 col-lg-2">
                                 <label class="form-label" for="email">Debit</label>
                                 <input type="text" name="debit" class="form-control debit" onkeyup="numberOnly(this)" onchange="multiply(this.name)"/>
                             </div>
-                            <div  class="mb-3 col-lg-3">
+                            <div  class="mb-3 col-lg-2">
                                 <label class="form-label" for="subject">Credit</label>
                                 <input type="text" name="credit" class="form-control credit" onkeyup="numberOnly(this)" onchange="multiply(this.name)"/>
                             </div>
@@ -229,12 +238,12 @@
 
     const accountFromIdChange =(e)=>{
         calculateTransaction();
-        $("select[name='transactionDetails[0][itemName]']").val($(e).val())
+        $("select[name='transactionDetails[0][chartOfAccountId]']").val($(e).val())
     }
 
     const accountToIdChange =(e)=>{
         $("#addNewItem").click();
-        $("select[name='transactionDetails[1][itemName]']").val($(e).val())
+        $("select[name='transactionDetails[1][chartOfAccountId]']").val($(e).val())
     }
 
     const calculateTransaction =()=>{
@@ -250,7 +259,7 @@
 
     const transactionFormSubmit = ( ) => {
         if(validateThisForm(true)){
-            // $(".transactionForm").submit();
+             $(".transactionForm").submit();
         }
         
     };

@@ -1,23 +1,23 @@
 module.exports = (sequelize, Sequelize) => {
-  const Table = sequelize.define("transactionDetails", {
+  const Table = sequelize.define("tax", {
     id: {
       type: Sequelize.INTEGER(11),
       allownull:false,
       autoIncrement:true,
       primaryKey: true
     },
-    credit: {
-      type: Sequelize.DOUBLE(),
+    name: {
+      type: Sequelize.STRING(),
       allowNull:false,
       validate:{
-        notNull:{ args: true, msg: "Amount cannot be empty !!"}
+        notNull:{ args: true, msg: "Name cannot be empty !!"}
       }
     },
-    debit: {
+    percentage: {
       type: Sequelize.DOUBLE(),
       allowNull:false, 
       validate:{
-        notNull:{ args: true, msg: "Amount cannot be empty !!"}
+        notNull:{ args: true, msg: "Percentage cannot be empty !!"}
       }
     },
     isActive: {

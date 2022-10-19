@@ -5,6 +5,7 @@ const Op = require('sequelize').Op;
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const accountService = require('../../service/account.service');
+const taxService = require('../../service/tax.service');
 
 module.exports.dashboard = async (req, res, next) => {
   res.locals = {
@@ -29,8 +30,7 @@ module.exports.chartOfAccount = async (req, res, next) => {
 module.exports.chartOfAccountListByParentId = async (req, res, next) => {
   accountService.chartOfAccountDDByParentId(req.params.id).then(chartOfAccountDDByParentId=>{
     res.status(200).send({ data:chartOfAccountDDByParentId});
-  })
-  
+  });
 }
 
 module.exports.newchartOfAccount = async (req, res, next) => {
@@ -106,19 +106,26 @@ module.exports.newchartOfAccount_Post = async (req, res, next) => {
 module.exports.newTransaction = async (req, res, next) => {
     await accountService.transactionType().then(async types=>{
       await accountService.chartOfAccountDDByBaseCode(enumm.AccountHead.Assets.value).then(async assets=>{
-        await accountService.chartOfAccountDD().then(coaAll=>{
-          res.locals = {
-            title: 'Transaction',
-            toast_Msg:res.locals.toast_Msg,
-            transactionType:types,
-            assets:assets,
-            coaAll:coaAll,
-            incomeCode:enumm.AccountHead.Income.value
-          };
-          res.render('Transaction/create');
+        await accountService.chartOfAccountDD().then(async coaAll=>{
+          await taxService.getTaxDD().then(taxAll=>{
+            res.locals = {
+              title: 'Transaction',
+              toast_Msg:res.locals.toast_Msg,
+              transactionType:types,
+              assets:assets,
+              coaAll:coaAll,
+              incomeCode:enumm.AccountHead.Income.value,
+              taxAll:taxAll
+            };
+            res.render('Transaction/create');
+          })
         })
       })
     })
+}
+
+module.exports.newTransaction_Post = async (req, res, next) => {
+  console.log(req.body);
 }
 
 module.exports.logout = async (req, res, next) => {

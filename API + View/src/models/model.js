@@ -42,6 +42,7 @@ db.Currency = require("./currency.model")(sequelize, Sequelize);
 db.ChartOfAccount = require("./chartOfAccount.model")(sequelize, Sequelize);
 db.Transaction = require("./transaction.model")(sequelize, Sequelize);
 db.TransactionDetails = require("./transactionDetails.model")(sequelize, Sequelize);
+db.Tax = require("./tax.model")(sequelize, Sequelize);
 
 //Associations
 
@@ -90,6 +91,9 @@ db.Transaction.hasMany(db.TransactionDetails);
 
 db.TransactionDetails.belongsTo(db.ChartOfAccount,{ foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
 db.ChartOfAccount.hasMany(db.TransactionDetails);
+
+db.TransactionDetails.belongsTo(db.Tax,{ foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
+db.Tax.hasMany(db.TransactionDetails);
 
 // db.sequelize.sync();
 
