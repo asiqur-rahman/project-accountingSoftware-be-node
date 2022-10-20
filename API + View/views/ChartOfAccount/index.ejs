@@ -113,33 +113,36 @@
         <summary>Accounts</summary>
         <ul>
           <% if(locals.data)
-        {for(var i=0; i<data.length; i++){%>
-            
-            <li>
-              <details>
-                <summary><%=data[i].name%></summary>
-                <ul>
-                  <% if(data[i].childs) {for(var j=0; j<data[i].childs.length; j++){%>
-                    
-                    <% if(data[i].childs[j].childs){%>
-                      <li>
-                        <details>
-                          <summary><%=data[i].childs[j].name%></summary>
-                          <ul>
-                              <% for(var k=0; k<data[i].childs[j].childs.length; k++){%>
-                                  <li><%=data[i].childs[j].childs[k].name%></li>
-                              <%}%>
-                          </ul>
-                        </details>
-                      </li>
-                    <%}else{%>
-                      <li><%=data[i].childs[j].name%></li>
-                    <%}%>
-                <%}}%>
-                </ul>
-              </details>
-            </li>
-        <%}}%>
+            {for(var i=0; i<data.length; i++){%>
+              <li>
+                <details>
+                  <% if(data[i].childs) { %>
+                  <summary><%=data[i].name%></summary>
+                  <ul>
+                    <% for(var j=0; j<data[i].childs.length; j++){%>
+                      
+                      <% if(data[i].childs[j].childs){%>
+                        <li>
+                          <details>
+                            <summary><%=data[i].childs[j].name%></summary>
+                            <ul>
+                                <% for(var k=0; k<data[i].childs[j].childs.length; k++){%>
+                                    <li><%=data[i].childs[j].childs[k].name%></li>
+                                <%}%>
+                            </ul>
+                          </details>
+                        </li>
+                      <%}else{%>
+                        <li><%=data[i].childs[j].name%></li>
+                      <%}%>
+                  <%}%>
+                  </ul>
+                  <%}else{%>
+                    <li><%=data[i].childs[j].name%></li>
+                  <%}%>
+                </details>
+              </li>
+          <%}}%>
           <!-- <li>
             <details>
               <summary>Gas giants</summary>
