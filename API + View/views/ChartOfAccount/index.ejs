@@ -1,68 +1,149 @@
 <%- contentFor('HeaderCss') %>
+
 <style>
-.tree, .tree ul {
-    margin:0;
-    padding:0;
-    list-style:none
+
+ol, ul {
+  list-style: none;
 }
-.tree ul {
-    margin-left:1em;
-    position:relative
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
 }
-.tree ul ul {
-    margin-left:.5em
+
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
 }
-.tree ul:before {
-    content:"";
-    display:block;
-    width:0;
-    position:absolute;
-    top:0;
-    bottom:0;
-    left:0;
-    border-left:1px solid
+
+q, blockquote {
+  quotes: none;
 }
-.tree li {
-    margin:0;
-    padding:0 1em;
-    line-height:2em;
-    color:#369;
-    font-weight:700;
-    position:relative;
-    font-size: 20px;
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
 }
-.tree ul li:before {
-    content:"";
-    display:block;
-    width:10px;
-    height:0;
-    border-top:1px solid;
-    margin-top:-1px;
-    position:absolute;
-    top:1em;
-    left:0
+
+a img {
+  border: none;
 }
-.tree ul li:last-child:before {
-    background:#fff;
-    height:auto;
-    top:1em;
-    bottom:0
+
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+  display: block;
 }
-.indicator {
-    margin-right:5px;
+
+/* fontawesome */
+[class*="fa-"]:before {
+  font-family: 'FontAwesome', sans-serif;
 }
-.tree li a {
-    text-decoration: none;
-    color:#369;
+
+.coaDiv {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1em;
+  text-align: center;
+  color: #444444;
 }
-.tree li button, .tree li button:active, .tree li button:focus {
-    text-decoration: none;
-    color:#369;
-    border:none;
-    background:transparent;
-    margin:0px 0px 0px 0px;
-    padding:0px 0px 0px 0px;
-    outline: 0;
+
+h1 {
+  font-size: 2.5em;
+  margin: 2em 0 1em;
+}
+
+h2 {
+  margin-bottom: 3em;
+}
+
+em,
+strong {
+  font-weight: 700;
+}
+
+input {
+  display: none;
+}
+
+header p {
+  margin-bottom: 2em;
+}
+
+section {
+  margin-bottom: 2em;
+  padding: 0;
+}
+section:last-of-type {
+  margin-bottom: 0;
+}
+
+p {
+  line-height: 1.5em;
+}
+
+.container {
+  z-index: 1;
+  margin-bottom: 4em;
+}
+
+.pure-tree {
+  text-align: left;
+  display: block;
+}
+.pure-tree.main-tree {
+  width: 30em;
+  display: inline-block;
+}
+.pure-tree:not(.main-tree) {
+  padding-left: 2em;
+}
+.pure-tree:not(.main-tree) li {
+  overflow: hidden;
+  height: 0;
+  display: block;
+}
+.pure-tree label {
+  display: block;
+  cursor: pointer;
+  color: #717780;
+  border-bottom: 1px dashed #B0B9C5;
+  padding: 1.125em 1.125em 1.125em 0;
+}
+.pure-tree label:before {
+  width: 1em;
+  height: 1em;
+  line-height: 1em;
+  display: inline-block;
+  font-family: 'FontAwesome', sans-serif;
+  content: "\f114";
+  padding-right: .75em;
+}
+.pure-tree label:hover {
+  color: #434a58;
+  border-bottom-color: #434a58;
+}
+.pure-tree .pure-tree_link a {
+  padding: 1.500em 1.125em 0.750em 0;
+  display: block;
+  border-radius: .2em;
+  color: #717780;
+  text-decoration: none;
+}
+.pure-tree .pure-tree_link a:hover {
+  color: #434a58;
+}
+.pure-tree.nested {
+  padding-left: 1.7em;
+}
+.pure-tree [type="checkbox"] {
+  display: none;
+}
+.pure-tree [type="checkbox"]:checked + label {
+  color: #434a58;
+  border-bottom-color: #434a58;
+}
+.pure-tree [type="checkbox"]:checked ~ ul > li {
+  height: auto;
 }
 </style>
 
@@ -87,132 +168,175 @@
 <!-- end page title -->
 
 <%- contentFor('body') %>
-
-<div class="col-md-4">
-    <ul id="tree1">
-        <% if(locals.data)
-        {for(var i=0; i<data.length; i++){%>
-            <li><a href="#"><%=data[i].name%></a>
-                <ul>
-                    <% if(data[i].childs) {for(var j=0; j<data[i].childs.length; j++){%>
-                        <li><%=data[i].childs[j].name%></li>
-                        <% if(data[i].childs[j].childs){%>
-                            <ul>
-                                <% for(var k=0; k<data[i].childs[j].childs.length; k++){%>
-                                    <li><%=data[i].childs[j].childs[k].name%></li>
-                                <%}%>
-                            </ul>
-                        <%}%>
-                    <%}}%>
-                </ul>
+<div class="col-md-12 coaDiv">
+<ul id="compositions-list" class="pure-tree main-tree">
+    <li>
+      <input type="checkbox" id="trigger-views" checked="checked">
+      <label for="trigger-views">views</label>
+      <ul class="pure-tree">
+        <li class="pure-tree_link"><a href="" title="index.jade" target="_blank">index.html</a></li>
+        <li>
+          <input type="checkbox" id="trigger-layout">
+          <label for="trigger-layout">layout</label>
+          <ul class="pure-tree">
+            <li>
+              <input type="checkbox" id="trigger-base">
+              <label for="trigger-base">base</label>
+              <ul class="pure-tree">
+                <li class="pure-tree_link"><a href="" title="index.jade" target="_blank">index.html</a></li>
+              </ul>
             </li>
-        <%}}%>
-
-        <li><a href="#">TECH</a>
-
-            <ul>
-                <li>Company Maintenance</li>
-                <li>Employees
-                    <ul>
-                        <li>Reports
-                            <ul>
-                                <li>Report1</li>
-                                <li>Report2</li>
-                                <li>Report3</li>
-                            </ul>
-                        </li>
-                        <li>Employee Maint.</li>
-                    </ul>
-                </li>
-                <li>Human Resources</li>
-            </ul>
+            <li>
+              <input type="checkbox" id="trigger-footer">
+              <label for="trigger-footer">footer</label>
+              <ul class="pure-tree">
+                <li class="pure-tree_link"><a href="" title="index.jade" target="_blank">index.html</a></li>
+              </ul>
+            </li>
+          </ul>
         </li>
-        <!-- <li>XRP
-            <ul>
-                <li>Company Maintenance</li>
-                <li>Employees
-                    <ul>
-                        <li>Reports
-                            <ul>
-                                <li>Report1</li>
-                                <li>Report2</li>
-                                <li>Report3</li>
-                            </ul>
-                        </li>
-                        <li>Employee Maint.</li>
-                    </ul>
+        <li>
+          <input type="checkbox" id="trigger-partials">
+          <label for="trigger-partials">partials</label>
+          <ul class="pure-tree">
+            <li>
+              <input type="checkbox" id="trigger-header">
+              <label for="trigger-header">header</label>
+              <ul class="pure-tree">
+                <li class="pure-tree_link"><a href="" title="index.jade" target="_blank">index.html</a></li>
+              </ul>
+            </li>
+            <li>
+              <input type="checkbox" id="trigger-list">
+              <label for="trigger-list">list</label>
+              <ul class="pure-tree">
+                <li class="pure-tree_link"><a href="" title="index.jade" target="_blank">index.html</a></li>
+              </ul>
+            </li>
+            <li>
+              <input type="checkbox" id="trigger-message">
+              <label for="trigger-message">message</label>
+              <ul class="pure-tree">
+                <li class="pure-tree_link"><a href="" title="index.jade" target="_blank">index.html</a></li>
+              </ul>
+            </li>
+            <li>
+              <input type="checkbox" id="trigger-panel">
+              <label for="trigger-panel">panel</label>
+              <ul class="pure-tree">
+                <li class="pure-tree_link"><a href="" title="index.jade" target="_blank">index.html</a></li>
+              </ul>
+            </li>
+            <li>
+              <input type="checkbox" id="trigger-prompt">
+              <label for="trigger-prompt">prompt</label>
+              <ul class="pure-tree">
+                <li class="pure-tree_link"><a href="" title="index.jade" target="_blank">index.html</a></li>
+              </ul>
+            </li>
+            <li>
+              <input type="checkbox" id="trigger-sub-header">
+              <label for="trigger-sub-header">sub-header</label>
+              <ul class="pure-tree">
+                <li class="pure-tree_link"><a href="" title="index.jade" target="_blank">index.html</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <input type="checkbox" id="trigger-ui">
+          <label for="trigger-ui">ui</label>
+          <ul class="pure-tree">
+            <li>
+              <input type="checkbox" id="trigger-box-color">
+              <label for="trigger-box-color">box-color</label>
+              <ul class="pure-tree">
+                <li class="pure-tree_link"><a href="" title="index.jade" target="_blank">index.html</a></li>
+              </ul>
+            </li>
+            <li>
+              <input type="checkbox" id="trigger-button">
+              <label for="trigger-button">button</label>
+              <ul class="pure-tree">
+                <li class="pure-tree_link"><a href="" title="index.jade" target="_blank">index.html</a></li>
+              </ul>
+            </li>
+            <li>
+              <input type="checkbox" id="trigger-charts">
+              <label for="trigger-charts">charts</label>
+              <ul class="pure-tree">
+                <li>
+                  <input type="checkbox" id="trigger-border">
+                  <label for="trigger-border">border</label>
+                  <ul class="pure-tree">
+                    <li class="pure-tree_link"><a href="" title="index.jade" target="_blank">index.html</a></li>
+                  </ul>
                 </li>
-                <li>Human Resources</li>
-            </ul>
-        </li> -->
-    </ul>
+                <li>
+                  <input type="checkbox" id="trigger-progress">
+                  <label for="trigger-progress">progress</label>
+                  <ul class="pure-tree">
+                    <li class="pure-tree_link"><a href="" title="index.jade" target="_blank">index.html</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <input type="checkbox" id="trigger-check">
+              <label for="trigger-check">check</label>
+              <ul class="pure-tree">
+                <li class="pure-tree_link"><a href="" title="index.jade" target="_blank">index.html</a></li>
+              </ul>
+            </li>
+            <li>
+              <input type="checkbox" id="trigger-dropdown">
+              <label for="trigger-dropdown">dropdown</label>
+              <ul class="pure-tree">
+                <li class="pure-tree_link"><a href="" title="index.jade" target="_blank">index.html</a></li>
+              </ul>
+            </li>
+            <li>
+              <input type="checkbox" id="trigger-input">
+              <label for="trigger-input">input</label>
+              <ul class="pure-tree">
+                <li class="pure-tree_link"><a href="" title="index.jade" target="_blank">index.html</a></li>
+              </ul>
+            </li>
+            <li>
+              <input type="checkbox" id="trigger-radio">
+              <label for="trigger-radio">radio</label>
+              <ul class="pure-tree">
+                <li class="pure-tree_link"><a href="" title="index.jade" target="_blank">index.html</a></li>
+              </ul>
+            </li>
+            <li>
+              <input type="checkbox" id="trigger-rating-stars">
+              <label for="trigger-rating-stars">rating-stars</label>
+              <ul class="pure-tree">
+                <li class="pure-tree_link"><a href="" title="index.jade" target="_blank">index.html</a></li>
+              </ul>
+            </li>
+            <li>
+              <input type="checkbox" id="trigger-textarea">
+              <label for="trigger-textarea">textarea</label>
+              <ul class="pure-tree">
+                <li class="pure-tree_link"><a href="" title="index.jade" target="_blank">index.html</a></li>
+              </ul>
+            </li>
+            <li>
+              <input type="checkbox" id="trigger-toggle">
+              <label for="trigger-toggle">toggle</label>
+              <ul class="pure-tree">
+                <li class="pure-tree_link"><a href="" title="index.jade" target="_blank">index.html</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+</ul>
 </div>
-<!-- end row -->
-
 <%- contentFor('FooterJs') %>
 
-<script>
-    
-
-
-//Initialization of treeviews
-$(function(){
-$.fn.extend({
-    treed: function (o) {
-      
-      var openedClass = 'glyphicon-minus-sign';
-      var closedClass = 'glyphicon-plus-sign';
-      
-      if (typeof o != 'undefined'){
-        if (typeof o.openedClass != 'undefined'){
-        openedClass = o.openedClass;
-        }
-        if (typeof o.closedClass != 'undefined'){
-        closedClass = o.closedClass;
-        }
-      };
-      
-        //initialize each of the top levels
-        var tree = $(this);
-        tree.addClass("tree");
-        tree.find('li').has("ul").each(function () {
-            var branch = $(this); //li with children ul
-            branch.prepend("<i class='indicator glyphicon " + closedClass + "'></i>");
-            branch.addClass('branch');
-            branch.on('click', function (e) {
-                if (this == e.target) {
-                    var icon = $(this).children('i:first');
-                    icon.toggleClass(openedClass + " " + closedClass);
-                    $(this).children().children().toggle();
-                }
-            })
-            branch.children().children().toggle();
-        });
-        //fire event from the dynamically added icon
-      tree.find('.branch .indicator').each(function(){
-        $(this).on('click', function () {
-            $(this).closest('li').click();
-        });
-      });
-        //fire event to open branch if the li contains an anchor instead of text
-        tree.find('.branch>a').each(function () {
-            $(this).on('click', function (e) {
-                $(this).closest('li').click();
-                e.preventDefault();
-            });
-        });
-        //fire event to open branch if the li contains a button instead of text
-        tree.find('.branch>button').each(function () {
-            $(this).on('click', function (e) {
-                $(this).closest('li').click();
-                e.preventDefault();
-            });
-        });
-    }
-});
-    $('#tree1').treed({openedClass:'uil-play', closedClass:'uil-play'});
-})
-
-</script>
 
 <%- contentFor('BottomJs') %>

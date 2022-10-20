@@ -12,6 +12,7 @@ const session = require('express-session');
 const bodyParser = require('body-parser');
 const flash = require('connect-flash');
 const i18n = require("i18n-express");
+var minifyHTML = require('express-minify-html-2');
 const Logger = require('./src/externalService/console.log.service');
 const log = new Logger('index.js');
 //#endregion
@@ -28,6 +29,21 @@ var sslOptions = {
 
 //#region Application Configuration
 app.use(compression()); // compress all responses
+app.use(minifyHTML({ // minify all html responsesls
+    override:      false,
+    exception_url: [
+        '/\<%.*?\%>/i',
+        /\<%.*?\%>/i, // Regex.
+    ],
+    htmlMinifier: {
+        removeComments:            true,
+        collapseWhitespace:        true,
+        collapseBooleanAttributes: true,
+        removeAttributeQuotes:     true,
+        removeEmptyAttributes:     true,
+        minifyJS:                  true
+    }
+}));
 
 app.use(session({
   key: config.appSettings.SECRET_KEY,

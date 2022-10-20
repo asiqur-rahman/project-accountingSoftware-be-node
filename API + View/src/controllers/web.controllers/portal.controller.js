@@ -8,6 +8,7 @@ const accountService = require('../../service/account.service');
 const transactionService = require('../../service/transaction.service');
 const taxService = require('../../service/tax.service');
 
+//#region Dashboard
 module.exports.dashboard = async (req, res, next) => {
   res.locals = {
       title: 'Dashboard',
@@ -15,6 +16,9 @@ module.exports.dashboard = async (req, res, next) => {
   };
   res.render('Dashboard/index');
 }
+//#endregion
+
+//#region Chart of Account
 
 module.exports.chartOfAccount = async (req, res, next) => {
   accountService.getTreeWiseData().then(data=>{
@@ -34,7 +38,7 @@ module.exports.chartOfAccountListByParentId = async (req, res, next) => {
   });
 }
 
-module.exports.newchartOfAccount = async (req, res, next) => {
+module.exports.newChartOfAccount_Get = async (req, res, next) => {
     accountService.chartOfAccountDD().then(chartOfAccountDD=>{
       accountService.currencyDD().then(currencyDD=>{
       res.locals = {
@@ -48,7 +52,7 @@ module.exports.newchartOfAccount = async (req, res, next) => {
   })
 }
 
-module.exports.coaByBaseCode = async (req, res, next) => {
+module.exports.chartOfAccountByBaseCode = async (req, res, next) => {
   console.log("Called coaByBaseCode")
   await accountService.chartOfAccountDDByBaseCode(req.params.code)
   .then(data=>{
@@ -103,6 +107,9 @@ module.exports.newchartOfAccount_Post = async (req, res, next) => {
   }
 }
 
+//#endregion
+
+//#region Transactions
 module.exports.newTransaction = async (req, res, next) => {
     await accountService.transactionType().then(async types=>{
       await accountService.chartOfAccountDDByBaseCode(enumm.AccountHead.Assets.value).then(async assets=>{
@@ -157,3 +164,5 @@ module.exports.logout = async (req, res, next) => {
   res.redirect('/auth/login');
   // res.render('Auth/auth-login', { 'message': req.flash('message'), 'error': req.flash('error') ,layout: false});
 };
+
+//#endregion
