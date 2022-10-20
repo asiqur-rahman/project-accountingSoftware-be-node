@@ -100,8 +100,12 @@ function confirmationCheck_ajax(url, method = 'GET', msg, tableId) {
                 beforeSend: function () {
                     Spinner.Show();
                 },
+                complete: function () {
+                    Spinner.Hide();
+                },
                 success: function (jsondata) {
-                    if (jsondata.status == "true") {
+                    debugger;
+                    if (jsondata.status == true) {
                         if(method=="DELETE")$('#' + tableId).DataTable().ajax.reload();
                         Swal.fire({
                             icon: 'success',
@@ -109,7 +113,6 @@ function confirmationCheck_ajax(url, method = 'GET', msg, tableId) {
                         })
 
                     } else {
-                        Spinner.Hide();
                         Swal.fire({
                             icon: 'error',
                             title: 'Internal Error ! '
