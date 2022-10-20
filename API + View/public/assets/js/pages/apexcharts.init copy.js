@@ -1,8 +1,8 @@
 /*
-Template Name: Minible - Admin & Dashboard Template
-Author: Themesbrand
-Website: https://themesbrand.com/
-Contact: themesbrand@gmail.com
+Template Name: BrainTechSolution
+Author: BrainTechSolution
+Website: https://braintechsolution.com/
+Contact: braintechsoln@gmail.com
 File: Apex Chart init js
 */
 

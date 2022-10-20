@@ -6,191 +6,6 @@ Contact: support@BrainTechSolution.com
 File: Dashboard
 */
 
-
-//
-// Total Revenue Chart
-//
-var options1 = {
-    series: [{
-        data: [25, 66, 41, 89, 63, 25, 44]
-    }],
-    fill: {
-        colors: ['#5b73e8']
-    },
-    chart: {
-        type: 'bar',
-        width: 70,
-        height: 40,
-        sparkline: {
-            enabled: true
-        }
-    },
-    plotOptions: {
-        bar: {
-            columnWidth: '50%'
-        }
-    },
-    labels: [1, 2, 3, 4, 5, 6, 7],
-    xaxis: {
-        crosshairs: {
-            width: 1
-        },
-    },
-    tooltip: {
-        fixed: {
-            enabled: false
-        },
-        x: {
-            show: false
-        },
-        y: {
-            title: {
-                formatter: function (seriesName) {
-                    return ''
-                }
-            }
-        },
-        marker: {
-            show: false
-        }
-    }
-};
-
-var chart1 = new ApexCharts(document.querySelector("#total-revenue-chart"), options1);
-chart1.render();
-
-//
-// Orders Chart
-//
-var options = {
-    fill: {
-        colors: ['#34c38f']
-    },
-    series: [70],
-    chart: {
-        type: 'radialBar',
-        width: 45,
-        height: 45,
-        sparkline: {
-            enabled: true
-        }
-    },
-    dataLabels: {
-        enabled: false
-    },
-    plotOptions: {
-        radialBar: {
-            hollow: {
-                margin: 0,
-                size: '60%'
-            },
-            track: {
-                margin: 0
-            },
-            dataLabels: {
-                show: false
-            }
-        }
-    }
-};
-
-var chart = new ApexCharts(document.querySelector("#orders-chart"), options);
-chart.render();
-
-
-// 
-// Customers Chart
-//
-
-var options = {
-    fill: {
-        colors: ['#5b73e8']
-    },
-    series: [55],
-    chart: {
-        type: 'radialBar',
-        width: 45,
-        height: 45,
-        sparkline: {
-            enabled: true
-        }
-    },
-    dataLabels: {
-        enabled: false
-    },
-    plotOptions: {
-        radialBar: {
-            hollow: {
-                margin: 0,
-                size: '60%'
-            },
-            track: {
-                margin: 0
-            },
-            dataLabels: {
-                show: false
-            }
-        }
-    }
-};
-
-var chart = new ApexCharts(document.querySelector("#customers-chart"), options);
-chart.render();
-
-
-// 
-// Growth Chart
-//
-var options2 = {
-    series: [{
-        data: [25, 66, 41, 89, 63, 25, 44, 12, 36, 9, 54]
-    }],
-    fill: {
-        colors: ['#f1b44c']
-    },
-    chart: {
-        type: 'bar',
-        width: 70,
-        height: 40,
-        sparkline: {
-            enabled: true
-        }
-    },
-    plotOptions: {
-        bar: {
-            columnWidth: '50%'
-        }
-    },
-    labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
-    xaxis: {
-        crosshairs: {
-            width: 1
-        },
-    },
-    tooltip: {
-        fixed: {
-            enabled: false
-        },
-        x: {
-            show: false
-        },
-        y: {
-            title: {
-                formatter: function (seriesName) {
-                    return ''
-                }
-            }
-        },
-        marker: {
-            show: false
-        }
-    }
-};
-
-var chart2 = new ApexCharts(document.querySelector("#growth-chart"), options2);
-chart2.render();
-
-
 //
 // Sales Analytics Chart
 
@@ -212,19 +27,11 @@ var options = {
             columnWidth: '30%'
         }
     },
-    colors: ['#C70039', '#229D18', '#2535FF'],
+    colors: ['#5b73e8'],
     series: [{
-        name: 'Cash',
+        name: 'Sale',
         type: 'area',
-        data: $("#ToTal_Cash_7").val().split(",") //[23, 11, 22, 27, 13, 22, 37]
-    }, {
-        name: 'Cheque',
-        type: 'area',
-        data: $("#ToTal_Cheque_7").val().split(",") //[23, 11, 22, 27, 13, 22, 37]
-    }, {
-        name: 'Card',
-        type: 'area',
-        data: $("#ToTal_Card_7").val().split(",") //[23, 11, 22, 27, 13, 22, 37]
+        data: $("#ToTal_Sales_7").val()?$("#ToTal_Sales_7").val().split(","):[0] //[23, 11, 22, 27, 13, 22, 37]
     }],
     fill: {
         opacity: [0.33, 0.33, 0.33],
@@ -282,20 +89,13 @@ var chart = new ApexCharts(
 function changeApexData(dataFor, dataShowingFor){
     $("#apextChartDataFor").html(dataShowingFor+' <i class="mdi mdi-chevron-down ms-1"></i>');
     $.getJSON('/portal-get-dashboard-apexData/'+dataFor, function(response) {
+        const data= response.sales?response.sales.split(","):[0];
         chart.updateOptions({
             labels: response.dates.split(","),//['01/01/2003', '02/01/2003', '03/01/2003', '04/01/2003', '05/01/2003', '06/01/2003', '07/01/2003'],
             series: [{
-                name: 'Cash',
+                name: 'Sale',
                 type: 'area',
-                data: response.cashes.split(",")//[23, 11, 22, 27, 13, 22, 37]
-            },{
-                name: 'Cheque',
-                type: 'area',
-                data: response.cheques.split(",")//[23, 11, 22, 27, 13, 22, 37]
-            },{
-                name: 'Card',
-                type: 'area',
-                data: response.cards.split(",")//[23, 11, 22, 27, 13, 22, 37]
+                data: data//[23, 11, 22, 27, 13, 22, 37]
             }],
          });
       });
