@@ -92,7 +92,7 @@ db.Transaction.hasMany(db.TransactionDetails);
 db.TransactionDetails.belongsTo(db.ChartOfAccount,{ foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
 db.ChartOfAccount.hasMany(db.TransactionDetails);
 
-db.TransactionDetails.belongsTo(db.Tax,{ foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
+db.TransactionDetails.belongsTo(db.Tax,{ foreignKey: { allowNull: true }, onDelete: 'CASCADE' });
 db.Tax.hasMany(db.TransactionDetails);
 
 // db.sequelize.sync();

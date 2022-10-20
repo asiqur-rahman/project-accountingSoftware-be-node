@@ -28,7 +28,7 @@
                 <!-- <h4 class="card-title mb-4">Invoice Details</h4> enctype="multipart/form-data" --> 
                 <form class="repeater validate-this-form transactionForm" method="post">
                     <div data-repeater-list="transactionDetails" class="row">
-                        <input class="form-control" type="number" name="id" id="id" value="<%= typeof model!='undefined' ? model.id : '0' %>" readonly hidden>
+                        <input class="form-control" type="number" name="id" id="id" value="<%= typeof model!='undefined' ? model.id : '' %>" readonly hidden>
                         <input class="form-control" type="number" name="parentId" id="parentId" value="<%= typeof model!='undefined' ? model.parentId : '0' %>" readonly hidden>
                         <input class="form-control" type="number" name="isItIncome" id="isItIncome" value="<%= typeof model!='undefined' ? model.isItIncome : '0' %>" readonly hidden>
                         <div class="col-md-6 motherParent0">
@@ -85,7 +85,7 @@
                                         <input type="text" class="form-control validate_this" placeholder="Date"
                                             data-date-format="mm/dd/yyyy" data-date-container='#datepicker2' data-provide="datepicker"
                                             data-date-autoclose="true" autocomplete="off"
-                                            name="date" id="date" value="<%= typeof model!='undefined' ? model.date : '' %>">
+                                            name="dateTime" id="dateTime" value="<%= typeof model!='undefined' ? model.date : '' %>">
         
                                         <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                     </div>
@@ -203,12 +203,12 @@
         $.ajax({
             type: "GET",
             url: `/portal/coaByBaseCode/${$(e).val()}`,
-            beforeSend: function () {
-                Spinner.Show();
-            },
-            complete: function () {
-                Spinner.Hide();
-            },
+            // beforeSend: function () {
+            //     Spinner.Show();
+            // },
+            // complete: function () {
+            //     Spinner.Hide();
+            // },
             success: function(data){
                 if(data){
                     data.forEach(item => {

@@ -54,4 +54,35 @@ service.create = async (req) => {
     });
 };
 
+service.createWithDetails = async (req) => {
+    return new Promise(async (resolve, reject) => {
+        req.body.userId=req.currentUser;
+        await db.Transaction.create(req.body,{isNewRecord:true}).then(async data => {
+            console.log("data",data)
+            const details = [];
+            req.body.transactionDetails.forEach(item=>{
+                details.push({
+                    chartOfAccountId:item.chartOfAccountId,
+                    taxId:item.taxId,
+                    debit:item.debit,
+                    credit:item.credit,
+                    transactionId:data.id
+                })
+            });
+            console.log(details);
+            await db.TransactionDetails.bulkCreate(details).then(result =>{
+                resolve({
+                    status: 201,
+                    message: 'Transaction was created, Id:' + data.id
+                });
+            });
+        }).catch(function (err) {
+            reject({
+                status: 502,
+                message: err.message
+            });
+        });
+    });
+};
+
 module.exports = service;

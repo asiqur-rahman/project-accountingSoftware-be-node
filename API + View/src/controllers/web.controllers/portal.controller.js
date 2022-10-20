@@ -5,6 +5,7 @@ const Op = require('sequelize').Op;
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const accountService = require('../../service/account.service');
+const transactionService = require('../../service/transaction.service');
 const taxService = require('../../service/tax.service');
 
 module.exports.dashboard = async (req, res, next) => {
@@ -60,47 +61,46 @@ module.exports.coaByBaseCode = async (req, res, next) => {
 module.exports.newchartOfAccount_Post = async (req, res, next) => {
   const area = 'Chart Of Account';
   req.body.userId=req.currentUser;
-  console.log(req.currentUser)
-    if (req.body.id && req.body.id > 0) {
-        await db.ChartOfAccount.update(req.body, {
-            where: {
-                id: req.body.id
-            }
-        }).then(() => {
-            req.session.notification=[enumm.notification.Success,'Chart Of Account updated successfully !'];
-            res.redirect(`/portal/chartOfAccount`);
-        }).catch(function (err) {
-            res.locals = {
-                title: `${area} Create`,
-                model: req.body
-            };
-            req.session.notification=[enumm.notification.Error,'Chart Of Account not updated !'];
-            res.render(`/portal/create`);
-        });
-    } else {
-      accountService.getById(req.body.parentId).then(async data=>{
-        req.body.name=`${data.name}:${req.body.name}`;
-        req.body.level=data.name.split(':').length;
-        req.body.baseCode=data.baseCode;
-        await db.ChartOfAccount.create(req.body)
-            .then((result) => {
-                if (result) {
-                    res.locals = {
-                        title: `${area} Create`,
-                    };
-                    req.session.notification=[enumm.notification.Success,'Chart Of Account created successfully !'];
-                    res.redirect(`/portal/chartOfAccount`);
-                } else {
-                    res.locals = {
-                        title: `${area} Create`,
-                        model: req.body
-                    };
-                    req.session.notification=[enumm.notification.Error,'Chart Of Account not created !'];
-                    res.render(`/portal/create`);
-                }
-            });
-      })
-    }
+  if (req.body.id && req.body.id > 0) {
+      await db.ChartOfAccount.update(req.body, {
+          where: {
+              id: req.body.id
+          }
+      }).then(() => {
+          req.session.notification=[enumm.notification.Success,'Chart Of Account updated successfully !'];
+          res.redirect(`/portal/chartOfAccount`);
+      }).catch(function (err) {
+          res.locals = {
+              title: `${area} Create`,
+              model: req.body
+          };
+          req.session.notification=[enumm.notification.Error,'Chart Of Account not updated !'];
+          res.render(`/portal/create`);
+      });
+  } else {
+    accountService.getById(req.body.parentId).then(async data=>{
+      req.body.name=`${data.name}:${req.body.name}`;
+      req.body.level=data.name.split(':').length;
+      req.body.baseCode=data.baseCode;
+      await db.ChartOfAccount.create(req.body)
+          .then((result) => {
+              if (result) {
+                  res.locals = {
+                      title: `${area} Create`,
+                  };
+                  req.session.notification=[enumm.notification.Success,'Chart Of Account created successfully !'];
+                  res.redirect(`/portal/chartOfAccount`);
+              } else {
+                  res.locals = {
+                      title: `${area} Create`,
+                      model: req.body
+                  };
+                  req.session.notification=[enumm.notification.Error,'Chart Of Account not created !'];
+                  res.render(`/portal/create`);
+              }
+          });
+    })
+  }
 }
 
 module.exports.newTransaction = async (req, res, next) => {
@@ -126,6 +126,23 @@ module.exports.newTransaction = async (req, res, next) => {
 
 module.exports.newTransaction_Post = async (req, res, next) => {
   console.log(req.body);
+  if(req.body.isItIncome=='1'){
+    req.body.debitAccountId=req.body.accountToId;
+    req.body.creditAccountId=req.body.accountFromId;
+  }else{
+    req.body.debitAccountId=req.body.accountFromId;
+    req.body.creditAccountId=req.body.accountToId;
+  }
+
+  await transactionService.createWithDetails(req)
+    .then(result=>{
+      req.session.notification=[enumm.notification.Success,'Transaction created successfully !'];
+      return res.redirect(`/portal/new-transaction`);
+    }).catch(e=>{
+      console.log(e);
+      req.session.notification=[enumm.notification.Error,'Transaction not created !'];
+      return res.render(`/portal/new-transaction`);
+    });
 }
 
 module.exports.logout = async (req, res, next) => {
