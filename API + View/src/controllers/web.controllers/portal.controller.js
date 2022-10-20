@@ -3,11 +3,13 @@ const enumm = require('../../utils/enum.utils');
 const appConfig = require('../../../config/config.json');
 const sequelize = require('sequelize');
 const Op = require('sequelize').Op;
+const moment = require('moment');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const accountService = require('../../service/account.service');
 const transactionService = require('../../service/transaction.service');
 const taxService = require('../../service/tax.service');
+const { details } = require('@hapi/joi/lib/errors');
 
 //#region Dashboard
 module.exports.dashboard = async (req, res, next) => {
@@ -118,6 +120,10 @@ module.exports.transactionList = async (req, res, next) => {
   res.render('Transaction/index');
 }
 
+module.exports.transactionDelete = async (req, res, next) => {
+  console.log(req.params.id)
+}
+
 module.exports.newTransaction = async (req, res, next) => {
     await accountService.transactionType().then(async types=>{
       await accountService.chartOfAccountDDByBaseCode(enumm.AccountHead.Assets.value).then(async assets=>{
@@ -178,13 +184,13 @@ module.exports.transactionListData = async (req, res, next) => {
         {
           model: db.ChartOfAccount,
           attributes: ['name'],
-          as: 'reg',
+          as: 'creditAccount',
           where: { id: {[Op.col]: 'creditAccountId'} }
         },
         {
           model: db.ChartOfAccount,
           attributes: ['name'],
-          as: 'tmn',
+          as: 'debitAccount',
           where: { id: {[Op.col]: 'debitAccountId'} }
         }
     ],
@@ -195,11 +201,12 @@ module.exports.transactionListData = async (req, res, next) => {
         var count = req.query.start;
         detailsInfo.rows.forEach(detail => {
             detail.sl = ++count;
+            detail.dateTime= moment.utc(detail.dateTime).format("DD-MM-yyyy hh:mm:ss A");
         })
         console.log(detailsInfo);
         res.status(200).send({draw:req.query.draw,recordsTotal:detailsInfo.count,recordsFiltered:detailsInfo.count,data:detailsInfo.rows});
     } else {
-        res.status(200).send();
+        res.status(200).send([]);
     }
 });
 

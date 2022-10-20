@@ -76,46 +76,33 @@
                 "title": "#SL",
             },
             {
-                "data": "detailsInfo.name",
-                "title": "Full Name",
+                "data": "dateTime",
+                "title": "Date Time",
+            },
+            {
+                "data": "sl",
+                "title": "Credit Account",
                 "render": function (data, type, row, meta) {
-                    return `${row['detailsInfo.name']}`;
+                    return `${row['creditAccount.name']}`;
                 }
             },
             {
-                "data": "username",
-                "title": "Username",
-            },
-            {
-                "data": "role.name",
-                "title": "Role",
+                "data": "sl",
+                "title": "Debit Account",
                 "render": function (data, type, row, meta) {
-                    return `${row['role.name']}`;
+                    return `${row['debitAccount.name']}`;
                 }
             },
             {
-                "data": "detailsInfo.email",
-                "title": "Email",
-                "render": function (data, type, row, meta) {
-                    return `${row['detailsInfo.email']}`;
-                }
+                "data": "amount",
+                "title": "Amount",
             },
             {
                 "data": "id",
                 "title": "Action",
                 "render": function (data, type, row, meta) {
-                    if(row['role.code']==2){
                         return `<a class="btn btn-sm btn-success btn-soft-success waves-effect waves-light" href="/portal-user-create/${row['id']}">Update</a> 
-                        <button class="btn btn-sm btn-warning btn-soft-warning waves-effect waves-light" onclick='confirmationCheck("/portal-user-password-reset/${row['id']}","Are you sure to reset this password ?","Reset password will be sent to this email : ${row['detailsInfo.email']}")'>Reset Password</button>
-                        <button class="btn btn-sm btn-${row['isActive']==1?'primary':'danger'} btn-soft-${row['isActive']==1?'primary':'danger'} waves-effect waves-light" onclick='confirmationCheck("/portal-user-change-status/${row['id']}","Are you sure ?","This user will be in ${row['isActive']==1?'inactive':'active'} status from now on.")'>${row['isActive']==1?'Active':'InActive'}</button>
-                        <button class="btn btn-sm btn-danger btn-soft-danger waves-effect waves-light" onclick='confirmationCheck("/portal-employee-delete/${row['id']}","Admin delete confirmation !","Are you sure about this deletion ?")'>Delete</button>`
-                    }else{
-                        return `<a class="btn btn-sm btn-success btn-soft-success waves-effect waves-light" href="/portal-user-create/${row['id']}">Update</a> 
-                        <button class="btn btn-sm btn-warning btn-soft-warning waves-effect waves-light" onclick='confirmationCheck("/portal-user-password-reset/${row['id']}","Are you sure to reset this password ?","Reset password will be sent to this email : ${row['detailsInfo.email']}")'>Reset Password</button>
-                        <button class="btn btn-sm btn-${row['isActive']==1?'primary':'danger'} btn-soft-${row['isActive']==1?'primary':'danger'} waves-effect waves-light" onclick='confirmationCheck("/portal-user-change-status/${row['id']}","Are you sure ?","This user will be in ${row['isActive']==1?'inactive':'active'} status from now on.")'>${row['isActive']==1?'Active':'InActive'}</button>`
-                    }
-                    
-                    
+                        <button class="btn btn-sm btn-danger btn-soft-danger waves-effect waves-light" onclick='confirmationCheck("/portal/transaction-delete/${row['id']}","Delete Confirmation ?","Are you sure about the transaction deletion. ")'>Delete</button>`
                 }
             }
         ]

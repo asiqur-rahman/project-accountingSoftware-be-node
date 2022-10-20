@@ -82,13 +82,13 @@ db.User.hasMany(db.Transaction);
 // db.Transaction.belongsTo(db.ChartOfAccount,{ foreignKey: { name:'debitAccountId' }, onDelete: 'CASCADE' });
 // db.ChartOfAccount.hasMany(db.Transaction, { foreignKey: { name:'debitAccountId' }});
 
-db.Transaction.belongsTo(db.ChartOfAccount,{ as:'debitAccount' , onDelete: 'CASCADE' });
+db.Transaction.belongsTo(db.ChartOfAccount,{ as:'debitAccount', foreignKey:'debitAccountId' , onDelete: 'CASCADE' });
 // db.ChartOfAccount.hasMany(db.Transaction, { as: 'debitAccount' });
 
 // db.Transaction.belongsTo(db.ChartOfAccount,{ foreignKey: { name:'creditAccountId' }, onDelete: 'CASCADE' });
 // db.ChartOfAccount.hasMany(db.Transaction, { foreignKey: { name:'creditAccountId' }});
 
-db.Transaction.belongsTo(db.ChartOfAccount,{ as:'creditAccount' , onDelete: 'CASCADE' });
+db.Transaction.belongsTo(db.ChartOfAccount,{ as:'creditAccount',debitAccount:'creditAccountId' , onDelete: 'CASCADE' });
 // db.ChartOfAccount.hasMany(db.Transaction, { as:'creditAccount' });
 
 //TransactionDetails
