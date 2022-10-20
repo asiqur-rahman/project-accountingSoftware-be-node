@@ -2,7 +2,9 @@ const db = require('../models/model');
 const Logger = require('../externalService/console.log.service');
 var path = require('path');
 const log = new Logger(path.basename(__filename));
+const sequelize = require('sequelize');
 const bcrypt = require('bcryptjs');
+const moment = require('moment');
 const Op = require('sequelize').Op;
 const enumm = require('../utils/enum.utils');
 
@@ -50,6 +52,96 @@ service.create = async (req) => {
                 status: 502,
                 message: err.message
             });
+        });
+    });
+};
+
+service.delete = async (req) => {
+    return new Promise(async (resolve, reject) => {
+        await db.Transaction.destroy({
+            where: {
+                id: req.params.id
+            },
+        }).then(() => {
+            console.log("allOK")
+            resolve({
+                status: 200,
+                message: 'Transaction deleted successfully.'
+            });
+        }).catch(function (err) {
+            console.log("notOK")
+            reject({
+                status: 502,
+                message: err.message
+            });
+        });
+    });
+};
+
+
+service.indexData = async (req) => {
+    return new Promise(async (resolve, reject) => {
+        //-----------------Server side pagination----------------------
+        const order = req.query.columns[req.query.order[0].column].data=='sl'?[]:sequelize.literal(req.query.columns[req.query.order[0].column].data+" "+req.query.order[0].dir);//req.query.order[0].column=='0'?[]:[[req.query.columns[req.query.order[0].column].data,req.query.order[0].dir]];
+        var searchQuery=[];
+        req.query.columns.forEach(coloum => {
+            if(coloum.data!='sl' && coloum.data!='id')searchQuery.push(sequelize.col(coloum.data));
+        });
+        var where = {};
+        if(req.query.search.value!=''){
+            where = {
+                [Op.and]: [
+                    sequelize.where(sequelize.fn("concat",...searchQuery), "like", '%'+req.query.search.value+'%' )
+                    , {
+                    // roleId: {
+                    //     [Op.ne]: roleId
+                    // }
+                }]
+            }
+        }else{
+            where = {
+                [Op.and]: [ {
+                    // roleId: {
+                    //     [Op.ne]: roleId
+                    // }
+                }]
+            }
+        }
+        //-----------------Server side pagination----------------------
+
+        await db.Transaction.findAndCountAll({
+            offset: parseInt(req.query.start),
+            limit : parseInt(req.query.length),
+            // subQuery:false,
+            where: where,
+            include: [
+                {
+                model: db.ChartOfAccount,
+                attributes: ['name'],
+                as: 'creditAccount',
+                where: { id: {[Op.col]: 'creditAccountId'} }
+                },
+                {
+                model: db.ChartOfAccount,
+                attributes: ['name'],
+                as: 'debitAccount',
+                where: { id: {[Op.col]: 'debitAccountId'} }
+                }
+            ],
+            order: order,
+            raw: true
+        }).then(detailsInfo => {
+            if (detailsInfo.rows) {
+                var count = req.query.start;
+                detailsInfo.rows.forEach(detail => {
+                    detail.sl = ++count;
+                    detail.dateTime= moment.utc(detail.dateTime).format("DD-MM-yyyy hh:mm:ss A");
+                })
+                // console.log(detailsInfo);
+                resolve({draw:req.query.draw,recordsTotal:detailsInfo.count,recordsFiltered:detailsInfo.count,data:detailsInfo.rows});
+            } else {
+                resolve({count: 0,rows:[]});
+            }
         });
     });
 };

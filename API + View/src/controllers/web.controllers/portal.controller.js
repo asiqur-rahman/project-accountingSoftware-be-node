@@ -25,7 +25,6 @@ module.exports.dashboard = async (req, res, next) => {
 
 module.exports.chartOfAccount = async (req, res, next) => {
   accountService.getTreeWiseData().then(data=>{
-    console.log(data[0].childs);
     res.locals = {
       title: 'Dashboard',
       toast_Msg:res.locals.toast_Msg,
@@ -65,7 +64,6 @@ module.exports.chartOfAccountByBaseCode = async (req, res, next) => {
 }
 
 module.exports.newchartOfAccount_Post = async (req, res, next) => {
-  const area = 'Chart Of Account';
   req.body.userId=req.currentUser;
   if (req.body.id && req.body.id > 0) {
       await db.ChartOfAccount.update(req.body, {
@@ -121,7 +119,10 @@ module.exports.transactionList = async (req, res, next) => {
 }
 
 module.exports.transactionDelete = async (req, res, next) => {
-  console.log(req.params.id)
+  transactionService.delete(req).then((data)=>{
+    console.log(data)
+    res.status(200).send({status:true});
+  });
 }
 
 module.exports.newTransaction = async (req, res, next) => {
@@ -146,70 +147,9 @@ module.exports.newTransaction = async (req, res, next) => {
 }
 
 module.exports.transactionListData = async (req, res, next) => {
-
-  //-----------------Server side pagination----------------------
-  const order = req.query.columns[req.query.order[0].column].data=='sl'?[]:sequelize.literal(req.query.columns[req.query.order[0].column].data+" "+req.query.order[0].dir);//req.query.order[0].column=='0'?[]:[[req.query.columns[req.query.order[0].column].data,req.query.order[0].dir]];
-  var searchQuery=[];
-  req.query.columns.forEach(coloum => {
-      if(coloum.data!='sl' && coloum.data!='id')searchQuery.push(sequelize.col(coloum.data));
+  transactionService.indexData(req).then(data=>{
+    res.status(200).send(data);
   });
-  var where = {};
-  if(req.query.search.value!=''){
-      where = {
-          [Op.and]: [
-              sequelize.where(sequelize.fn("concat",...searchQuery), "like", '%'+req.query.search.value+'%' )
-              , {
-              // roleId: {
-              //     [Op.ne]: roleId
-              // }
-          }]
-      }
-  }else{
-      where = {
-          [Op.and]: [ {
-              // roleId: {
-              //     [Op.ne]: roleId
-              // }
-          }]
-      }
-  }
-  //-----------------Server side pagination----------------------
-
-  await db.Transaction.findAndCountAll({
-    offset: parseInt(req.query.start),
-    limit : parseInt(req.query.length),
-    // subQuery:false,
-    where: where,
-    include: [
-        {
-          model: db.ChartOfAccount,
-          attributes: ['name'],
-          as: 'creditAccount',
-          where: { id: {[Op.col]: 'creditAccountId'} }
-        },
-        {
-          model: db.ChartOfAccount,
-          attributes: ['name'],
-          as: 'debitAccount',
-          where: { id: {[Op.col]: 'debitAccountId'} }
-        }
-    ],
-    order: order,
-    raw: true
-}).then(detailsInfo => {
-    if (detailsInfo.rows) {
-        var count = req.query.start;
-        detailsInfo.rows.forEach(detail => {
-            detail.sl = ++count;
-            detail.dateTime= moment.utc(detail.dateTime).format("DD-MM-yyyy hh:mm:ss A");
-        })
-        console.log(detailsInfo);
-        res.status(200).send({draw:req.query.draw,recordsTotal:detailsInfo.count,recordsFiltered:detailsInfo.count,data:detailsInfo.rows});
-    } else {
-        res.status(200).send([]);
-    }
-});
-
 }
 
 module.exports.newTransaction_Post = async (req, res, next) => {

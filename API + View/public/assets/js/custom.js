@@ -46,9 +46,10 @@ function deleteConfirmation(url) {
         denyButtonText: `Delete`,
     }).then((result) => {
         if (result.isConfirmed) {
-            // Swal.fire('Changes are not saved', '', 'info')
+            // if(tableId!="")$('#' + tableId).DataTable().ajax.reload();
         } else if (result.isDenied) {
             window.location.href = url;
+            // Swal.fire('Changes are not saved', '', 'info')
         }
     })
 }
@@ -80,7 +81,7 @@ function confirmationCheck(url, title, msg = "") {
     })
 }
 
-function confirmationCheck_ajax(url, method = 'GET', msg) {
+function confirmationCheck_ajax(url, method = 'GET', msg, tableId) {
     Swal.fire({
         // position: 'top',
         title: msg,
@@ -95,16 +96,16 @@ function confirmationCheck_ajax(url, method = 'GET', msg) {
             await $.ajax({
                 type: method,
                 // url: `${window.location.href+url}`,
-                url: `http://localhost:2222${url}`,
+                url: `${url}`,
                 beforeSend: function () {
                     Spinner.Show();
                 },
                 success: function (jsondata) {
                     if (jsondata.status == "true") {
-
+                        if(method=="DELETE")$('#' + tableId).DataTable().ajax.reload();
                         Swal.fire({
                             icon: 'success',
-                            title: 'Reset Password sended successfully.'
+                            title: 'Changes are done successfully !.'
                         })
 
                     } else {
