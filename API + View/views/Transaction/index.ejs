@@ -102,7 +102,7 @@
                 "title": "Action",
                 "render": function (data, type, row, meta) {
                         return `<a class="btn btn-sm btn-success btn-soft-success waves-effect waves-light" href="/portal-user-create/${row['id']}">Update</a> 
-                        <button class="btn btn-sm btn-danger btn-soft-danger waves-effect waves-light" onclick='confirmationCheck_ajax("/portal/transaction-delete/${row['id']}","DELETE","Are you sure about the transaction deletion.","datatable-buttons")'>Delete</button>`
+                        <button class="btn btn-sm btn-danger btn-soft-danger waves-effect waves-light" onclick='confirmationCheck_ajax("/portal/transaction-delete/${row['id']}","DELETE","Are you sure about the transaction deletion.","datatable-buttons",false)'>Delete</button>`
                 }
             }
         ]

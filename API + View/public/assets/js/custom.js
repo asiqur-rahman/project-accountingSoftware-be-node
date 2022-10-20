@@ -81,7 +81,7 @@ function confirmationCheck(url, title, msg = "") {
     })
 }
 
-function confirmationCheck_ajax(url, method = 'GET', msg, tableId) {
+function confirmationCheck_ajax(url, method = 'GET', msg, tableId, showSpin=true) {
     Swal.fire({
         // position: 'top',
         title: msg,
@@ -98,10 +98,10 @@ function confirmationCheck_ajax(url, method = 'GET', msg, tableId) {
                 // url: `${window.location.href+url}`,
                 url: `${url}`,
                 beforeSend: function () {
-                    Spinner.Show();
+                    if(showSpin)Spinner.Show();
                 },
                 complete: function () {
-                    Spinner.Hide();
+                    if(showSpin)Spinner.Hide();
                 },
                 success: function (jsondata) {
                     debugger;
