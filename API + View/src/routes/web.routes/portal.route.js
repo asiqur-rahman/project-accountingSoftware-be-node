@@ -17,6 +17,8 @@ router.get('/coaByBaseCode/:code', awaitHandlerFactory(portalController.chartOfA
 router.get('/new-chartOfAccount', awaitHandlerFactory(portalController.newChartOfAccount_Get));
 router.post('/new-chartOfAccount', awaitHandlerFactory(portalController.newchartOfAccount_Post));
 
+router.get('/transaction-list', awaitHandlerFactory(portalController.transactionList));
+router.get('/transaction-list-data', awaitHandlerFactory(portalController.transactionListData));
 router.get('/new-transaction', awaitHandlerFactory(portalController.newTransaction));
 router.post('/new-transaction', awaitHandlerFactory(portalController.newTransaction_Post));
 router.get('/transaction-list', awaitHandlerFactory(portalController.chartOfAccount));

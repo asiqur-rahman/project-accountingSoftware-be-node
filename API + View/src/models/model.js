@@ -79,11 +79,17 @@ db.ChartOfAccount.belongsTo(db.ChartOfAccount,{ foreignKey: { name:'parentId', a
 db.Transaction.belongsTo(db.User,{ foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
 db.User.hasMany(db.Transaction);
 
-db.Transaction.belongsTo(db.ChartOfAccount,{ foreignKey: { name:'debitAccountId' }, onDelete: 'CASCADE' });
-db.ChartOfAccount.hasMany(db.Transaction, { foreignKey: { name:'debitAccountId' }});
+// db.Transaction.belongsTo(db.ChartOfAccount,{ foreignKey: { name:'debitAccountId' }, onDelete: 'CASCADE' });
+// db.ChartOfAccount.hasMany(db.Transaction, { foreignKey: { name:'debitAccountId' }});
 
-db.Transaction.belongsTo(db.ChartOfAccount,{ foreignKey: { name:'creditAccountId' }, onDelete: 'CASCADE' });
-db.ChartOfAccount.hasMany(db.Transaction, { foreignKey: { name:'creditAccountId' }});
+db.Transaction.belongsTo(db.ChartOfAccount,{ as:'debitAccount' , onDelete: 'CASCADE' });
+// db.ChartOfAccount.hasMany(db.Transaction, { as: 'debitAccount' });
+
+// db.Transaction.belongsTo(db.ChartOfAccount,{ foreignKey: { name:'creditAccountId' }, onDelete: 'CASCADE' });
+// db.ChartOfAccount.hasMany(db.Transaction, { foreignKey: { name:'creditAccountId' }});
+
+db.Transaction.belongsTo(db.ChartOfAccount,{ as:'creditAccount' , onDelete: 'CASCADE' });
+// db.ChartOfAccount.hasMany(db.Transaction, { as:'creditAccount' });
 
 //TransactionDetails
 db.TransactionDetails.belongsTo(db.Transaction,{ foreignKey: { allowNull: false }, onDelete: 'CASCADE' });

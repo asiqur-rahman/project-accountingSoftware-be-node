@@ -1,6 +1,7 @@
 const db = require('../../models/model');
 const enumm = require('../../utils/enum.utils');
 const appConfig = require('../../../config/config.json');
+const sequelize = require('sequelize');
 const Op = require('sequelize').Op;
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -53,7 +54,6 @@ module.exports.newChartOfAccount_Get = async (req, res, next) => {
 }
 
 module.exports.chartOfAccountByBaseCode = async (req, res, next) => {
-  console.log("Called coaByBaseCode")
   await accountService.chartOfAccountDDByBaseCode(req.params.code)
   .then(data=>{
       return res.status(200).send(data);
@@ -110,6 +110,14 @@ module.exports.newchartOfAccount_Post = async (req, res, next) => {
 //#endregion
 
 //#region Transactions
+module.exports.transactionList = async (req, res, next) => {
+  res.locals = {
+    title: 'Transaction',
+    toast_Msg:res.locals.toast_Msg,
+  };
+  res.render('Transaction/index');
+}
+
 module.exports.newTransaction = async (req, res, next) => {
     await accountService.transactionType().then(async types=>{
       await accountService.chartOfAccountDDByBaseCode(enumm.AccountHead.Assets.value).then(async assets=>{
@@ -129,6 +137,72 @@ module.exports.newTransaction = async (req, res, next) => {
         })
       })
     })
+}
+
+module.exports.transactionListData = async (req, res, next) => {
+
+  //-----------------Server side pagination----------------------
+  const order = req.query.columns[req.query.order[0].column].data=='sl'?[]:sequelize.literal(req.query.columns[req.query.order[0].column].data+" "+req.query.order[0].dir);//req.query.order[0].column=='0'?[]:[[req.query.columns[req.query.order[0].column].data,req.query.order[0].dir]];
+  var searchQuery=[];
+  req.query.columns.forEach(coloum => {
+      if(coloum.data!='sl' && coloum.data!='id')searchQuery.push(sequelize.col(coloum.data));
+  });
+  var where = {};
+  if(req.query.search.value!=''){
+      where = {
+          [Op.and]: [
+              sequelize.where(sequelize.fn("concat",...searchQuery), "like", '%'+req.query.search.value+'%' )
+              , {
+              // roleId: {
+              //     [Op.ne]: roleId
+              // }
+          }]
+      }
+  }else{
+      where = {
+          [Op.and]: [ {
+              // roleId: {
+              //     [Op.ne]: roleId
+              // }
+          }]
+      }
+  }
+  //-----------------Server side pagination----------------------
+
+  await db.Transaction.findAndCountAll({
+    offset: parseInt(req.query.start),
+    limit : parseInt(req.query.length),
+    // subQuery:false,
+    where: where,
+    include: [
+        {
+          model: db.ChartOfAccount,
+          attributes: ['name'],
+          as: 'reg',
+          where: { id: {[Op.col]: 'creditAccountId'} }
+        },
+        {
+          model: db.ChartOfAccount,
+          attributes: ['name'],
+          as: 'tmn',
+          where: { id: {[Op.col]: 'debitAccountId'} }
+        }
+    ],
+    order: order,
+    raw: true
+}).then(detailsInfo => {
+    if (detailsInfo.rows) {
+        var count = req.query.start;
+        detailsInfo.rows.forEach(detail => {
+            detail.sl = ++count;
+        })
+        console.log(detailsInfo);
+        res.status(200).send({draw:req.query.draw,recordsTotal:detailsInfo.count,recordsFiltered:detailsInfo.count,data:detailsInfo.rows});
+    } else {
+        res.status(200).send();
+    }
+});
+
 }
 
 module.exports.newTransaction_Post = async (req, res, next) => {
