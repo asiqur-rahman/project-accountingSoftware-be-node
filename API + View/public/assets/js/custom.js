@@ -1,11 +1,11 @@
 const Spinner = {
     Show() {
         $('#status').fadeIn();
-        $('#preloader').fadeIn();
+        $('#preloader').delay(100).fadeIn();
     },
     Hide() {
         $('#status').fadeOut();
-        $('#preloader').delay(350).fadeOut('slow');
+        $('#preloader').fadeOut();
     }
 };
 

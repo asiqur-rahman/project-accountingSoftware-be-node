@@ -40,7 +40,7 @@
     </li>
     <li>
         <a href="javascript: void(0);" class="has-arrow waves-effect">
-            <i class="fas fa-people-arrows"></i>
+            <i class="fas fa-money-check-alt"></i>
             <span><%=translation.Transaction%></span>
         </a>
         <ul class="sub-menu" aria-expanded="false">
@@ -54,10 +54,14 @@
     <!---------Report Start------------->
     <li class="menu-title"><%=translation.Reports%></li>
     <li>
-        <a href="/portal-master-report">
-            <i class="far fa-list-alt"></i>
-            <span><%=translation.MasterReport%></span>
+        <a href="javascript: void(0);" class="has-arrow waves-effect">
+            <i class="fas fa-list-alt"></i>
+            <span><%=translation.Reports%></span>
         </a>
+        <ul class="sub-menu" aria-expanded="false">
+            <li><a href="/portal/income-statement"><%=translation.IncomeStatement%></a></li>
+            <li><a href="/portal/balance-sheet"><%=translation.BalanceSheet%></a></li>
+        </ul>
     </li>
     <!---------Report End------------->
 </ul>

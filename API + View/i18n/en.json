@@ -125,20 +125,16 @@
   "Extra_pages" : "Extra pages",
   "-----------":"-----------",
   "ChartOfAccount":"Chart Of Account",
-  "NewChartOfAccount":"New Chart Of Account",
-  "ChartOfAccountList":"Chart Of Account List",
+  "NewChartOfAccount":"New Account",
+  "ChartOfAccountList":"List of Accounts",
   "Transaction":"Transaction",
   "NewTransaction":"New Transaction",
   "TransactionList":"List of Transactions",
-  "RequiredSoftwares":"Required Softwares",
-  "Download":"Download",
-  "FaceRecognition":"Face Recognition",
   "Registration" : "Registration",
-  "CostEntry":"Cost Entry",
   "Reports":"Reports",
   "User":"User",
   "UserList":"List of User",
   "UserCreate":"New User",
-
-  "MasterReport":"Master Report"
+  "IncomeStatement":"Income Statement",
+  "BalanceSheet":"Balance Sheet"
 }

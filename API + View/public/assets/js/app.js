@@ -207,19 +207,6 @@ File: Main Js File
             }
         );
     }
-
-    const Spinner = {
-        Show() {
-            $('#status').fadeIn();
-            // $('#preloader').fadeIn();
-            $('#preloader').show();
-        },
-        Hide() {
-            $('#status').fadeOut();
-            // $('#preloader').delay(50).fadeOut('fast');
-            $('#preloader').hide();
-        }
-    };
     
     function updateThemeSetting(id) {
         if ($("#light-mode-switch").prop("checked") == true && id === "light-mode-switch") {
