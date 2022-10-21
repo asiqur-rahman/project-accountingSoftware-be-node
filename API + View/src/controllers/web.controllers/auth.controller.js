@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken');
 const userService = require('../../service/user.service');
 
 module.exports.login_Get = async (req, res, next) => {
+  console.log(res.locals)
   res.render('Auth/auth-login', {
     layout: false
   });

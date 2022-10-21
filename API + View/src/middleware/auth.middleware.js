@@ -168,6 +168,11 @@ module.exports.notification = () => {
 module.exports.isLogedIn = (...roles) => {
     return async function (req, res, next) {
         try {
+            res.locals.orgName = appConfig.organizationInfo.orgName;
+            res.locals.devOrgName = appConfig.organizationInfo.devOrgName;
+            res.locals.devOrgLink = appConfig.organizationInfo.devOrgLink;
+            res.locals.hostName= req.protocol + '://' + req.get('host');
+            
             var sess = req.session;
             if (!sess || !sess.user) {
                 req.currentUser = -1;
@@ -206,38 +211,5 @@ module.exports.isLogedIn = (...roles) => {
             req.currentUser = -1;
             next();
         }
-    }
-}
-
-const getSessionDetails = (req,res) => {
-    try {
-        //#region Notifications
-        res.locals.error_Msg= "adssad";
-        if(req.session.notification){
-            console.log(req.session.notification)
-            const notification = req.session.notification;
-            if(notification[0]==enumm.notification.Error){
-                res.locals.error_Msg= notification[1];
-            }
-            else if(notification[0]==enumm.notification.Warning){
-                res.locals.war_Msg= notification[1];
-            }
-            else if(notification[0]==enumm.notification.Info){
-                res.locals.info_Msg= notification[1];
-            }
-            else if(notification[0]==enumm.notification.Success){
-                res.locals.succ_Msg= notification[1];
-            }
-            req.session.notification=null;
-        }else{
-            res.locals.error_Msg= undefined;
-            res.locals.info_Msg= undefined;
-            res.locals.war_Msg= undefined;
-            res.locals.succ_Msg= undefined;
-        }
-        //#endregion
-    } catch (e) {
-        console.log(e)
-        req.session.notification=null;
     }
 }

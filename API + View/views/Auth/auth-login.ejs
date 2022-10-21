@@ -116,7 +116,7 @@
 
                     <div class="mt-5 text-center">
                         <p>©
-                            <script>document.write(new Date().getFullYear())</script> <%= typeof orgName=='undefined' ? 'Brain Tech Solution' : orgName%>.</br> Developed & Maintained by <%= typeof devOrgName=='undefined' ? 'Brain Tech Solution' : devOrgName %>
+                            <script>document.write(new Date().getFullYear())</script> <%= typeof orgName=='undefined' ? 'N/A' : orgName%>.</br> Developed & Maintained by <a href="<%= typeof devOrgLink=='undefined' ? '#' : devOrgLink %>" target="_blank" class="text-reset"><span style="color: #fd7014;"><%= typeof devOrgName=='undefined' ? 'N/A' : devOrgName %>.</span></a>
                         </p>
                     </div>
                 </div>
