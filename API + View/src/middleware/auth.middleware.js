@@ -114,7 +114,7 @@ module.exports.webAuth = (...roles) => {
             // console.log(decoded.clientIp);
             var clientIp= req.headers['x-forwarded-for'] || req.socket.remoteAddress || null;
             // console.log(clientIp);
-            if(clientIp.toString()==decoded.clientIp){
+            // if(clientIp.toString()==decoded.clientIp){
                 res.locals.roleCode = decoded?decoded.role_code:undefined;
                 res.locals.userName = decoded?decoded.user_name:undefined;
                 res.locals.roleName = decoded?decoded.role_name:undefined;
@@ -123,9 +123,9 @@ module.exports.webAuth = (...roles) => {
                 res.locals.devOrgLink = appConfig.organizationInfo.devOrgLink;
                 res.locals.hostName= req.protocol + '://' + req.get('host');
                 next();
-            }else{
-                return res.redirect('/auth/logout');
-            }
+            // }else{
+            //     return res.redirect('/auth/logout');
+            // }
 
         } catch (e) {
             e.status = 401;

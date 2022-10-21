@@ -12,6 +12,10 @@ router.use('/', notification(),(req, res, next) => {
 
 router.get('/dashboard', awaitHandlerFactory(portalController.dashboard));
 
+router.get('/new-user', awaitHandlerFactory(portalController.newUser));
+router.get('/user-list', awaitHandlerFactory(portalController.userList));
+router.get('/user-list-data', awaitHandlerFactory(portalController.userListData));
+
 router.get('/chartOfAccount', awaitHandlerFactory(portalController.chartOfAccount));
 router.get('/coaByBaseCode/:code', awaitHandlerFactory(portalController.chartOfAccountByBaseCode));
 router.get('/new-chartOfAccount', awaitHandlerFactory(portalController.newChartOfAccount_Get));

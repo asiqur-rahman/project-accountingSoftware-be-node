@@ -8,18 +8,42 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const accountService = require('../../service/account.service');
 const transactionService = require('../../service/transaction.service');
+const userService = require('../../service/user.service');
 const taxService = require('../../service/tax.service');
 const { details } = require('@hapi/joi/lib/errors');
 
 //#region Dashboard
 module.exports.dashboard = async (req, res, next) => {
-  res.locals = {
-      title: 'Dashboard',
-      toast_Msg:res.locals.toast_Msg,
-  };
-  res.render('Dashboard/index');
+  transactionService.lastTransactionsForDashboard().then(data=>{
+    console.log(data)
+    res.locals.title= 'Dashboard';
+    res.locals.lTFD = data.rows;//lastTransactionsForDashboard
+    res.render('Dashboard/index');
+  });
+  
 }
 //#endregion
+
+//#region User
+module.exports.newUser = async (req, res, next) => {
+  res.locals = {
+      title: 'User Create',
+  };
+  res.render('User/create');
+}
+
+module.exports.userList = async (req, res, next) => {
+  res.locals.title= 'User List';
+  res.render('User/index');
+}
+
+module.exports.userListData = async (req, res, next) => {
+  userService.indexData(req).then(data=>{
+    res.status(200).send(data);
+  });
+}
+//#endregion
+
 
 //#region Chart of Account
 

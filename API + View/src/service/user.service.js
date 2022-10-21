@@ -1,9 +1,12 @@
 const db = require('../models/model');
-const bcrypt = require('bcryptjs');
 const Logger = require('../externalService/console.log.service');
 var path = require('path');
 const log = new Logger(path.basename(__filename));
+const sequelize = require('sequelize');
+const bcrypt = require('bcryptjs');
+const moment = require('moment');
 const Op = require('sequelize').Op;
+const enumm = require('../utils/enum.utils');
 
 const service = {};
 
@@ -91,6 +94,73 @@ service.getByName = async (value) => {
         throw err;
     });
 };
+
+
+service.indexData = async (req) => {
+    return new Promise(async (resolve, reject) => {
+        //-----------------Server side pagination----------------------
+        const order = req.query.columns[req.query.order[0].column].data=='sl'?[]:sequelize.literal(req.query.columns[req.query.order[0].column].data+" "+req.query.order[0].dir);//req.query.order[0].column=='0'?[]:[[req.query.columns[req.query.order[0].column].data,req.query.order[0].dir]];
+        var searchQuery=[];
+        req.query.columns.forEach(coloum => {
+            if(coloum.data!='sl' && coloum.data!='id')searchQuery.push(sequelize.col(coloum.data));
+        });
+        var where = {};
+        if(req.query.search.value!=''){
+            where = {
+                [Op.and]: [
+                    sequelize.where(sequelize.fn("concat",...searchQuery), "like", '%'+req.query.search.value+'%' )
+                    , {
+                    // roleId: {
+                    //     [Op.ne]: roleId
+                    // }
+                }]
+            }
+        }else{
+            where = {
+                [Op.and]: [ {
+                    // roleId: {
+                    //     [Op.ne]: roleId
+                    // }
+                }]
+            }
+        }
+        //-----------------Server side pagination----------------------
+
+        await db.User.findAndCountAll({
+            offset: parseInt(req.query.start),
+            limit : parseInt(req.query.length),
+            // subQuery:false,
+            where: where,
+            include: [
+                {
+                    model: db.UserDetails,
+                    attributes: ['firstName', 'lastName'],
+                    include: [
+                        {
+                            model: db.Role,
+                            attributes: ['name'],
+                        }
+                    ],
+                }
+            ],
+            order: order,
+            raw: true
+        }).then(detailsInfo => {
+            console.log(detailsInfo)
+            if (detailsInfo.rows) {
+                var count = req.query.start;
+                detailsInfo.rows.forEach(detail => {
+                    detail.sl = ++count;
+                })
+                // console.log(detailsInfo);
+                resolve({draw:req.query.draw,recordsTotal:detailsInfo.count,recordsFiltered:detailsInfo.count,data:detailsInfo.rows});
+            } else {
+                resolve({count: 0,rows:[]});
+            }
+        });
+    });
+};
+
 
 service.create = async (req) => {
     return new Promise(async (resolve, reject) => {

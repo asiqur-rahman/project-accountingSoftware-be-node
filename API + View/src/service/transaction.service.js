@@ -146,6 +146,46 @@ service.indexData = async (req) => {
     });
 };
 
+
+service.lastTransactionsForDashboard = async (req) => {
+    return new Promise(async (resolve, reject) => {
+        
+        await db.Transaction.findAndCountAll({
+            offset: 0,
+            limit : 7,
+            // subQuery:false,
+            include: [
+                {
+                model: db.ChartOfAccount,
+                attributes: ['name'],
+                as: 'creditAccount',
+                where: { id: {[Op.col]: 'creditAccountId'} }
+                },
+                {
+                model: db.ChartOfAccount,
+                attributes: ['name'],
+                as: 'debitAccount',
+                where: { id: {[Op.col]: 'debitAccountId'} }
+                }
+            ],
+            order:[['dateTime', 'DESC']],
+            raw: true
+        }).then(detailsInfo => {
+            if (detailsInfo.rows) {
+                var count = 0;
+                detailsInfo.rows.forEach(detail => {
+                    detail.sl = ++count;
+                    detail.dateTime= moment.utc(detail.dateTime).format("DD-MM-yyyy hh:mm:ss A");
+                })
+                // console.log(detailsInfo);
+                resolve(detailsInfo);
+            } else {
+                resolve({count: 0, rows: []});
+            }
+        });
+    });
+};
+
 service.createWithDetails = async (req) => {
     return new Promise(async (resolve, reject) => {
         req.body.userId=req.currentUser;

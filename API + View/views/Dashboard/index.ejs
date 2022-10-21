@@ -6,13 +6,29 @@
 <div class="row">
     <div class="col-12">
         <div class="page-title-box d-flex align-items-center justify-content-between">
-            <h4 class="mb-0">Apex</h4>
+            <h4 class="mb-0">Dashboard</h4>
 
             <div class="page-title-right">
-                <ol class="breadcrumb m-0">
-                    <li class="breadcrumb-item"><a href="javascript: void(0);">Charts</a></li>
-                    <li class="breadcrumb-item active">Apex</li>
-                </ol>
+                <!-- <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Index</li>
+                </ol> -->
+                <div class="float-end">
+                    <div class="dropdown">
+                        <a class="dropdown-toggle text-reset" href="#" id="dropdownMenuButton5"
+                            data-bs-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            <span class="fw-semibold">Sort Data For :</span> <span class="text-muted" id="apextChartDataFor">Last 7 Days <i class="mdi mdi-chevron-down ms-1"></i></span>
+                        </a>
+        
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton5">
+                            <a class="dropdown-item" href="#" onclick="changeApexData(7, '7 days')">Last 7 Days</a>
+                            <a class="dropdown-item" href="#" onclick="changeApexData(30, '1 Month')">Last 1 Month</a>
+                            <a class="dropdown-item" href="#" onclick="changeApexData(180, '6 Month')">Last 6 Month</a>
+                            <a class="dropdown-item" href="#" onclick="changeApexData(365, '1 Year')">Last 1 Year</a>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>
@@ -23,7 +39,7 @@
 <%- contentFor('body') %>
 
 <div class="row">
-    <div class="col-md-6 col-xl-4">
+    <div class="col-md-6 col-xl-3">
         <div class="card">
             <div class="card-body">
                 <div class="float-end mt-2">
@@ -31,15 +47,13 @@
                 </div>
                 <div>
                     <h4 class="mb-1 mt-1">$ <span data-plugin="counterup"><%= typeof results!='undefined' ? results.Total_Sales : '0' %></span></h4>
-                    <p class="text-muted mb-0">Today Sales</p>
+                    <p class="text-muted mb-0">Income Today</p>
                 </div>
-                <p class="text-muted mt-3 mb-0">Last day Sales <span class="text-success me-1">$<%= typeof results!='undefined' ? results.Today_Sales_Pre : '0' %></span>
-                </p>
             </div>
         </div>
     </div> <!-- end col-->
 
-    <div class="col-md-6 col-xl-4">
+    <div class="col-md-6 col-xl-3">
         <div class="card">
             <div class="card-body">
                 <div class="float-end mt-2">
@@ -47,26 +61,36 @@
                 </div>
                 <div>
                     <h4 class="mb-1 mt-1">$ <span data-plugin="counterup"><%= typeof results!='undefined' ? results.Today_Supplies : '0' %></span></h4>
-                    <p class="text-muted mb-0">Today Supplies</p>
+                    <p class="text-muted mb-0">Income this Month</p>
                 </div>
-                <p class="text-muted mt-3 mb-0">Last day Supplies <span class="text-success me-1">$<%= typeof results!='undefined' ? results.Today_Supplies_Pre : '0' %></span>
-                </p>
             </div>
         </div>
     </div> <!-- end col-->
 
-    <div class="col-md-6 col-xl-4">
+    <div class="col-md-6 col-xl-3">
         <div class="card">
             <div class="card-body">
                 <div class="float-end mt-2">
                     <div id="customers-chart"> </div>
                 </div>
                 <div>
-                    <h4 class="mb-1 mt-1"><span data-plugin="counterup"> <%= typeof results!='undefined' ? results.Today_Expense : '0' %></span></h4>
+                    <h4 class="mb-1 mt-1">$ <span data-plugin="counterup"> <%= typeof results!='undefined' ? results.Today_Expense : '0' %></span></h4>
                     <p class="text-muted mb-0">Today Expense</p>
                 </div>
-                <p class="text-muted mt-3 mb-0">Last day expense <span class="text-success me-1"><%= typeof results!='undefined' ? results.Today_Expense_Pre : '0' %></span>
-                </p>
+            </div>
+        </div>
+    </div> <!-- end col-->
+
+    <div class="col-md-6 col-xl-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="float-end mt-2">
+                    <div id="customers-chart"> </div>
+                </div>
+                <div>
+                    <h4 class="mb-1 mt-1">$ <span data-plugin="counterup"> <%= typeof results!='undefined' ? results.Today_Expense : '0' %></span></h4>
+                    <p class="text-muted mb-0">Expense this Month</p>
+                </div>
             </div>
         </div>
     </div> <!-- end col-->
@@ -96,6 +120,55 @@
 </div>
 <!-- end row -->
 
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title mb-4">Latest 7 Transaction</h4>
+                <div class="table-responsive">
+                    <table class="table table-centered table-nowrap mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>#SL</th>
+                                <th>Credit Account</th>
+                                <th>Debit Acoount</th>
+                                <th>Datetime</th>
+                                <th>Amount</th>
+                                <th>View Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <% if(locals.lTFD) {for(var i=0; i<lTFD.length; i++){%>
+                                <!-- <option value="<%=lTFD[i].id%>" <%=typeof detailsInfo!='undefined' ? lTFD[i].id==detailsInfo.parentId ? 'selected':'' : ''%>><%=lTFD[i].name%></option> -->
+                                <tr>
+                                    <td><a href="javascript: void(0);" class="text-body fw-bold">#<%= lTFD[i]['sl'] %></a> </td>
+                                    <td><%= lTFD[i]['creditAccount.name'] %></td>
+                                    <td><%= lTFD[i]['debitAccount.name'] %></td>
+                                    <td><%= lTFD[i]['dateTime'] %></td>
+                                    <td><%= lTFD[i]['amount'] %></td>
+                                    <td>
+                                        <!-- Button trigger modal -->
+                                        <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light">
+                                            View Details
+                                        </button>
+                                    </td>
+                                </tr>
+                            <%}}else{%>
+                                <tr>
+                                    <td style="text-align: center;" colspan="7"><a href="javascript: void(0);" class="text-body fw-bold">No Transaction Made Yet</a> </td>
+                                </tr>
+                            <%}%>
+                            
+                        </tbody>
+                    </table>
+                </div>
+                <!-- end table-responsive -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end row -->
 
 <%- contentFor('FooterJs') %>
 

@@ -15,7 +15,7 @@
 <div class="row">
     <div class="col-12">
         <div class="page-title-box d-flex align-items-center justify-content-between">
-            <h4 class="mb-0">Users List</h4>
+            <h4 class="mb-0">User List</h4>
 
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
@@ -76,10 +76,10 @@
                 "title": "#SL",
             },
             {
-                "data": "detailsInfo.name",
+                "data": "sl",
                 "title": "Full Name",
                 "render": function (data, type, row, meta) {
-                    return `${row['detailsInfo.name']}`;
+                    return `${row['userDetail.firstName']} ${row['userDetail.lastName']}`;
                 }
             },
             {
@@ -90,36 +90,21 @@
                 "data": "role.name",
                 "title": "Role",
                 "render": function (data, type, row, meta) {
-                    return `${row['role.name']}`;
-                }
-            },
-            {
-                "data": "detailsInfo.email",
-                "title": "Email",
-                "render": function (data, type, row, meta) {
-                    return `${row['detailsInfo.email']}`;
+                    return `${row['userDetail.role.name']}`;
                 }
             },
             {
                 "data": "id",
                 "title": "Action",
                 "render": function (data, type, row, meta) {
-                    if(row['role.code']==2){
                         return `<a class="btn btn-sm btn-success btn-soft-success waves-effect waves-light" href="/portal-user-create/${row['id']}">Update</a> 
                         <button class="btn btn-sm btn-warning btn-soft-warning waves-effect waves-light" onclick='confirmationCheck("/portal-user-password-reset/${row['id']}","Are you sure to reset this password ?","Reset password will be sent to this email : ${row['detailsInfo.email']}")'>Reset Password</button>
                         <button class="btn btn-sm btn-${row['isActive']==1?'primary':'danger'} btn-soft-${row['isActive']==1?'primary':'danger'} waves-effect waves-light" onclick='confirmationCheck("/portal-user-change-status/${row['id']}","Are you sure ?","This user will be in ${row['isActive']==1?'inactive':'active'} status from now on.")'>${row['isActive']==1?'Active':'InActive'}</button>
                         <button class="btn btn-sm btn-danger btn-soft-danger waves-effect waves-light" onclick='confirmationCheck("/portal-employee-delete/${row['id']}","Admin delete confirmation !","Are you sure about this deletion ?")'>Delete</button>`
-                    }else{
-                        return `<a class="btn btn-sm btn-success btn-soft-success waves-effect waves-light" href="/portal-user-create/${row['id']}">Update</a> 
-                        <button class="btn btn-sm btn-warning btn-soft-warning waves-effect waves-light" onclick='confirmationCheck("/portal-user-password-reset/${row['id']}","Are you sure to reset this password ?","Reset password will be sent to this email : ${row['detailsInfo.email']}")'>Reset Password</button>
-                        <button class="btn btn-sm btn-${row['isActive']==1?'primary':'danger'} btn-soft-${row['isActive']==1?'primary':'danger'} waves-effect waves-light" onclick='confirmationCheck("/portal-user-change-status/${row['id']}","Are you sure ?","This user will be in ${row['isActive']==1?'inactive':'active'} status from now on.")'>${row['isActive']==1?'Active':'InActive'}</button>`
-                    }
-                    
-                    
                 }
             }
         ]
-        get_table_data("datatable-buttons","get-portal-user-list-data",coloum,[],true,true);
+        get_table_data("datatable-buttons","portal/user-list-data",coloum,[],true,true);
     });
 
     // <button class="btn btn-sm btn-danger btn-soft-danger waves-effect waves-light" onclick='deleteEmployeeFaces("/portal-user-delete/${data}",${data})'>Delete</button>
