@@ -46,7 +46,7 @@
                     <div id="total-revenue-chart"></div>
                 </div>
                 <div>
-                    <h4 class="mb-1 mt-1">$ <span data-plugin="counterup"><%= typeof results!='undefined' ? results.Total_Sales : '0' %></span></h4>
+                    <h4 class="mb-1 mt-1">$ <span data-plugin="counterup"><%= typeof dashboardData!='undefined' ? dashboardData.IncomeToday : '0' %></span></h4>
                     <p class="text-muted mb-0">Income Today</p>
                 </div>
             </div>
@@ -60,7 +60,7 @@
                     <div id="total-revenue-chart"></div>
                 </div>
                 <div>
-                    <h4 class="mb-1 mt-1">$ <span data-plugin="counterup"><%= typeof results!='undefined' ? results.Today_Supplies : '0' %></span></h4>
+                    <h4 class="mb-1 mt-1">$ <span data-plugin="counterup"><%= typeof dashboardData!='undefined' ? dashboardData.IncomeThisMonth : '0' %></span></h4>
                     <p class="text-muted mb-0">Income this Month</p>
                 </div>
             </div>
@@ -74,7 +74,7 @@
                     <div id="customers-chart"> </div>
                 </div>
                 <div>
-                    <h4 class="mb-1 mt-1">$ <span data-plugin="counterup"> <%= typeof results!='undefined' ? results.Today_Expense : '0' %></span></h4>
+                    <h4 class="mb-1 mt-1">$ <span data-plugin="counterup"><%= typeof dashboardData!='undefined' ? dashboardData.ExpenseToday : '0' %></span></h4>
                     <p class="text-muted mb-0">Today Expense</p>
                 </div>
             </div>
@@ -88,7 +88,7 @@
                     <div id="customers-chart"> </div>
                 </div>
                 <div>
-                    <h4 class="mb-1 mt-1">$ <span data-plugin="counterup"> <%= typeof results!='undefined' ? results.Today_Expense : '0' %></span></h4>
+                    <h4 class="mb-1 mt-1">$ <span data-plugin="counterup"><%= typeof dashboardData!='undefined' ? dashboardData.ExpenseThisMonth : '0' %></span></h4>
                     <p class="text-muted mb-0">Expense this Month</p>
                 </div>
             </div>
@@ -96,7 +96,7 @@
     </div> <!-- end col-->
 </div>
 
-
+<div>
 <div class="row">
     <div class="col-xl-6">
         <div class="card">
@@ -117,6 +117,7 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 <!-- end row -->
 
@@ -139,7 +140,7 @@
                         </thead>
                         <tbody>
                             
-                            <% if(locals.lTFD) {for(var i=0; i<lTFD.length; i++){%>
+                            <% if(locals.lTFD && lTFD.length>0) {for(var i=0; i<lTFD.length; i++){%>
                                 <!-- <option value="<%=lTFD[i].id%>" <%=typeof detailsInfo!='undefined' ? lTFD[i].id==detailsInfo.parentId ? 'selected':'' : ''%>><%=lTFD[i].name%></option> -->
                                 <tr>
                                     <td><a href="javascript: void(0);" class="text-body fw-bold">#<%= lTFD[i]['sl'] %></a> </td>

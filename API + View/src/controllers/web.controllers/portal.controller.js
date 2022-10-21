@@ -14,12 +14,23 @@ const { details } = require('@hapi/joi/lib/errors');
 
 //#region Dashboard
 module.exports.dashboard = async (req, res, next) => {
-  transactionService.lastTransactionsForDashboard().then(data=>{
-    console.log(data)
-    res.locals.title= 'Dashboard';
-    res.locals.lTFD = data.rows;//lastTransactionsForDashboard
-    res.render('Dashboard/index');
-  });
+  db.sequelize.query('CALL DashboardData (:days,:incomeCode,:expenseCode)', {
+    replacements: {
+        days: 7,
+        incomeCode:'401',
+        expenseCode:'301'
+    }
+  })
+  .then(async function (dashboardData) {
+    await transactionService.lastTransactionsForDashboard().then(data=>{
+      // console.log(data,dashboardData[0])
+      res.locals.title= 'Dashboard';
+      res.locals.dashboardData = dashboardData[0];
+      res.locals.lTFD = data.rows;//lastTransactionsForDashboard
+      res.render('Dashboard/index');
+    });
+  })
+  
   
 }
 //#endregion
@@ -88,6 +99,7 @@ module.exports.chartOfAccountByBaseCode = async (req, res, next) => {
 }
 
 module.exports.newchartOfAccount_Post = async (req, res, next) => {
+  const area="Chart of Account"
   req.body.userId=req.currentUser;
   if (req.body.id && req.body.id > 0) {
       await db.ChartOfAccount.update(req.body, {
