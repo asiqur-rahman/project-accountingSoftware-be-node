@@ -168,7 +168,7 @@ service.lastTransactionsForDashboard = async (req) => {
                 where: { id: {[Op.col]: 'debitAccountId'} }
                 }
             ],
-            order:[['dateTime', 'DESC']],
+            order:[['id', 'DESC']],
             raw: true
         }).then(detailsInfo => {
             if (detailsInfo.rows) {
@@ -177,8 +177,9 @@ service.lastTransactionsForDashboard = async (req) => {
                     detail.sl = ++count;
                     detail.dateTime= moment.utc(detail.dateTime).format("DD-MM-yyyy hh:mm:ss A");
                 })
-                // console.log(detailsInfo);
-                resolve(detailsInfo);
+                console.log(detailsInfo);
+                // resolve(detailsInfo);
+                resolve({draw:'1',recordsTotal:detailsInfo.count,recordsFiltered:detailsInfo.count,data:detailsInfo.rows});
             } else {
                 resolve({count: 0, rows: []});
             }

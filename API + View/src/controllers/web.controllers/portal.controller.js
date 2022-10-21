@@ -22,16 +22,21 @@ module.exports.dashboard = async (req, res, next) => {
     }
   })
   .then(async function (dashboardData) {
-    await transactionService.lastTransactionsForDashboard().then(data=>{
+    // await transactionService.lastTransactionsForDashboard().then(data=>{
       // console.log(data,dashboardData[0])
       res.locals.title= 'Dashboard';
       res.locals.dashboardData = dashboardData[0];
-      res.locals.lTFD = data.rows;//lastTransactionsForDashboard
+      res.locals.lTFD = [];//data.rows;//lastTransactionsForDashboard
       res.render('Dashboard/index');
-    });
+    // });
   })
-  
-  
+}
+
+module.exports.dashboardLTFD = async (req, res, next) => {
+  await transactionService.lastTransactionsForDashboard().then(data=>{
+    console.log(data)
+    res.status(200).send(data);
+  });
 }
 //#endregion
 
@@ -105,7 +110,7 @@ module.exports.newchartOfAccount_Post = async (req, res, next) => {
       await db.ChartOfAccount.update(req.body, {
           where: {
               id: req.body.id
-          }
+          },
       }).then(() => {
           req.session.notification=[enumm.notification.Success,'Chart Of Account updated successfully !'];
           res.redirect(`/portal/chartOfAccount`);
@@ -184,6 +189,7 @@ module.exports.newTransaction = async (req, res, next) => {
 
 module.exports.transactionListData = async (req, res, next) => {
   transactionService.indexData(req).then(data=>{
+    console.log(data)
     res.status(200).send(data);
   });
 }

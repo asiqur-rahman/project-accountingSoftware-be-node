@@ -127,41 +127,10 @@
             <div class="card-body">
                 <h4 class="card-title mb-4">Latest 7 Transaction</h4>
                 <div class="table-responsive">
-                    <table class="table table-centered table-nowrap mb-0">
-                        <thead class="table-light">
-                            <tr>
-                                <th>#SL</th>
-                                <th>Credit Account</th>
-                                <th>Debit Acoount</th>
-                                <th>Datetime</th>
-                                <th>Amount</th>
-                                <th>View Details</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            
-                            <% if(locals.lTFD && lTFD.length>0) {for(var i=0; i<lTFD.length; i++){%>
-                                <!-- <option value="<%=lTFD[i].id%>" <%=typeof detailsInfo!='undefined' ? lTFD[i].id==detailsInfo.parentId ? 'selected':'' : ''%>><%=lTFD[i].name%></option> -->
-                                <tr>
-                                    <td><a href="javascript: void(0);" class="text-body fw-bold">#<%= lTFD[i]['sl'] %></a> </td>
-                                    <td><%= lTFD[i]['creditAccount.name'] %></td>
-                                    <td><%= lTFD[i]['debitAccount.name'] %></td>
-                                    <td><%= lTFD[i]['dateTime'] %></td>
-                                    <td><%= lTFD[i]['amount'] %></td>
-                                    <td>
-                                        <!-- Button trigger modal -->
-                                        <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light">
-                                            View Details
-                                        </button>
-                                    </td>
-                                </tr>
-                            <%}}else{%>
-                                <tr>
-                                    <td style="text-align: center;" colspan="7"><a href="javascript: void(0);" class="text-body fw-bold">No Transaction Made Yet</a> </td>
-                                </tr>
-                            <%}%>
-                            
-                        </tbody>
+                    <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap"
+                        style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                        <thead></thead>
+                        <tbody></tbody>
                     </table>
                 </div>
                 <!-- end table-responsive -->
@@ -178,5 +147,74 @@
 
 <!-- apexcharts init -->
 <script src="/public/assets/js/pages/apexcharts.init.js"></script>
+
+
+<!-- Required datatable js -->
+<script src="/public/assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="/public/assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<!-- Buttons examples -->
+<script src="/public/assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="/public/assets/libs/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
+<script src="/public/assets/libs/jszip/jszip.min.js"></script>
+<script src="/public/assets/libs/pdfmake/build/pdfmake.min.js"></script>
+<script src="/public/assets/libs/pdfmake/build/vfs_fonts.js"></script>
+<script src="/public/assets/libs/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="/public/assets/libs/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script src="/public/assets/libs/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+
+<!-- Responsive examples -->
+<script src="/public/assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="/public/assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+<!-- Datatable init js -->
+<script src="/public/assets/js/pages/datatables.init.js"></script>
+
+<script src="/public/assets/js/face-verification.js"></script>
+<script>
+    $(document).ready(function () {
+        const coloum=[
+            {
+                "data": "sl",
+                "title": "#SL",
+            },
+            {
+                "data": "dateTime",
+                "title": "Date Time",
+            },
+            {
+                "data": "sl",
+                "title": "Credit Account",
+                "render": function (data, type, row, meta) {
+                    return `${row['creditAccount.name']}`;
+                }
+            },
+            {
+                "data": "sl",
+                "title": "Debit Account",
+                "render": function (data, type, row, meta) {
+                    return `${row['debitAccount.name']}`;
+                }
+            },
+            {
+                "data": "amount",
+                "title": "Amount",
+            },
+            {
+                "data": "id",
+                "title": "Action",
+                "render": function (data, type, row, meta) {
+                        return `<button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light">
+                                            View Details
+                                        </button>`
+                }
+            }
+        ]
+        get_table_data("datatable-buttons","portal/dashboardLTFD",coloum,[],false,true,false,false);
+    });
+
+    // <button class="btn btn-sm btn-danger btn-soft-danger waves-effect waves-light" onclick='deleteEmployeeFaces("/portal-user-delete/${data}",${data})'>Delete</button>
+    
+</script>
+
 
 <%- contentFor('BottomJs') %>
