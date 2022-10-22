@@ -175,11 +175,53 @@ service.lastTransactionsForDashboard = async (req) => {
                 var count = 0;
                 detailsInfo.rows.forEach(detail => {
                     detail.sl = ++count;
-                    detail.dateTime= moment.utc(detail.dateTime).format("DD-MM-yyyy hh:mm:ss A");
+                    detail.dateTime= moment.utc(detail.dateTime).format("DD-MM-yyyy");
                 })
                 console.log(detailsInfo);
                 // resolve(detailsInfo);
                 resolve({draw:'1',recordsTotal:detailsInfo.count,recordsFiltered:detailsInfo.count,data:detailsInfo.rows});
+            } else {
+                resolve({count: 0, rows: []});
+            }
+        });
+    });
+};
+
+
+service.dashboardEAR = async (req) => {
+    return new Promise(async (resolve, reject) => {
+        
+        await db.ChartOfAccount.findAll({
+            where: {
+                [Op.or]: [{
+                    baseCode: {
+                        [Op.eq]: enumm.AccountHead.Expense.value
+                    }
+                }]
+            },
+            attributes: ['name'],
+            include: [{
+                model: db.AccountBalance,
+                attributes: ['amount'],
+                where: {
+                    chartOfAccountId: {
+                        [Op.col]: 'chartOfAccount.id'
+                    }
+                }
+            }],
+            // order: [
+            //     ['name', 'ASC'],
+            // ],
+            raw: true
+        }).then(detailsInfo => {
+            if (detailsInfo) {
+                var key=[];
+                var value=[];
+                detailsInfo.forEach(element => {
+                    key.push(element.name);
+                    value.push(element['accountBalances.amount']);
+                });
+                resolve({key:key, value:value});
             } else {
                 resolve({count: 0, rows: []});
             }
@@ -207,6 +249,42 @@ service.createWithDetails = async (req) => {
                     message: 'Transaction was created, Id:' + data.id
                 });
             });
+        }).catch(function (err) {
+            reject({
+                status: 502,
+                message: err.message
+            });
+        });
+    });
+};
+
+
+service.transactionDetailsByTransactionId = async (req) => {
+    return new Promise(async (resolve, reject) => {
+        await db.TransactionDetails.findAndCountAll({
+            where: {
+                transactionId: req.params.id
+            },
+            attributes: ['credit','debit'],
+            include: [
+                {
+                    model: db.ChartOfAccount,
+                    attributes: ['name']
+                }
+            ],
+            raw: true
+        }).then(data => {
+            if (data.rows) {
+                var count=0;
+                data.rows.forEach(detail => {
+                    detail.sl = ++count;
+                })
+                console.log(data)
+                resolve(data.rows);
+            } else {
+                resolve([]);
+            }
+            resolve(data);
         }).catch(function (err) {
             reject({
                 status: 502,

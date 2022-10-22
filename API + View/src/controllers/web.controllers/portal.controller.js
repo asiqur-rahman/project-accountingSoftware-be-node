@@ -32,8 +32,16 @@ module.exports.dashboard = async (req, res, next) => {
   })
 }
 
+//lastTransactionsForDashboard
 module.exports.dashboardLTFD = async (req, res, next) => {
   await transactionService.lastTransactionsForDashboard().then(data=>{
+    res.status(200).send(data);
+  });
+}
+
+//expenseAccountReview
+module.exports.dashboardEAR = async (req, res, next) => {
+  await transactionService.dashboardEAR().then(data=>{
     res.status(200).send(data);
   });
 }

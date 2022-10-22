@@ -139,7 +139,20 @@
     </div>
 </div>
 <!-- end row -->
-
+<div class="modal fade bs-custom-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mt-0" id="myLargeModalLabel">Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
 <%- contentFor('FooterJs') %>
 
 <!-- apexcharts -->
@@ -203,13 +216,14 @@
                 "data": "id",
                 "title": "Action",
                 "render": function (data, type, row, meta) {
-                        return `<button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light">
+                        return `<button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light" onclick=showResponseInModals('/portal/transaction-details/${row['id']}')>
                                             View Details
                                         </button>`
                 }
             }
         ]
         get_table_data("datatable-buttons","portal/dashboardLTFD",coloum,[],false,true,false,false);
+        changeApexData(7,'')
     });
 
     // <button class="btn btn-sm btn-danger btn-soft-danger waves-effect waves-light" onclick='deleteEmployeeFaces("/portal-user-delete/${data}",${data})'>Delete</button>
