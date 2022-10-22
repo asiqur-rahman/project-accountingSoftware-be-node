@@ -170,7 +170,7 @@ input, label {
                 </div>
                 <br/> -->
                 <ol class="wtree">
-                    <% if(locals.data) {%>
+                    <% if(locals.data && locals.data.income) {%>
                         <li><span>Income<p>$ <%=data.income.total%></p></span>
                             <ol>
                                 <% for(var i=0; i<data.income.data.length; i++){%>
@@ -190,11 +190,11 @@ input, label {
                                 <%}%>
                             </ol>
                         </li>
-                    <%}%>
-
                     <li style="font-weight: bold; font-size: 18px;">
                         <span>Net Income<p>$ <%=data.income.total - data.expense.total%></p></span>
                     </li>
+                    <%}%>
+
                 </ol>
             </div>
         </div>

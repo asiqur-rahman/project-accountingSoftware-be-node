@@ -64,11 +64,9 @@ module.exports.userListData = async (req, res, next) => {
 
 module.exports.chartOfAccount = async (req, res, next) => {
   accountService.getTreeWiseData().then(data=>{
-    res.locals = {
-      title: 'Dashboard',
-      toast_Msg:res.locals.toast_Msg,
-      data:data
-    };
+      res.locals.title= 'Dashboard';
+      res.locals.toast_Msg=res.locals.toast_Msg;
+      res.locals.data=data;
     res.render('ChartOfAccount/index');
   })
 }
@@ -82,12 +80,10 @@ module.exports.chartOfAccountListByParentId = async (req, res, next) => {
 module.exports.newChartOfAccount_Get = async (req, res, next) => {
     accountService.chartOfAccountDD().then(chartOfAccountDD=>{
       accountService.currencyDD().then(currencyDD=>{
-      res.locals = {
-        title: 'Chart Of Account',
-        toast_Msg:res.locals.toast_Msg,
-        chartOfAccountDD:chartOfAccountDD,
-        currencyDD:currencyDD,
-      };
+        res.locals.title= 'Chart Of Account';
+        res.locals.toast_Msg=res.locals.toast_Msg;
+        res.locals.chartOfAccountDD=chartOfAccountDD;
+        res.locals.currencyDD=currencyDD;
       res.render('ChartOfAccount/create');
     })
   })
@@ -126,7 +122,7 @@ module.exports.newchartOfAccount_Post = async (req, res, next) => {
       req.body.name=`${data.name}:${req.body.name}`;
       req.body.level=data.name.split(':').length;
       req.body.baseCode=data.baseCode;
-      await db.ChartOfAccount.create(req.body)
+      await accountService.create(req)
           .then((result) => {
               if (result) {
                   res.locals = {

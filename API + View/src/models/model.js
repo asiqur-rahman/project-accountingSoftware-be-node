@@ -40,6 +40,7 @@ db.SendSms = require("./sendSms.model")(sequelize, Sequelize);
 
 db.Currency = require("./currency.model")(sequelize, Sequelize);
 db.ChartOfAccount = require("./chartOfAccount.model")(sequelize, Sequelize);
+db.AccountBalance = require("./accountBalance.model")(sequelize, Sequelize);
 db.Transaction = require("./transaction.model")(sequelize, Sequelize);
 db.TransactionDetails = require("./transactionDetails.model")(sequelize, Sequelize);
 db.Tax = require("./tax.model")(sequelize, Sequelize);
@@ -100,6 +101,14 @@ db.ChartOfAccount.hasMany(db.TransactionDetails);
 
 db.TransactionDetails.belongsTo(db.Tax,{ foreignKey: { allowNull: true }, onDelete: 'CASCADE' });
 db.Tax.hasMany(db.TransactionDetails);
+
+
+//AccountBalance
+db.AccountBalance.belongsTo(db.ChartOfAccount,{ foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
+db.ChartOfAccount.hasMany(db.AccountBalance);
+
+db.AccountBalance.belongsTo(db.User,{ foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
+db.User.hasMany(db.AccountBalance);
 
 // db.sequelize.sync();
 

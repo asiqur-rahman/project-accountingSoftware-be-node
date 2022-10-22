@@ -13,10 +13,6 @@ module.exports = (sequelize, Sequelize) => {
         notNull:{ args: true, msg: "Name cannot be empty !!"}
       }
     },
-    decimalPlaces: {
-      type: Sequelize.INTEGER(2),
-      defaultValue:2
-    },
     code: {
       type: Sequelize.STRING(5),
       allowNull:true,

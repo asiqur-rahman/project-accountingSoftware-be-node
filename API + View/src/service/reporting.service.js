@@ -7,6 +7,7 @@ const bcrypt = require('bcryptjs');
 const moment = require('moment');
 const Op = require('sequelize').Op;
 const enumm = require('../utils/enum.utils');
+const accountBalanceService = require('./accountBalance.service');
 
 const service = {};
 
@@ -14,7 +15,8 @@ service.getIncomeStatement = async () => {
     return new Promise(async (resolve, reject) => {
         await db.Transaction.findAll({
             attributes: ['amount', 'isItIncome'],
-            include: [{
+            include: [
+                {
                 model: db.ChartOfAccount,
                 attributes: ['name', 'level', 'baseCode'],
                 as: 'debitAccount',
@@ -23,7 +25,18 @@ service.getIncomeStatement = async () => {
                         [Op.col]: 'debitAccountId'
                     }
                 }
-            }],
+            },
+            {
+                model: db.ChartOfAccount,
+                attributes: ['name', 'level', 'baseCode'],
+                as: 'creditAccount',
+                where: {
+                    id: {
+                        [Op.col]: 'creditAccountId'
+                    }
+                }
+            }
+        ],
             raw: true
         }).then(data => {
             if (data) {
@@ -33,9 +46,9 @@ service.getIncomeStatement = async () => {
                 const income = data.filter(x => x.isItIncome === 1);
                 var finalIncome=[];
                 income.forEach(element => {
-                    if(finalIncome.filter(y=>y['debitAccount.baseCode']===element['debitAccount.baseCode']).length>0){
+                    if(finalIncome.filter(y=>y['creditAccount.baseCode']===element['creditAccount.baseCode']).length>0){
                         finalIncome.forEach(item=>{
-                            if(item['debitAccount.baseCode']===element['debitAccount.baseCode']){
+                            if(item['creditAccount.baseCode']===element['creditAccount.baseCode']){
                                 item.amount+=element.amount;
                             }
                         })
@@ -73,6 +86,58 @@ service.getIncomeStatement = async () => {
                 }
                 //#endregion
                 resolve(result);
+            } else {
+                resolve({
+                    status: 404,
+                    message: "Transactions not found !"
+                })
+            }
+        }).catch(function (err) {
+            reject({
+                status: 502,
+                message: err.message
+            })
+        });
+    });
+};
+
+service.getBalanceSheet = async () => {
+    return new Promise(async (resolve, reject) => {
+        await db.ChartOfAccount.findAll({
+            where: {
+                [Op.or]: [{
+                    baseCode: {
+                        [Op.eq]: enumm.AccountHead.Assets.value
+                    }
+                }, {
+                    baseCode: {
+                        [Op.eq]: enumm.AccountHead.Liabilities.value
+                    }
+                },{
+                    baseCode: {
+                        [Op.eq]: enumm.AccountHead.Equity.value
+                    }
+                }]
+            },
+            // attributes: ['amount', 'isItIncome'],
+            // include: [{
+            //     model: db.ChartOfAccount,
+            //     attributes: ['name', 'level', 'baseCode'],
+            //     as: 'debitAccount',
+            //     where: {
+            //         id: {
+            //             [Op.col]: 'debitAccountId'
+            //         }
+            //     }
+            // }],
+            // order: [
+            //     ['name', 'ASC'],
+            // ],
+            raw: true
+        }).then(data => {
+            if (data) {
+                console.log(data)
+                resolve(data);
             } else {
                 resolve({
                     status: 404,

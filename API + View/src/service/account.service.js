@@ -5,6 +5,7 @@ const log = new Logger(path.basename(__filename));
 const bcrypt = require('bcryptjs');
 const Op = require('sequelize').Op;
 const enumm = require('../utils/enum.utils');
+const accountBalanceService = require('./accountBalance.service');
 
 const service = {};
 
@@ -52,6 +53,32 @@ service.getTreeWiseData = async () => {
         });
         throw err;
     });
+};
+
+service.create = async (req) => {
+    return new Promise(async (resolve, reject) => {
+        req.body.id=null;
+        await db.ChartOfAccount.create(req.body)
+            .then(async (result) => {
+                if (result) {
+                    await accountBalanceService.create({body:{
+                        amount: req.body.amount,
+                        userId: req.currentUser,
+                        chartOfAccountId: result.id,
+                    }}).then(() => {
+                        resolve({
+                            status: 201,
+                            message: 'Account was created, Id:' + result.id
+                        });
+                    })
+                } else {
+                    reject({
+                        status: 200,
+                        message: 'Account not created'
+                    });
+                }
+            });
+        })
 };
 
 service.chartOfAccountDD =async ()=> {
@@ -153,6 +180,7 @@ service.transactionTypeWithRef = async ()=> {
 
 service.getById = async (id) => {
     return new Promise(async (resolve, reject) => {
+        console.log("called")
         await db.ChartOfAccount.findOne({
             where: {
                 id: id
@@ -274,37 +302,37 @@ service.getByName = async (value) => {
     });
 };
 
-service.create = async (req) => {
-    return new Promise(async (resolve, reject) => {
-        await service.getByName(req.body.name)
-        .then(async data => {
-            if (data && data.status != 404) {
-                reject({
-                    status: 303,
-                    message: "Account already exists by this name"
-                })
-            } 
-            else {
-                req.body.userId=req.currentUser;
-                await db.ChartOfAccount.create(req.body).then(user => {
-                    resolve({
-                        status: 201,
-                        message: 'Account was created, Id:' + user.id
-                    });
-                }).catch(function (err) {
-                    reject({
-                        status: 502,
-                        message: err.message
-                    });
-                });
-            }
-        }).catch(function (err) {
-            reject({
-                status: 502,
-                message: err.message
-            });
-        });
-    });
-};
+// service.create = async (req) => {
+//     return new Promise(async (resolve, reject) => {
+//         await service.getByName(req.body.name)
+//         .then(async data => {
+//             if (data && data.status != 404) {
+//                 reject({
+//                     status: 303,
+//                     message: "Account already exists by this name"
+//                 })
+//             } 
+//             else {
+//                 req.body.userId=req.currentUser;
+//                 await db.ChartOfAccount.create(req.body).then(user => {
+//                     resolve({
+//                         status: 201,
+//                         message: 'Account was created, Id:' + user.id
+//                     });
+//                 }).catch(function (err) {
+//                     reject({
+//                         status: 502,
+//                         message: err.message
+//                     });
+//                 });
+//             }
+//         }).catch(function (err) {
+//             reject({
+//                 status: 502,
+//                 message: err.message
+//             });
+//         });
+//     });
+// };
 
 module.exports = service;
