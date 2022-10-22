@@ -14,7 +14,7 @@
     },
     "appSettings": {
         "httpPort": 3332,
-        "httpsPort": 3333,
+        "httpsPort": false,
         "SECRET_KEY": "Asiq Application",
         "SECRET_JWT": "Asiq Application",
         "SessionTimeOut": 3600000,

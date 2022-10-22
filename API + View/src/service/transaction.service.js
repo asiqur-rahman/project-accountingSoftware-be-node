@@ -234,6 +234,7 @@ service.createWithDetails = async (req) => {
         req.body.userId=req.currentUser;
         await db.Transaction.create(req.body,{isNewRecord:true}).then(async data => {
             const details = [];
+
             req.body.transactionDetails.forEach(item=>{
                 details.push({
                     chartOfAccountId:item.chartOfAccountId,
@@ -244,6 +245,9 @@ service.createWithDetails = async (req) => {
                 })
             });
             await db.TransactionDetails.bulkCreate(details).then(result =>{
+                details.forEach(async element => {
+                    await db.AccountBalance.increment({amount:element.debit?element.debit*-1:element.credit},{where:{chartOfAccountId:element.chartOfAccountId}});
+                });
                 resolve({
                     status: 201,
                     message: 'Transaction was created, Id:' + data.id

@@ -5,6 +5,10 @@ const sequelize = require('sequelize');
 const Op = require('sequelize').Op;
 const moment = require('moment');
 const bcrypt = require('bcryptjs');
+const fs = require('fs');
+const del = require('del');
+const path = require('path');
+const formidable = require('formidable');
 const jwt = require('jsonwebtoken');
 const accountService = require('../../service/account.service');
 const transactionService = require('../../service/transaction.service');
@@ -168,6 +172,15 @@ module.exports.transactionDetails = async (req, res, next) => {
   
 }
 
+module.exports.transactionFileDownload = async (req, res, next) => {
+  const mainPath = path.join(__dirname, '..', '..', 'public', 'transaction', 'ID_' + req.params.id, req.params.fileName);
+  if (fs.existsSync(mainPath)) {
+      res.download(mainPath)
+  } else {
+      res.redirect('/portal/login')
+  }
+};
+
 module.exports.transactionDelete = async (req, res, next) => {
   transactionService.delete(req).then((data)=>{
     res.status(200).send({status:true});
@@ -207,7 +220,7 @@ module.exports.newTransaction_Post = async (req, res, next) => {
     req.body.debitAccountId=req.body.accountFromId;
     req.body.creditAccountId=req.body.accountToId;
   }
-
+  
   await transactionService.createWithDetails(req)
     .then(result=>{
       req.session.notification=[enumm.notification.Success,'Transaction created successfully !'];
@@ -217,6 +230,51 @@ module.exports.newTransaction_Post = async (req, res, next) => {
       return res.render(`/portal/new-transaction`);
     });
 }
+
+
+module.exports.newTransaction_Post_ = async (req, res, next) => {
+  const form = formidable({});
+  form.parse(req, async (err, fields, files) => {
+      if (err) {
+        req.session.notification=[enumm.notification.Error,'Transaction creation failed !'];
+        return res.redirect(`/portal/new-transaction`);
+      } else {
+          if(fields.isItIncome=='1'){
+            fields.debitAccountId=fields.accountToId;
+            fields.creditAccountId=fields.accountFromId;
+          }else{
+            fields.debitAccountId=fields.accountFromId;
+            fields.creditAccountId=fields.accountToId;
+          }
+          fields.dateTime=moment(fields.dateTime, "MM-DD-YYYY");
+          // fields.id = null;
+          await transactionService.createWithDetails({body:fields,currentUser:req.currentUser})
+              .then(async (result) => {
+                console.log(result);
+                  if (result) {
+                      const oldName = path.join(req.body.mainPath, req.body.folderName);
+                      const newName = path.join(req.body.mainPath, "ID_" + result.id);
+                      fs.rename(oldName, newName, function (err) {
+                          if (err) {
+                              req.session.notification=[enumm.notification.Error,'File permission error !'];
+                              del(oldName);
+                              // fs.rmSync(oldName, { recursive: true, force: true });
+                          } else {
+                              req.session.notification=[enumm.notification.Success,'Transaction created successfully !'];
+                              return res.redirect(`/portal/new-transaction`);
+                          }
+                      });
+                  }
+              }).catch(function (err) {
+                  req.session.notification=[enumm.notification.Error,'Transaction not created !'];
+                  return res.redirect(`/portal/new-transaction`);
+              });
+      };
+  });
+
+};
+
+
 //#endregion
 
 module.exports.logout = async (req, res, next) => {

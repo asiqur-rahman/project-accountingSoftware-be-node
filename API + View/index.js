@@ -145,10 +145,9 @@ if(config.appSettings.httpPort){
             node_version: process.versions.node,
         });
     });
+    require('./src/socketEvent/socketEvent')(io,iceServers); 
   }
 //#endregion
 
 RouteService(app);
 //#endregion
-
-require('./src/socketEvent/socketEvent')(io,iceServers); 

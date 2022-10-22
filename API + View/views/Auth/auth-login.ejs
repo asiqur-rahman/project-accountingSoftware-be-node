@@ -21,23 +21,24 @@
     </div> -->
     <div class="account-pages my-5">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="text-center">
-                        <a href="/login" class="mb-5 d-block auth-logo">
-                            <!-- <img src="/public/assets/images/logo-dark.png" alt="" height="120" class="logo logo-dark">
-                            <img src="/public/assets/images/logo-light.png" alt="" height="120" class="logo logo-light"> -->
-                        </a>
-                    </div>
-                </div>
-            </div>
+            
             <div class="row align-items-center justify-content-center">
                 <div class="col-md-6 col-lg-6 col-xl-4">
                     <div class="card">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="text-center">
+                                    <a href="/login" class="d-block auth-logo">
+                                        <img src="/public/assets/images/bim-login-logo.png" alt="" height="130" class="logo logo-dark">
+                                        <img src="/public/assets/images/bim-login-logo.png" alt="" height="130" class="logo logo-light">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                         <div class="card-body p-4">
-                            <div class="text-center mt-2">
-                                <h5 class="text-primary">Welcome Back !</h5>
-                                <!-- <p class="text-muted">Sign in to continue to BrainTechSolution.</p> -->
+                            <div class="text-center">
+                                <h5 class="text-primary">Bangladesh Institute of Management (BIM)</h5>
+                                <p class="text-muted">Sign in to <span style="color: black; font-size: 15px;">Accounting Pro</span></p>
                             </div>
                             <div class="p-2">
                                 <% if(typeof error!='undefined' && error.length> 0) { %>
@@ -114,7 +115,7 @@
                         </div>
                     </div>
 
-                    <div class="mt-5 text-center">
+                    <div class="mt-2 text-center">
                         <p>©
                             <script>document.write(new Date().getFullYear())</script> <%= typeof orgName=='undefined' ? 'N/A' : orgName%>.</br> Developed & Maintained by <a href="<%= typeof devOrgLink=='undefined' ? '#' : devOrgLink %>" target="_blank" class="text-reset"><span style="color: #fd7014;"><%= typeof devOrgName=='undefined' ? 'N/A' : devOrgName %>.</span></a>
                         </p>
