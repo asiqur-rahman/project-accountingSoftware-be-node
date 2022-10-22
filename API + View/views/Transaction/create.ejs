@@ -39,7 +39,7 @@
                                         <select class="form-select validate_this select2" onchange="chartOfAccountChange(this)">
                                             <option value="0" disabled selected>Select</option>
                                             <% if(locals.transactionType) {for(var i=0; i<transactionType.length; i++){%>
-                                                <option value="<%=transactionType[i].baseCode%>" <%=typeof detailsInfo!='undefined' ? transactionType[i].id==model.roleId ? 'selected':'' : ''%>><%=transactionType[i].name%></option>
+                                                <option value="<%=transactionType[i].code%>" <%=typeof detailsInfo!='undefined' ? transactionType[i].id==model.roleId ? 'selected':'' : ''%>><%=transactionType[i].name%></option>
                                             <%}}%>
                                         </select>
                                     </div>

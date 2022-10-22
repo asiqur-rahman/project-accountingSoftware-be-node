@@ -119,24 +119,22 @@ service.getBalanceSheet = async () => {
                     }
                 }]
             },
-            // attributes: ['amount', 'isItIncome'],
-            // include: [{
-            //     model: db.ChartOfAccount,
-            //     attributes: ['name', 'level', 'baseCode'],
-            //     as: 'debitAccount',
-            //     where: {
-            //         id: {
-            //             [Op.col]: 'debitAccountId'
-            //         }
-            //     }
-            // }],
+            attributes: ['name','code','baseCode','level'],
+            include: [{
+                model: db.AccountBalance,
+                attributes: ['amount'],
+                where: {
+                    chartOfAccountId: {
+                        [Op.col]: 'chartOfAccount.id'
+                    }
+                }
+            }],
             // order: [
             //     ['name', 'ASC'],
             // ],
             raw: true
         }).then(data => {
             if (data) {
-                console.log(data)
                 resolve(data);
             } else {
                 resolve({

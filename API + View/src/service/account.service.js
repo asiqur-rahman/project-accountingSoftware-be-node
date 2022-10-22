@@ -222,7 +222,7 @@ service.transactionType = async ()=> {
                 }
             }]
         },
-        attributes: ['name', 'baseCode'],
+        attributes: ['name', 'code'],
         raw: true
     }).then(data => {
         return data;

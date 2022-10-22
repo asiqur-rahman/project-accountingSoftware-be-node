@@ -174,7 +174,7 @@ function initial() {
       userId:1,
       isActive:true,
       code:enumm.AccountHead.Assets.value,
-      baseCode:enumm.AccountHead.Assets.value
+      // baseCode:enumm.AccountHead.Assets.value
     });
 
     db.ChartOfAccount.create({
@@ -183,7 +183,7 @@ function initial() {
       userId:1,
       isActive:true,
       code:enumm.AccountHead.Equity.value,
-      baseCode:enumm.AccountHead.Equity.value
+      // baseCode:enumm.AccountHead.Equity.value
     });
 
     db.ChartOfAccount.create({
@@ -192,7 +192,7 @@ function initial() {
       userId:1,
       isActive:true,
       code:enumm.AccountHead.Expense.value,
-      baseCode:enumm.AccountHead.Expense.value
+      // baseCode:enumm.AccountHead.Expense.value
     });
 
     db.ChartOfAccount.create({
@@ -201,7 +201,7 @@ function initial() {
       userId:1,
       isActive:true,
       code:enumm.AccountHead.Income.value,
-      baseCode:enumm.AccountHead.Income.value
+      // baseCode:enumm.AccountHead.Income.value
     });
 
     db.ChartOfAccount.create({
@@ -210,7 +210,7 @@ function initial() {
       userId:1,
       isActive:true,
       code:enumm.AccountHead.Liabilities.value,
-      baseCode:enumm.AccountHead.Liabilities.value
+      // baseCode:enumm.AccountHead.Liabilities.value
     });
 
   }

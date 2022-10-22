@@ -121,7 +121,7 @@ module.exports.newchartOfAccount_Post = async (req, res, next) => {
     accountService.getById(req.body.parentId).then(async data=>{
       req.body.name=`${data.name}:${req.body.name}`;
       req.body.level=data.name.split(':').length;
-      req.body.baseCode=data.baseCode;
+      req.body.baseCode=req.body.level>1 ? data.baseCode:data.code;
       await accountService.create(req)
           .then((result) => {
               if (result) {
