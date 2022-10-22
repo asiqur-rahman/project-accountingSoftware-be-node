@@ -49,9 +49,7 @@ module.exports.dashboardEAR = async (req, res, next) => {
 
 //#region User
 module.exports.newUser = async (req, res, next) => {
-  res.locals = {
-      title: 'User Create',
-  };
+  res.locals.title= 'User Create';
   res.render('User/create');
 }
 
@@ -155,16 +153,13 @@ module.exports.newchartOfAccount_Post = async (req, res, next) => {
 
 //#region Transactions
 module.exports.transactionList = async (req, res, next) => {
-  res.locals = {
-    title: 'Transaction',
-    toast_Msg:res.locals.toast_Msg,
-  };
+  res.locals.title= 'Transaction';
+  res.locals.toast_Msg=res.locals.toast_Msg;
   res.render('Transaction/index');
 }
 
 module.exports.transactionDetails = async (req, res, next) => {
   transactionService.transactionDetailsByTransactionId(req).then((data)=>{
-    console.log(data)
     res.locals = {
       data:data
     };
@@ -184,15 +179,13 @@ module.exports.newTransaction = async (req, res, next) => {
       await accountService.chartOfAccountDDByBaseCode(enumm.AccountHead.Assets.value).then(async assets=>{
         await accountService.chartOfAccountDD().then(async coaAll=>{
           await taxService.getTaxDD().then(taxAll=>{
-            res.locals = {
-              title: 'Transaction',
-              toast_Msg:res.locals.toast_Msg,
-              transactionType:types,
-              assets:assets,
-              coaAll:coaAll,
-              incomeCode:enumm.AccountHead.Income.value,
-              taxAll:taxAll
-            };
+            res.locals.title= 'Transaction';
+            res.locals.toast_Msg=res.locals.toast_Msg;
+            res.locals.transactionType=types;
+            res.locals.assets=assets;
+            res.locals.coaAll=coaAll;
+            res.locals.incomeCode=enumm.AccountHead.Income.value;
+            res.locals.taxAll=taxAll;
             res.render('Transaction/create');
           })
         })
