@@ -46,9 +46,9 @@ service.getIncomeStatement = async () => {
                 const income = data.filter(x => x.isItIncome === 1);
                 var finalIncome=[];
                 income.forEach(element => {
-                    if(finalIncome.filter(y=>y['creditAccount.baseCode']===element['creditAccount.baseCode']).length>0){
+                    if(finalIncome.filter(y=>y['creditAccount.baseCode']===element['creditAccount.baseCode'] && y['creditAccount.name']===element['creditAccount.name']).length>0){
                         finalIncome.forEach(item=>{
-                            if(item['creditAccount.baseCode']===element['creditAccount.baseCode']){
+                            if(item['creditAccount.baseCode']===element['creditAccount.baseCode'] && item['creditAccount.name']===element['creditAccount.name']){
                                 item.amount+=element.amount;
                             }
                         })
@@ -69,9 +69,9 @@ service.getIncomeStatement = async () => {
                 const expense = data.filter(x => x.isItIncome === 0);
                 var finalExpense=[];
                 expense.forEach(element => {
-                    if(finalExpense.filter(y=>y['debitAccount.baseCode']===element['debitAccount.baseCode']).length>0){
+                    if(finalExpense.filter(y=>y['debitAccount.baseCode']===element['debitAccount.baseCode'] && y['debitAccount.name']===element['debitAccount.name']).length>0){
                         finalExpense.forEach(item=>{
-                            if(item['debitAccount.baseCode']===element['debitAccount.baseCode']){
+                            if(item['debitAccount.baseCode']===element['debitAccount.baseCode'] && item['debitAccount.name']===element['debitAccount.name']){
                                 item.amount+=element.amount;
                             }
                         })
@@ -141,9 +141,9 @@ service.getBalanceSheet = async () => {
                 const assets = data.filter(x => x.baseCode === enumm.AccountHead.Assets.value.toString());
                 var finalAssets=[];
                 assets.forEach(element => {
-                    if(finalAssets.filter(y=>y['baseCode']===element['baseCode']).length>0){
+                    if(finalAssets.filter(y=>y['baseCode']===element['baseCode'] && y['name']===element['name']).length>0){
                         finalAssets.forEach(item=>{
-                            if(item['baseCode']===element['baseCode']){
+                            if(item['baseCode']===element['baseCode'] && item['name']===element['name']){
                                 item['accountBalances.amount']+=element['accountBalances.amount'];
                             }
                         })
