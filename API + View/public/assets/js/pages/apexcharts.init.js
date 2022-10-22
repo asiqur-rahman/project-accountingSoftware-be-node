@@ -1,6 +1,4 @@
 
-
-
 //   spline_area
 
 var options = {
@@ -16,23 +14,23 @@ var options = {
         width: 3,
     },
     series: [{
-        name: 'series1',
+        name: 'Income',
         data: [34, 40, 28, 52, 42, 109, 100]
     }, {
-        name: 'series2',
+        name: 'Expense',
         data: [32, 60, 34, 46, 34, 52, 41]
     }],
     colors: ['#5b73e8', '#f1b44c'],
     xaxis: {
-        type: 'datetime',
-        categories: ["2018-09-19T00:00:00", "2018-09-19T01:30:00", "2018-09-19T02:30:00", "2018-09-19T03:30:00", "2018-09-19T04:30:00", "2018-09-19T05:30:00", "2018-09-19T06:30:00"],                
+        type: 'date',
+        categories: ["22-09-19", "22-09-19", "22-09-19", "22-09-19", "22-09-19", "22-09-19", "22-09-19"],                
     },
     grid: {
         borderColor: '#f1f1f1',
     },
     tooltip: {
         x: {
-            format: 'dd/MM/yy HH:mm'
+            format: 'dd/MM/yy'
         },
     }
 }
