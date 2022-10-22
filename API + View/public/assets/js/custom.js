@@ -1,7 +1,7 @@
 const Spinner = {
     Show() {
         $('#status').fadeIn();
-        $('#preloader').delay(100).fadeIn();
+        $('#preloader').delay(300).fadeIn();
     },
     Hide() {
         $('#status').fadeOut();
