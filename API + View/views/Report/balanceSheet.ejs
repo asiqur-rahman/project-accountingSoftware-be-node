@@ -118,12 +118,12 @@ input, label {
 <div class="row">
     <div class="col-12">
         <div class="page-title-box d-flex align-items-center justify-content-between">
-            <h4 class="mb-0">Income Statement</h4>
+            <h4 class="mb-0">Balance Sheet</h4>
 
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Report</a></li>
-                    <li class="breadcrumb-item active">Statement</li>
+                    <li class="breadcrumb-item active">Sheet</li>
                 </ol>
             </div>
 
@@ -170,29 +170,36 @@ input, label {
                 </div>
                 <br/> -->
                 <ol class="wtree">
-                    <% if(locals.data && locals.data.income) {%>
-                        <li><span>Income<p>$ <%=data.income.total%></p></span>
+                    <% if(locals.data) {%>
+                        <li><span>Assets<p>$ <%=data.assets.total%></p></span>
                             <ol>
-                                <% for(var i=0; i<data.income.data.length; i++){%>
+                                <% for(var i=0; i<data.assets.data.length; i++){%>
                                     <li>
-                                        <span><%=data.income.data[i]['creditAccount.name']%> <p>$ <%=data.income.data[i].amount%></p></span>
+                                        <span><%=data.assets.data[i].name%> <p>$ <%=data.assets.data[i]['accountBalances.amount']%></p></span>
                                     </li>
                                 <%}%>
                             </ol>
                         </li>
 
-                        <li><span>Expense<p>$ <%=data.expense.total%></p></span>
+                        <li><span>Liabilities<p>$ <%=data.liabilities.total%></p></span>
                             <ol>
-                                <% for(var i=0; i<data.expense.data.length; i++){%>
+                                <% for(var i=0; i<data.liabilities.data.length; i++){%>
                                     <li>
-                                        <span><%=data.expense.data[i]['debitAccount.name']%> <p>$ <%=data.expense.data[i].amount%></p></span>
+                                        <span><%=data.liabilities.data[i].name%> <p>$ <%=data.liabilities.data[i]['accountBalances.amount']%></p></span>
                                     </li>
                                 <%}%>
                             </ol>
                         </li>
-                    <li style="font-weight: bold; font-size: 18px;">
-                        <span>Net Income<p>$ <%=data.income.total - data.expense.total%></p></span>
-                    </li>
+
+                        <li><span>Equity<p>$ <%=data.equities.total%></p></span>
+                            <ol>
+                                <% for(var i=0; i<data.equities.data.length; i++){%>
+                                    <li>
+                                        <span><%=data.equities.data[i].name%> <p>$ <%=data.equities.data[i]['accountBalances.amount']%></p></span>
+                                    </li>
+                                <%}%>
+                            </ol>
+                        </li>
                     <%}%>
 
                 </ol>

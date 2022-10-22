@@ -135,7 +135,71 @@ service.getBalanceSheet = async () => {
             raw: true
         }).then(data => {
             if (data) {
-                resolve(data);
+                var result = [];
+                var total = 0;
+                //#region Assets calculation
+                const assets = data.filter(x => x.baseCode === enumm.AccountHead.Assets.value.toString());
+                var finalAssets=[];
+                assets.forEach(element => {
+                    if(finalAssets.filter(y=>y['baseCode']===element['baseCode']).length>0){
+                        finalAssets.forEach(item=>{
+                            if(item['baseCode']===element['baseCode']){
+                                item['accountBalances.amount']+=element['accountBalances.amount'];
+                            }
+                        })
+                    }else{
+                        finalAssets.push(element);
+                    }
+                    total += element['accountBalances.amount'];
+                });
+                result.assets = {
+                    total: total,
+                    data: finalAssets
+                };
+                //#endregion
+                total=0;
+                //#region Assets calculation
+                const liabilities = data.filter(x => x.baseCode === enumm.AccountHead.Liabilities.value.toString());
+                var finalLiabilities=[];
+                liabilities.forEach(element => {
+                    if(finalLiabilities.filter(y=>y['baseCode']===element['baseCode']).length>0){
+                        finalLiabilities.forEach(item=>{
+                            if(item['baseCode']===element['baseCode']){
+                                item['accountBalances.amount']+=element['accountBalances.amount'];
+                            }
+                        })
+                    }else{
+                        finalLiabilities.push(element);
+                    }
+                    total += element['accountBalances.amount'];
+                });
+                result.liabilities = {
+                    total: total,
+                    data: finalLiabilities
+                };
+                //#endregion
+                total=0;
+                //#region Assets calculation
+                const equities = data.filter(x => x.baseCode === enumm.AccountHead.Liabilities.value.toString());
+                var finalEquities=[];
+                equities.forEach(element => {
+                    if(finalEquities.filter(y=>y['baseCode']===element['baseCode']).length>0){
+                        finalEquities.forEach(item=>{
+                            if(item['baseCode']===element['baseCode']){
+                                item['accountBalances.amount']+=element['accountBalances.amount'];
+                            }
+                        })
+                    }else{
+                        finalEquities.push(element);
+                    }
+                    total += element['accountBalances.amount'];
+                });
+                result.equities = {
+                    total: total,
+                    data: finalEquities
+                };
+                //#endregion
+                resolve(result);
             } else {
                 resolve({
                     status: 404,
