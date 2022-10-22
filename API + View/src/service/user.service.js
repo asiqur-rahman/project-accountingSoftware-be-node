@@ -101,7 +101,7 @@ service.indexData = async (req) => {
         //-----------------Server side pagination----------------------
         const order = req.query.columns[req.query.order[0].column].data=='sl'?[]:sequelize.literal(req.query.columns[req.query.order[0].column].data+" "+req.query.order[0].dir);//req.query.order[0].column=='0'?[]:[[req.query.columns[req.query.order[0].column].data,req.query.order[0].dir]];
         var searchQuery=[];
-        req.query?.columns?.forEach(coloum => {
+        req.query.columns.forEach(coloum => {
             if(coloum.data!='sl' && coloum.data!='id')searchQuery.push(sequelize.col(coloum.data));
         });
         var where = {};

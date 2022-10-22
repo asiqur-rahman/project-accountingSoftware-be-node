@@ -131,6 +131,30 @@ function confirmationCheck_ajax(url, method = 'GET', msg, tableId, showSpin=true
     })
 }
 
+async function showResponseInModals(url,method){
+    await $.ajax({
+        type: method??'GET',
+        url: url,
+        // beforeSend: function () {
+        //     Spinner.Show();
+        // },
+        // complete: function () {
+        //     Spinner.Hide();
+        // },
+        success: function (result) {
+            $('.bs-custom-modal-lg .modal-body').html(result);
+            $('.bs-custom-modal-lg').modal('toggle');
+        },
+        error: function (request, status, error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Internal error !'
+            })
+        }
+    })
+    $('.bs-example-modal-lg').modal('toggle');
+} 
+
 $('.number_only').keyup(function(e) {
     if(this.value!='-')
       while(isNaN(this.value))

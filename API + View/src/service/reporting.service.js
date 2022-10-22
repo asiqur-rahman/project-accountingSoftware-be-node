@@ -1,0 +1,91 @@
+const db = require('../models/model');
+const Logger = require('../externalService/console.log.service');
+var path = require('path');
+const log = new Logger(path.basename(__filename));
+const sequelize = require('sequelize');
+const bcrypt = require('bcryptjs');
+const moment = require('moment');
+const Op = require('sequelize').Op;
+const enumm = require('../utils/enum.utils');
+
+const service = {};
+
+service.getIncomeStatement = async () => {
+    return new Promise(async (resolve, reject) => {
+        await db.Transaction.findAll({
+            attributes: ['amount', 'isItIncome'],
+            include: [{
+                model: db.ChartOfAccount,
+                attributes: ['name', 'level', 'baseCode'],
+                as: 'debitAccount',
+                where: {
+                    id: {
+                        [Op.col]: 'debitAccountId'
+                    }
+                }
+            }],
+            raw: true
+        }).then(data => {
+            if (data) {
+                var result = [];
+                var total = 0;
+                //#region Income calculation
+                const income = data.filter(x => x.isItIncome === 1);
+                var finalIncome=[];
+                income.forEach(element => {
+                    if(finalIncome.filter(y=>y['debitAccount.baseCode']===element['debitAccount.baseCode']).length>0){
+                        finalIncome.forEach(item=>{
+                            if(item['debitAccount.baseCode']===element['debitAccount.baseCode']){
+                                item.amount+=element.amount;
+                            }
+                        })
+                    }else{
+                        finalIncome.push(element);
+                    }
+                    total += element.amount;
+                });
+                result.income = {
+                    total: total,
+                    data: finalIncome
+                };
+                //#endregion
+                
+                total = 0;
+
+                //#region Expense calculation
+                const expense = data.filter(x => x.isItIncome === 0);
+                var finalExpense=[];
+                expense.forEach(element => {
+                    if(finalExpense.filter(y=>y['debitAccount.baseCode']===element['debitAccount.baseCode']).length>0){
+                        finalExpense.forEach(item=>{
+                            if(item['debitAccount.baseCode']===element['debitAccount.baseCode']){
+                                item.amount+=element.amount;
+                            }
+                        })
+                    }else{
+                        finalExpense.push(element);
+                    }
+                    total += element.amount;
+                });
+                result.expense = {
+                    total: total,
+                    data: finalExpense
+                }
+                //#endregion
+                resolve(result);
+            } else {
+                resolve({
+                    status: 404,
+                    message: "Transactions not found !"
+                })
+            }
+        }).catch(function (err) {
+            reject({
+                status: 502,
+                message: err.message
+            })
+        });
+    });
+};
+
+module.exports = service;

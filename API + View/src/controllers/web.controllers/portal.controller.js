@@ -34,7 +34,6 @@ module.exports.dashboard = async (req, res, next) => {
 
 module.exports.dashboardLTFD = async (req, res, next) => {
   await transactionService.lastTransactionsForDashboard().then(data=>{
-    console.log(data)
     res.status(200).send(data);
   });
 }
@@ -159,9 +158,19 @@ module.exports.transactionList = async (req, res, next) => {
   res.render('Transaction/index');
 }
 
+module.exports.transactionDetails = async (req, res, next) => {
+  transactionService.transactionDetailsByTransactionId(req).then((data)=>{
+    console.log(data)
+    res.locals = {
+      data:data
+    };
+    res.render('Transaction/details',{layout: false});
+  });
+  
+}
+
 module.exports.transactionDelete = async (req, res, next) => {
   transactionService.delete(req).then((data)=>{
-    console.log(data)
     res.status(200).send({status:true});
   });
 }
@@ -189,13 +198,11 @@ module.exports.newTransaction = async (req, res, next) => {
 
 module.exports.transactionListData = async (req, res, next) => {
   transactionService.indexData(req).then(data=>{
-    console.log(data)
     res.status(200).send(data);
   });
 }
 
 module.exports.newTransaction_Post = async (req, res, next) => {
-  console.log(req.body);
   if(req.body.isItIncome=='1'){
     req.body.debitAccountId=req.body.accountToId;
     req.body.creditAccountId=req.body.accountFromId;
@@ -209,11 +216,11 @@ module.exports.newTransaction_Post = async (req, res, next) => {
       req.session.notification=[enumm.notification.Success,'Transaction created successfully !'];
       return res.redirect(`/portal/new-transaction`);
     }).catch(e=>{
-      console.log(e);
       req.session.notification=[enumm.notification.Error,'Transaction not created !'];
       return res.render(`/portal/new-transaction`);
     });
 }
+//#endregion
 
 module.exports.logout = async (req, res, next) => {
   // Assign  null value in session
@@ -227,5 +234,3 @@ module.exports.logout = async (req, res, next) => {
   res.redirect('/auth/login');
   // res.render('Auth/auth-login', { 'message': req.flash('message'), 'error': req.flash('error') ,layout: false});
 };
-
-//#endregion
