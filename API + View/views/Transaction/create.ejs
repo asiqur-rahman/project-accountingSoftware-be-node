@@ -6,14 +6,7 @@
 <div class="row">
     <div class="col-12">
         <div class="page-title-box d-flex align-items-center justify-content-between">
-            <h4 class="mb-0">Transaction <%= typeof model=='undefined' ? 'Create' : 'Update' %></h4>
-            <div class="page-title-right">
-                <ol class="breadcrumb m-0">
-                    <li class="breadcrumb-item"><a href="javascript: void(0);">Sales</a></li>
-                    <li class="breadcrumb-item active"><%= typeof model=='undefined' ? 'Create' : 'Update' %></li>
-                </ol>
-            </div>
-
+            <h4 class="mb-0"><%= typeof model=='undefined' ? 'New' : 'Update' %> Transaction</h4>
         </div>
     </div>
 </div>
@@ -85,7 +78,7 @@
                                         <input type="text" class="form-control validate_this" placeholder="Date"
                                             data-date-format="mm/dd/yyyy" data-date-container='#datepicker2' data-provide="datepicker"
                                             data-date-autoclose="true" autocomplete="off"
-                                            name="dateTime" id="dateTime" value="<%= typeof model!='undefined' ? model.date : '' %>">
+                                            name="dateTime" id="dateTime" value="<%= typeof model!='undefined' ? model.date : locals.todayDate %>">
         
                                         <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                     </div>
@@ -109,17 +102,18 @@
                         <div class="col-md-6">
                             <div class="mb-3 row">
                                 <label for="description" class="col-md-4 col-form-label">Description</label>
-                                <div class="col-md-8">
-                                    <input class="form-control" placeholder="Description" type="text" name="description" id="description" value="<%= typeof model!='undefined' ? model.description : '' %>">
+                                <div class="col-md-8" data-validate="Description is required">
+                                    <!-- <input class="form-control" placeholder="Description" type="text" name="description" id="description" value="<%= typeof model!='undefined' ? model.description : '' %>"> -->
+                                    <textarea class="form-control validate_this" name="description" id="description" rows="1"></textarea>
                                 </div>
                             </div>
                         </div>
                         <br/>
                         <br/>
                         <br/>
-                        <h5>Transaction Details</h5>
+                        <hr/>
                         <div data-repeater-item class="row transactionDetailsPart">
-                            <div  class="mb-3 col-lg-4">
+                            <div  class="mb-3 col-lg-5">
                                 <label class="form-label" for="name">Account</label>
                                 <select class="form-select chartOfAccountId" name="chartOfAccountId">
                                     <option value="0" disabled selected>Select</option>
@@ -129,19 +123,10 @@
                                 </select>
                             </div>
                             <div  class="mb-3 col-lg-3">
-                                <label class="form-label" for="name">Tax</label>
-                                <select class="form-select taxId" name="taxId">
-                                    <option value="0" disabled selected>Select</option>
-                                    <% if(locals.taxAll) {for(var i=0; i<taxAll.length; i++){%>
-                                        <option value="<%=taxAll[i].id%>" <%=typeof detailsInfo!='undefined' ? taxAll[i].id==model.roleId ? 'selected':'' : ''%>><%=taxAll[i].name%></option>
-                                    <%}}%>
-                                </select>
-                            </div>
-                            <div  class="mb-3 col-lg-2">
                                 <label class="form-label" for="email">Debit</label>
                                 <input type="text" name="debit" class="form-control debit" onkeyup="numberOnly(this)" onchange="multiply(this.name)"/>
                             </div>
-                            <div  class="mb-3 col-lg-2">
+                            <div  class="mb-3 col-lg-3">
                                 <label class="form-label" for="subject">Credit</label>
                                 <input type="text" name="credit" class="form-control credit" onkeyup="numberOnly(this)" onchange="multiply(this.name)"/>
                             </div>
@@ -151,7 +136,7 @@
                         </div>
 
                     </div>
-                    <input data-repeater-create type="button" class="btn btn-success" value="Add New Item" id="addNewItem"/>
+                    <input data-repeater-create type="button" class="btn btn-sm btn-secondary" value="Add Split" id="addNewItem"/>
                     
                     <div class="mt-3 col-md-12">
                         <div class="mt-3 text-end">

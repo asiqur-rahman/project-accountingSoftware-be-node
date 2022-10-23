@@ -199,6 +199,7 @@ module.exports.newTransaction = async (req, res, next) => {
             res.locals.coaAll=coaAll;
             res.locals.incomeCode=enumm.AccountHead.Income.value;
             res.locals.taxAll=taxAll;
+            res.locals.todayDate= moment().format("MM/DD/yyyy");
             res.render('Transaction/create');
           })
         })
@@ -213,7 +214,7 @@ module.exports.transactionListData = async (req, res, next) => {
 }
 
 module.exports.newTransaction_Post = async (req, res, next) => {
-  if(req.body.isItIncome=='1'){
+  if(req.body.isItIncome=='0'){
     req.body.debitAccountId=req.body.accountToId;
     req.body.creditAccountId=req.body.accountFromId;
   }else{

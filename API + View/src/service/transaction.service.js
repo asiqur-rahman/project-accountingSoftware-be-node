@@ -63,13 +63,11 @@ service.delete = async (req) => {
                 id: req.params.id
             },
         }).then(() => {
-            console.log("allOK")
             resolve({
                 status: 200,
                 message: 'Transaction deleted successfully.'
             });
         }).catch(function (err) {
-            console.log("notOK")
             reject({
                 status: 502,
                 message: err.message
@@ -137,7 +135,6 @@ service.indexData = async (req) => {
                     detail.sl = ++count;
                     detail.dateTime= moment.utc(detail.dateTime).format("DD-MM-yyyy hh:mm:ss A");
                 })
-                // console.log(detailsInfo);
                 resolve({draw:req.query.draw,recordsTotal:detailsInfo.count,recordsFiltered:detailsInfo.count,data:detailsInfo.rows});
             } else {
                 resolve({count: 0,rows:[]});
@@ -177,7 +174,6 @@ service.lastTransactionsForDashboard = async (req) => {
                     detail.sl = ++count;
                     detail.dateTime= moment.utc(detail.dateTime).format("DD-MM-yyyy");
                 })
-                console.log(detailsInfo);
                 // resolve(detailsInfo);
                 resolve({draw:'1',recordsTotal:detailsInfo.count,recordsFiltered:detailsInfo.count,data:detailsInfo.rows});
             } else {
@@ -274,6 +270,10 @@ service.transactionDetailsByTransactionId = async (req) => {
                 {
                     model: db.ChartOfAccount,
                     attributes: ['name']
+                },
+                {
+                    model: db.Transaction,
+                    attributes: ['dateTime','description']
                 }
             ],
             raw: true
@@ -282,8 +282,8 @@ service.transactionDetailsByTransactionId = async (req) => {
                 var count=0;
                 data.rows.forEach(detail => {
                     detail.sl = ++count;
+                    detail.dateTime=moment.utc(detail.dateTime).format("DD-MM-yyyy");
                 })
-                console.log(data)
                 resolve(data.rows);
             } else {
                 resolve([]);
