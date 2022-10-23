@@ -206,4 +206,36 @@ service.create = async (req) => {
     });
 };
 
+
+service.update = async (req) => {
+    return new Promise(async (resolve, reject) => {
+        await db.UserDetails.update(req.body, {
+            where: {
+                id: req.body.udId
+            }
+        }).then(async () => {
+            await db.User.update(req.body, {
+                where: {
+                    id: req.body.userId
+                }
+            }).then(() => {
+                resolve({
+                    status: 201,
+                    message: 'User was updated.'
+                });
+            });
+        }).catch(function (err) {
+            reject({
+                status: 200,
+                message: 'User was not updated.'
+            });
+        });
+    }).catch(function (err) {
+        log.debug('Error', {
+            error: err.message,
+        });
+        throw err;
+    });
+};
+
 module.exports = service;

@@ -53,8 +53,71 @@ module.exports.dashboardEAR = async (req, res, next) => {
 
 //#region User
 module.exports.newUser = async (req, res, next) => {
-  res.locals.title= 'User Create';
-  res.render('User/create');
+  if(req.params.id){
+    await userService.getById(req.params.id)
+    .then(detailsInfo=>{
+      res.locals.detailsInfo= detailsInfo;
+      res.render('User/create');
+    })
+    
+
+  }else{
+    res.locals.title= 'User Create';
+    res.render('User/create');
+  }
+}
+
+module.exports.newUser_Post = async (req, res, next) => {
+  if (req.body.id && req.body.id > 0) {
+      await userService.update(req)
+        .then(() => {
+            req.session.notification=[enumm.notification.Success,'User updated successfully !'];
+            res.redirect(`/portal/user-list`);
+        }).catch(function (err) {
+        res.locals = {
+            title: `${area} Create`,
+            employeeCode: Date.now() % 100000000,
+            detailsInfo: req.body
+        };
+        req.session.notification=[enumm.notification.Error,'User not updated !'];
+        res.render(`/${area}/create`);
+    });
+} else {
+    await db.detailsInfo.create(req.body)
+        .then(async (result) => {
+            if (result) {
+                await db.detailsInfo.findOne({
+                    where: {
+                        employeeCode: req.body.employeeCode
+                    },
+                    raw: true
+                }).then(async detailsInfo => {
+                    const passwordNotHashed = (Date.now() % 10000000000).toString();
+                    await bcrypt.hash(passwordNotHashed, 8).then(async password => {
+                        req.body.password = password;
+                        req.body.detailsInfoId = detailsInfo.id;
+                        await db.user.create(req.body)
+                            .then(async () => {
+                                await emailController.sendMail_Func({
+                                    To: [detailsInfo.email],
+                                    MailSubject: "Chicken Man User Portal Credentials.",
+                                    MailBody: `Hi ${detailsInfo.name}, <br/><br/>Welcome to Chicken Man. Here is your portal login credentials.<br/><br/>UserName : <b>${req.body.username}</b><br/>Password : <b>${passwordNotHashed}</b><br/><br/>Please reset your password from the below link<br/>https://chickenman.net.au/login<br/><br/> Thank you for joining Chicken Man.<br/><br/>Best Regards,<br/>Chicken Man<br/>(02) 4856 8660<br/>info@chickenman.net.au<br/>www.chickenman.net.au<br/>12 Verner St, Goulburn, NSW, Australia `
+                                }, req).then((result) => {
+                                    // console.log(result);
+                                    // res.redirect(`/portal-${area}-list`);
+                                    req.session.notification=[enumm.notification.Success,'User created successfully!'];
+                                    res.redirect(`/portal-${area.toLowerCase()}-create`);
+                                });
+                            });
+                    });
+                });
+            } else {
+                req.session.notification=[enumm.notification.Error,'User not created !'];
+                // req.flash('responseMessage',JSON.stringify({type:'success',message:'User Created Successfully !'}))
+                res.redirect(`/portal-${area.toLowerCase()}-create`);
+            }
+        });
+}
 }
 
 module.exports.userList = async (req, res, next) => {
@@ -196,7 +259,7 @@ module.exports.newTransaction = async (req, res, next) => {
             res.locals.toast_Msg=res.locals.toast_Msg;
             res.locals.transactionType=types;
             res.locals.assets=assets;
-            res.locals.coaAll=coaAll;
+            res.locals.coaAll=coaAll; 
             res.locals.incomeCode=enumm.AccountHead.Income.value;
             res.locals.taxAll=taxAll;
             res.locals.todayDate= moment().format("MM/DD/yyyy");
