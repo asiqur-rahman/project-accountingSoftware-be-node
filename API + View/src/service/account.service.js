@@ -58,6 +58,7 @@ service.getTreeWiseData = async () => {
 service.create = async (req) => {
     return new Promise(async (resolve, reject) => {
         req.body.id=null;
+        req.body.userId=req.currentUser;
         await db.ChartOfAccount.create(req.body)
             .then(async (result) => {
                 if (result) {
@@ -299,6 +300,26 @@ service.getByName = async (value) => {
             error: err.message,
         });
         throw err;
+    });
+};
+
+service.delete = async (req) => {
+    return new Promise(async (resolve, reject) => {
+        await db.ChartOfAccount.destroy({
+            where: {
+                id: req.params.id
+            },
+        }).then(() => {
+            resolve({
+                status: 200,
+                message: 'Account deleted successfully.'
+            });
+        }).catch(function (err) {
+            reject({
+                status: 502,
+                message: err.message
+            });
+        });
     });
 };
 

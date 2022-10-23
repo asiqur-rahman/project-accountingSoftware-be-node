@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const {apiAuth} = require('../../middleware/auth.middleware');
 
 const authRouter = require('./auth.route');
 const userRouter = require('./user.route');
@@ -8,10 +9,10 @@ const transactionRouter = require('./transaction.route');
 const reportRouter = require('./report.route');
 
 router.use('/auth', authRouter);
-router.use('/user', userRouter);
-router.use('/account', accountRouter);
-router.use('/transaction', transactionRouter);
-router.use('/report', reportRouter);
+router.use('/user', apiAuth(), userRouter);
+router.use('/account',apiAuth(), accountRouter);
+router.use('/transaction',apiAuth(), transactionRouter);
+router.use('/report',apiAuth(), reportRouter);
 
 // 404 error
 router.all('*', (req, res, next) => {

@@ -6,7 +6,6 @@ const awaitHandlerFactory = require('../../middleware/awaitHandlerFactory.middle
 const { loginValidator,userCreateValidator } = require('../../middleware/validators/userValidator.middleware');
 
 router.post('/login', loginValidator, awaitHandlerFactory(authController.login));
-router.get('/whoami', apiAuth(), awaitHandlerFactory(authController.whoAmI));
 router.post('/registration', userCreateValidator, awaitHandlerFactory(authController.registration));
 
 module.exports = router;

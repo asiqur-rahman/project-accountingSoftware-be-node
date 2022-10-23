@@ -5,9 +5,9 @@ const userController = require('../../controllers/api.controllers/user.controlle
 const awaitHandlerFactory = require('../../middleware/awaitHandlerFactory.middleware');
 const { userCreateValidator } = require('../../middleware/validators/userValidator.middleware');
 
-router.get('/:id', apiAuth(), awaitHandlerFactory(userController.getById));
-router.post('/', apiAuth(),userCreateValidator, awaitHandlerFactory(userController.create));
-router.patch('/:id', apiAuth(), awaitHandlerFactory(userController.update));
-router.delete('/:id', apiAuth(), awaitHandlerFactory(userController.delete));
+router.get('/:id', awaitHandlerFactory(userController.getById));
+router.post('/', userCreateValidator, awaitHandlerFactory(userController.create));
+router.patch('/:id', awaitHandlerFactory(userController.update));
+router.delete('/:id', awaitHandlerFactory(userController.delete));
 
 module.exports = router;
