@@ -164,7 +164,7 @@ function initial() {
     });
 
     db.Currency.create({
-      name:'USD',
+      name:'BDT',
       isActive:true
     });
 

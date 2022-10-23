@@ -44,7 +44,6 @@
                             <div class="col-md-8">
                                 <div class="input-group" data-validate="Currency is required">
                                     <select class="form-select validate_this select2" name="currencyId" id="currencyId">
-                                        <option value="" disabled selected>Select an option</option>
                                         <% if(locals.currencyDD) {for(var i=0; i<currencyDD.length; i++){%>
                                             <option value="<%=currencyDD[i].id%>" <%=typeof detailsInfo!='undefined' ? currencyDD[i].id==detailsInfo.currencyId ? 'selected':'' : ''%>><%=currencyDD[i].name%></option>
                                         <%}}%>
