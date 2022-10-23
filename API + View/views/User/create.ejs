@@ -27,13 +27,21 @@
             <div class="card-body">
                 <form class="validate-this-form" method="post">
                     <div class="row">
-                        <input class="form-control" type="number" name="id" id="id" value="<%= typeof detailsInfo!='undefined' ? detailsInfo.id : '0' %>" readonly hidden>
-                        <input class="form-control" type="number" name="userId" id="userId" value="<%= typeof detailsInfo!='undefined' ? detailsInfo.userId : '0' %>" readonly hidden>
+                        <input class="form-control" type="number" name="userDetailId" id="userDetailId" value="<%= typeof detailsInfo!='undefined' ? detailsInfo.userDetailId : '' %>" readonly hidden>
+                        <input class="form-control" type="number" name="id" id="id" value="<%= typeof detailsInfo!='undefined' ? detailsInfo.id : '' %>" readonly hidden>
                         <div class="col-md-6">
                             <div class="mb-3 row">
-                                <label for="name" class="col-md-4 col-form-label">Full Name</label>
-                                <div class="col-md-8" data-validate="Full Name is required">
-                                    <input class="form-control validate_this" type="text" name="name" id="name" value="<%= typeof detailsInfo!='undefined' ? detailsInfo.name : '' %>">
+                                <label for="firstName" class="col-md-4 col-form-label">First Name</label>
+                                <div class="col-md-8" data-validate="First Name is required">
+                                    <input class="form-control validate_this" type="text" name="firstName" id="firstName" value="<%= typeof detailsInfo!='undefined' ? detailsInfo['userDetail.firstName'] : '' %>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3 row">
+                                <label for="lastName" class="col-md-4 col-form-label">Last Name</label>
+                                <div class="col-md-8" data-validate="Last Name is required">
+                                    <input class="form-control validate_this" type="text" name="lastName" id="lastName" value="<%= typeof detailsInfo!='undefined' ? detailsInfo['userDetail.lastName'] : '' %>">
                                 </div>
                             </div>
                         </div>
@@ -45,7 +53,7 @@
                                         <select class="form-select validate_this select2" name="roleId" id="roleId">
                                             <option value="" disabled selected>Select</option>
                                             <% if(locals.roleDD) {for(var i=0; i<roleDD.length; i++){%>
-                                                <option value="<%=roleDD[i].id%>" <%=typeof detailsInfo!='undefined' ? roleDD[i].id==detailsInfo.roleId ? 'selected':'' : ''%>><%=roleDD[i].name%></option>
+                                                <option value="<%=roleDD[i].id%>" <%=typeof detailsInfo!="undefined" ? roleDD[i].id==detailsInfo["userDetail.role.id"] ? 'selected':'' : ''%>><%=roleDD[i].name%></option>
                                             <%}}%>
                                         </select>
                                     </div>
@@ -64,7 +72,7 @@
                             <div class="mb-3 row">
                                 <label for="contactNo" class="col-md-4 col-form-label">Contact No</label>
                                 <div class="col-md-8" data-validate="Contact No is required">
-                                    <input class="form-control validate_this" type="text" name="contactNo" id="contactNo" value="<%= typeof detailsInfo!='undefined' ? detailsInfo.contactNo : '' %>">
+                                    <input class="form-control validate_this" type="text" name="contactNo" id="contactNo" value="<%= typeof detailsInfo!='undefined' ? detailsInfo['userDetail.contactNo'] : '' %>">
                                 </div>
                             </div>
                         </div>
@@ -72,7 +80,7 @@
                             <div class="mb-3 row">
                                 <label for="email" class="col-md-4 col-form-label">Email</label>
                                 <div class="col-md-8" data-validate="Email is required">
-                                    <input class="form-control validate_this" type="email" name="email" id="email" value="<%= typeof detailsInfo!='undefined' ? detailsInfo.email : '' %>">
+                                    <input class="form-control validate_this" type="email" name="email" id="email" value="<%= typeof detailsInfo!='undefined' ? detailsInfo['userDetail.email'] : '' %>">
                                 </div>
                             </div>
                         </div>
@@ -80,13 +88,13 @@
                             <div class="mb-3 row">
                                 <label for="address" class="col-md-4 col-form-label">Address</label>
                                 <div class="col-md-8">
-                                    <input class="form-control" type="text" name="address" id="address" value="<%= typeof detailsInfo!='undefined' ? detailsInfo.address : '' %>">
+                                    <input class="form-control" type="text" name="address" id="address" value="<%= typeof detailsInfo!='undefined' ? detailsInfo['userDetail.address'] : '' %>">
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <a class="btn btn-danger" style="float: right; margin-left: 2%;" type="button" href="/portal-user-list">Cancel</a>
+                        <a class="btn btn-danger" style="float: right; margin-left: 2%;" type="button" href="/portal/user-list">Cancel</a>
                         <button class="btn btn-primary" style="float: right;" type="submit" id="formSubmitBtn" ><%= typeof detailsInfo=='undefined' ? 'Create' : 'Update' %></button>
                         <!-- <button class="btn btn-primary" type="button" id="faceScanBtn" style="display: none;">Face Scan</button> -->
                     </div>
@@ -109,11 +117,10 @@
 <script>
     $("#username").change(async function(){
         const username=$("#username").val();
-        alert(username)
         if(username.trim()!=''){
             await $.ajax({
                 type: 'get',
-                url: "/portal-username-check/" + username,
+                url: "/portal/username-check/" + username,
                 beforeSend: function () {
                     // Spinner.Show();
                 },
@@ -121,7 +128,8 @@
                     // Spinner.Hide();
                 },
                 success: function (jsondata) {
-                    if(jsondata.status==1){
+                    debugger;
+                    if(jsondata.id && jsondata.id!=$("#id").val()){
                         $("#username").val('');
                         Swal.fire({
                             icon: 'error',
@@ -130,7 +138,7 @@
                     }
                 },
                 error: function (request, status, error) {
-                    Spinner.Hide();
+                    // Spinner.Hide();
                     Swal.fire({
                         icon: 'error',
                         title: 'Duplicate username checking failed !'

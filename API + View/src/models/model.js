@@ -32,7 +32,7 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.User = require("./user.model.js")(sequelize, Sequelize);
-db.Role = require("./role.model.js")(sequelize, Sequelize);
+db.Role = require("./Role.model.js")(sequelize, Sequelize);
 db.Branch = require("./branch.model.js")(sequelize, Sequelize);
 db.UserDetails = require("./userDetails.model")(sequelize, Sequelize);
 db.SendMail = require("./sendMail.model")(sequelize, Sequelize);
@@ -55,7 +55,7 @@ db.UserDetails.hasOne(db.User);
 db.UserDetails.belongsTo(db.Role,{ foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
 db.Role.hasMany(db.UserDetails);
 
-db.UserDetails.belongsTo(db.Branch,{ foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
+db.UserDetails.belongsTo(db.Branch,{ foreignKey: { allowNull: true }, onDelete: 'CASCADE' });
 db.Branch.hasMany(db.UserDetails);
 
 //sendMailTable
@@ -134,30 +134,30 @@ function initial() {
       isActive:true
     });
   
+    // db.Role.create({
+    //   name: "SuperUser",
+    //   code: enumm.Role.SuperUser,
+    //   isActive:true
+    // });
     db.Role.create({
-      name: "SuperUser",
-      code: enumm.Role.SuperUser,
-      isActive:true
-    });
-    db.Role.create({
-      name: "Admin",
-      code: enumm.Role.Admin,
+      name: "User",
+      code: enumm.Role.User,
       isActive:true
     });
   
     db.UserDetails.create({
-        firstName: "Brain Tech",
+        firstName: "Accounting",
         userId:1,
         roleId:1,
         branchId:1,
-        lastName:"Solution",
+        lastName:"Pro",
         email:"braintechsoln@gmail.com",
         contactNo: "01799089893",
         address:"Dhaka, Bangladesh"
     });
 
     db.User.create({
-      username:'asiq',
+      username:'admin',
       password:'$2a$08$oDOBw2EEQ6UbtLLe0TuDguGez0rY4xJNt5KbMoVY659Kd4E3poZTi',
       userDetailId:1,
       isActive:true

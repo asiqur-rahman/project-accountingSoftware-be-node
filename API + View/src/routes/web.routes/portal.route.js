@@ -15,8 +15,12 @@ router.get('/dashboardLTFD', awaitHandlerFactory(portalController.dashboardLTFD)
 router.get('/dashboardEAR/:days', awaitHandlerFactory(portalController.dashboardEAR));
 
 router.get(['/new-user','/new-user/:id'], awaitHandlerFactory(portalController.newUser));
-router.post('/new-user', awaitHandlerFactory(portalController.newUser_Post));
+router.post(['/new-user','/new-user/:id'], awaitHandlerFactory(portalController.newUser_Post));
+router.post(['/new-user','/new-user/:id'], awaitHandlerFactory(portalController.newUser_Post));
 router.get('/user-list', awaitHandlerFactory(portalController.userList));
+router.get('/username-check/:name', awaitHandlerFactory(portalController.usernameCheck));
+router.get('/user-change-status/:id', awaitHandlerFactory(portalController.userChangeStatus));
+router.get('/user-password-reset/:id', awaitHandlerFactory(portalController.userResetPassword));
 router.get('/user/:id', awaitHandlerFactory(portalController.getUserById));
 router.get('/user-list-data', awaitHandlerFactory(portalController.userListData));
 

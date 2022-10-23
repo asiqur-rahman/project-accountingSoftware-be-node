@@ -97,10 +97,10 @@
                 "data": "id",
                 "title": "Action",
                 "render": function (data, type, row, meta) {
-                        return `<a class="btn btn-sm btn-success btn-soft-success waves-effect waves-light" href="/portal-user-create/${row['id']}">Update</a> 
-                        <button class="btn btn-sm btn-warning btn-soft-warning waves-effect waves-light" onclick='confirmationCheck("/portal-user-password-reset/${row['id']}","Are you sure to reset this password ?","Reset password will be sent to this email : ${row['detailsInfo.email']}")'>Reset Password</button>
-                        <button class="btn btn-sm btn-${row['isActive']==1?'primary':'danger'} btn-soft-${row['isActive']==1?'primary':'danger'} waves-effect waves-light" onclick='confirmationCheck("/portal-user-change-status/${row['id']}","Are you sure ?","This user will be in ${row['isActive']==1?'inactive':'active'} status from now on.")'>${row['isActive']==1?'Active':'InActive'}</button>
-                        <button class="btn btn-sm btn-danger btn-soft-danger waves-effect waves-light" onclick='confirmationCheck("/portal-employee-delete/${row['id']}","Admin delete confirmation !","Are you sure about this deletion ?")'>Delete</button>`
+                        return `<a class="btn btn-sm btn-success btn-soft-success waves-effect waves-light" href="/portal/new-user/${row['id']}">Update</a> 
+                        <button class="btn btn-sm btn-warning btn-soft-warning waves-effect waves-light" onclick='confirmationCheck_ajax("/portal/user-password-reset/${row['id']}","GET","Reset password will be sent to this email : ${row['userDetail.email']}",false,false)'>Reset Password</button>
+                        <button class="btn btn-sm btn-${row['isActive']==1?'primary':'danger'} btn-soft-${row['isActive']==1?'primary':'danger'} waves-effect waves-light" onclick='confirmationCheck_ajax("/portal/user-change-status/${row['id']}","GET","Are you sure ? </br>This user will be in ${row['isActive']==1?'inactive':'active'} status from now on.","datatable-buttons",false)'>${row['isActive']==1?'Active':'InActive'}</button>
+                        `
                 }
             }
         ]

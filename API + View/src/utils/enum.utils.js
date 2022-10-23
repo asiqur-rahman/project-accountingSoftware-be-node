@@ -9,7 +9,7 @@ var Enum = require('enum');
     module.exports.Role={
         SuperUser: '1',
         Admin: '2',
-        user:'5'
+        User:'5'
     }
 
     module.exports.paymentType={

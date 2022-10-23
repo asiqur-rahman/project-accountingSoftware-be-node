@@ -63,7 +63,7 @@ function go_link_new_page(url, host) {
 
 }
 
-function confirmationCheck(url, title, msg = "") {
+function confirmationCheck(url, title, msg = "",tableId=false) {
     Swal.fire({
         // position: 'top',
         title: title,
@@ -74,9 +74,14 @@ function confirmationCheck(url, title, msg = "") {
         denyButtonText: `Confirm`,
     }).then((result) => {
         if (result.isConfirmed) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Changes are done successfully !.'
+            })
             // Swal.fire('Changes are not saved', '', 'info')
         } else if (result.isDenied) {
             window.location.href = url;
+            // if(tableId)$('#' + tableId).DataTable().ajax.reload();
         }
     })
 }
@@ -105,8 +110,9 @@ function confirmationCheck_ajax(url, method = 'GET', msg, tableId, showSpin=true
                 },
                 success: function (jsondata) {
                     debugger;
-                    if (jsondata.status == true) {
-                        if(method=="DELETE")$('#' + tableId).DataTable().ajax.reload();
+                    if (jsondata.status == true || jsondata.status == 200 ) {
+                        // if(method=="DELETE")
+                        $('#' + tableId).DataTable().ajax.reload();
                         Swal.fire({
                             icon: 'success',
                             title: 'Changes are done successfully !.'
