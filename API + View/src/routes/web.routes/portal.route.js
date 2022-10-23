@@ -14,8 +14,10 @@ router.get('/dashboard', awaitHandlerFactory(portalController.dashboard));
 router.get('/dashboardLTFD', awaitHandlerFactory(portalController.dashboardLTFD));
 router.get('/dashboardEAR/:days', awaitHandlerFactory(portalController.dashboardEAR));
 
-router.get('/new-user', awaitHandlerFactory(portalController.newUser));
+router.get(['/new-user','/new-user/:id'], awaitHandlerFactory(portalController.newUser));
+router.post('/new-user', awaitHandlerFactory(portalController.newUser_Post));
 router.get('/user-list', awaitHandlerFactory(portalController.userList));
+router.get('/user/:id', awaitHandlerFactory(portalController.getUserById));
 router.get('/user-list-data', awaitHandlerFactory(portalController.userListData));
 
 router.get('/chartOfAccount', awaitHandlerFactory(portalController.chartOfAccount));
