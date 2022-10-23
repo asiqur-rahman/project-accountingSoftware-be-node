@@ -3601,7 +3601,7 @@ Please see [original select2 docs](http://ivaynberg.github.com/select2) for deta
 You should manually download and include select2 distributive:  
 
     <link href="select2/select2.css" rel="stylesheet" type="text/css"></link>  
-    <script src="select2/select2.js"></script>  
+    <script defer src="select2/select2.js"></script>  
     
 To make it **bootstrap-styled** you can use css from [here](https://github.com/t0m/select2-bootstrap-css): 
 
@@ -4433,7 +4433,7 @@ $(function(){
 Combodate input - dropdown date and time picker.    
 Based on [combodate](http://vitalets.github.com/combodate) plugin (included). To use it you should manually include [momentjs](http://momentjs.com).
 
-    <script src="js/moment.min.js"></script>
+    <script defer src="js/moment.min.js"></script>
    
 Allows to input:
 
@@ -6490,7 +6490,7 @@ Based on [smalot bootstrap-datetimepicker plugin](https://github.com/smalot/boot
 Before usage you should manually include dependent js and css:
 
     <link href="css/datetimepicker.css" rel="stylesheet" type="text/css"></link> 
-    <script src="js/bootstrap-datetimepicker.js"></script>
+    <script defer src="js/bootstrap-datetimepicker.js"></script>
 
 For **i18n** you should include js file from here: https://github.com/smalot/bootstrap-datetimepicker/tree/master/js/locales
 and set `language` option.  
