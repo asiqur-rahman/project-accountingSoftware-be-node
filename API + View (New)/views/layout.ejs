@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title><%- title %></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta content="Managemnet type software (Internal use Only)" name="description">
+  <meta content="BrainTechSolution" name="author">
+  <!-- App favicon -->
+  <link rel="shortcut icon" href="/public/assets/images/favicon.ico">
+  <link href="/public/assets/css/custom-validation.css" rel="stylesheet" type="text/css" />
+  <!-- <link href="/public/assets/css/font-awesome.css" rel="stylesheet" type="text/css" /> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- plugin css -->
+  <!-- <link href="/public/assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" /> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"
+    integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- <link href="/public/assets/libs/spectrum-colorpicker2/spectrum.min.css" rel="stylesheet" type="text/css"> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.1/spectrum.min.css"
+    integrity="sha512-KuSX+43gVS5MEIJD2ewtrFPOHqC1PJnL8o2f5ciggPC0JUZ8XV0QXlfArO1mSzKkVFdRjsBDfrTU96C5SuRfqQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- <link href="/public/assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet"> -->
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css"
+    integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- <link href="/public/assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet" /> -->
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-touchspin/4.3.0/jquery.bootstrap-touchspin.css"
+    integrity="sha512-g4B+TyvVE4aa0Y1SgjMHnT/4M4IRl8jnG3Ha9ebg8VhLyrfaAqL5AHDh7zo0/ZdES57Y1E7wvWwsDzX806b1Gw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="/public/assets/libs/@chenfengyuan/datepicker/datepicker.min.css" rel="stylesheet">
+  <!-- Sweet Alert-->
+  <!-- <link href="/public/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" /> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.4/sweetalert2.min.css"
+    integrity="sha512-y4S4cBeErz9ykN3iwUC4kmP/Ca+zd8n8FDzlVbq5Nr73gn1VBXZhpriQ7avR+8fQLpyq4izWm0b8s6q4Vedb9w=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Bootstrap Css -->
+  <link href="/public/assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+  <!-- Icons Css -->
+  <link href="/public/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+  <!-- App Css-->
+  <link href="/public/assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+
+
+</head>
+
+<body>
+
+  <!-- Loader -->
+  <div id="preloader">
+    <div id="status">
+      <div class="spinner">
+        <i class="uil-shutter-alt spin-icon"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- <% if(typeof responseMessage!='undefined' && responseMessage.length> 0) { %>
+    <input type="text" id="responseMessage" hidden="true" readonly="true" value="<%=responseMessage%>">
+  <% } %> -->
+
+  <!-- Begin page -->
+  <div id="layout-wrapper">
+
+    <header id="page-topbar">
+      <div class="navbar-header">
+        <div class="d-flex">
+          <!-- LOGO -->
+          <div class="navbar-brand-box">
+            <a href="/" class="logo logo-dark">
+              <span class="logo-sm">
+                <!-- <img src="/public/assets/images/logo-sm.png" alt="Developed by Brain Tech Solution" height="22"> -->
+                <img src="/public/assets/images/Capture.PNG" alt="Developed by Brain Tech Solution" height="22">
+              </span>
+              <span class="logo-lg">
+                <!-- <img src="/public/assets/images/logo-dark.png" alt="Developed by Brain Tech Solution" height="50"> -->
+                <img src="/public/assets/images/Capture.PNG" alt="Developed by Brain Tech Solution" height="22">
+              </span>
+            </a>
+
+            <a href="/" class="logo logo-light">
+              <span class="logo-sm">
+                <!-- <img src="/public/assets/images/logo-sm.png" alt="Developed by Brain Tech Solution" height="22"> -->
+                <img src="/public/assets/images/Capture.PNG" alt="Developed by Brain Tech Solution" height="22">
+              </span>
+              <span class="logo-lg">
+                <!-- <img src="/public/assets/images/logo-light.png" alt="Developed by Brain Tech Solution" height="50"> -->
+                <img src="/public/assets/images/Capture.PNG" alt="Developed by Brain Tech Solution" height="22">
+              </span>
+            </a>
+          </div>
+
+          <button type="button" class="btn btn-sm px-3 font-size-16 header-item waves-effect vertical-menu-btn">
+            <i class="fa fa-fw fa-bars"></i>
+          </button>
+
+          <!-- App Search-->
+          <!-- <form class="app-search d-none d-lg-block">
+                  <div class="position-relative">
+                      <input type="text" class="form-control" placeholder="<%=translation.Search%>">
+                      <span class="uil-search"></span>
+                  </div>
+              </form> -->
+        </div>
+
+        <div class="d-flex">
+
+          <div class="dropdown d-inline-block d-lg-none ms-2">
+            <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-search-dropdown"
+              data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="uil-search"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
+              aria-labelledby="page-header-search-dropdown">
+
+              <form class="p-3">
+                <div class="form-group m-0">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search ..." aria-label="Recipient's username">
+                    <div class="input-group-append">
+                      <button class="btn btn-primary" type="submit"><i class="mdi mdi-magnify"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div class="dropdown d-inline-block language-switch" style="display:none !important">
+            <button type="button" class="btn header-item waves-effect" data-bs-toggle="dropdown" aria-haspopup="true"
+              aria-expanded="false">
+              <% if(lang=="en") { %>
+              <img src="/public/assets/images/flags/us.png" alt="Header Language" height="16">
+              <% } else if(lang=="ru") { %>
+              <img src="/public/assets/images/flags/russia.jpg" alt="Header Language" height="16">
+              <% } else if(lang=="it") { %>
+              <img src="/public/assets/images/flags/italy.jpg" alt="Header Language" height="16">
+              <% } else if(lang=="de") { %>
+              <img src="/public/assets/images/flags/germany.jpg" alt="Header Language" height="16">
+              <% } else if(lang=="es") { %>
+              <img src="/public/assets/images/flags/spain.jpg" alt="Header Language" height="16">
+              <% } else if(lang=="ind") { %>
+              <img src="/public/assets/images/flags/ind.png" alt="Header Language" height="16">
+              <% } else { %>
+              <img src="/public/assets/images/flags/us.jpg" alt="Header Language" height="16">
+              <% } %>
+            </button>
+            <div class="dropdown-menu dropdown-menu-end" style="display:none !important">
+
+              <!-- item-->
+              <a href="?clang=en" class="dropdown-item notify-item">
+                <img src="/public/assets/images/flags/us.png" alt="user-image" class="me-1" height="12"> <span
+                  class="align-middle">English</span>
+              </a>
+
+              <!-- item-->
+              <a href="?clang=ind" class="dropdown-item notify-item">
+                <img src="/public/assets/images/flags/ind.png" alt="user-image" class="me-1" height="12"> <span
+                  class="align-middle">Hindi</span>
+              </a>
+
+              <!-- item-->
+              <!-- <a href="?clang=es" class="dropdown-item notify-item">
+                          <img src="/public/assets/images/flags/spain.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Spanish</span>
+                      </a> -->
+
+              <!-- item-->
+              <!-- <a href="?clang=de" class="dropdown-item notify-item">
+                          <img src="/public/assets/images/flags/germany.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">German</span>
+                      </a> -->
+
+              <!-- item-->
+              <!-- <a href="?clang=it" class="dropdown-item notify-item">
+                          <img src="/public/assets/images/flags/italy.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Italian</span>
+                      </a> -->
+
+              <!-- item-->
+              <!-- <a href="?clang=ru" class="dropdown-item notify-item">
+                          <img src="/public/assets/images/flags/russia.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Russian</span>
+                      </a> -->
+            </div>
+          </div>
+
+          <!-- <div class="dropdown d-none d-lg-inline-block ms-1">
+                  <button type="button" class="btn header-item noti-icon waves-effect"
+                      data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="uil-apps"></i>
+                  </button>
+                  <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
+                      <div class="px-lg-2">
+                          <div class="row g-0">
+                              <div class="col">
+                                  <a class="dropdown-icon-item" href="#">
+                                      <img src="/public/assets/images/brands/github.png" alt="Github">
+                                      <span>GitHub</span>
+                                  </a>
+                              </div>
+                              <div class="col">
+                                  <a class="dropdown-icon-item" href="#">
+                                      <img src="/public/assets/images/brands/bitbucket.png" alt="bitbucket">
+                                      <span>Bitbucket</span>
+                                  </a>
+                              </div>
+                              <div class="col">
+                                  <a class="dropdown-icon-item" href="#">
+                                      <img src="/public/assets/images/brands/dribbble.png" alt="dribbble">
+                                      <span>Dribbble</span>
+                                  </a>
+                              </div>
+                          </div>
+  
+                          <div class="row g-0">
+                              <div class="col">
+                                  <a class="dropdown-icon-item" href="#">
+                                      <img src="/public/assets/images/brands/dropbox.png" alt="dropbox">
+                                      <span>Dropbox</span>
+                                  </a>
+                              </div>
+                              <div class="col">
+                                  <a class="dropdown-icon-item" href="#">
+                                      <img src="/public/assets/images/brands/mail_chimp.png" alt="mail_chimp">
+                                      <span>Mail Chimp</span>
+                                  </a>
+                              </div>
+                              <div class="col">
+                                  <a class="dropdown-icon-item" href="#">
+                                      <img src="/public/assets/images/brands/slack.png" alt="slack">
+                                      <span>Slack</span>
+                                  </a>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div> -->
+
+          <div class="dropdown d-none d-lg-inline-block ms-1">
+            <button type="button" class="btn header-item noti-icon waves-effect" data-bs-toggle="fullscreen">
+              <i class="uil-minus-path"></i>
+            </button>
+          </div>
+
+          <!-- <div class="dropdown d-inline-block"> 
+                  <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-notifications-dropdown"
+                      data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="uil-bell"></i>
+                      <span class="badge bg-danger rounded-pill">3</span>
+                  </button>
+                  <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
+                      aria-labelledby="page-header-notifications-dropdown">
+                      <div class="p-3">
+                          <div class="row align-items-center">
+                              <div class="col">
+                                  <h5 class="m-0 font-size-16"> <%=translation.Notifications%> </h5>
+                              </div>
+                              <div class="col-auto">
+                                  <a href="#!" class="small"> <%=translation.Mark_all_as_read%></a>
+                              </div>
+                          </div>
+                      </div>
+                      <div data-simplebar style="max-height: 230px;">
+                          <a href="" class="text-reset notification-item">
+                              <div class="d-flex align-items-start">
+                                  <div class="avatar-xs me-3">
+                                      <span class="avatar-title bg-primary rounded-circle font-size-16">
+                                          <i class="uil-shopping-basket"></i>
+                                      </span>
+                                  </div>
+                                  <div class="flex-1">
+                                      <h6 class="mt-0 mb-1"><%=translation.Your_order_is_placed%></h6>
+                                      <div class="font-size-12 text-muted">
+                                          <p class="mb-1"><%=translation.If_several_languages_coalesce_the_grammar%></p>
+                                          <p class="mb-0"><i class="mdi mdi-clock-outline"></i> <%=translation.min_ago%></p>
+                                      </div>
+                                  </div>
+                              </div>
+                          </a>
+                          <a href="" class="text-reset notification-item">
+                              <div class="d-flex align-items-start">
+                                  <img src="/public/assets/images/users/avatar-3.jpg"
+                                      class="me-3 rounded-circle avatar-xs" alt="user-pic">
+                                  <div class="flex-1">
+                                      <h6 class="mt-0 mb-1">James Lemire</h6>
+                                      <div class="font-size-12 text-muted">
+                                          <p class="mb-1"><%=translation.It_will_seem_like_simplified_English%></p>
+                                          <p class="mb-0"><i class="mdi mdi-clock-outline"></i> <%=translation.hours_ago%></p>
+                                      </div>
+                                  </div>
+                              </div>
+                          </a>
+                          <a href="" class="text-reset notification-item">
+                              <div class="d-flex align-items-start">
+                                  <div class="avatar-xs me-3">
+                                      <span class="avatar-title bg-success rounded-circle font-size-16">
+                                          <i class="uil-truck"></i>
+                                      </span>
+                                  </div>
+                                  <div class="flex-1">
+                                      <h6 class="mt-0 mb-1"><%=translation.Your_item_is_shipped%></h6>
+                                      <div class="font-size-12 text-muted">
+                                          <p class="mb-1"><%=translation.If_several_languages_coalesce_the_grammar%></p>
+                                          <p class="mb-0"><i class="mdi mdi-clock-outline"></i> <%=translation.min_ago%></p>
+                                      </div>
+                                  </div>
+                              </div>
+                          </a>
+  
+                          <a href="" class="text-reset notification-item">
+                              <div class="d-flex align-items-start">
+                                  <img src="/public/assets/images/users/avatar-4.jpg"
+                                      class="me-3 rounded-circle avatar-xs" alt="user-pic">
+                                  <div class="flex-1">
+                                      <h6 class="mt-0 mb-1">Salena Layfield</h6>
+                                      <div class="font-size-12 text-muted">
+                                          <p class="mb-1"><%=translation.As_a_skeptical_Cambridge_friend_of_mine_occidental%></p>
+                                          <p class="mb-0"><i class="mdi mdi-clock-outline"></i> <%=translation.hours_ago%></p>
+                                      </div>
+                                  </div>
+                              </div>
+                          </a>
+                      </div>
+                      <div class="p-2 border-top d-grid">
+                          <a class="btn btn-sm btn-link font-size-14 text-center" href="javascript:void(0)">
+                              <i class="uil-arrow-circle-right me-1"></i> <%=translation.View_More%>
+                          </a>
+                      </div>
+                  </div>
+              </div> -->
+
+          <div class="dropdown d-inline-block">
+            <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
+              data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <img class="rounded-circle header-profile-user" src="/public/assets/images/users/avatar.png"
+                alt="Header Avatar">
+              <span
+                class="d-none d-xl-inline-block ms-1 fw-medium font-size-15"><%= typeof userName=='undefined' ? 'N/A' : userName.toUpperCase() %><%= typeof roleName=='undefined' ? '' : ' - ('+roleName.toUpperCase()+')' %></span>
+              <i class="uil-angle-down d-none d-xl-inline-block font-size-15"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-end">
+              <!-- item-->
+              <a class="dropdown-item" href="/portal-user-profile"><i
+                  class="uil uil-user-circle font-size-18 align-middle text-muted me-1"></i> <span
+                  class="align-middle"><%=translation.View_Profile%></span></a>
+              <!-- <a class="dropdown-item" href="#"><i class="uil uil-wallet font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle"><%=translation.My_Wallet%></span></a> -->
+              <!-- <a class="dropdown-item d-block" href="#"><i class="uil uil-cog font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle"><%=translation.Settings%></span> <span class="badge bg-soft-success rounded-pill mt-1 ms-2">03</span></a> -->
+              <a class="dropdown-item" href="#"><i
+                  class="uil uil-lock-alt font-size-18 align-middle me-1 text-muted"></i> <span
+                  class="align-middle"><%=translation.Lock_screen%></span></a>
+              <a class="dropdown-item" href="/portal/logout"><i
+                  class="uil uil-sign-out-alt font-size-18 align-middle me-1 text-muted"></i> <span
+                  class="align-middle"><%=translation.Sign_out%></span></a>
+            </div>
+          </div>
+
+          <div class="dropdown d-inline-block">
+            <button type="button" class="btn header-item noti-icon right-bar-toggle waves-effect">
+              <i class="uil-cog"></i>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </header>
+    <!-- ========== Left Sidebar Start ========== -->
+    <div class="vertical-menu">
+
+      <!-- LOGO -->
+      <div class="navbar-brand-box">
+        <a href="<%= typeof dashboard=='undefined' ? '#' : dashboard%>" class="logo logo-dark"
+          style="text-align: center;">
+          <span class="logo-sm">
+            <!-- <img src="/public/assets/images/logo-sm.png" alt="" height="22"> -->
+            <img src="/public/assets/images/capture.jpg" alt="Developed by Brain Tech Solution" height="22">
+          </span>
+          <span class="logo-lg">
+            <!-- <img src="/public/assets/images/logo-dark.png" alt="" height="50"> -->
+            <img src="/public/assets/images/capture.jpg" alt="Developed by Brain Tech Solution" height="50">
+          </span>
+        </a>
+
+        <a href="<%= typeof dashboard=='undefined' ? '#' : dashboard%>" class="logo logo-light"
+          style="text-align: center;">
+          <span class="logo-sm">
+            <!-- <img src="/public/assets/images/logo-sm.png" alt="" height="22"> -->
+            <img src="/public/assets/images/capture.jpg" alt="Developed by Brain Tech Solution" height="22">
+          </span>
+          <span class="logo-lg">
+            <!-- <img src="/public/assets/images/logo-light.png" alt="" height="50"> -->
+            <img src="/public/assets/images/capture.jpg" alt="Developed by Brain Tech Solution" height="50">
+          </span>
+        </a>
+      </div>
+
+      <button type="button" class="btn btn-sm px-3 font-size-16 header-item waves-effect vertical-menu-btn">
+        <i class="fa fa-fw fa-bars"></i>
+      </button>
+
+      <div data-simplebar class="sidebar-menu-scroll">
+
+        <!--- Sidemenu -->
+        <div id="sidebar-menu">
+          <!-- Left Menu Start -->
+          <ul class="metismenu list-unstyled" id="side-menu">
+
+            <li class="menu-title"><%=translation.Menu%></li>
+
+            <li>
+              <a href="javascript: void(0);" onclick="loadPartial('/portal/dashboard')">
+                <i class="uil-home-alt"></i>
+                <!-- <span class="badge rounded-pill bg-primary float-end">full details</span> -->
+                <span><%=translation.Dashboard%></span>
+              </a>
+            </li>
+
+            <!---------CostEntry Start------------->
+            <li class="menu-title"><%=translation.CostEntry%></li>
+            <li>
+              <a href="javascript: void(0);" class="has-arrow waves-effect">
+                <i class="fas fa-people-arrows"></i>
+                <span><%=translation.ChartOfAccount%></span>
+              </a>
+              <ul class="sub-menu" aria-expanded="false">
+                <li><a href="javascript: void(0);"
+                    onclick="loadPartial('/portal/new-chartOfAccount')"><%=translation.NewChartOfAccount%></a></li>
+                <li><a href="javascript: void(0);"
+                    onclick="loadPartial('/portal/chartOfAccount')"><%=translation.ChartOfAccountList%></a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="javascript: void(0);" class="has-arrow waves-effect">
+                <i class="fas fa-money-check-alt"></i>
+                <span><%=translation.Transaction%></span>
+              </a>
+              <ul class="sub-menu" aria-expanded="false">
+                <li><a href="javascript: void(0);"
+                    onclick="loadPartial('/portal/new-transaction')"><%=translation.NewTransaction%></a></li>
+                <li><a href="javascript: void(0);"
+                    onclick="loadPartial('/portal/transaction-list')"><%=translation.TransactionList%></a></li>
+              </ul>
+            </li>
+            <!---------CostEntry End------------->
+
+            <!---------Report Start------------->
+            <li class="menu-title"><%=translation.ChequeManagement%></li>
+            <li>
+              <a href="javascript: void(0);" class="has-arrow waves-effect">
+                <i class="fas fa-list-alt"></i>
+                <span><%=translation.ChequeManagement%></span>
+              </a>
+              <ul class="sub-menu" aria-expanded="false">
+                <li><a href="javascript: void(0);"
+                    onclick="loadPartial('/portal/bank-account-list')"><%=translation.BankAccount%></a></li>
+                <li><a href="javascript: void(0);"
+                    onclick="loadPartial('/portal/cheque-record-list')"><%=translation.ChequeRecord%></a></li>
+              </ul>
+            </li>
+            <!---------Report End------------->
+
+            <!---------Report Start------------->
+            <li class="menu-title"><%=translation.Reports%></li>
+            <li>
+              <a href="javascript: void(0);" class="has-arrow waves-effect">
+                <i class="fas fa-list-alt"></i>
+                <span><%=translation.Reports%></span>
+              </a>
+              <ul class="sub-menu" aria-expanded="false">
+                <li><a href="javascript: void(0);"
+                    onclick="loadPartial('/report/income-statement')"><%=translation.IncomeStatement%></a></li>
+                <li><a href="javascript: void(0);"
+                    onclick="loadPartial('/report/balance-sheet')"><%=translation.BalanceSheet%></a></li>
+              </ul>
+            </li>
+            <!---------Report End------------->
+
+            <!---------Registration Start------------->
+            <li class="menu-title"><%=translation.Registration%></li>
+            <li>
+              <a href="javascript: void(0);" class="has-arrow waves-effect">
+                <i class="uil-users-alt"></i>
+                <span><%=translation.User%></span>
+              </a>
+              <ul class="sub-menu" aria-expanded="false">
+                <li><a href="javascript: void(0);"
+                    onclick="loadPartial('/portal/new-user')"><%=translation.UserCreate%></a></li>
+                <li><a href="javascript: void(0);"
+                    onclick="loadPartial('/portal/user-list')"><%=translation.UserList%></a></li>
+              </ul>
+            </li>
+
+            <!---------Registration End------------->
+
+          </ul>
+        </div>
+        <!-- Sidebar -->
+      </div>
+    </div>
+    <!-- Left Sidebar End -->
+
+    <div class="main-content">
+      <div class="page-content">
+        <div class="container-fluid main-container">
+
+        </div>
+      </div>
+      <footer class="footer">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-sm-6">
+              <script>
+                document.write(new Date().getFullYear())
+              </script> © <%= typeof orgName=='undefined' ? 'Brain Tech Solution' : orgName%>.
+            </div>
+            <div class="col-sm-6">
+              <div class="text-sm-end d-none d-sm-block">
+                Developed & Maintained by <a href="<%= typeof devOrgLink=='undefined' ? '#' : devOrgLink %>"
+                  target="_blank" class="text-reset"><span
+                    style="color: #fd7014;"><%= typeof devOrgName=='undefined' ? 'N/A' : devOrgName %>.</span></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Right Sidebar -->
+  <div class="right-bar">
+    <div data-simplebar class="h-100">
+
+      <div class="rightbar-title d-flex align-items-center px-3 py-4">
+
+        <h5 class="m-0 me-2">Settings</h5>
+
+        <a href="javascript: void(0);" class="right-bar-toggle ms-auto">
+          <i class="mdi mdi-close noti-icon"></i>
+        </a>
+      </div>
+
+
+      <!-- Settings -->
+      <hr class="mt-0" />
+      <h6 class="text-center mb-0">Choose Layouts</h6>
+
+      <div class="p-4">
+        <div class="mb-2">
+          <!-- <img src="/public/assets/images/layouts/layout-1.jpg" class="img-fluid img-thumbnail" alt=""> -->
+        </div>
+        <div class="form-check form-switch mb-3">
+          <input type="checkbox" class="form-check-input theme-choice" id="light-mode-switch" checked />
+          <label class="form-check-label" for="light-mode-switch">Light Mode</label>
+        </div>
+
+        <div class="mb-2">
+          <!-- <img src="/public/assets/images/layouts/layout-2.jpg" class="img-fluid img-thumbnail" alt=""> -->
+        </div>
+        <div class="form-check form-switch mb-3">
+          <input type="checkbox" class="form-check-input theme-choice" id="dark-mode-switch"
+            data-bsStyle="public/assets/css/bootstrap-dark.min.css"
+            data-appStyle="public/assets/css/app-dark.min.css" />
+          <label class="form-check-label" for="dark-mode-switch">Dark Mode</label>
+        </div>
+
+        <div class="mb-2">
+          <!-- <img src="/public/assets/images/layouts/layout-3.jpg" class="img-fluid img-thumbnail" alt=""> -->
+        </div>
+        <div class="form-check form-switch mb-5">
+          <input type="checkbox" class="form-check-input theme-choice" id="rtl-mode-switch"
+            data-appStyle="public/assets/css/app-rtl.min.css" />
+          <label class="form-check-label" for="rtl-mode-switch">RTL Mode</label>
+        </div>
+
+
+      </div>
+
+    </div> <!-- end slimscroll-menu-->
+  </div>
+  <!-- /Right-bar -->
+
+  <!-- Right bar overlay-->
+  <div class="rightbar-overlay"></div>
+  <!-- JAVASCRIPT -->
+  <!-- <script defer src="/public/assets/libs/jquery/jquery.min.js"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+    integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script defer src="/public/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- <script defer src="/public/assets/libs/metismenu/metisMenu.min.js"></script> -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/metisMenu/3.0.6/metisMenu.min.js"
+    integrity="sha512-60b5sBjPn8P3x2sRsLFwdKgnCXXXliy9Z6sKgpLzTxj9+5G7Bu0coHIMTOggKZplcwPh4uPQ5V0sYpVEZW4Pjg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!-- <script defer src="/public/assets/libs/simplebar/simplebar.min.js"></script> -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/simplebar/4.2.3/simplebar.min.js"
+    integrity="sha512-ru0JkTo+U6A7HVuiN5qdBn53K/l/ybnA3Y1rcIU4V1h/dSkDrhyvxQJne7qklbON3RvWWknrbTOSciGW5geDbQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!-- <script defer src="/public/assets/libs/node-waves/waves.min.js"></script> -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/node-waves/0.7.6/waves.min.js"
+    integrity="sha512-MzXgHd+o6pUd/tm8ZgPkxya3QUCiHVMQolnY3IZqhsrOWQaBfax600esAw3XbBucYB15hZLOF0sKMHsTPdjLFg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!-- <script defer src="/public/assets/libs/waypoints/lib/jquery.waypoints.min.js"></script> -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"
+    integrity="sha512-CEiA+78TpP9KAIPzqBvxUv8hy41jyI3f2uHi7DGp/Y/Ka973qgSdybNegWFciqh6GrN2UePx2KkflnQUbUhNIA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!-- <script defer src="/public/assets/libs/jquery.counterup/jquery.counterup.min.js"></script> -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0.0/jquery.counterup.min.js"
+    integrity="sha512-d8F1J2kyiRowBB/8/pAWsqUl0wSEOkG5KATkVV4slfblq9VRQ6MyDZVxWl2tWd+mPhuCbpTB4M7uU/x9FlgQ9Q=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script defer src="/public/assets/js/key-disable.js"></script>
+
+  <!-- staticBackdrop Modal -->
+  <div class="modal fade" id="customModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    role="dialog" aria-labelledby="customModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="customModalLabel">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          </button>
+        </div>
+        <div class="modal-body" id="customModalBody">
+          <p>I will not close if you click outside me. Don't even try to press escape key.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+          <!-- <button type="button" class="btn btn-primary">Understood</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script defer src="/public/assets/js/app.js"></script>
+
+  <!-- plugins -->
+  <!-- <script defer src="/public/assets/libs/select2/js/select2.min.js"></script> -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"
+    integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!-- init js -->
+  <!-- <script defer src="/public/assets/libs/spectrum-colorpicker2/spectrum.min.js"></script> -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.1/spectrum.min.js"
+    integrity="sha512-1aNp9qKP+hKU/VJwCtYqJP9tdZWbMDN5pEEXXoXT0pTAxZq1HHZhNBR/dtTNSrHO4U1FsFGGILbqG1O9nl8Mdg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!-- <script defer src="/public/assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script> -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-touchspin/4.3.0/jquery.bootstrap-touchspin.min.js"
+    integrity="sha512-0hFHNPMD0WpvGGNbOaTXP0pTO9NkUeVSqW5uFG2f5F9nKyDuHE3T4xnfKhAhnAZWZIO/gBLacwVvxxq0HuZNqw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!-- <script defer src="/public/assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js"></script> -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-maxlength/1.10.0/bootstrap-maxlength.min.js"
+    integrity="sha512-04L+TAgzlDAaUpaEGriEBg/qEryUjw4GNL/FkxA3h621EFPycccO2Y8vNhvid9UhgGC/9+MHLAFwGythpvOAAQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!-- <script defer src="/public/assets/libs/@chenfengyuan/datepicker/datepicker.min.js"></script> -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"
+    integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script defer src="/public/assets/js/pages/form-advanced.init.js"></script>
+
+  <!-- Sweet Alerts js -->
+  <!-- <script defer src="/public/assets/libs/sweetalert2/sweetalert2.min.js"></script> -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.4/sweetalert2.min.js"
+    integrity="sha512-vDRRSInpSrdiN5LfDsexCr56x9mAO3WrKn8ZpIM77alA24mAH3DYkGVSIq0mT5coyfgOlTbFyBSUG7tjqdNkNw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script defer src="/public/assets/js/pages/sweet-alerts.init.js"></script>
+  <script defer src="/public/assets/js/face-verification.js"></script>
+
+
+  <script defer src="/public/assets/js/custom-validation.js"></script>
+  <script defer src="/public/assets/js/custom.js"></script>
+  <link rel="stylesheet" type="text/css" href="/public/assets/libs/toastr/build/toastr.min.css">
+  <!-- <input type="hidden" id="error_Msg" value="<%=typeof error_Msg!='undefined' && error_Msg.length> 0 ? error_Msg: ''%>">
+<input type="hidden" id="info_Msg" value="<%=typeof info_Msg!='undefined' && info_Msg.length> 0 ? info_Msg: ''%>">
+<input type="hidden" id="war_Msg" value="<%=typeof war_Msg!='undefined' && war_Msg.length> 0 ? war_Msg: ''%>">
+<input type="hidden" id="succ_Msg" value="<%=typeof succ_Msg!='undefined' && succ_Msg.length> 0 ? succ_Msg: ''%>"> -->
+  <input type="hidden" id="toast_Msg" value="<%=typeof toast_Msg!='undefined' && toast_Msg.length> 0 ? toast_Msg: ''%>">
+  <!-- toastr plugin -->
+  <script src="/public/assets/libs/toastr/build/toastr.min.js"></script>
+
+  <script>
+    toastr.options = {
+      "opacity": "1 !important",
+      "closeButton": true,
+      "debug": false,
+      "newestOnTop": true,
+      "progressBar": true,
+      "positionClass": "toast-bottom-right",
+      "preventDuplicates": true,
+      "showDuration": 300,
+      "hideDuration": 1000,
+      "timeOut": 5000,
+      "extendedTimeOut": 1000,
+      "showEasing": "swing",
+      "hideEasing": "linear",
+      "showMethod": "fadeIn",
+      "hideMethod": "fadeOut"
+    };
+    $(window).on('load', function () {
+      // const errorMsg=$("#error_Msg").val();
+      // const infoMsg=$("#info_Msg").val();
+      // const warMsg=$("#war_Msg").val();
+      // const succMsg=$("#succ_Msg").val();
+      // if(errorMsg){
+      //     toastr["error"](errorMsg)
+      // }
+      // else if(infoMsg){
+      //     toastr["info"](infoMsg)
+      //     // alert(errorMsg)
+      // }
+      // else if(warMsg){
+      //     toastr["warning"](warMsg)
+      //     // alert(errorMsg)
+      // }
+      // else if(succMsg){
+      //     toastr["success"](succMsg)
+      //     // alert(errorMsg)
+      // }
+      const msg = $("#toast_Msg").val().split("|,");
+      if (msg.length > 1) {
+        toastr[msg[0]](msg[1])
+      }
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Log In</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Managemnet type software (Internal use Only)" name="description" />
+    <meta content="BrainTechSolution" name="author" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="/public/assets/images/favicon.ico">
+
+    <%- include ('../Partials/HeaderStyle')  %>
+
+</head>
+
+<body class="authentication-bg">
+
+    <!-- <div class="home-btn d-none d-sm-block">
+        <a href="/" class="text-dark"><i class="mdi mdi-home-variant h2"></i></a>
+    </div> -->
+    <div class="account-pages my-5">
+        <div class="container">
+            
+            <div class="row align-items-center justify-content-center">
+                <div class="col-md-6 col-lg-6 col-xl-4">
+                    <div class="card">
+                        <div class="row">
+                            
+                            <div class="col-lg-6">
+                                <div class="text-center">
+                                    <a href="/login" class="d-block auth-logo">
+                                        <img src="/public/assets/images/bim-login-logo.png" alt="" height="130" class="logo logo-dark">
+                                        <img src="/public/assets/images/bim-login-logo.png" alt="" height="130" class="logo logo-light">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="text-center">
+                                    <a href="/login" class="d-block auth-logo">
+                                        <img src="/public/assets/images/giz-logo.jpg" alt="" height="130" class="logo logo-dark">
+                                        <img src="/public/assets/images/giz-logo.jpg" alt="" height="130" class="logo logo-light">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-lg-12">
+                                <div class="text-center">
+                                    <a href="/login" class="d-block auth-logo">
+                                        <img src="/public/assets/images/bim-login-logo.jpg" alt="" width="200" class="logo logo-dark">
+                                        <img src="/public/assets/images/bim-login-logo.jpg" alt="" width="200" class="logo logo-light">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body p-4">
+                            <!-- <div class="text-center">
+                                <h5 class="text-primary">Bangladesh Institute of Management (BIM)</h5>
+                                <p class="text-muted">Sign in to <span style="color: black; font-size: 15px;">Accounting Pro</span></p>
+                            </div> -->
+                            <div class="p-2">
+                                <% if(typeof error!='undefined' && error.length> 0) { %>
+                                    <div class="alert alert-danger text-center mb-4 flash" role="alert">
+                                        <%= error %>
+                                    </div>
+                                <% } %>
+                                <% if(typeof message!='undefined' && message.length> 0) { %>
+                                    <div class="alert alert-success text-center mb-4 flash" role="alert">
+                                        <%= message %>
+                                    </div>
+                                <% } %>
+                                <form method="post" autocomplete="off">
+
+                                    <div class="mb-3">
+                                        <label class="form-label" for="username">Username</label>
+                                        <input type="text" class="form-control" id="username" name="username"
+                                            placeholder="Enter username" value="admin">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <!-- <div class="float-end">
+                                            <a href="/forgot-password" class="text-muted">Forgot password?</a>
+                                        </div> -->
+                                        <label class="form-label" for="userpassword">Password</label>
+                                        <input type="password" class="form-control" id="userpassword" name="password"
+                                            placeholder="Enter password" value="admin">
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="showPassword">
+                                        <label class="form-check-label" for="auth-remember-check">Show Password</label>
+                                    </div>
+
+                                    <div class="mt-3 text-end">
+                                        <button class="btn btn-primary w-sm waves-effect waves-light" type="submit">Log
+                                            In</button>
+                                    </div>
+
+                                    <!-- <div class="mt-4 text-center">
+                                        <div class="signin-other-title">
+                                            <h5 class="font-size-14 mb-3 title">Sign in with</h5>
+                                        </div>
+
+                                        <ul class="list-inline">
+                                            <li class="list-inline-item">
+                                                <a href="javascript:void()"
+                                                    class="social-list-item bg-primary text-white border-primary">
+                                                    <i class="mdi mdi-facebook"></i>
+                                                </a>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <a href="javascript:void()"
+                                                    class="social-list-item bg-info text-white border-info">
+                                                    <i class="mdi mdi-twitter"></i>
+                                                </a>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <a href="javascript:void()"
+                                                    class="social-list-item bg-danger text-white border-danger">
+                                                    <i class="mdi mdi-google"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div> -->
+
+                                    <!-- <div class="mt-4 text-center">
+                                        <p class="mb-0">Don't have an account ? <a href="register"
+                                                class="fw-medium text-primary"> Signup now </a> </p>
+                                    </div> -->
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-2 text-center">
+                        <p>©
+                            <script>document.write(new Date().getFullYear())</script> <%= typeof orgName=='undefined' ? 'N/A' : orgName%>.</br> Developed & Maintained by <a href="<%= typeof devOrgLink=='undefined' ? '#' : devOrgLink %>" target="_blank" class="text-reset"><span style="color: #fd7014;"><%= typeof devOrgName=='undefined' ? 'N/A' : devOrgName %>.</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- end container -->
+    </div>
+    
+    <%- include ('../Partials/VendorScript')  %>
+
+    <script defer src="/public/assets/js/app.js"></script>
+    <script defer src="/public/assets/js/custom.js"></script>
+    <%- include ('../Partials/ResponseMessage')  %>
+    <script>
+        $(window).on('load', function () {
+            $("#showPassword").click(function(){
+                if ($("#userpassword").attr('type') === "password") {
+                    $("#userpassword").attr('type','text')
+                } else {
+                    $("#userpassword").attr('type','password')
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

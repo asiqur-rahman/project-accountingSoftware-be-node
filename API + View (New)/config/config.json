@@ -1,0 +1,67 @@
+{
+    "development": {
+        "username": "drtechma_test",
+        "password": "drtechma_test",
+        "database": "drtechma_test",
+        "host": "braintechsolution.com",
+        "dialect": "mysql",
+        "pool": {
+            "max": 5,
+            "min": 0,
+            "acquire": 30000,
+            "idle": 10000
+        }
+    },
+    "appSettings": {
+        "httpPort": 3332,
+        "httpsPort": false,
+        "SECRET_KEY": "Asiq Application",
+        "SECRET_JWT": "Asiq Application",
+        "SessionTimeOut": 3600000,
+        "UniquePublicIpFiltration": false,
+        "DebugOn": false,
+        "ConsoleLog": true
+    },
+    "logSettings": {
+        "DebugLog": true
+    },
+    "serverSettings": {
+        "Mode_Production": false,
+        "HTTP_PORT": 3000,
+        "API_KEY_SECRET": "BTS_Secret_By_Asiq",
+        "TURN_URLS": [
+            "turn:ss-turn1.xirsys.com:80?transport=udp",
+            "turn:ss-turn1.xirsys.com:80?transport=udp"
+        ],
+        "TURN_USERNAME": "SJ8gV3mjmH00ay9K51k8xCOCA18d5XgjvKRDhULdXZ8iKC5WePZmhMVybSzcfbtKAAAAAGIVwe1wZWZpcmFiNTIz",
+        "TURN_PASSWORD": "033335be-9467-11ec-81c6-0242ac120004"
+    },
+    "organizationInfo": {
+        "orgName": "BIM or Giz",
+        "orgPhone": "+880 17990 89893",
+        "orgEmail": "info@braintechsolution.com",
+        "orgAddress": "Dhaka, Bangladesh, 1216",
+        "devOrgName": "DataCo Systems Limited",
+        "devOrgLink": "https://datacosys.com"
+    },
+    "emailSettings_": {
+        "name": "Datacosys",
+        "host": "mail.datacosys.com",
+        "port": 465,
+        "email": "no-reply@datacosys.com",
+        "password": "@no-reply@22"
+    },
+    "emailSettings": {
+        "name": "Brain Tech Solution",
+        "host": "mail.chickenman.net.au",
+        "port": 465,
+        "email": "no-reply@ims.braintechsolution.com",
+        "password": "@IMS@bts@7061"
+    },
+    "smsSettings": {
+        "connection": false,
+        "apiKey": "Gck30R2M7EyYYPR6z+/++w66R4ajjcNaoXwadgR2idk=",
+        "clientId": "fde083ee-51b4-45ef-a6bf-6b8c2abf9438",
+        "senderId": "8804445649528"
+    }
+}
