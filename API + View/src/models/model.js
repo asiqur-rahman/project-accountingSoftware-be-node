@@ -44,6 +44,8 @@ db.AccountBalance = require("./accountBalance.model")(sequelize, Sequelize);
 db.Transaction = require("./transaction.model")(sequelize, Sequelize);
 db.TransactionDetails = require("./transactionDetails.model")(sequelize, Sequelize);
 db.Tax = require("./tax.model")(sequelize, Sequelize);
+db.BankAccount = require("./bankAccount.model")(sequelize, Sequelize);
+db.ChequeRecord = require("./chequeRecord.model")(sequelize, Sequelize);
 
 //Associations
 
@@ -109,6 +111,10 @@ db.ChartOfAccount.hasMany(db.AccountBalance);
 
 db.AccountBalance.belongsTo(db.User,{ foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
 db.User.hasMany(db.AccountBalance);
+
+//ChequeRecord
+db.ChequeRecord.belongsTo(db.BankAccount,{ foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
+db.BankAccount.hasMany(db.ChequeRecord);
 
 // db.sequelize.sync();
 
