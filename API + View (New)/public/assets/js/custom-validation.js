@@ -1,8 +1,19 @@
-$('.validate-this-form').on('submit', function () {
-    return validateThisForm();
+$('.validate-this-form').on('submit', function (e) {
+    e.preventDefault();
+    if(validateThisForm()){
+        $.ajax({
+            type: 'POST',
+            url: $(this).attr('action'),
+            data: $(this).serialize(), 
+            success: function(response) { 
+                console.log(response)
+                alert("Success!");
+             }
+          });
+    }
 });
 
-const validateThisForm=(hasCallback=false)=>{
+var validateThisForm=(hasCallback=false)=>{
     var input = $('.validate-this-form .validate_this');
     var check = true;
     for (var i = 0; i < input.length; i++) {

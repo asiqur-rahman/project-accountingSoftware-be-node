@@ -19,7 +19,6 @@ const { details } = require('@hapi/joi/lib/errors');
 //#region Dashboard
 module.exports.portal = async (req, res, next) => {
   res.locals.title= 'Dashboard';
-  console.log("Called")
   res.render('Dashboard/portal');
 }
 

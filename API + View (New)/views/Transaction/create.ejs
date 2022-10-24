@@ -152,6 +152,8 @@
 
 <script>
     var incomeCode='<%=incomeCode%>';
+    
+
     var multiply=(name)=>{
         const id = name.split("][")[0].split("group-a[")[1];
         const itemQuantity=$(`input[name="group-a[${id}][itemQuantity]"]`).val();

@@ -10,17 +10,6 @@ const Spinner = {
     }
 };
 
-// $(function() {
-//     var responseMessage=$("#responseMessage").val();
-//     if(responseMessage){
-//         responseMessage=JSON.parse(responseMessage);
-//         Swal.fire({
-//             icon: responseMessage.type,
-//             title: responseMessage.message
-//         })
-//     }
-// });
-
 async function loadPartial(url,contentId="main-container"){
     // $("#sidebar-menu mm-active active").removeClass("active");
     if(document.querySelector("#sidebar-menu .mm-active .active"))document.querySelector("#sidebar-menu .mm-active .active").classList.remove("active")
@@ -165,12 +154,6 @@ async function showResponseInModals(url,method){
     await $.ajax({
         type: method??'GET',
         url: url,
-        // beforeSend: function () {
-        //     Spinner.Show();
-        // },
-        // complete: function () {
-        //     Spinner.Hide();
-        // },
         success: function (result) {
             $('.bs-custom-modal-lg .modal-body').html(result);
             $('.bs-custom-modal-lg').modal('toggle');

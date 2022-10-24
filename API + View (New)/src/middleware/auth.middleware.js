@@ -122,6 +122,7 @@ module.exports.webAuth = (...roles) => {
                 res.locals.devOrgName = appConfig.organizationInfo.devOrgName;
                 res.locals.devOrgLink = appConfig.organizationInfo.devOrgLink;
                 res.locals.hostName= req.protocol + '://' + req.get('host');
+                res.locals.lastVisitedUrl= req.originalUrl
                 next();
             // }else{
             //     return res.redirect('/auth/logout');
