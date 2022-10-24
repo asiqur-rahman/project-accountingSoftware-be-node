@@ -32,7 +32,7 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.User = require("./user.model.js")(sequelize, Sequelize);
-db.Role = require("./Role.model.js")(sequelize, Sequelize);
+db.Role = require("./role.model.js")(sequelize, Sequelize);
 db.Branch = require("./branch.model.js")(sequelize, Sequelize);
 db.UserDetails = require("./userDetails.model")(sequelize, Sequelize);
 db.SendMail = require("./sendMail.model")(sequelize, Sequelize);

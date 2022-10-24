@@ -70,3 +70,8 @@ function hideValidate(input) {
     var thisAlert = $(input).parent();
     $(thisAlert).removeClass('alert-validate');
 }
+
+
+$(function(){
+    $(".select2").select2();
+})
