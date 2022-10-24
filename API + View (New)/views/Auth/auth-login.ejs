@@ -10,7 +10,13 @@
     <!-- App favicon -->
     <link rel="shortcut icon" href="/public/assets/images/favicon.ico">
 
-    <%- include ('../Partials/HeaderStyle')  %>
+    <!-- Bootstrap Css -->
+    <link href="/public/assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link href="/public/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href="/public/assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+
 
 </head>
 
@@ -21,25 +27,29 @@
     </div> -->
     <div class="account-pages my-5">
         <div class="container">
-            
+
             <div class="row align-items-center justify-content-center">
                 <div class="col-md-6 col-lg-6 col-xl-4">
                     <div class="card">
                         <div class="row">
-                            
+
                             <div class="col-lg-6">
                                 <div class="text-center">
                                     <a href="/login" class="d-block auth-logo">
-                                        <img src="/public/assets/images/bim-login-logo.png" alt="" height="130" class="logo logo-dark">
-                                        <img src="/public/assets/images/bim-login-logo.png" alt="" height="130" class="logo logo-light">
+                                        <img src="/public/assets/images/bim-login-logo.png" alt="" height="130"
+                                            class="logo logo-dark">
+                                        <img src="/public/assets/images/bim-login-logo.png" alt="" height="130"
+                                            class="logo logo-light">
                                     </a>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="text-center">
                                     <a href="/login" class="d-block auth-logo">
-                                        <img src="/public/assets/images/giz-logo.jpg" alt="" height="130" class="logo logo-dark">
-                                        <img src="/public/assets/images/giz-logo.jpg" alt="" height="130" class="logo logo-light">
+                                        <img src="/public/assets/images/giz-logo.jpg" alt="" height="130"
+                                            class="logo logo-dark">
+                                        <img src="/public/assets/images/giz-logo.jpg" alt="" height="130"
+                                            class="logo logo-light">
                                     </a>
                                 </div>
                             </div>
@@ -48,8 +58,10 @@
                             <div class="col-lg-12">
                                 <div class="text-center">
                                     <a href="/login" class="d-block auth-logo">
-                                        <img src="/public/assets/images/bim-login-logo.jpg" alt="" width="200" class="logo logo-dark">
-                                        <img src="/public/assets/images/bim-login-logo.jpg" alt="" width="200" class="logo logo-light">
+                                        <img src="/public/assets/images/bim-login-logo.jpg" alt="" width="200"
+                                            class="logo logo-dark">
+                                        <img src="/public/assets/images/bim-login-logo.jpg" alt="" width="200"
+                                            class="logo logo-light">
                                     </a>
                                 </div>
                             </div>
@@ -61,14 +73,14 @@
                             </div> -->
                             <div class="p-2">
                                 <% if(typeof error!='undefined' && error.length> 0) { %>
-                                    <div class="alert alert-danger text-center mb-4 flash" role="alert">
-                                        <%= error %>
-                                    </div>
+                                <div class="alert alert-danger text-center mb-4 flash" role="alert">
+                                    <%= error %>
+                                </div>
                                 <% } %>
                                 <% if(typeof message!='undefined' && message.length> 0) { %>
-                                    <div class="alert alert-success text-center mb-4 flash" role="alert">
-                                        <%= message %>
-                                    </div>
+                                <div class="alert alert-success text-center mb-4 flash" role="alert">
+                                    <%= message %>
+                                </div>
                                 <% } %>
                                 <form method="post" autocomplete="off">
 
@@ -136,7 +148,12 @@
 
                     <div class="mt-2 text-center">
                         <p>©
-                            <script>document.write(new Date().getFullYear())</script> <%= typeof orgName=='undefined' ? 'N/A' : orgName%>.</br> Developed & Maintained by <a href="<%= typeof devOrgLink=='undefined' ? '#' : devOrgLink %>" target="_blank" class="text-reset"><span style="color: #fd7014;"><%= typeof devOrgName=='undefined' ? 'N/A' : devOrgName %>.</span></a>
+                            <script>
+                                document.write(new Date().getFullYear())
+                            </script> <%= typeof orgName=='undefined' ? 'N/A' : orgName%>.</br> Developed & Maintained
+                            by <a href="<%= typeof devOrgLink=='undefined' ? '#' : devOrgLink %>" target="_blank"
+                                class="text-reset"><span
+                                    style="color: #fd7014;"><%= typeof devOrgName=='undefined' ? 'N/A' : devOrgName %>.</span></a>
                         </p>
                     </div>
                 </div>
@@ -145,19 +162,94 @@
         </div>
         <!-- end container -->
     </div>
-    
-    <%- include ('../Partials/VendorScript')  %>
+
+    <!-- JAVASCRIPT -->
+    <!-- <script defer src="/public/assets/libs/jquery/jquery.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+        integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script defer src="/public/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- <script defer src="/public/assets/libs/metismenu/metisMenu.min.js"></script> -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/metisMenu/3.0.6/metisMenu.min.js"
+        integrity="sha512-60b5sBjPn8P3x2sRsLFwdKgnCXXXliy9Z6sKgpLzTxj9+5G7Bu0coHIMTOggKZplcwPh4uPQ5V0sYpVEZW4Pjg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- <script defer src="/public/assets/libs/simplebar/simplebar.min.js"></script> -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/simplebar/4.2.3/simplebar.min.js"
+        integrity="sha512-ru0JkTo+U6A7HVuiN5qdBn53K/l/ybnA3Y1rcIU4V1h/dSkDrhyvxQJne7qklbON3RvWWknrbTOSciGW5geDbQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- <script defer src="/public/assets/libs/node-waves/waves.min.js"></script> -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/node-waves/0.7.6/waves.min.js"
+        integrity="sha512-MzXgHd+o6pUd/tm8ZgPkxya3QUCiHVMQolnY3IZqhsrOWQaBfax600esAw3XbBucYB15hZLOF0sKMHsTPdjLFg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- <script defer src="/public/assets/libs/waypoints/lib/jquery.waypoints.min.js"></script> -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"
+        integrity="sha512-CEiA+78TpP9KAIPzqBvxUv8hy41jyI3f2uHi7DGp/Y/Ka973qgSdybNegWFciqh6GrN2UePx2KkflnQUbUhNIA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- <script defer src="/public/assets/libs/jquery.counterup/jquery.counterup.min.js"></script> -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0.0/jquery.counterup.min.js"
+        integrity="sha512-d8F1J2kyiRowBB/8/pAWsqUl0wSEOkG5KATkVV4slfblq9VRQ6MyDZVxWl2tWd+mPhuCbpTB4M7uU/x9FlgQ9Q=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script defer src="/public/assets/js/key-disable.js"></script>
 
     <script defer src="/public/assets/js/app.js"></script>
     <script defer src="/public/assets/js/custom.js"></script>
-    <%- include ('../Partials/ResponseMessage')  %>
+    <link rel="stylesheet" type="text/css" href="/public/assets/libs/toastr/build/toastr.min.css">
+    <input type="hidden" id="toast_Msg"
+        value="<%=typeof toast_Msg!='undefined' && toast_Msg.length> 0 ? toast_Msg: ''%>">
+    <!-- toastr plugin -->
+    <script src="/public/assets/libs/toastr/build/toastr.min.js"></script>
+
+    <script>
+        toastr.options = {
+            "opacity": "1 !important",
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": true,
+            "positionClass": "toast-bottom-right",
+            "preventDuplicates": true,
+            "showDuration": 300,
+            "hideDuration": 1000,
+            "timeOut": 5000,
+            "extendedTimeOut": 1000,
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+        $(window).on('load', function () {
+            // const errorMsg=$("#error_Msg").val();
+            // const infoMsg=$("#info_Msg").val();
+            // const warMsg=$("#war_Msg").val();
+            // const succMsg=$("#succ_Msg").val();
+            // if(errorMsg){
+            //     toastr["error"](errorMsg)
+            // }
+            // else if(infoMsg){
+            //     toastr["info"](infoMsg)
+            //     // alert(errorMsg)
+            // }
+            // else if(warMsg){
+            //     toastr["warning"](warMsg)
+            //     // alert(errorMsg)
+            // }
+            // else if(succMsg){
+            //     toastr["success"](succMsg)
+            //     // alert(errorMsg)
+            // }
+            const msg = $("#toast_Msg").val().split("|,");
+            if (msg.length > 1) {
+                toastr[msg[0]](msg[1])
+            }
+        });
+    </script>
     <script>
         $(window).on('load', function () {
-            $("#showPassword").click(function(){
+            $("#showPassword").click(function () {
                 if ($("#userpassword").attr('type') === "password") {
-                    $("#userpassword").attr('type','text')
+                    $("#userpassword").attr('type', 'text')
                 } else {
-                    $("#userpassword").attr('type','password')
+                    $("#userpassword").attr('type', 'password')
                 }
             });
         });

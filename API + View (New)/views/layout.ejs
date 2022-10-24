@@ -679,6 +679,10 @@
   <script src="/public/assets/libs/toastr/build/toastr.min.js"></script>
 
   <script>
+    $(function(){
+        loadPartial("/portal/dashboard");
+    });
+
     toastr.options = {
       "opacity": "1 !important",
       "closeButton": true,

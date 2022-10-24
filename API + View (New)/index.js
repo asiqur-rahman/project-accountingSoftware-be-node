@@ -31,10 +31,6 @@ var sslOptions = {
 app.use(compression()); // compress all responses
 app.use(minifyHTML({ // minify all html responsesls
     override:      true,
-    exception_url: [
-        '/\<%.*?\%>/i',
-        /\<%.*?\%>/i, // Regex.
-    ],
     htmlMinifier: {
         removeComments:            true,
         collapseWhitespace:        true,

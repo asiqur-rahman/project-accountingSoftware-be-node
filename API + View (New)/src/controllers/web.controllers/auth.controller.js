@@ -37,7 +37,7 @@ module.exports.login_Post = async (req, res, next) => {
         // user matched!
         const secretKey = appConfig.appSettings.SECRET_JWT;
         // if (user['userDetail.role.code'] == enumm.Role.SuperUser || user['role.code'] == enumm.Role.Admin) {
-          dashboard = '/portal/dashboard';
+          dashboard = '/portal';
         // }
         
         const fullName=`${user['userDetail.firstName']} ${user['userDetail.lastName']}`;

@@ -17,6 +17,12 @@ const taxService = require('../../service/tax.service');
 const { details } = require('@hapi/joi/lib/errors');
 
 //#region Dashboard
+module.exports.portal = async (req, res, next) => {
+  res.locals.title= 'Dashboard';
+  console.log("Called")
+  res.render('Dashboard/portal');
+}
+
 module.exports.dashboard = async (req, res, next) => {
   db.sequelize.query('CALL DashboardData (:days,:incomeCode,:expenseCode)', {
     replacements: {
@@ -30,7 +36,7 @@ module.exports.dashboard = async (req, res, next) => {
       res.locals.title= 'Dashboard';
       res.locals.dashboardData = dashboardData[0];
       res.locals.lTFD = [];//data.rows;//lastTransactionsForDashboard
-      res.render('Dashboard/index');
+      res.render('Dashboard/index',{layout: false});
     // });
   })
 }
@@ -59,11 +65,11 @@ module.exports.newUser = async (req, res, next) => {
       .then(detailsInfo=>{
         res.locals.title= 'User Update';
         res.locals.detailsInfo= detailsInfo;
-        res.render('User/create');
+        res.render('User/create',{layout: false});
       })
     }else{
       res.locals.title= 'User Create';
-      res.render('User/create');
+      res.render('User/create',{layout: false});
     }
   });
   
@@ -74,7 +80,7 @@ module.exports.newUser_Post = async (req, res, next) => {
       await userService.update(req)
         .then(() => {
             req.session.notification=[enumm.notification.Success,'User updated successfully !'];
-            res.redirect(`/portal/user-list`);
+            res.redirect(`/portal/user-list`,{layout: false});
         }).catch(function (err) {
         res.locals = {
             title: `${area} Create`,
@@ -82,16 +88,15 @@ module.exports.newUser_Post = async (req, res, next) => {
             detailsInfo: req.body
         };
         req.session.notification=[enumm.notification.Error,'User not updated !'];
-        res.render(`/${area}/create`);
+        res.render(`/portal/create`,{layout: false});
     });
 } else {
   await userService.create(req)
         .then(() => {
-            res.redirect(`/portal/user-list`);
+            res.redirect(`/portal/user-list`,{layout: false});
         }).catch(function (err) {
         res.locals = {
             title: `${area} Create`,
-            employeeCode: Date.now() % 100000000,
             detailsInfo: req.body
         };
         req.session.notification=[enumm.notification.Error,'User not created !'];
@@ -102,7 +107,7 @@ module.exports.newUser_Post = async (req, res, next) => {
 
 module.exports.userList = async (req, res, next) => {
   res.locals.title= 'User List';
-  res.render('User/index');
+  res.render('User/index',{layout: false});
 }
 
 module.exports.userListData = async (req, res, next) => {
@@ -129,7 +134,6 @@ module.exports.userResetPassword = async (req, res, next) => {
   });
 }
 //#endregion
-
 
 //#region Chart of Account
 
@@ -259,7 +263,7 @@ module.exports.chequeRecordData = async (req, res, next) => {
 module.exports.transactionList = async (req, res, next) => {
   res.locals.title= 'Transaction';
   res.locals.toast_Msg=res.locals.toast_Msg;
-  res.render('Transaction/index');
+  res.render('Transaction/index',{layout: false});
 }
 
 module.exports.transactionDetails = async (req, res, next) => {
@@ -300,7 +304,7 @@ module.exports.newTransaction = async (req, res, next) => {
             res.locals.incomeCode=enumm.AccountHead.Income.value;
             res.locals.taxAll=taxAll;
             res.locals.todayDate= moment().format("MM/DD/yyyy");
-            res.render('Transaction/create');
+            res.render('Transaction/create',{layout: false});
           })
         })
       })
@@ -325,10 +329,10 @@ module.exports.newTransaction_Post = async (req, res, next) => {
   await transactionService.createWithDetails(req)
     .then(result=>{
       req.session.notification=[enumm.notification.Success,'Transaction created successfully !'];
-      return res.redirect(`/portal/new-transaction`);
+      return res.redirect(`/portal/new-transaction`,{layout: false});
     }).catch(e=>{
       req.session.notification=[enumm.notification.Error,'Transaction not created !'];
-      return res.render(`/portal/new-transaction`);
+      return res.render(`/portal/new-transaction`,{layout: false});
     });
 }
 
@@ -338,7 +342,7 @@ module.exports.newTransaction_Post_ = async (req, res, next) => {
   form.parse(req, async (err, fields, files) => {
       if (err) {
         req.session.notification=[enumm.notification.Error,'Transaction creation failed !'];
-        return res.redirect(`/portal/new-transaction`);
+        return res.redirect(`/portal/new-transaction`,{layout: false});
       } else {
           if(fields.isItIncome=='1'){
             fields.debitAccountId=fields.accountToId;
@@ -361,13 +365,13 @@ module.exports.newTransaction_Post_ = async (req, res, next) => {
                               // fs.rmSync(oldName, { recursive: true, force: true });
                           } else {
                               req.session.notification=[enumm.notification.Success,'Transaction created successfully !'];
-                              return res.redirect(`/portal/new-transaction`);
+                              return res.redirect(`/portal/new-transaction`,{layout: false});
                           }
                       });
                   }
               }).catch(function (err) {
                   req.session.notification=[enumm.notification.Error,'Transaction not created !'];
-                  return res.redirect(`/portal/new-transaction`);
+                  return res.redirect(`/portal/new-transaction`,{layout: false});
               });
       };
   });

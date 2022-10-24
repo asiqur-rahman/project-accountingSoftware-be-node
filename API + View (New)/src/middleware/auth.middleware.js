@@ -201,7 +201,7 @@ module.exports.isLogedIn = (...roles) => {
             // //check Client IP
             var clientIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress || null;
             if (clientIp.toString() == decoded.clientIp) {
-                return res.redirect('/portal/dashboard');
+                return res.redirect('/portal');
             } else {
                 req.currentUser = -1;
                 next();

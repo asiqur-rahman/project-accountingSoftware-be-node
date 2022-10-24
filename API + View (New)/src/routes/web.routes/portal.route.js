@@ -10,6 +10,7 @@ router.use('/', notification(),(req, res, next) => {
     next()
  });
 
+router.get('/', awaitHandlerFactory(portalController.portal));
 router.get('/dashboard', awaitHandlerFactory(portalController.dashboard));
 router.get('/dashboardLTFD', awaitHandlerFactory(portalController.dashboardLTFD));
 router.get('/dashboardEAR/:days', awaitHandlerFactory(portalController.dashboardEAR));
