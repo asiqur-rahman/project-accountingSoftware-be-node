@@ -81,7 +81,7 @@
 <script src="/public/assets/js/custom-validation.js"></script>
 <script>
     
-    function numberOnly(e){
+    var numberOnly=(e)=>{
         if(e.value!='-')
         while(isNaN(e.value))
         e.value = e.value.split('').reverse().join('').replace(/[\D]/i,'')

@@ -7,7 +7,13 @@ $('.validate-this-form').on('submit', function (e) {
             data: $(this).serialize(), 
             success: function(response) { 
                 console.log(response)
-                alert("Success!");
+                if(response.msg){
+                    toastr[response.msg[0]](response.msg[1]);
+                    if(response.redirect)loadPartial(response.redirect);
+                    else Spinner.Hide();
+                }else{
+                    toastr['error']('Something Wrong ! Please try again.');
+                }
              }
           });
     }

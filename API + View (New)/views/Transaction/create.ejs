@@ -14,7 +14,7 @@
         <div class="card">
             <div class="card-body">
                 <!-- <h4 class="card-title mb-4">Invoice Details</h4> enctype="multipart/form-data" --> 
-                <form class="repeater validate-this-form transactionForm" method="post">
+                <form class="repeater validate-this-form transactionForm" method="post" action="<%=lastVisitedUrl%>">
                     <div data-repeater-list="transactionDetails" class="row">
                         <input class="form-control" type="number" name="id" id="id" value="<%= typeof model!='undefined' ? model.id : '' %>" readonly hidden>
                         <input class="form-control" type="number" name="parentId" id="parentId" value="<%= typeof model!='undefined' ? model.parentId : '0' %>" readonly hidden>
@@ -147,7 +147,6 @@
 
 <!-- form repeater js -->
 <script defer src="/public/assets/libs/jquery.repeater/jquery.repeater.min.js"></script>
-
 <script defer src="/public/assets/js/pages/form-repeater.int.js"></script>
 <script src="/public/assets/js/custom-validation.js"></script>
 

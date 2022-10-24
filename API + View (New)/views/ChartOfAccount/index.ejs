@@ -132,15 +132,15 @@ input, label {
               </div>
                 <ol class="wtree">
                     <% if(locals.data) {for(var i=0; i<data.length; i++){%>
-                        <li><span><%=data[i].name%> (<a href="/portal/new-chartOfAccount/<%=data[i].id%>">Edit</a>)<p>BDT <%=data[i]['accountBalances.amount']%> Tk.</p></span>
+                        <li><span><%=data[i].name%> (<a href="javascript: void(0);" onclick="loadPartial('/portal/new-chartOfAccount/<%=data[i].id%>')">Edit</a>)<p>BDT <%=data[i]['accountBalances.amount']%> Tk.</p></span>
                             <ol>
                                 <% if(data[i].childs) { for(var j=0; j<data[i].childs.length; j++){%>
                                     <li>
-                                        <span><%=data[i].childs[j].name%> (<a href="/portal/new-chartOfAccount/<%=data[i].childs[j].id%>">Edit</a>)<p>BDT <%=data[i].childs[j]['accountBalances.amount']%> Tk.</p></span>
+                                        <span><%=data[i].childs[j].name%> (<a href="javascript: void(0);" onclick="loadPartial('/portal/new-chartOfAccount/<%=data[i].childs[j].id%>')">Edit</a>)<p>BDT <%=data[i].childs[j]['accountBalances.amount']%> Tk.</p></span>
                                           <ol>
                                             <% if(data[i].childs[j].childs){ for(var k=0; k<data[i].childs[j].childs.length; k++){%>
                                                 <li>
-                                                    <span><%=data[i].childs[j].childs[k].name%> (<a href="/portal/new-chartOfAccount/<%=data[i].childs[j].childs[k].id%>">Edit</a>)<p>BDT <%=data[i].childs[j].childs[k]['accountBalances.amount']%> Tk.</p></span>
+                                                    <span><%=data[i].childs[j].childs[k].name%> (<a href="javascript: void(0);" onclick="loadPartial('/portal/new-chartOfAccount/<%=data[i].childs[j].childs[k].id%>')">Edit</a>)<p>BDT <%=data[i].childs[j].childs[k]['accountBalances.amount']%> Tk.</p></span>
                                                 </li>
                                             <%}}%>
                                           </ol>

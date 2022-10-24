@@ -80,6 +80,7 @@ service.create = async (req) => {
             req.body.name=`${data.name}:${req.body.name}`;
             req.body.level=data.name.split(':').length;
             req.body.baseCode=req.body.level>1 ? data.baseCode:data.code;
+            req.body.code=null;
             await db.ChartOfAccount.create(req.body)
                 .then(async (result) => {
                     if (result) {
@@ -222,6 +223,7 @@ service.chartOfAccountDDByBaseCode =async (code)=> {
         attributes: ['name', 'id'],
         raw: true
     }).then(data => {
+        console.log(data)
         return data;
     });
 };

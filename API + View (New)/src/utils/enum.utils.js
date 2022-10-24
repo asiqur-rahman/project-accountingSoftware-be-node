@@ -19,10 +19,10 @@ var Enum = require('enum');
     }
 
     module.exports.notification={
-        Error: 'error|',
-        Info: 'info|',
-        Warning: 'warning|',
-        Success: 'success|'
+        Error: 'error',
+        Info: 'info',
+        Warning: 'warning',
+        Success: 'success'
     }
 
     module.exports.AccountHead=new Enum({

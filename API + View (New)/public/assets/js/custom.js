@@ -22,14 +22,16 @@ async function loadPartial(url,contentId="main-container"){
         complete: function () {
             Spinner.Hide();
         },
-        success: function (result) {
-            $(`.${contentId}`).html(result);
+        success: function (result,textStatus, xhr) {
+            if(xhr.status==302)window.location.replace('/');
+            else $(`.${contentId}`).html(result);
         },
         error: function (request, status, error) {
             Swal.fire({
                 icon: 'error',
                 title: 'Internal error !'
             })
+            window.location.replace('/');
         }
     })
 }

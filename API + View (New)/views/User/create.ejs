@@ -1,7 +1,3 @@
-<%- contentFor('HeaderCss') %>
-
-<%- contentFor('breadcrumb') %>
-
 <!-- start page title -->
 <div class="row">
     <div class="col-12">
@@ -19,13 +15,11 @@
 </div>
 <!-- end page title -->
 
-<%- contentFor('body') %>
-
 <div class="row">
     <div class="col-xl-12">
         <div class="card">
             <div class="card-body">
-                <form class="validate-this-form" method="post">
+                <form class="validate-this-form" method="post" action="<%=lastVisitedUrl%>">
                     <div class="row">
                         <input class="form-control" type="number" name="userDetailId" id="userDetailId" value="<%= typeof detailsInfo!='undefined' ? detailsInfo.userDetailId : '' %>" readonly hidden>
                         <input class="form-control" type="number" name="id" id="id" value="<%= typeof detailsInfo!='undefined' ? detailsInfo.id : '' %>" readonly hidden>
@@ -94,7 +88,7 @@
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <a class="btn btn-danger" style="float: right; margin-left: 2%;" type="button" href="/portal/user-list">Cancel</a>
+                        <a class="btn btn-danger" style="float: right; margin-left: 2%;" type="button" href="javascript: void(0);" onclick="loadPartial('/portal/user-list')">Cancel</a>
                         <button class="btn btn-primary" style="float: right;" type="submit" id="formSubmitBtn" ><%= typeof detailsInfo=='undefined' ? 'Create' : 'Update' %></button>
                         <!-- <button class="btn btn-primary" type="button" id="faceScanBtn" style="display: none;">Face Scan</button> -->
                     </div>
@@ -106,13 +100,10 @@
 </div>
 <!-- end row -->
 
-<%- contentFor('FooterJs') %>
-
 <!-- parsleyjs -->
 <script defer src="/public/assets/libs/parsleyjs/parsley.min.js"></script>
 <script defer src="/public/assets/js/pages/form-validation.init.js"></script>
-
-<%- contentFor('BottomJs') %>
+<script src="/public/assets/js/custom-validation.js"></script>
 
 <script>
     $("#username").change(async function(){
@@ -128,7 +119,7 @@
                     // Spinner.Hide();
                 },
                 success: function (jsondata) {
-                    debugger;
+                    if(jsondata.status===401)window.location.reload();
                     if(jsondata.id && jsondata.id!=$("#id").val()){
                         $("#username").val('');
                         Swal.fire({

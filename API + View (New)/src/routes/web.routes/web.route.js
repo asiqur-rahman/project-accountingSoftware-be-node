@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {isLogedIn,webAuth} = require('../../middleware/auth.middleware');
+const {isLogedIn,webAuth,apiAuth} = require('../../middleware/auth.middleware');
 
 const authRouter = require('./auth.route');
 const portalRouter = require('./portal.route');

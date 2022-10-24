@@ -7,7 +7,6 @@ const jwt = require('jsonwebtoken');
 const userService = require('../../service/user.service');
 
 module.exports.login_Get = async (req, res, next) => {
-  console.log(res.locals)
   res.render('Auth/auth-login', {
     layout: false
   });
@@ -15,7 +14,6 @@ module.exports.login_Get = async (req, res, next) => {
 
 module.exports.login_Post = async (req, res, next) => {
   var clientIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress || null;
-  console.log("LoginIp : " + clientIp)
   const {
     username,
     password
@@ -93,6 +91,7 @@ module.exports.logout = async (req, res, next) => {
   req.session.user = null;
   req.session.notification = notification;
   req.session.destroy();
+  // res.status(302).send()
   res.redirect('/auth/login');
   // res.render('Auth/auth-login', { 'message': req.flash('message'), 'error': req.flash('error') ,layout: false});
 };
