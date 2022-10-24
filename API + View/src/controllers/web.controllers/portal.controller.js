@@ -228,6 +228,36 @@ module.exports.newchartOfAccount_Post = async (req, res, next) => {
 
 //#endregion
 
+//#region Bank Account
+module.exports.bankAccountList = async (req, res, next) => {
+  res.locals.title= 'Bank Account List';
+  res.render('BankAccount/index');
+}
+
+module.exports.bankAccountListData = async (req, res, next) => {
+  userService.indexData(req).then(data=>{
+    res.status(200).send(data);
+  });
+}
+//#endregion
+
+//#region Cheque Record
+module.exports.chequeRecord = async (req, res, next) => {
+  res.render('ChequeRecord/create');
+}
+
+module.exports.chequeRecordList = async (req, res, next) => {
+  res.locals.title= 'Cheque Record List';
+  res.render('ChequeRecord/index');
+}
+
+module.exports.chequeRecordData = async (req, res, next) => {
+  userService.indexData(req).then(data=>{
+    res.status(200).send(data);
+  });
+}
+//#endregion
+
 //#region Transactions
 module.exports.transactionList = async (req, res, next) => {
   res.locals.title= 'Transaction';

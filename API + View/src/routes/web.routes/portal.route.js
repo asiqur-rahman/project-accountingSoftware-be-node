@@ -29,6 +29,14 @@ router.get('/coaByBaseCode/:code', awaitHandlerFactory(portalController.chartOfA
 router.get(['/new-chartOfAccount','/new-chartOfAccount/:id'], awaitHandlerFactory(portalController.newChartOfAccount_Get));
 router.post(['/new-chartOfAccount','/new-chartOfAccount/:id'], awaitHandlerFactory(portalController.newchartOfAccount_Post));
 
+router.get(['/bank-account','/bank-account/:id'], awaitHandlerFactory(portalController.bankAccount));
+router.post(['/bank-account','/bank-account/:id'], awaitHandlerFactory(portalController.bankAccount_Post));
+router.get('/bank-account-list', awaitHandlerFactory(portalController.bankAccountList));
+
+router.get(['/cheque-record','/cheque-record/:id'], awaitHandlerFactory(portalController.chequeRecord));
+router.post(['/cheque-record','/cheque-record/:id'], awaitHandlerFactory(portalController.chequeRecord_Post));
+router.get('/cheque-record-list', awaitHandlerFactory(portalController.chequeRecordList));
+
 router.get('/transaction-list', awaitHandlerFactory(portalController.transactionList));
 router.get('/transaction-details/:id', awaitHandlerFactory(portalController.transactionDetails));
 router.delete('/transaction-delete/:id', awaitHandlerFactory(portalController.transactionDelete));

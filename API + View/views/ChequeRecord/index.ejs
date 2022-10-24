@@ -11,12 +11,11 @@
     type="text/css" />
 
 <%- contentFor('breadcrumb') %>
-
 <!-- start page title -->
 <div class="row">
     <div class="col-12">
         <div class="page-title-box d-flex align-items-center justify-content-between">
-            <h4 class="mb-0">List of Transactions</h4>
+            <h4 class="mb-0">User List</h4>
 
         </div>
     </div>
@@ -24,6 +23,7 @@
 <!-- end page title -->
 
 <%- contentFor('body') %>
+
 <div class="row">
     <div class="col-12">
         <div class="card">
@@ -37,21 +37,6 @@
         </div>
     </div> <!-- end col -->
 </div> <!-- end row -->
-
-<div class="modal fade bs-custom-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title mt-0" id="myLargeModalLabel">Details</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                </button>
-            </div>
-            <div class="modal-body">
-                
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div>
 
 <%- contentFor('FooterJs') %>
 
@@ -84,38 +69,35 @@
                 "title": "#SL",
             },
             {
-                "data": "dateTime",
-                "title": "Date Time",
-            },
-            {
                 "data": "sl",
-                "title": "Credit Account",
+                "title": "Full Name",
                 "render": function (data, type, row, meta) {
-                    return `${row['creditAccount.name']}`;
+                    return `${row['userDetail.firstName']} ${row['userDetail.lastName']}`;
                 }
             },
             {
-                "data": "sl",
-                "title": "Debit Account",
-                "render": function (data, type, row, meta) {
-                    return `${row['debitAccount.name']}`;
-                }
+                "data": "username",
+                "title": "Username",
             },
             {
-                "data": "amount",
-                "title": "Amount",
+                "data": "role.name",
+                "title": "Role",
+                "render": function (data, type, row, meta) {
+                    return `${row['userDetail.role.name']}`;
+                }
             },
             {
                 "data": "id",
                 "title": "Action",
                 "render": function (data, type, row, meta) {
-                        return `<a class="btn btn-sm btn-success btn-soft-success waves-effect waves-light" href="/portal-user-create/${row['id']}">Update</a> 
-                        <button class="btn btn-sm btn-primary btn-soft-primary waves-effect waves-light" onclick=showResponseInModals('/portal/transaction-details/${row['id']}')>Details</button> 
-                        <button class="btn btn-sm btn-danger btn-soft-danger waves-effect waves-light" onclick='confirmationCheck_ajax("/portal/transaction-delete/${row['id']}","DELETE","Are you sure about the transaction deletion.","datatable-buttons",false)'>Delete</button>`
+                        return `<a class="btn btn-sm btn-success btn-soft-success waves-effect waves-light" href="/portal/new-user/${row['id']}">Update</a> 
+                        <button class="btn btn-sm btn-warning btn-soft-warning waves-effect waves-light" onclick='confirmationCheck_ajax("/portal/user-password-reset/${row['id']}","GET","Reset password will be sent to this email : ${row['userDetail.email']}",false,false)'>Reset Password</button>
+                        <button class="btn btn-sm btn-${row['isActive']==1?'primary':'danger'} btn-soft-${row['isActive']==1?'primary':'danger'} waves-effect waves-light" onclick='confirmationCheck_ajax("/portal/user-change-status/${row['id']}","GET","Are you sure ? </br>This user will be in ${row['isActive']==1?'inactive':'active'} status from now on.","datatable-buttons",false)'>${row['isActive']==1?'Active':'InActive'}</button>
+                        `
                 }
             }
         ]
-        get_table_data("datatable-buttons","portal/transaction-list-data",coloum,[],true,true);
+        get_table_data("datatable-buttons","portal/user-list-data",coloum,[],true,true);
     });
 
     // <button class="btn btn-sm btn-danger btn-soft-danger waves-effect waves-light" onclick='deleteEmployeeFaces("/portal-user-delete/${data}",${data})'>Delete</button>
