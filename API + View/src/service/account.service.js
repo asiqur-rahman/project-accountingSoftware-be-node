@@ -15,7 +15,12 @@ service.getTreeWiseData = async () => {
             where: {
                 isActive:true
             },
-            attributes: ['id','name','parentId'],
+            include: [{
+                model: db.AccountBalance,
+                attributes: ['amount'],
+                required:false
+            }],
+            attributes: ['id','name','parentId','baseCode','code','level'],
             raw: true
         })
         .then(data => {
@@ -24,9 +29,21 @@ service.getTreeWiseData = async () => {
                 mothers.forEach(mother => {
                     mother.childs=data.filter(x=>x.parentId === mother.id);
                     mother.childs.forEach(mother => {
+                        
+                        mothers.forEach(item=>{
+                            if(item['code']===mother['baseCode']){
+                                item['accountBalances.amount']+=mother['accountBalances.amount'];
+                            }
+                        })
+
                         mother.name=mother.name.split(':').pop();
                         mother.childs=data.filter(x=>x.parentId === mother.id);
                         mother.childs.forEach(mother => {
+                            mothers.forEach(item=>{
+                                if(item['code']===mother['baseCode']){
+                                    item['accountBalances.amount']+=mother['accountBalances.amount'];
+                                }
+                            })
                             mother.name=mother.name.split(':').pop();
                         });
                     });
@@ -186,6 +203,11 @@ service.getById = async (id) => {
             where: {
                 id: id
             },
+            include: [{
+                model: db.AccountBalance,
+                attributes: ['amount'],
+                required:false
+            }],
             raw: true
         }).then(data => {
             if (data) {

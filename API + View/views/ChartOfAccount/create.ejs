@@ -27,7 +27,9 @@
             <div class="card-body">
                 <!-- <h4 class="card-title mb-4">Invoice Details</h4> enctype="multipart/form-data" --> 
                 <form class="repeater validate-this-form row" method="post">
-                    <input class="form-control" type="number" name="id" id="id" value="<%= typeof model!='undefined' ? model.id : '0' %>" readonly hidden>
+                    <input class="form-control" type="number" name="id" id="id" value="<%= typeof model!='undefined' ? model.id : '' %>" readonly hidden>
+                    <input class="form-control" type="number" name="userId" id="userId" value="<%= typeof model!='undefined' ? model.userId : '' %>" readonly hidden>
+                    <input class="form-control" type="number" name="code" id="code" value="<%= typeof model!='undefined' ? model.code : '' %>" readonly hidden>
                     
                     <div class="col-md-6">
                         <div class="mb-3 row">
@@ -45,7 +47,7 @@
                                 <div class="input-group" data-validate="Currency is required">
                                     <select class="form-select validate_this select2" name="currencyId" id="currencyId">
                                         <% if(locals.currencyDD) {for(var i=0; i<currencyDD.length; i++){%>
-                                            <option value="<%=currencyDD[i].id%>" <%=typeof detailsInfo!='undefined' ? currencyDD[i].id==detailsInfo.currencyId ? 'selected':'' : ''%>><%=currencyDD[i].name%></option>
+                                            <option value="<%=currencyDD[i].id%>" <%=typeof model!='undefined' ? currencyDD[i].id==model.currencyId ? 'selected':'' : ''%>><%=currencyDD[i].name%></option>
                                         <%}}%>
                                     </select>
                                 </div>
@@ -61,7 +63,7 @@
                                     <select class="form-select validate_this select2" name="parentId" id="parentId">
                                         <option value="" disabled selected>Select an option</option>
                                         <% if(locals.chartOfAccountDD) {for(var i=0; i<chartOfAccountDD.length; i++){%>
-                                            <option value="<%=chartOfAccountDD[i].id%>" <%=typeof detailsInfo!='undefined' ? chartOfAccountDD[i].id==detailsInfo.parentId ? 'selected':'' : ''%>><%=chartOfAccountDD[i].name%></option>
+                                            <option value="<%=chartOfAccountDD[i].id%>" <%=typeof model!='undefined' ? chartOfAccountDD[i].id==model.parentId ? 'selected':'' : ''%>><%=chartOfAccountDD[i].name%></option>
                                         <%}}%>
                                     </select>
                                 </div>
@@ -72,7 +74,7 @@
                         <div class="mb-3 row">
                             <label for="amount" class="col-md-4 col-form-label">Initial Amount</label>
                             <div class="col-md-8" data-validate="Initial Amount is required">
-                                <input class="form-control validate_this number_only" placeholder="Ex. 2000" type="text" name="amount" id="amount" value="<%= typeof model!='undefined' ? model.decimalPlaces : '' %>">
+                                <input class="form-control validate_this number_only" placeholder="Ex. 2000" type="text" name="amount" id="amount" value="<%= typeof model!='undefined' ? model['accountBalances.amount'] : '' %>">
                             </div>
                         </div>
                     </div>

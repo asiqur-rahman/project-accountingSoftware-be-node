@@ -139,6 +139,7 @@ module.exports.chartOfAccount = async (req, res, next) => {
       res.locals.title= 'Dashboard';
       res.locals.toast_Msg=res.locals.toast_Msg;
       res.locals.data=data;
+      console.log(data)
     res.render('ChartOfAccount/index');
   })
 }
@@ -150,13 +151,25 @@ module.exports.chartOfAccountListByParentId = async (req, res, next) => {
 }
 
 module.exports.newChartOfAccount_Get = async (req, res, next) => {
-    accountService.chartOfAccountDD().then(chartOfAccountDD=>{
-      accountService.currencyDD().then(currencyDD=>{
-        res.locals.title= 'Chart Of Account';
-        res.locals.toast_Msg=res.locals.toast_Msg;
-        res.locals.chartOfAccountDD=chartOfAccountDD;
-        res.locals.currencyDD=currencyDD;
-      res.render('ChartOfAccount/create');
+    await accountService.chartOfAccountDD().then(async chartOfAccountDD=>{
+      await accountService.currencyDD().then(async currencyDD=>{
+        if(req.params.id){
+          await accountService.getById(req.params.id)
+          .then(detailsInfo=>{
+            console.log(detailsInfo)
+            res.locals.title= 'Chart Of Account Update';
+            res.locals.model= detailsInfo;
+            res.locals.chartOfAccountDD=chartOfAccountDD;
+            res.locals.currencyDD=currencyDD;
+            res.render('ChartOfAccount/create');
+          })
+        }else{
+            res.locals.title= 'Chart Of Account Create';
+            res.locals.toast_Msg=res.locals.toast_Msg;
+            res.locals.chartOfAccountDD=chartOfAccountDD;
+            res.locals.currencyDD=currencyDD;
+          res.render('ChartOfAccount/create');
+      }
     })
   })
 }

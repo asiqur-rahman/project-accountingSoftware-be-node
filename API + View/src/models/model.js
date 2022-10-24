@@ -117,7 +117,7 @@ db.User.hasMany(db.AccountBalance);
 //   console.log('Drop and Resync Database with { force: true }');
 //   initial();
 // });
-//
+
 // db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0', { raw: true }).then ( function () {
 //   db.sequelize.sync ({ force: true }).then ( function () {
 //     console.log('Drop and Resync Database with { force: true }');
@@ -175,6 +175,12 @@ function initial() {
       isActive:true,
       code:enumm.AccountHead.Assets.value,
       // baseCode:enumm.AccountHead.Assets.value
+    }).then(data=>{
+      db.AccountBalance.create({
+        amount:0,
+        chartOfAccountId:data.id,
+        userId:1,
+      })
     });
 
     db.ChartOfAccount.create({
@@ -184,6 +190,12 @@ function initial() {
       isActive:true,
       code:enumm.AccountHead.Equity.value,
       // baseCode:enumm.AccountHead.Equity.value
+    }).then(data=>{
+      db.AccountBalance.create({
+        amount:0,
+        chartOfAccountId:data.id,
+        userId:1,
+      })
     });
 
     db.ChartOfAccount.create({
@@ -193,6 +205,12 @@ function initial() {
       isActive:true,
       code:enumm.AccountHead.Expense.value,
       // baseCode:enumm.AccountHead.Expense.value
+    }).then(data=>{
+      db.AccountBalance.create({
+        amount:0,
+        chartOfAccountId:data.id,
+        userId:1,
+      })
     });
 
     db.ChartOfAccount.create({
@@ -202,6 +220,12 @@ function initial() {
       isActive:true,
       code:enumm.AccountHead.Income.value,
       // baseCode:enumm.AccountHead.Income.value
+    }).then(data=>{
+      db.AccountBalance.create({
+        amount:0,
+        chartOfAccountId:data.id,
+        userId:1,
+      })
     });
 
     db.ChartOfAccount.create({
@@ -211,6 +235,12 @@ function initial() {
       isActive:true,
       code:enumm.AccountHead.Liabilities.value,
       // baseCode:enumm.AccountHead.Liabilities.value
+    }).then(data=>{
+      db.AccountBalance.create({
+        amount:0,
+        chartOfAccountId:data.id,
+        userId:1,
+      })
     });
 
   }

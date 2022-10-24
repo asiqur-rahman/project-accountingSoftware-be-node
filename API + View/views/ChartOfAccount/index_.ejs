@@ -1,218 +1,196 @@
 <%- contentFor('HeaderCss') %>
+
 <style>
-.tree, .tree ul {
-    margin:0;
-    padding:0;
-    list-style:none
-}
-.tree ul {
-    margin-left:1em;
-    position:relative
-}
-.tree ul ul {
-    margin-left:.5em
-}
-.tree ul:before {
-    content:"";
-    display:block;
-    width:0;
-    position:absolute;
-    top:0;
-    bottom:0;
-    left:0;
-    border-left:1px solid
-}
-.tree li {
-    margin:0;
-    padding:0 1em;
-    line-height:2em;
-    color:#369;
-    font-weight:700;
-    position:relative;
-    font-size: 20px;
-}
-.tree ul li:before {
-    content:"";
-    display:block;
-    width:10px;
-    height:0;
-    border-top:1px solid;
-    margin-top:-1px;
-    position:absolute;
-    top:1em;
-    left:0
-}
-.tree ul li:last-child:before {
-    background:#fff;
-    height:auto;
-    top:1em;
-    bottom:0
-}
-.indicator {
-    margin-right:5px;
-}
-.tree li a {
-    text-decoration: none;
-    color:#369;
-}
-.tree li button, .tree li button:active, .tree li button:focus {
-    text-decoration: none;
-    color:#369;
-    border:none;
-    background:transparent;
-    margin:0px 0px 0px 0px;
-    padding:0px 0px 0px 0px;
-    outline: 0;
-}
+  .tree {
+    --spacing: 1.5rem;
+    --radius: 10px;
+  }
+
+  .tree li {
+    display: block;
+    position: relative;
+    padding-left: calc(2 * var(--spacing) - var(--radius) - 2px);
+    font-size: 19px;
+    margin: 10px;
+  }
+
+  .tree ul {
+    margin-left: calc(var(--radius) - var(--spacing));
+    padding-left: 0;
+  }
+
+
+
+  /* .tree li:hover li:not(:hover) {color: red} */
+
+
+  .tree ul li:hover {
+    font-weight: bold;
+    transition: ease all .5s;
+  }
+
+
+  .tree ul li {
+    border-left: 2px solid #ddd;
+    transition: ease all .5s;
+  }
+
+  .tree ul li:last-child {
+    border-color: transparent;
+  }
+
+  .tree ul li::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: calc(var(--spacing) / -2);
+    left: -2px;
+    width: calc(var(--spacing) + 2px);
+    height: calc(var(--spacing) + 1px);
+    border: solid #ddd;
+    border-width: 0 0 2px 2px;
+  }
+
+  .tree summary {
+    display: block;
+    cursor: pointer;
+  }
+
+  .tree summary::marker,
+  .tree summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .tree summary:focus {
+    outline: none;
+  }
+
+  .tree summary:focus-visible {
+    outline: 1px dotted #000;
+  }
+
+  .tree li::after,
+  .tree summary::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: calc(var(--spacing) / 2 - var(--radius));
+    left: calc(var(--spacing) - var(--radius) - 1px);
+    width: calc(2 * var(--radius));
+    height: calc(2 * var(--radius));
+    border-radius: 50%;
+    background: #ddd;
+  }
+
+  .tree summary::before {
+    content: '+';
+    z-index: 1;
+    background: #696;
+    color: #fff;
+    line-height: calc(2 * var(--radius) - 2px);
+    text-align: center;
+  }
+
+  .tree details[open]>summary::before {
+    content: '−';
+  }
 </style>
 
 <%- contentFor('breadcrumb') %>
 
 <!-- start page title -->
 <div class="row">
-    <div class="col-12">
-        <div class="page-title-box d-flex align-items-center justify-content-between">
-            <h4 class="mb-0">Chart of Account</h4>
-            <div class="page-title-right">
-                <ol class="breadcrumb m-0">
-                    <li class="breadcrumb-item"><a href="javascript: void(0);">Chart of Account</a></li>
-                    <li class="breadcrumb-item active">Index</li>
-                </ol>
-            </div>
+  <div class="col-12">
+    <div class="page-title-box d-flex align-items-center justify-content-between">
+      <h4 class="mb-0">Chart of Account</h4>
+      <div class="page-title-right">
+        <ol class="breadcrumb m-0">
+          <li class="breadcrumb-item"><a href="javascript: void(0);">Chart of Account</a></li>
+          <li class="breadcrumb-item active">Index</li>
+        </ol>
+      </div>
 
-        </div>
     </div>
+  </div>
 </div>
 
 <!-- end page title -->
 
 <%- contentFor('body') %>
+<div class="col-md-12 coaDiv">
 
-<div class="col-md-4">
-    <ul id="tree1">
-        <% if(locals.data)
-        {for(var i=0; i<data.length; i++){%>
-            <li><a href="#"><%=data[i].name%></a>
+  <!-- start page title -->
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <ul class="tree">
+            <li>
+              <details open>
+                <summary>Accounts</summary>
                 <ul>
-                    <% if(data[i].childs) {for(var j=0; j<data[i].childs.length; j++){%>
-                        <li><%=data[i].childs[j].name%></li>
+                  <% if(locals.data) {for(var i=0; i<data.length; i++){%>
+                  <li>
+                    <% if(data[i].childs) { %>
+                    <details>
+                      <summary><%=data[i].name%></summary>
+                      <ul>
+                        <% for(var j=0; j<data[i].childs.length; j++){%>
                         <% if(data[i].childs[j].childs){%>
+                        <li>
+                          <details>
+                            <summary><%=data[i].childs[j].name%></summary>
                             <ul>
-                                <% for(var k=0; k<data[i].childs[j].childs.length; k++){%>
-                                    <li><%=data[i].childs[j].childs[k].name%></li>
-                                <%}%>
-                            </ul>
+                              <% for(var k=0; k<data[i].childs[j].childs.length; k++){%>
+                              <li><%=data[i].childs[j].childs[k].name%></li>
+                              <%}%>
+                              </ul>
+                            </details>
+                          </li>
+                          <%}else{%>
+                              <li><%=data[i].childs[j].name%></li>
+                              <%}%>
                         <%}%>
-                    <%}}%>
+                            </ul>
+                          </details>
+                          <%}else{%>
+                        <li><%=data[i].childs[j].name%></li>
+                        <%}%>
+              </li>
+          <%}}%>
+                        <!-- <li>
+            <details>
+              <summary>Gas giants</summary>
+              <ul>
+                <li>Jupiter</li>
+                <li>Saturn</li>
+              </ul>
+            </details>
+          </li>
+          <li>
+            <details>
+              <summary>Ice giants</summary>
+              <ul>
+                <li>Uranus</li>
+                <li>Neptune</li>
+              </ul>
+            </details>
+          </li> -->
+                      </ul>
+                    </details>
+                  </li>
                 </ul>
-            </li>
-        <%}}%>
+        </div>
+      </div>
+    </div>
+  </div>
 
-        <li><a href="#">TECH</a>
 
-            <ul>
-                <li>Company Maintenance</li>
-                <li>Employees
-                    <ul>
-                        <li>Reports
-                            <ul>
-                                <li>Report1</li>
-                                <li>Report2</li>
-                                <li>Report3</li>
-                            </ul>
-                        </li>
-                        <li>Employee Maint.</li>
-                    </ul>
-                </li>
-                <li>Human Resources</li>
-            </ul>
-        </li>
-        <!-- <li>XRP
-            <ul>
-                <li>Company Maintenance</li>
-                <li>Employees
-                    <ul>
-                        <li>Reports
-                            <ul>
-                                <li>Report1</li>
-                                <li>Report2</li>
-                                <li>Report3</li>
-                            </ul>
-                        </li>
-                        <li>Employee Maint.</li>
-                    </ul>
-                </li>
-                <li>Human Resources</li>
-            </ul>
-        </li> -->
-    </ul>
+  <!-- https://iamkate.com/code/tree-views/ -->
+
+
+  <!-- end page title -->
 </div>
-<!-- end row -->
-
 <%- contentFor('FooterJs') %>
-
-<script>
-    
-
-
-//Initialization of treeviews
-$(function(){
-$.fn.extend({
-    treed: function (o) {
-      
-      var openedClass = 'glyphicon-minus-sign';
-      var closedClass = 'glyphicon-plus-sign';
-      
-      if (typeof o != 'undefined'){
-        if (typeof o.openedClass != 'undefined'){
-        openedClass = o.openedClass;
-        }
-        if (typeof o.closedClass != 'undefined'){
-        closedClass = o.closedClass;
-        }
-      };
-      
-        //initialize each of the top levels
-        var tree = $(this);
-        tree.addClass("tree");
-        tree.find('li').has("ul").each(function () {
-            var branch = $(this); //li with children ul
-            branch.prepend("<i class='indicator glyphicon " + closedClass + "'></i>");
-            branch.addClass('branch');
-            branch.on('click', function (e) {
-                if (this == e.target) {
-                    var icon = $(this).children('i:first');
-                    icon.toggleClass(openedClass + " " + closedClass);
-                    $(this).children().children().toggle();
-                }
-            })
-            branch.children().children().toggle();
-        });
-        //fire event from the dynamically added icon
-      tree.find('.branch .indicator').each(function(){
-        $(this).on('click', function () {
-            $(this).closest('li').click();
-        });
-      });
-        //fire event to open branch if the li contains an anchor instead of text
-        tree.find('.branch>a').each(function () {
-            $(this).on('click', function (e) {
-                $(this).closest('li').click();
-                e.preventDefault();
-            });
-        });
-        //fire event to open branch if the li contains a button instead of text
-        tree.find('.branch>button').each(function () {
-            $(this).on('click', function (e) {
-                $(this).closest('li').click();
-                e.preventDefault();
-            });
-        });
-    }
-});
-    $('#tree1').treed({openedClass:'uil-play', closedClass:'uil-play'});
-})
-
-</script>
 
 <%- contentFor('BottomJs') %>
