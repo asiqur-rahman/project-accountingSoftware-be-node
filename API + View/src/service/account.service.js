@@ -74,29 +74,69 @@ service.getTreeWiseData = async () => {
 
 service.create = async (req) => {
     return new Promise(async (resolve, reject) => {
-        req.body.id=null;
-        req.body.userId=req.currentUser;
-        await db.ChartOfAccount.create(req.body)
-            .then(async (result) => {
-                if (result) {
-                    await accountBalanceService.create({body:{
-                        amount: req.body.amount,
-                        userId: req.currentUser,
-                        chartOfAccountId: result.id,
-                    }}).then(() => {
-                        resolve({
-                            status: 201,
-                            message: 'Account was created, Id:' + result.id
+        await service.getById(req.body.parentId).then(async data=>{
+            req.body.id=null;
+            req.body.userId=req.currentUser;
+            req.body.name=`${data.name}:${req.body.name}`;
+            req.body.level=data.name.split(':').length;
+            req.body.baseCode=req.body.level>1 ? data.baseCode:data.code;
+            await db.ChartOfAccount.create(req.body)
+                .then(async (result) => {
+                    if (result) {
+                        await accountBalanceService.create({body:{
+                            amount: req.body.amount,
+                            userId: req.currentUser,
+                            chartOfAccountId: result.id,
+                        }}).then(() => {
+                            resolve({
+                                status: 201,
+                                message: 'Account was created, Id:' + result.id
+                            });
+                        })
+                    } else {
+                        reject({
+                            status: 200,
+                            message: 'Account not created'
                         });
-                    })
-                } else {
-                    reject({
-                        status: 200,
-                        message: 'Account not created'
-                    });
+                    }
+                });
+            })
+        });
+};
+
+
+service.update = async (req) => {
+    return new Promise(async (resolve, reject) => {
+        await service.getById(req.body.parentId).then(async data=>{
+            req.body.name=`${data.name}:${req.body.name}`;
+            req.body.level=data.name.split(':').length;
+            req.body.baseCode=req.body.level>1 ? data.baseCode:data.code;
+            await db.ChartOfAccount.update({
+                name: req.body.name,
+                parentId: req.body.parentId,
+                level: req.body.parentId,
+                baseCode: req.body.baseCode
+            }, {
+                where: {
+                    id: req.body.id
                 }
-            });
-        })
+            }).then(async (result) => {
+                    if (result) {
+                        await accountBalanceService.updateByCoaId(req).then(() => {
+                            resolve({
+                                status: 201,
+                                message: 'Account was updated !'
+                            });
+                        })
+                    } else {
+                        reject({
+                            status: 200,
+                            message: 'Account not created'
+                        });
+                    }
+                });
+            })
+        });
 };
 
 service.chartOfAccountDD =async ()=> {

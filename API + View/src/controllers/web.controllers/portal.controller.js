@@ -156,6 +156,7 @@ module.exports.newChartOfAccount_Get = async (req, res, next) => {
         if(req.params.id){
           await accountService.getById(req.params.id)
           .then(detailsInfo=>{
+            detailsInfo.name=detailsInfo.name.split(':').pop();
             console.log(detailsInfo)
             res.locals.title= 'Chart Of Account Update';
             res.locals.model= detailsInfo;
@@ -187,11 +188,8 @@ module.exports.newchartOfAccount_Post = async (req, res, next) => {
   const area="Chart of Account"
   req.body.userId=req.currentUser;
   if (req.body.id && req.body.id > 0) {
-      await db.ChartOfAccount.update(req.body, {
-          where: {
-              id: req.body.id
-          },
-      }).then(() => {
+    accountService.update(req)
+    .then(() => {
           req.session.notification=[enumm.notification.Success,'Chart Of Account updated successfully !'];
           res.redirect(`/portal/chartOfAccount`);
       }).catch(function (err) {
@@ -203,10 +201,10 @@ module.exports.newchartOfAccount_Post = async (req, res, next) => {
           res.render(`/portal/create`);
       });
   } else {
-    accountService.getById(req.body.parentId).then(async data=>{
-      req.body.name=`${data.name}:${req.body.name}`;
-      req.body.level=data.name.split(':').length;
-      req.body.baseCode=req.body.level>1 ? data.baseCode:data.code;
+    // accountService.getById(req.body.parentId).then(async data=>{
+    //   req.body.name=`${data.name}:${req.body.name}`;
+    //   req.body.level=data.name.split(':').length;
+    //   req.body.baseCode=req.body.level>1 ? data.baseCode:data.code;
       await accountService.create(req)
           .then((result) => {
               if (result) {
@@ -224,7 +222,7 @@ module.exports.newchartOfAccount_Post = async (req, res, next) => {
                   res.render(`/portal/create`);
               }
           });
-    })
+    // })
   }
 }
 
