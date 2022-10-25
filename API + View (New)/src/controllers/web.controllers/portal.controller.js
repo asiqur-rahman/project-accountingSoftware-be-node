@@ -43,6 +43,17 @@ module.exports.dashboard = async (req, res, next) => {
     })
 }
 
+module.exports.dashboardApex = async (req, res, next) => {
+  db.sequelize.query('CALL DashboardApex (:days)', {
+      replacements: {
+        days: req.params.days,
+      }
+    })
+    .then(async function (data) {
+      console.log(data)
+    })
+}
+
 //lastTransactionsForDashboard
 module.exports.dashboardLTFD = async (req, res, next) => {
   await transactionService.lastTransactionsForDashboard().then(data => {

@@ -76,10 +76,19 @@ var chart = new ApexCharts(
   document.querySelector("#donut_chart"),
   options
 );
-
 function changeApexData(dataFor, dataShowingFor){
     // $("#apextChartDataFor").html(dataShowingFor+' <i class="mdi mdi-chevron-down ms-1"></i>');
-    $.getJSON('/portal/dashboardEAR/'+dataFor, function(response) {
+    $.getJSON('/portal/dashboardEAR', function(response) {
+        chart.updateOptions({
+            labels: response.key,//['01/01/2003', '02/01/2003', '03/01/2003', '04/01/2003', '05/01/2003', '06/01/2003', '07/01/2003'],
+            series: response.value//[23, 11, 22, 27, 13, 22, 37],
+         });
+      });
+}
+
+function changeDashboardEar(){
+    // $("#apextChartDataFor").html(dataShowingFor+' <i class="mdi mdi-chevron-down ms-1"></i>');
+    $.getJSON('/portal/dashboardEAR', function(response) {
         chart.updateOptions({
             labels: response.key,//['01/01/2003', '02/01/2003', '03/01/2003', '04/01/2003', '05/01/2003', '06/01/2003', '07/01/2003'],
             series: response.value//[23, 11, 22, 27, 13, 22, 37],

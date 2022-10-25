@@ -13,7 +13,8 @@ router.use('/', notification(),(req, res, next) => {
 router.get('/', awaitHandlerFactory(portalController.portal));
 router.get('/dashboard', awaitHandlerFactory(portalController.dashboard));
 router.get('/dashboardLTFD', awaitHandlerFactory(portalController.dashboardLTFD));
-router.get('/dashboardEAR/:days', awaitHandlerFactory(portalController.dashboardEAR));
+router.get('/dashboardEAR', awaitHandlerFactory(portalController.dashboardEAR));
+router.get('/dashboardApex/:days', awaitHandlerFactory(portalController.dashboardApex));
 
 router.get(['/new-user','/new-user/:id'], awaitHandlerFactory(portalController.newUser));
 router.post(['/new-user','/new-user/:id'], awaitHandlerFactory(portalController.newUser_Post));
