@@ -37,6 +37,7 @@ router.get('/bank-account-list-data', awaitHandlerFactory(portalController.bankA
 
 router.get(['/cheque-record','/cheque-record/:id'], awaitHandlerFactory(portalController.chequeRecord));
 router.post(['/cheque-record','/cheque-record/:id'], awaitHandlerFactory(portalController.chequeRecord_Post));
+router.delete(['/cheque-delete/:id'], awaitHandlerFactory(portalController.chequeDelete));
 router.get('/cheque-record-list', awaitHandlerFactory(portalController.chequeRecordList));
 router.get('/cheque-record-list-data', awaitHandlerFactory(portalController.chequeRecordListData));
 

@@ -350,7 +350,40 @@ service.getByName = async (value) => {
             } else {
                 resolve({
                     status: 404,
-                    message: "User not found !"
+                    message: "COA not found !"
+                })
+            }
+        }).catch(function (err) {
+            reject({
+                status: 502,
+                message: err.message
+            })
+        });
+    }).catch(function (err) {
+        log.debug('Error', {
+            error: err.message,
+        });
+        throw err;
+    });
+};
+
+
+service.getByCode = async (value) => {
+    return new Promise(async (resolve, reject) => {
+        await db.ChartOfAccount.findOne({
+            where: {
+                [Op.or]: [{
+                    code: value
+                }]
+            },
+            raw: true
+        }).then(data => {
+            if (data) {
+                resolve(data);
+            } else {
+                resolve({
+                    status: 404,
+                    message: "COA not found !"
                 })
             }
         }).catch(function (err) {

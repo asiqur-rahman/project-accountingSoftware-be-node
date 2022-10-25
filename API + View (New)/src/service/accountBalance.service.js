@@ -21,8 +21,8 @@ service.create = async (req) => {
 
 service.updateByCoaId = async (req) => {
     return new Promise(async (resolve, reject) => {
-        console.log(req.body)
-        await db.AccountBalance.update({
+        
+        await db.AccountBalance.increment({
             amount: req.body.amount
         }, {
             where: {

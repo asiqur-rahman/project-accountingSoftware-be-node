@@ -449,7 +449,6 @@ module.exports.chequeRecord = async (req, res, next) => {
     if (req.params.id) {
       await chequeRecordService.getById(req.params.id)
         .then(detailsInfo => {
-          console.log(detailsInfo)
           res.locals.detailsInfo = detailsInfo;
           res.render('ChequeRecord/create', {
             layout: false
@@ -473,6 +472,14 @@ module.exports.chequeRecord_Post = async (req, res, next) => {
     res.status(200).send({
       msg: [enumm.notification.Error, 'Cheque Record not created !'],
       redirect:`/portal/cheque-record`
+    });
+  });
+}
+
+module.exports.chequeDelete = async (req, res, next) => {
+  chequeRecordService.delete(req).then((data) => {
+    res.status(200).send({
+      status: true
     });
   });
 }

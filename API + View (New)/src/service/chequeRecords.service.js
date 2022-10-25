@@ -8,17 +8,33 @@ const moment = require('moment');
 const Op = require('sequelize').Op;
 const enumm = require('../utils/enum.utils');
 const accountBalanceService = require('./accountBalance.service');
+const accountService = require('./account.service');
+const config= require('../../config/config.json')
 
 const service = {};
 
 service.create = async (req) => {
     return new Promise(async (resolve, reject) => {
         req.body.dateTime=Date.now();
-        await db.ChequeRecord.create(req.body).then(data => {
-            resolve({
-                status: 201,
-                message: 'Cheque was created, Id:' + data.id
-            });
+        await db.ChequeRecord.create(req.body).then(async data => {
+            // await accountBalanceService.updateByCoaId(req).then(() => {
+            //     resolve({
+            //         status: 201,
+            //         message: 'Account was updated !'
+            //     });
+            // })
+            await accountService.getByCode(config.appSettings.BankingGlCode).then(async coa=>{
+                await accountBalanceService.updateByCoaId({body:{
+                    amount: req.body.amount,
+                    userId: req.currentUser,
+                    id: coa.id,
+                }}).then(() => {
+                    resolve({
+                        status: 201,
+                        message: 'Cheque Record was created, Id:' + data.id
+                    });
+                })
+            })
         }).catch(function (err) {
             console.log(err)
             reject({
@@ -144,22 +160,28 @@ service.update = async (req) => {
 
 service.delete = async (req) => {
     return new Promise(async (resolve, reject) => {
-        await db.ChequeRecord.destroy({
-            where: {
-                id: req.params.id
-            },
-        }).then(() => {
-            resolve({
-                status: 200,
-                message: 'Account deleted successfully.'
-            });
-        }).catch(function (err) {
-            reject({
-                status: 502,
-                message: err.message
+        await service.getById(req.params.id).then(async cr=>{
+            await db.ChequeRecord.destroy({
+                where: {
+                    id: req.params.id
+                },
+            }).then(async () => {
+                await accountService.getByCode(config.appSettings.BankingGlCode).then(async coa=>{
+                        await accountBalanceService.updateByCoaId({body:{id:cr.id,amount:cr.amount*(-1)}}).then(() => {
+                            resolve({
+                                status: 200,
+                                message: 'Account deleted successfully.'
+                            });
+                        })
+                    }).catch(function (err) {
+                        reject({
+                            status: 502,
+                            message: err.message
+                        });
+                    });
+                });
             });
         });
-    });
 };
 
 module.exports = service;

@@ -20,7 +20,8 @@
         "SECRET_JWT": "Asiq Application",
         "SessionTimeOut": 3600000,
         "DebugOn": false,
-        "ConsoleLog": true
+        "ConsoleLog": true,
+        "BankingGlCode":"101"
     },
     "logSettings": {
         "DebugLog": true
