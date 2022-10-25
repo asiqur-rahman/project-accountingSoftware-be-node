@@ -104,7 +104,8 @@ module.exports.newUser_Post = async (req, res, next) => {
     await userService.create(req)
       .then(() => {
         res.status(200).send({
-          msg: [enumm.notification.Success, 'User created successfully ! ']
+          msg: [enumm.notification.Success, 'User created successfully ! '],
+          redirect:'/portal/user-list'
         });
       }).catch(function (err) {
         res.status(200).send({

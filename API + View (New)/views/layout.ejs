@@ -62,10 +62,6 @@
     </div>
   </div>
 
-  <!-- <% if(typeof responseMessage!='undefined' && responseMessage.length> 0) { %>
-    <input type="text" id="responseMessage" hidden="true" readonly="true" value="<%=responseMessage%>">
-  <% } %> -->
-
   <!-- Begin page -->
   <div id="layout-wrapper">
 
@@ -130,14 +126,6 @@
               aria-expanded="false">
               <% if(lang=="en") { %>
               <img src="/public/assets/images/flags/us.png" alt="Header Language" height="16">
-              <% } else if(lang=="ru") { %>
-              <img src="/public/assets/images/flags/russia.jpg" alt="Header Language" height="16">
-              <% } else if(lang=="it") { %>
-              <img src="/public/assets/images/flags/italy.jpg" alt="Header Language" height="16">
-              <% } else if(lang=="de") { %>
-              <img src="/public/assets/images/flags/germany.jpg" alt="Header Language" height="16">
-              <% } else if(lang=="es") { %>
-              <img src="/public/assets/images/flags/spain.jpg" alt="Header Language" height="16">
               <% } else if(lang=="ind") { %>
               <img src="/public/assets/images/flags/ind.png" alt="Header Language" height="16">
               <% } else { %>
@@ -458,7 +446,6 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-          <!-- <button type="button" class="btn btn-primary">Understood</button> -->
         </div>
       </div>
     </div>
@@ -525,25 +512,6 @@
       "hideMethod": "fadeOut"
     };
     $(window).on('load', function () {
-      // const errorMsg=$("#error_Msg").val();
-      // const infoMsg=$("#info_Msg").val();
-      // const warMsg=$("#war_Msg").val();
-      // const succMsg=$("#succ_Msg").val();
-      // if(errorMsg){
-      //     toastr["error"](errorMsg)
-      // }
-      // else if(infoMsg){
-      //     toastr["info"](infoMsg)
-      //     // alert(errorMsg)
-      // }
-      // else if(warMsg){
-      //     toastr["warning"](warMsg)
-      //     // alert(errorMsg)
-      // }
-      // else if(succMsg){
-      //     toastr["success"](succMsg)
-      //     // alert(errorMsg)
-      // }
       const msg = $("#toast_Msg").val().split("|,");
       if (msg.length > 1) {
         toastr[msg[0]](msg[1])

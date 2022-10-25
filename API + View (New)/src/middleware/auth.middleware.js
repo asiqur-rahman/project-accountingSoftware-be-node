@@ -168,14 +168,14 @@ module.exports.webAuth = (...roles) => {
             // console.log(decoded);
 
             if (!decoded.user_id && !decoded.roleId) {
-                return res.redirect('/auth/logout');
+                return req.originalUrl == '/portal' ? res.redirect('/auth/logout'):res.status(302).send();
             }
 
             // if the current user is not the owner and
             // if the user role don't have the permission to do this action.
             // the user will get this error
             if ( roles && roles.length && !roles.includes(decoded.role_id)) {
-                return res.redirect('/auth/logout');
+                return req.originalUrl == '/portal' ? res.redirect('/auth/logout'):res.status(302).send();
             }
             // if the user has permissions
             req.currentUser = decoded.user_id;

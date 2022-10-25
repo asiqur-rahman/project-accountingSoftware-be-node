@@ -17,7 +17,7 @@ module.exports.incomeStatement = async (req, res, next) => {
   await reportingService.getIncomeStatement().then(data=>{
     res.locals.title= 'Income Statement';
     res.locals.data = data;
-    res.render('Report/incomeStatement');
+    res.render('Report/incomeStatement',{layout:false});
   });
 }
 
@@ -26,7 +26,7 @@ module.exports.balanceSheet = async (req, res, next) => {
     console.log(data)
     res.locals.title= 'Balance Sheet';
     res.locals.data = data;
-    res.render('Report/balanceSheet');
+    res.render('Report/balanceSheet',{layout:false});
   });
 }
 

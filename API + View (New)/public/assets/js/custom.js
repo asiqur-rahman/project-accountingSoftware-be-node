@@ -27,10 +27,6 @@ async function loadPartial(url,contentId="main-container"){
             else $(`.${contentId}`).html(result);
         },
         error: function (request, status, error) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Internal error !'
-            })
             window.location.replace('/');
         }
     })

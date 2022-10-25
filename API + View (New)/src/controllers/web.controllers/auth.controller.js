@@ -28,15 +28,11 @@ module.exports.login_Post = async (req, res, next) => {
     } else {
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
-        var dashboard = "";
         req.session.notification = [enumm.notification.Error, 'Incorrect password !'];
         res.redirect('/');
       } else {
         // user matched!
         const secretKey = appConfig.appSettings.SECRET_JWT;
-        // if (user['userDetail.role.code'] == enumm.Role.SuperUser || user['role.code'] == enumm.Role.Admin) {
-          dashboard = '/portal';
-        // }
         
         const fullName=`${user['userDetail.firstName']} ${user['userDetail.lastName']}`;
         const token = jwt.sign({
@@ -47,34 +43,18 @@ module.exports.login_Post = async (req, res, next) => {
           role_code: user['userDetail.role.code'].toString(),
           role_name: user['userDetail.role.name'].toString(),
           force_change_password: user.forceChangePassword,
-          clientIp: clientIp.toString(),
-          dashboard: dashboard
+          clientIp: clientIp.toString()
         }, secretKey, {
           expiresIn: appConfig.appSettings.SessionTimeOut
         });
         req.session.user = token;
-        if (user.forceChangePassword != 1) {
-          req.session.notification = [enumm.notification.Warning, 'Hi,  ' + fullName + '</br>Please change your password !'];
-        } else {
-          req.session.notification = [enumm.notification.Info, 'Hi,  ' + fullName + '</br>Welcome to Accounting Software.'];
-        }
-  
         const returnUrl = req.session.returnUrl;
         if (returnUrl) {
           req.session.returnUrl = null;
           res.redirect(returnUrl);
         } else {
-          // if (user['role.code'] == enumm.role.SuperUser || user['role.code'] == enumm.role.Admin) {
-          //   res.redirect('/portal-get-dashboard');
-          // } else if (user['role.code'] == enumm.role.Manager) {
-          //   res.redirect('/portal-attendance-entry');
-          // } else if (user['role.code'] == enumm.role.Employee) {
-          //   res.redirect('/portal-attendance-entry');
-          // } else {
-          //   req.flash('error', 'Sorry, You Have No Access !');
-          //   res.redirect('/logout');
-          // }
-          res.redirect(dashboard);
+          console.log(token,"Portal return")
+          res.redirect('/portal');
         }
       }
     }
