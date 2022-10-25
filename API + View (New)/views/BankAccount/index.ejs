@@ -1,19 +1,8 @@
-
-<!-- DataTables -->
-<link href="/public/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet"
-    type="text/css" />
-<link href="/public/assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet"
-    type="text/css" />
-
-<!-- Responsive datatable examples -->
-<link href="/public/assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet"
-    type="text/css" />
-
 <!-- start page title -->
 <div class="row">
     <div class="col-12">
         <div class="page-title-box d-flex align-items-center justify-content-between">
-            <h4 class="mb-0">Bank Accounts (<a href="javascript: void(0);" onclick="loadPartial('/portal/cheque-record')">Add New</a>)</h4>
+            <h4 class="mb-0">Bank Accounts (<a href="javascript: void(0);" onclick="loadPartial('/portal/bank-account')">Add New</a>)</h4>
         </div>
     </div>
 </div>
@@ -55,7 +44,6 @@
 <!-- Datatable init js -->
 <script defer src="/public/assets/js/pages/datatables.init.js"></script>
 
-<script defer src="/public/assets/js/face-verification.js"></script>
 <script>
     $(document).ready(function () {
         const coloum=[
@@ -64,35 +52,32 @@
                 "title": "#SL",
             },
             {
-                "data": "sl",
-                "title": "Full Name",
-                "render": function (data, type, row, meta) {
-                    return `${row['userDetail.firstName']} ${row['userDetail.lastName']}`;
-                }
+                "data": "name",
+                "title": "Bank Name"
             },
             {
-                "data": "username",
-                "title": "Username",
+                "data": "accountTitle",
+                "title": "Account Title",
             },
             {
-                "data": "role.name",
-                "title": "Role",
-                "render": function (data, type, row, meta) {
-                    return `${row['userDetail.role.name']}`;
-                }
+                "data": "accountNumber",
+                "title": "Account Number",
+            },
+            {
+                "data": "description",
+                "title": "Description",
             },
             {
                 "data": "id",
                 "title": "Action",
                 "render": function (data, type, row, meta) {
                         return `<a class="btn btn-sm btn-success btn-soft-success waves-effect waves-light" href="/portal/new-user/${row['id']}">Update</a> 
-                        <button class="btn btn-sm btn-warning btn-soft-warning waves-effect waves-light" onclick='confirmationCheck_ajax("/portal/user-password-reset/${row['id']}","GET","Reset password will be sent to this email : ${row['userDetail.email']}",false,false)'>Reset Password</button>
                         <button class="btn btn-sm btn-${row['isActive']==1?'primary':'danger'} btn-soft-${row['isActive']==1?'primary':'danger'} waves-effect waves-light" onclick='confirmationCheck_ajax("/portal/user-change-status/${row['id']}","GET","Are you sure ? </br>This user will be in ${row['isActive']==1?'inactive':'active'} status from now on.","datatable-buttons",false)'>${row['isActive']==1?'Active':'InActive'}</button>
                         `
                 }
             }
         ]
-        get_table_data("datatable-buttons","portal/user-list-data",coloum,[],true,true);
+        get_table_data("datatable-buttons","portal/bank-account-list-data",coloum,[],true,true);
     });
 
     // <button class="btn btn-sm btn-danger btn-soft-danger waves-effect waves-light" onclick='deleteEmployeeFaces("/portal-user-delete/${data}",${data})'>Delete</button>

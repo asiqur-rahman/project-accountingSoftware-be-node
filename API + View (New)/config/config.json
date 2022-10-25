@@ -5,7 +5,7 @@
         "database": "drtechma_test",
         "host": "braintechsolution.com",
         "dialect": "mysql",
-        "logging": false,
+        "logging": true,
         "pool": {
             "max": 5,
             "min": 0,

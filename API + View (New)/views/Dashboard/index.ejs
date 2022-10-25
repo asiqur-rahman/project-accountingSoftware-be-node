@@ -95,8 +95,24 @@
     <div class="col-xl-8">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title mb-4">Income vs Expense</h4>
-
+                <div class="float-end">
+                    <div class="dropdown">
+                        <a class="dropdown-toggle text-reset" href="#" id="dropdownMenuButton5"
+                            data-bs-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            <span class="fw-semibold">Sort By :</span> <span class="text-muted" id="apextChartDataFor">Last 7 Days <i class="mdi mdi-chevron-down ms-1"></i></span>
+                        </a>
+        
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton5">
+                            <a class="dropdown-item" href="#" onclick="changeApexData(7, '7 days')">Last 7 Days</a>
+                            <a class="dropdown-item" href="#" onclick="changeApexData(30, '1 Month')">Last 1 Month</a>
+                            <a class="dropdown-item" href="#" onclick="changeApexData(180, '6 Month')">Last 6 Month</a>
+                            <a class="dropdown-item" href="#" onclick="changeApexData(365, '1 Year')">Last 1 Year</a>
+                        </div>
+                    </div>
+                </div>
+                <h4 class="card-title mb-4">Expense</h4>
+                
                 <div id="spline_area" class="apex-charts" dir="ltr"></div>                      
             </div>
         </div><!--end card-->
@@ -105,6 +121,22 @@
     <div class="col-xl-4">
         <div class="card">
             <div class="card-body">
+                <div class="float-end">
+                    <div class="dropdown">
+                        <a class="dropdown-toggle text-reset" href="#" id="dropdownMenuButton5"
+                            data-bs-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            <span class="fw-semibold">Sort By :</span> <span class="text-muted" id="apextChartDataFor">Last 7 Days <i class="mdi mdi-chevron-down ms-1"></i></span>
+                        </a>
+        
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton5">
+                            <a class="dropdown-item" href="#" onclick="changeApexData(7, '7 days')">Last 7 Days</a>
+                            <a class="dropdown-item" href="#" onclick="changeApexData(30, '1 Month')">Last 1 Month</a>
+                            <a class="dropdown-item" href="#" onclick="changeApexData(180, '6 Month')">Last 6 Month</a>
+                            <a class="dropdown-item" href="#" onclick="changeApexData(365, '1 Year')">Last 1 Year</a>
+                        </div>
+                    </div>
+                </div>
                 <h4 class="card-title mb-4">Expenses Overview</h4>
                 
                 <div id="donut_chart" class="apex-charts"  dir="ltr"></div>
@@ -175,7 +207,6 @@
 <!-- Datatable init js -->
 <script defer src="/public/assets/js/pages/datatables.init.js"></script>
 
-<script defer src="/public/assets/js/face-verification.js"></script>
 <script>
     $(document).ready(function () {
         const coloum=[

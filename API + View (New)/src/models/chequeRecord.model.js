@@ -6,11 +6,11 @@ module.exports = (sequelize, Sequelize) => {
       autoIncrement:true,
       primaryKey: true
     },
-    name: {
+    number: {
       type: Sequelize.STRING(),
       allowNull:false,
       validate:{
-        notNull:{ args: true, msg: "Name cannot be empty !!"}
+        notNull:{ args: true, msg: "Number cannot be empty !!"}
       }
     },
     amount: {

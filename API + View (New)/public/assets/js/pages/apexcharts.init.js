@@ -16,9 +16,6 @@ var options = {
     series: [{
         name: 'Income',
         data: [34, 40, 28, 52, 42, 109, 100]
-    }, {
-        name: 'Expense',
-        data: [32, 60, 34, 46, 34, 52, 41]
     }],
     colors: ['#5b73e8', '#f1b44c'],
     xaxis: {

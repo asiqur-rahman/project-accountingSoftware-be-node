@@ -33,10 +33,12 @@ router.post(['/new-chartOfAccount','/new-chartOfAccount/:id'], awaitHandlerFacto
 router.get(['/bank-account','/bank-account/:id'], awaitHandlerFactory(portalController.bankAccount));
 router.post(['/bank-account','/bank-account/:id'], awaitHandlerFactory(portalController.bankAccount_Post));
 router.get('/bank-account-list', awaitHandlerFactory(portalController.bankAccountList));
+router.get('/bank-account-list-data', awaitHandlerFactory(portalController.bankAccountListData));
 
 router.get(['/cheque-record','/cheque-record/:id'], awaitHandlerFactory(portalController.chequeRecord));
 router.post(['/cheque-record','/cheque-record/:id'], awaitHandlerFactory(portalController.chequeRecord_Post));
 router.get('/cheque-record-list', awaitHandlerFactory(portalController.chequeRecordList));
+router.get('/cheque-record-list-data', awaitHandlerFactory(portalController.chequeRecordListData));
 
 router.get('/transaction-list', awaitHandlerFactory(portalController.transactionList));
 router.get('/transaction-details/:id', awaitHandlerFactory(portalController.transactionDetails));

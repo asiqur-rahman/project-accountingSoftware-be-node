@@ -3,16 +3,20 @@ const Logger = require('../externalService/console.log.service');
 var path = require('path');
 const log = new Logger(path.basename(__filename));
 const sequelize = require('sequelize');
+const bcrypt = require('bcryptjs');
+const moment = require('moment');
 const Op = require('sequelize').Op;
+const enumm = require('../utils/enum.utils');
 const accountBalanceService = require('./accountBalance.service');
 
 const service = {};
+
 service.create = async (req) => {
     return new Promise(async (resolve, reject) => {
-        await db.BankAccount.create(req.body).then(async data => {
+        await db.ChequeRecord.create(req.body).then(async data => {
             resolve({
                 status: 201,
-                message: 'Account was created, Id:' + data.id
+                message: 'Cheque was created, Id:' + data.id
             });
         }).catch(function (err) {
             reject({
@@ -54,11 +58,17 @@ service.indexData = async (req) => {
         }
         //-----------------Server side pagination----------------------
 
-        await db.BankAccount.findAndCountAll({
+        await db.ChequeRecord.findAndCountAll({
             offset: parseInt(req.query.start),
             limit : parseInt(req.query.length),
             // subQuery:false,
             where: where,
+            include: [
+                {
+                    model: db.BankAccount,
+                    attributes: ['name']
+                }
+            ],
             order: order,
             raw: true
         }).then(detailsInfo => {
@@ -78,7 +88,7 @@ service.indexData = async (req) => {
 
 service.update = async (req) => {
     return new Promise(async (resolve, reject) => {
-        await db.BankAccount.update(req.body, {
+        await db.ChequeRecord.update(req.body, {
             where: {
                 id: req.body.id
             }
@@ -102,7 +112,7 @@ service.update = async (req) => {
 
 service.delete = async (req) => {
     return new Promise(async (resolve, reject) => {
-        await db.BankAccount.destroy({
+        await db.ChequeRecord.destroy({
             where: {
                 id: req.params.id
             },

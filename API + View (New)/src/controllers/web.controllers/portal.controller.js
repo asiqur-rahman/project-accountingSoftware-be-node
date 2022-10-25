@@ -14,6 +14,8 @@ const accountService = require('../../service/account.service');
 const transactionService = require('../../service/transaction.service');
 const userService = require('../../service/user.service');
 const taxService = require('../../service/tax.service');
+const bankAccountService = require('../../service/bankAccount.service');
+const chequeRecordService = require('../../service/chequeRecords.service');
 const {
   details
 } = require('@hapi/joi/lib/errors');
@@ -399,6 +401,18 @@ module.exports.newTransaction_Post_ = async (req, res, next) => {
 //#endregion
 
 //#region Bank Account
+module.exports.bankAccount = async (req, res, next) => {
+  res.render('BankAccount/create', {
+    layout: false
+  });
+}
+
+module.exports.bankAccount_Post = async (req, res, next) => {
+  userService.create(req).then(data => {
+    res.status(200).send(data);
+  });
+}
+
 module.exports.bankAccountList = async (req, res, next) => {
   res.locals.title = 'Bank Account List';
   res.render('BankAccount/index', {
@@ -407,7 +421,7 @@ module.exports.bankAccountList = async (req, res, next) => {
 }
 
 module.exports.bankAccountListData = async (req, res, next) => {
-  userService.indexData(req).then(data => {
+  bankAccountService.indexData(req).then(data => {
     res.status(200).send(data);
   });
 }
@@ -420,6 +434,12 @@ module.exports.chequeRecord = async (req, res, next) => {
   });
 }
 
+module.exports.chequeRecord_Post = async (req, res, next) => {
+  res.render('ChequeRecord/create', {
+    layout: false
+  });
+}
+
 module.exports.chequeRecordList = async (req, res, next) => {
   res.locals.title = 'Cheque Record List';
   res.render('ChequeRecord/index', {
@@ -427,8 +447,8 @@ module.exports.chequeRecordList = async (req, res, next) => {
   });
 }
 
-module.exports.chequeRecordData = async (req, res, next) => {
-  userService.indexData(req).then(data => {
+module.exports.chequeRecordListData = async (req, res, next) => {
+  chequeRecordService.indexData(req).then(data => {
     res.status(200).send(data);
   });
 }
