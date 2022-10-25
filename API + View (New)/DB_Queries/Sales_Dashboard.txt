@@ -1,9 +1,13 @@
-CREATE OR REPLACE  PROCEDURE `Sales_Dashboard`(
-	days INT
-)
-BEGIN
-	-- DROP PROCEDURE IF EXISTS `Sales_Dashboard`;
-	
-	select t.totalPrice,id.vat ,id.subTotal  from tallies t left join invoiceDetails id on t.invoiceNo = id.invoiceNo where (t.`date` BETWEEN  DATE_SUB(CURDATE(), INTERVAL days DAY) AND CURDATE()) and  t.status = 2 ;
+select SUM(t.amount) as total, DATE_FORMAT(t.`dateTime`, "%d/%m/%Y") as date
+	from transactions  t  where (t.`dateTime` BETWEEN  DATE_SUB(CURDATE(), INTERVAL 30 DAY) AND CURDATE()) GROUP by t.`dateTime`  order by DATE(t.`dateTime`) asc;
 
-END;
+select GROUP_CONCAT(DATE_FORMAT(t.`dateTime`, "%d/%m/%Y") ORDER BY t.`dateTime` ASC  SEPARATOR ',') as dates,
+		GROUP_CONCAT(t.amount ORDER BY t.`dateTime` ASC SEPARATOR ',') as sales
+from transactions t where (t.`dateTime` BETWEEN  DATE_SUB(CURDATE(), INTERVAL 30 DAY) AND CURDATE()) order by DATE(t.`dateTime`) asc;
+
+
+
+select GROUP_CONCAT(t.amount) from transactions t
+
+select * from (select sum(t.amount) as amount, t.`dateTime`  from transactions t group by t.`dateTime`) as r
+	
