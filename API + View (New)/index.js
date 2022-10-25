@@ -31,6 +31,7 @@ var sslOptions = {
 app.use(compression()); // compress all responses
 app.use(minifyHTML({ // minify all html responsesls
     override:      true,
+    exception_url: false,
     htmlMinifier: {
         removeComments:            true,
         collapseWhitespace:        true,
@@ -57,7 +58,7 @@ app.use(session({
 app.use(flash());
 app.use(i18n({
   translationsPath: path.join(__dirname, 'i18n'), // <--- use here. Specify translations files path.
-  siteLangs: ["es", "en", "de", "ru", "it", "fr", "ind"],
+  siteLangs: ["en", "ind"],
   textsVarName: 'translation'
 }));
 
@@ -101,25 +102,6 @@ app.use((err, req, res, next) => {
 
 //#region Server Start and Routing
 
-// Turn config
-const turnUrls = config.serverSettings.Mode_Production ? config.serverSettings.TURN_URLS : 'turn:numb.viagenie.ca';
-const turnUsername = config.serverSettings.Mode_Production ? config.serverSettings.TURN_USERNAME : 'webrtc@live.com';
-const turnCredential = config.serverSettings.Mode_Production ? config.serverSettings.TURN_PASSWORD : 'muazkh';
-
-const iceServers = [];
-
-iceServers.push({
-    urls: 'stun:stun.l.google.com:19302',
-}, {
-    urls: turnUrls,
-    username: turnUsername,
-    credential: turnCredential,
-}, );
-
-//#region Server Start
-log.debug('Server IceServers ', {
-    iceServers: iceServers,
-});
 if(config.appSettings.httpPort){
     const httpPort = Number(process.env.PORT || config.appSettings.httpPort);
     http.createServer(app).listen(httpPort, function () {
@@ -131,19 +113,13 @@ if(config.appSettings.httpPort){
   }
   if(config.appSettings.httpsPort){
     const httpsServer = https.createServer(sslOptions, app);
-    io = require('socket.io')(httpsServer, {
-        maxHttpBufferSize: 1e7,
-        transports: ['polling'] //['polling','websocket'] // Only using polling for auto re-connection
-    });
     httpsServer.listen(Number(process.env.PORT || config.appSettings.httpsPort), () => {
         log.debug('HTTPS Server Ready ', {
             port: config.appSettings.httpsPort,
             node_version: process.versions.node,
         });
     });
-    require('./src/socketEvent/socketEvent')(io,iceServers); 
   }
-//#endregion
 
 RouteService(app);
 //#endregion

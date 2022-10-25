@@ -270,13 +270,25 @@
             <li>
               <a href="javascript: void(0);" class="has-arrow waves-effect">
                 <i class="fas fa-list-alt"></i>
-                <span><%=translation.ChequeManagement%></span>
+                <span><%=translation.BankAccount%></span>
               </a>
               <ul class="sub-menu" aria-expanded="false">
                 <li><a href="javascript: void(0);"
-                    onclick="loadPartial('/portal/bank-account-list')"><%=translation.BankAccount%></a></li>
+                    onclick="loadPartial('/portal/bank-account')"><%=translation.NewBankAccount%></a></li>
                 <li><a href="javascript: void(0);"
-                    onclick="loadPartial('/portal/cheque-record-list')"><%=translation.ChequeRecord%></a></li>
+                    onclick="loadPartial('/portal/bank-account-list')"><%=translation.BankAccountList%></a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="javascript: void(0);" class="has-arrow waves-effect">
+                <i class="fas fa-list-alt"></i>
+                <span><%=translation.ChequeRecord%></span>
+              </a>
+              <ul class="sub-menu" aria-expanded="false">
+                <li><a href="javascript: void(0);"
+                    onclick="loadPartial('/portal/cheque-record')"><%=translation.newChequeRecord%></a></li>
+                <li><a href="javascript: void(0);"
+                    onclick="loadPartial('/portal/cheque-record-list')"><%=translation.ChequeRecordList%></a></li>
               </ul>
             </li>
             <!---------Report End------------->
@@ -434,17 +446,17 @@
   <!-- staticBackdrop Modal -->
   <div class="modal fade" id="customModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     role="dialog" aria-labelledby="customModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="customModalLabel">Modal title</h5>
+          <h5 class="modal-title" id="customModalLabel"></h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
           </button>
         </div>
         <div class="modal-body" id="customModalBody">
-          <p>I will not close if you click outside me. Don't even try to press escape key.</p>
+
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer" style="display:none;">
           <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
         </div>
       </div>

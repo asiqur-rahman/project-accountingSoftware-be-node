@@ -64,5 +64,9 @@
   "BalanceSheet":"Balance Sheet",
   "ChequeManagement":"Cheque Management",
   "BankAccount":"Bank Account",
-  "ChequeRecord":"Cheque Record"
+  "NewBankAccount":"New Bank Account",
+  "BankAccountList":"Bank Account List",
+  "ChequeRecord":"Cheque Record",
+  "ChequeRecordList":"Cheque Record List",
+  "newChequeRecord":"New Cheque Record"
 }

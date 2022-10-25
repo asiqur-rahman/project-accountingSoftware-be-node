@@ -148,10 +148,10 @@ module.exports.webAuth = (...roles) => {
         try {
             // res.session.returnUrl = req.originalUrl;
             // sess = req.session;
-            console.log(req.originalUrl)
             if (!req.session || !req.session.user) {
                 req.session.notification=[enumm.notification.Error,'Access denied. No credentials sent !'];
-                console.log('Access denied. No credentials sent !')
+                console.log('Access denied. No credentials sent !');
+                req.session.destroy();
                 return req.originalUrl == '/portal' ? res.redirect('/auth/logout'):res.status(302).send();
             }
             const token = req.session.user;
@@ -168,6 +168,7 @@ module.exports.webAuth = (...roles) => {
             // console.log(decoded);
 
             if (!decoded.user_id && !decoded.roleId) {
+                req.session.destroy();
                 return req.originalUrl == '/portal' ? res.redirect('/auth/logout'):res.status(302).send();
             }
 
@@ -175,6 +176,7 @@ module.exports.webAuth = (...roles) => {
             // if the user role don't have the permission to do this action.
             // the user will get this error
             if ( roles && roles.length && !roles.includes(decoded.role_id)) {
+                req.session.destroy();
                 return req.originalUrl == '/portal' ? res.redirect('/auth/logout'):res.status(302).send();
             }
             // if the user has permissions

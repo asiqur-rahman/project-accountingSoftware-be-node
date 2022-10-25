@@ -27,6 +27,10 @@ module.exports = (sequelize, Sequelize) => {
         notNull:{ args: true, msg: "Account Title cannot be empty !!"}
       }
     },
+    description: {
+      type: Sequelize.STRING(),
+      allowNull:true,
+    },
     isActive: {
       type: Sequelize.BOOLEAN(),
       allowNull:false,

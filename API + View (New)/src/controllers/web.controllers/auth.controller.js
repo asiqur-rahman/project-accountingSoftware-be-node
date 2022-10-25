@@ -53,7 +53,6 @@ module.exports.login_Post = async (req, res, next) => {
           req.session.returnUrl = null;
           res.redirect(returnUrl);
         } else {
-          console.log(token,"Portal return")
           res.redirect('/portal');
         }
       }

@@ -10,7 +10,7 @@ const Spinner = {
     }
 };
 
-async function loadPartial(url,contentId="main-container"){
+async function loadPartial(url,contentId=null,modal=false){
     // $("#sidebar-menu mm-active active").removeClass("active");
     if(document.querySelector("#sidebar-menu .mm-active .active"))document.querySelector("#sidebar-menu .mm-active .active").classList.remove("active")
     await $.ajax({
@@ -24,7 +24,16 @@ async function loadPartial(url,contentId="main-container"){
         },
         success: function (result,textStatus, xhr) {
             if(xhr.status==302)window.location.replace('/');
-            else $(`.${contentId}`).html(result);
+            else {
+                if(!modal)$(`.${contentId??"main-container"}`).html(result);
+                else{
+                    $("#customModalLabel").html(modal[0]);
+                    $("#customModalBody").html(result);
+                    if(modal[1]) $("#customModal .modal-footer").show(); //show close btn (scb)
+                    else $("#customModal .modal-footer").hide();
+                    $('#customModal').modal('toggle');
+                }
+            }
         },
         error: function (request, status, error) {
             window.location.replace('/');
