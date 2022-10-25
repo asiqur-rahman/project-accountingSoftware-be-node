@@ -21,21 +21,13 @@
                                 <label for="detailsInfoId" class="col-md-4 col-form-label">Bank</label>
                                 <div class="col-md-8">
                                     <div class="input-group" data-validate="Bank is required">
-                                        <select class="form-select validate_this select2" name="roleId" id="roleId">
+                                        <select class="form-select validate_this select2" name="bankAccountId" id="bankAccountId">
                                             <option value="" disabled selected>Select</option>
-                                            <% if(locals.bankDD) {for(var i=0; i<bankDD.length; i++){%>
-                                                <option value="<%=bankDD[i].id%>" <%=typeof detailsInfo!="undefined" ? bankDD[i].id==detailsInfo.bankAccountId? 'selected':'' : ''%>><%=bankDD[i].name%></option>
+                                            <% if(locals.bankAccountDD) {for(var i=0; i<bankAccountDD.length; i++){%>
+                                                <option value="<%=bankAccountDD[i].id%>" <%=typeof detailsInfo!="undefined" ? bankAccountDD[i].id==detailsInfo.bankAccountId? 'selected':'' : ''%>><%=bankAccountDD[i].name%></option>
                                             <%}}%>
                                         </select>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3 row">
-                                <label for="accountTitle" class="col-md-4 col-form-label">Account Title</label>
-                                <div class="col-md-8">
-                                    <input class="form-control" type="text" name="accountTitle" id="accountTitle" value="<%= typeof detailsInfo!='undefined' ? detailsInfo.accountTitle : '' %>" readonly="readonly">
                                 </div>
                             </div>
                         </div>

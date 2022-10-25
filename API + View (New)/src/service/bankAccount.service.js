@@ -7,6 +7,7 @@ const Op = require('sequelize').Op;
 const accountBalanceService = require('./accountBalance.service');
 
 const service = {};
+
 service.create = async (req) => {
     return new Promise(async (resolve, reject) => {
         await db.BankAccount.create(req.body).then(async data => {
@@ -23,6 +24,52 @@ service.create = async (req) => {
     })
 };
 
+
+service.getById = async (id) => {
+    return new Promise(async (resolve, reject) => {
+        await db.BankAccount.findOne({
+            where: {
+                id: id
+            },
+            raw: true
+        }).then(data => {
+            if (data) {
+                resolve(data);
+            } else {
+                resolve({
+                    status: 404,
+                    message: "Bank Account not found !"
+                })
+            }
+        }).catch(function (err) {
+            reject({
+                status: 502,
+                message: err.message
+            })
+        });
+    }).catch(function (err) {
+        log.debug('Error', {
+            error: err.message,
+        });
+        throw err;
+    });
+};
+
+service.getBankAccountDD =async ()=> {
+    return await db.BankAccount.findAll({
+        where: {
+            [Op.and]: [{
+                isActive: {
+                    [Op.eq]: true
+                }
+            }]
+        },
+        attributes: ['id','name'],
+        raw: true
+    }).then(data => {
+        return data;
+    })
+};
 
 service.indexData = async (req) => {
     return new Promise(async (resolve, reject) => {

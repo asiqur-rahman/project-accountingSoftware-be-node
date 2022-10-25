@@ -13,12 +13,14 @@ const service = {};
 
 service.create = async (req) => {
     return new Promise(async (resolve, reject) => {
-        await db.ChequeRecord.create(req.body).then(async data => {
+        req.body.dateTime=Date.now();
+        await db.ChequeRecord.create(req.body).then(data => {
             resolve({
                 status: 201,
                 message: 'Cheque was created, Id:' + data.id
             });
         }).catch(function (err) {
+            console.log(err)
             reject({
                 status: 502,
                 message: err.message
@@ -27,6 +29,36 @@ service.create = async (req) => {
     })
 };
 
+
+service.getById = async (id) => {
+    return new Promise(async (resolve, reject) => {
+        await db.ChequeRecord.findOne({
+            where: {
+                id: id
+            },
+            raw: true
+        }).then(data => {
+            if (data) {
+                resolve(data);
+            } else {
+                resolve({
+                    status: 404,
+                    message: "Bank Account not found !"
+                })
+            }
+        }).catch(function (err) {
+            reject({
+                status: 502,
+                message: err.message
+            })
+        });
+    }).catch(function (err) {
+        log.debug('Error', {
+            error: err.message,
+        });
+        throw err;
+    });
+};
 
 service.indexData = async (req) => {
     return new Promise(async (resolve, reject) => {

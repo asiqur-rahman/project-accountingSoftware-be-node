@@ -16,9 +16,6 @@ const userService = require('../../service/user.service');
 const taxService = require('../../service/tax.service');
 const bankAccountService = require('../../service/bankAccount.service');
 const chequeRecordService = require('../../service/chequeRecords.service');
-const {
-  details
-} = require('@hapi/joi/lib/errors');
 
 //#region Dashboard
 module.exports.portal = async (req, res, next) => {
@@ -402,14 +399,32 @@ module.exports.newTransaction_Post_ = async (req, res, next) => {
 
 //#region Bank Account
 module.exports.bankAccount = async (req, res, next) => {
-  res.render('BankAccount/create', {
-    layout: false
-  });
+    if (req.params.id) {
+      await bankAccountService.getById(req.params.id)
+        .then(detailsInfo => {
+          res.locals.model = detailsInfo;
+          res.render('User/create', {
+            layout: false
+          });
+        })
+    } else {
+      res.render('BankAccount/create', {
+        layout: false
+      });
+    }
 }
 
 module.exports.bankAccount_Post = async (req, res, next) => {
-  userService.create(req).then(data => {
-    res.status(200).send(data);
+  bankAccountService.create(req).then(data => {
+    res.status(200).send({
+      msg: [enumm.notification.Success, 'Bank Account created successfully !'],
+      redirect:`/portal/bank-account-list`
+    });
+  }).catch(e => {
+    res.status(200).send({
+      msg: [enumm.notification.Error, 'Bank Account not created !'],
+      redirect:`/portal/bank-account`
+    });
   });
 }
 
@@ -429,14 +444,36 @@ module.exports.bankAccountListData = async (req, res, next) => {
 
 //#region Cheque Record
 module.exports.chequeRecord = async (req, res, next) => {
-  res.render('ChequeRecord/create', {
-    layout: false
+  await bankAccountService.getBankAccountDD().then(async data => {
+    res.locals.bankAccountDD = data;
+    if (req.params.id) {
+      await chequeRecordService.getById(req.params.id)
+        .then(detailsInfo => {
+          console.log(detailsInfo)
+          res.locals.detailsInfo = detailsInfo;
+          res.render('ChequeRecord/create', {
+            layout: false
+          });
+        })
+    } else {
+      res.render('ChequeRecord/create', {
+        layout: false
+      });
+    }
   });
 }
 
 module.exports.chequeRecord_Post = async (req, res, next) => {
-  res.render('ChequeRecord/create', {
-    layout: false
+  chequeRecordService.create(req).then(data => {
+    res.status(200).send({
+      msg: [enumm.notification.Success, 'Cheque Record created successfully !'],
+      redirect:`/portal/cheque-record-list`
+    });
+  }).catch(e => {
+    res.status(200).send({
+      msg: [enumm.notification.Error, 'Cheque Record not created !'],
+      redirect:`/portal/cheque-record`
+    });
   });
 }
 
