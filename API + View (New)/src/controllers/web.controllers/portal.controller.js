@@ -195,10 +195,8 @@ module.exports.newChartOfAccount_Get = async (req, res, next) => {
 }
 
 module.exports.chartOfAccountByBaseCode = async (req, res, next) => {
-  console.log(req.params.code)
   await accountService.chartOfAccountDDByBaseCode(req.params.code)
     .then(data => {
-      console.log(data)
       res.status(200).send(data);
     }).catch(e => {
       res.status(e.status).send(e);

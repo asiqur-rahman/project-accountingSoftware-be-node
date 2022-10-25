@@ -242,7 +242,7 @@ service.createWithDetails = async (req) => {
             });
             await db.TransactionDetails.bulkCreate(details).then(result =>{
                 details.forEach(async element => {
-                    await db.AccountBalance.increment({amount:element.debit?element.debit*-1:element.credit},{where:{chartOfAccountId:element.chartOfAccountId}});
+                    await db.AccountBalance.increment({amount:element.debit?element.debit:element.credit*-1},{where:{chartOfAccountId:element.chartOfAccountId}});
                 });
                 resolve({
                     status: 201,

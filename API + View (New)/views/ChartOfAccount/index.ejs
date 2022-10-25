@@ -132,7 +132,8 @@ input, label {
               </div>
                 <ol class="wtree">
                     <% if(locals.data) {for(var i=0; i<data.length; i++){%>
-                        <li><span><%=data[i].name%> (<a href="javascript: void(0);" onclick="loadPartial('/portal/new-chartOfAccount/<%=data[i].id%>')">Edit</a>)<p>BDT <%=data[i]['accountBalances.amount']%> Tk.</p></span>
+                        <!-- <li><span><%=data[i].name%> (<a href="javascript: void(0);" onclick="loadPartial('/portal/new-chartOfAccount/<%=data[i].id%>')">Edit</a>)<p>BDT <%=data[i]['accountBalances.amount']%> Tk.</p></span> -->
+                          <li><span><%=data[i].name%> <p>BDT <%=data[i]['accountBalances.amount']%> Tk.</p></span>
                             <ol>
                                 <% if(data[i].childs) { for(var j=0; j<data[i].childs.length; j++){%>
                                     <li>
