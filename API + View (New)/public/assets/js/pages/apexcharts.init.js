@@ -15,12 +15,12 @@ var options = {
     },
     series: [{
         name: 'Income',
-        data: [34, 40, 28, 52, 42, 109, 100]
+        data: [0]
     }],
     colors: ['#5b73e8', '#f1b44c'],
     xaxis: {
         type: 'date',
-        categories: ["22-09-19", "22-09-19", "22-09-19", "22-09-19", "22-09-19", "22-09-19", "22-09-19"],                
+        categories: ["0000"],                
     },
     grid: {
         borderColor: '#f1f1f1',
@@ -32,12 +32,28 @@ var options = {
     }
 }
 
-var chart = new ApexCharts(
+var apexChart = new ApexCharts(
     document.querySelector("#spline_area"),
     options
 );
+function changeApexData(dataFor, dataShowingFor){
+    $("#apextChartDataFor").html(dataShowingFor+' <i class="mdi mdi-chevron-down ms-1"></i>');
+    $.getJSON('/portal/dashboardApex/'+dataFor, function(response) {
+        debugger;
+        const labels=response?response[0].dates.split(","):[0]
+        const data=response?response[0].sales.split(","):[0]
+        apexChart.updateOptions({
+            labels: labels,//['01/01/2003', '02/01/2003', '03/01/2003', '04/01/2003', '05/01/2003', '06/01/2003', '07/01/2003'],
+            series: [{
+                name: 'Expense',
+                type: 'area',
+                data: data //23, 11, 22, 27, 13, 22, 37]
+            }],
+         });
+      });
+}
 
-chart.render();
+apexChart.render();
 
 // Donut chart
 
@@ -76,15 +92,6 @@ var chart = new ApexCharts(
   document.querySelector("#donut_chart"),
   options
 );
-function changeApexData(dataFor, dataShowingFor){
-    // $("#apextChartDataFor").html(dataShowingFor+' <i class="mdi mdi-chevron-down ms-1"></i>');
-    $.getJSON('/portal/dashboardEAR', function(response) {
-        chart.updateOptions({
-            labels: response.key,//['01/01/2003', '02/01/2003', '03/01/2003', '04/01/2003', '05/01/2003', '06/01/2003', '07/01/2003'],
-            series: response.value//[23, 11, 22, 27, 13, 22, 37],
-         });
-      });
-}
 
 function changeDashboardEar(){
     // $("#apextChartDataFor").html(dataShowingFor+' <i class="mdi mdi-chevron-down ms-1"></i>');

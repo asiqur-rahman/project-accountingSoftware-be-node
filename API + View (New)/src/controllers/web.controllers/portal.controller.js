@@ -50,7 +50,7 @@ module.exports.dashboardApex = async (req, res, next) => {
       }
     })
     .then(async function (data) {
-      console.log(data)
+      res.status(200).send(data);
     })
 }
 
