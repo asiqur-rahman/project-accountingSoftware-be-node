@@ -21,19 +21,35 @@ service.create = async (req) => {
 
 service.updateByCoaId = async (req) => {
     return new Promise(async (resolve, reject) => {
+        if(req.body.amount>0){
+            await db.AccountBalance.increment({
+                amount: req.body.amount
+            }, {
+                where: {
+                    chartOfAccountId: req.body.id
+                }
+            }).then((result) => {
+                resolve({
+                    status: 200,
+                    message: 'Account Balance updated successfully'
+                });
+            })
+        }
+        else{
+            await db.AccountBalance.decrement({
+                amount: req.body.amount*(-1)
+            }, {
+                where: {
+                    chartOfAccountId: req.body.id
+                }
+            }).then((result) => {
+                resolve({
+                    status: 200,
+                    message: 'Account Balance updated successfully'
+                });
+            })
+        }
         
-        await db.AccountBalance.increment({
-            amount: req.body.amount
-        }, {
-            where: {
-                chartOfAccountId: req.body.id
-            }
-        }).then((result) => {
-            resolve({
-                status: 200,
-                message: 'Account Balance updated successfully'
-            });
-        })
     })
 };
 

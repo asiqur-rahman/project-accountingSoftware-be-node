@@ -21,7 +21,8 @@
         "SessionTimeOut": 3600000,
         "DebugOn": false,
         "ConsoleLog": true,
-        "BankingGlCode":"101"
+        "BankingGlCode":"101",
+        "BankingGlLevel":0
     },
     "logSettings": {
         "DebugLog": true

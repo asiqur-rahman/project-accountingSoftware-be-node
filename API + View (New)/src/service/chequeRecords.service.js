@@ -23,7 +23,7 @@ service.create = async (req) => {
             //         message: 'Account was updated !'
             //     });
             // })
-            await accountService.getByCode(config.appSettings.BankingGlCode).then(async coa=>{
+            await accountService.getByCodeAndLevel({code:config.appSettings.BankingGlCode,level:config.appSettings.BankingGlLevel}).then(async coa=>{
                 await accountBalanceService.updateByCoaId({body:{
                     amount: req.body.amount,
                     userId: req.currentUser,
@@ -166,8 +166,8 @@ service.delete = async (req) => {
                     id: req.params.id
                 },
             }).then(async () => {
-                await accountService.getByCode(config.appSettings.BankingGlCode).then(async coa=>{
-                        await accountBalanceService.updateByCoaId({body:{id:cr.id,amount:cr.amount*(-1)}}).then(() => {
+                await accountService.getByCodeAndLevel({code:config.appSettings.BankingGlCode,level:config.appSettings.BankingGlLevel}).then(async coa=>{
+                        await accountBalanceService.updateByCoaId({body:{id:coa.id,amount:cr.amount*(-1)}}).then(() => {
                             resolve({
                                 status: 200,
                                 message: 'Account deleted successfully.'

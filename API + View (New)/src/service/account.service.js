@@ -400,6 +400,44 @@ service.getByCode = async (value) => {
     });
 };
 
+service.getByCodeAndLevel = async (value) => {
+    return new Promise(async (resolve, reject) => {
+        await db.ChartOfAccount.findOne({
+            where: {
+                [Op.and]: [{
+                    code: {
+                        [Op.eq]: value.code
+                    }
+                }, {
+                    level: {
+                        [Op.eq]: value.level
+                    }
+                }]
+            },
+            raw: true
+        }).then(data => {
+            if (data) {
+                resolve(data);
+            } else {
+                resolve({
+                    status: 404,
+                    message: "COA not found !"
+                })
+            }
+        }).catch(function (err) {
+            reject({
+                status: 502,
+                message: err.message
+            })
+        });
+    }).catch(function (err) {
+        log.debug('Error', {
+            error: err.message,
+        });
+        throw err;
+    });
+};
+
 service.delete = async (req) => {
     return new Promise(async (resolve, reject) => {
         await db.ChartOfAccount.destroy({
