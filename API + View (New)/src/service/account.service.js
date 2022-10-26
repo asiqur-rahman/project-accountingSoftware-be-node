@@ -140,7 +140,7 @@ service.update = async (req) => {
         });
 };
 
-service.chartOfAccountDD =async ()=> {
+service.chartOfAccountDD =async (withHeaders=true)=> {
     return await db.ChartOfAccount.findAll({
         where: {
             [Op.and]: [{

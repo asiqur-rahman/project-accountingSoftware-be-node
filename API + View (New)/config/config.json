@@ -5,7 +5,7 @@
         "database": "drtechma_test",
         "host": "braintechsolution.com",
         "dialect": "mysql",
-        "logging": false,
+        "logging": true,
         "pool": {
             "max": 5,
             "min": 0,
@@ -19,7 +19,7 @@
         "database": "haordlsc_ac",
         "host": "51.210.52.244",
         "dialect": "mysql",
-        "logging": false,
+        "logging": true,
         "pool": {
             "max": 5,
             "min": 0,

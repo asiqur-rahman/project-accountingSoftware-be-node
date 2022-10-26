@@ -68,5 +68,6 @@
   "BankAccountList":"Bank Account List",
   "ChequeRecord":"Cheque Record",
   "ChequeRecordList":"Cheque Record List",
-  "newChequeRecord":"New Cheque Record"
+  "NewChequeRecord":"New Cheque Record",
+  "FilterRecord":"Filter Record"
 }

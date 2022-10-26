@@ -10,6 +10,7 @@ $('.validate-this-form').on('submit', function (e) {
         Spinner.Hide();
         var debitAmount = 0;
         var creditAmount = 0;
+        debugger;
         for (var i = 0; i < formDataArray.length; i++) {
             if (formDataArray[i].name.includes('[debit]')) {
                 const value=formDataArray[i].value;//$(`input[name='transactionDetails[${i}][debit]']`).val();
@@ -20,17 +21,22 @@ $('.validate-this-form').on('submit', function (e) {
                 creditAmount += parseInt(value?value:0);
             }
         }
-        const mainAmount=formDataArray.filter(x=>x.name=="amount").value;
+        const mainAmount=formDataArray.filter(x=>x.name=="amount")[0].value;
         debugger;
         if (debitAmount == creditAmount && debitAmount == mainAmount) {
             canSubmitNow=true;
+        } 
+        else if (debitAmount == creditAmount && debitAmount != mainAmount) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Main Amount and Debit Credit Amount are not the same.'
+            })
         } 
         else {
             Swal.fire({
                 icon: 'error',
                 title: 'Debit and Credit not matched !'
-            })
-            return false;
+            });
         }
     }
     if(canSubmitNow){

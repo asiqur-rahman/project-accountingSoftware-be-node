@@ -31,18 +31,18 @@ var sslOptions = {
 //#region Application Configuration
 app.use(compression()); // compress all responses
 // app.use(minify());
-app.use(minifyHTML({
-    override:      true,
-    exception_url: false,
-    htmlMinifier: {
-        removeComments:            true,
-        collapseWhitespace:        true,
-        collapseBooleanAttributes: true,
-        removeAttributeQuotes:     true,
-        removeEmptyAttributes:     true,
-        minifyJS:                  true
-    }
-}));
+// app.use(minifyHTML({
+//     override:      true,
+//     exception_url: false,
+//     htmlMinifier: {
+//         removeComments:            true,
+//         collapseWhitespace:        true,
+//         collapseBooleanAttributes: true,
+//         removeAttributeQuotes:     true,
+//         removeEmptyAttributes:     true,
+//         minifyJS:                  true
+//     }
+// }));
 
 app.use(session({
   key: config.appSettings.SECRET_KEY,

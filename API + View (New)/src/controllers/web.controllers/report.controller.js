@@ -34,4 +34,21 @@ module.exports.balanceSheet = async (req, res, next) => {
   });
 }
 
+module.exports.filterReport = async (req, res, next) => {
+  await accountService.chartOfAccountDD().then(async coaAll => {
+    const todayDate=moment().format("MM/DD/yyyy");
+    res.locals.todayDate = todayDate;
+    res.locals.coaAll = coaAll;
+    res.render('Report/filterReport',{layout:false});
+  });
+}
+
+module.exports.filterReportData = async (req, res, next) => {
+  console.log(req.body)
+  await reportingService.getFilterRecordData(req).then(data=>{
+    res.locals.data = data;
+    res.render('Report/filterReportDetails',{layout:false});
+  });
+}
+
 //#endregion

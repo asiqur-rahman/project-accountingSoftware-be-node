@@ -12,5 +12,7 @@ router.use('/', notification(),(req, res, next) => {
 router.get('/income-statement', awaitHandlerFactory(reportController.incomeStatement));
 router.post('/income-statement-data', awaitHandlerFactory(reportController.incomeStatementData));
 router.get('/balance-sheet', awaitHandlerFactory(reportController.balanceSheet));
+router.get('/filter-report', awaitHandlerFactory(reportController.filterReport));
+router.post('/filter-report-data', awaitHandlerFactory(reportController.filterReportData));
 
 module.exports = router;

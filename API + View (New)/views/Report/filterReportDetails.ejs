@@ -1,0 +1,34 @@
+<div class="row">
+  <div class="col-lg-12">
+      <div class="card">
+          <div class="card-body">
+              <div class="table-responsive">
+                  <table class="table table-centered table-nowrap mb-0">
+                      <thead class="table-light">
+                          <tr>
+                              <th>#SL</th>
+                              <th>Date</th>
+                              <th>Account Name</th>
+                              <th>Debit</th>
+                              <th>Credit</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <% if(locals.data) {for(var i=0; i<data.length; i++){%>
+                              <tr>
+                                  <td><a href="javascript: void(0);" class="text-body fw-bold"><%=i+1%></a> </td>
+                                  <td><%=data[i].dateTime%></td>
+                                  <td><%=data[i].name%></td>
+                                  <td><%=data[i].debit%></td>
+                                  <td><%=data[i].credit%></td>
+                              </tr>
+                          <%}}%>
+
+                      </tbody>
+                  </table>
+              </div>
+              <!-- end table-responsive -->
+          </div>
+      </div>
+  </div>
+</div>

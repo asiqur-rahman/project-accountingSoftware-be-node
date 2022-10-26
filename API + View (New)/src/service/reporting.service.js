@@ -221,4 +221,27 @@ service.getBalanceSheet = async () => {
     });
 };
 
+
+service.getFilterRecordData = async (req) => {
+    return new Promise(async (resolve, reject) => {
+        console.log(new Date(req.body.toDate))
+    await db.sequelize.query('CALL SP_FilterRecord (:fromDate,:toDate,:charAccountId)', {
+        replacements: {
+            fromDate: moment(req.body.fromdate).format("yyyy-MM-DD"),
+            toDate: moment(req.body.toDate).format("yyyy-MM-DD"),
+            charAccountId: req.body.charAccountId?req.body.charAccountId.toString():'0'
+        }
+    }).then(data => {
+        console.log("data",data)
+        resolve(data);
+    }).catch(function (err) {
+        console.log(err)
+        reject({
+            status: 502,
+            message: err.message
+        })
+    });
+});
+};
+
 module.exports = service;
