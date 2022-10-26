@@ -111,63 +111,42 @@ input, label {
 }
 </style>
 
-<!-- start page title -->
-<div class="row">
-    <div class="col-12">
-        <div class="page-title-box d-flex align-items-center justify-content-between">
-            <h4 class="mb-0">Income Statement</h4>
 
-
-        </div>
-    </div>
-</div>
-<!-- end page title -->
-<!-- 
-<div class="row">
-    <div class="col-lg-12">
-        <div class="card" id="printDiv">
-            <div class="card-body"> -->
-                <input id='radio-1' data-tooltip='first level'  name='test' type='radio' style="display: none;"/><label style="display: none;" for="radio-1">First level</label>
-                <input checked id='radio-2' data-tooltip='second level' name='test' type='radio' style="display: none;"/><label style="display: none;" for="radio-2">Second level</label>
-                <input id='radio-3' data-tooltip='third level' name='test' type='radio' style="display: none;"/><label style="display: none;" for="radio-3">Third level</label>
-                <ol class="wtree">
-                    <% if(locals.data) {%>
-                        <li><span>Income<p>$ <%=data.income.total%></p></span>
-                            <ol>
-                                <% for(var i=0; i<data.income.data.length; i++){%>
-                                    <li>
-                                        <span><%=data.income.data[i]['creditAccount.name']%> <p>$ <%=data.income.data[i].amount%></p></span>
-                                    </li>
-                                <%}%>
-                            </ol>
-                        </li>
-
-                        <li><span>Expense<p>$ <%=data.expense.total%></p></span>
-                            <ol>
-                                <% for(var i=0; i<data.expense.data.length; i++){%>
-                                    <li>
-                                        <span><%=data.expense.data[i]['debitAccount.name']%> <p>$ <%=data.expense.data[i].amount%></p></span>
-                                    </li>
-                                <%}%>
-                            </ol>
-                        </li>
-                    <%}%>
-
-                    <li style="font-weight: bold; font-size: 18px;">
-                        <span>Net Income<p>$ <%=data.income.total - data.expense.total%></p></span>
+<input id='radio-1' data-tooltip='first level'  name='test' type='radio' style="display: none;"/><label style="display: none;" for="radio-1">First level</label>
+<input checked id='radio-2' data-tooltip='second level' name='test' type='radio' style="display: none;"/><label style="display: none;" for="radio-2">Second level</label>
+<input id='radio-3' data-tooltip='third level' name='test' type='radio' style="display: none;"/><label style="display: none;" for="radio-3">Third level</label>
+<ol class="wtree">
+    <% if(locals.data) {%>
+        <li><span>Income<p>$ <%=data.income.total%></p></span>
+            <ol>
+                <% for(var i=0; i<data.income.data.length; i++){%>
+                    <li>
+                        <span><%=data.income.data[i]['creditAccount.name']%> <p>$ <%=data.income.data[i].amount%></p></span>
                     </li>
-                </ol>
-            <!-- </div>
-        </div>
-    </div>
-</div> -->
-<!-- end row -->
+                <%}%>
+            </ol>
+        </li>
+
+        <li><span>Expense<p>$ <%=data.expense.total%></p></span>
+            <ol>
+                <% for(var i=0; i<data.expense.data.length; i++){%>
+                    <li>
+                        <span><%=data.expense.data[i]['debitAccount.name']%> <p>$ <%=data.expense.data[i].amount%></p></span>
+                    </li>
+                <%}%>
+            </ol>
+        </li>
+    <%}%>
+
+    <li style="font-weight: bold; font-size: 18px;">
+        <span>Net Income<p>$ <%=data.income.total - data.expense.total%></p></span>
+    </li>
+</ol>
 
 <script>
   
 function printFunction(id) {
         var htmlToPrint = '';
-        debugger;
         var printContent = document.getElementById(id);
         htmlToPrint += printContent.innerHTML;
         var windowUrl = 'Account Statement';

@@ -39,7 +39,6 @@ var apexChart = new ApexCharts(
 function changeApexData(dataFor, dataShowingFor){
     $("#apextChartDataFor").html(dataShowingFor+' <i class="mdi mdi-chevron-down ms-1"></i>');
     $.getJSON('/portal/dashboardApex/'+dataFor, function(response) {
-        debugger;
         const labels=response?response[0].dates.split(","):[0]
         const data=response?response[0].sales.split(","):[0]
         apexChart.updateOptions({
@@ -96,7 +95,6 @@ var chart = new ApexCharts(
 function changeDashboardEar(){
     // $("#apextChartDataFor").html(dataShowingFor+' <i class="mdi mdi-chevron-down ms-1"></i>');
     $.getJSON('/portal/dashboardEAR', function(response) {
-        debugger;
         chart.updateOptions({
             labels: response.key.length>0 ? response.key :["Expense"],//['01/01/2003', '02/01/2003', '03/01/2003', '04/01/2003', '05/01/2003', '06/01/2003', '07/01/2003'],
             series: response.value.length>0 ? response.value:[1]//[23, 11, 22, 27, 13, 22, 37],

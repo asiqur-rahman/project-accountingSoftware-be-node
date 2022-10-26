@@ -1,5 +1,5 @@
 {
-    "development": {
+    "databaseSettings": {
         "username": "drtechma_test",
         "password": "drtechma_test",
         "database": "drtechma_test",

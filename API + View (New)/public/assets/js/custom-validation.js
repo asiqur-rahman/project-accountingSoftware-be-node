@@ -1,36 +1,42 @@
 $('.validate-this-form').on('submit', function (e) {
     e.preventDefault();
-    if(validateThisForm()){
+    if (validateThisForm()) {
+        const loadingArea=$(this).attr('area');
         $.ajax({
             type: 'POST',
             url: $(this).attr('action'),
-            data: $(this).serialize(), 
-            success: function(response) { 
-                console.log(response)
-                if(response.msg){
+            data: $(this).serialize(),
+            beforeSend: function () {
+                Spinner.Show();
+            },
+            complete: function () {
+                Spinner.Hide();
+            },
+            success: function (response) {
+                if (response.msg) {
                     toastr[response.msg[0]](response.msg[1]);
-                    if(response.redirect)loadPartial(response.redirect);
-                    else Spinner.Hide();
-                }else{
-                    toastr['error']('Something Wrong ! Please try again.');
-                }
-             }
-          });
+                    if (response.redirect) loadPartial(response.redirect);
+                } 
+                else if (loadingArea)  $(`.${loadingArea}`).html(response);
+                
+                else toastr['error']('Something Wrong ! Please try again.');
+            }
+        });
     }
 });
 
-var validateThisForm=(hasCallback=false)=>{
+var validateThisForm = (hasCallback = false) => {
     var input = $('.validate-this-form .validate_this');
     var check = true;
     for (var i = 0; i < input.length; i++) {
-        const val=$(input[i]).val();
+        const val = $(input[i]).val();
         if (!validate(input[i])) {
             showValidate(input[i]);
             check = false;
         }
     }
-    
-    if(check && !hasCallback){
+
+    if (check && !hasCallback) {
         Spinner.Show();
     }
     return check;
@@ -59,9 +65,9 @@ $('.validate_this').change(function () {
 });
 
 function validate(input) {
-    if (!$(input).val() || $(input).val()=='' || $(input).val().trim() == '') {
+    if (!$(input).val() || $(input).val() == '' || $(input).val().trim() == '') {
         return false;
-    }else{
+    } else {
         return true;
     }
 }
@@ -78,6 +84,6 @@ function hideValidate(input) {
 }
 
 
-$(function(){
+$(function () {
     $(".select2").select2();
 })

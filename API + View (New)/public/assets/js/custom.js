@@ -10,22 +10,22 @@ const Spinner = {
     }
 };
 
-async function loadPartial(url,contentId=null,modal=false){
+async function loadPartial(url,contentDiv=null,modal=false,method=false,showSpin=true){
     // $("#sidebar-menu mm-active active").removeClass("active");
     if(document.querySelector("#sidebar-menu .mm-active .active"))document.querySelector("#sidebar-menu .mm-active .active").classList.remove("active")
     await $.ajax({
-        type: 'GET',
+        type: method?method:'GET',
         url: url,
         beforeSend: function () {
-            Spinner.Show();
+            if(showSpin)Spinner.Show();
         },
         complete: function () {
-            Spinner.Hide();
+            if(showSpin)Spinner.Hide();
         },
         success: function (result,textStatus, xhr) {
             if(xhr.status==302)window.location.replace('/');
             else {
-                if(!modal)$(`.${contentId??"main-container"}`).html(result);
+                if(!modal)$(`.${contentDiv?contentDiv:"main-container"}`).html(result);
                 else{
                     $("#customModalLabel").html(modal[0]);
                     $("#customModalBody").html(result);

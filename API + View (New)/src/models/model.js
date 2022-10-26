@@ -2,19 +2,19 @@ const config = require("../../config/config.json");
 const enumm = require('../utils/enum.utils');
 const Sequelize = require("sequelize");
 const sequelize = new Sequelize(
-    config.development.database,
-    config.development.username,
-    config.development.password, 
+    config.databaseSettings.database,
+    config.databaseSettings.username,
+    config.databaseSettings.password, 
     {
-        host: config.development.host,
-        dialect: config.development.dialect,
+        host: config.databaseSettings.host,
+        dialect: config.databaseSettings.dialect,
         operatorsAliases: 0,
-        logging: config.development.logging,
+        logging: config.databaseSettings.logging,
         pool: {
-            max: config.development.pool.max,
-            min: config.development.pool.min,
-            acquire: config.development.pool.acquire,
-            idle: config.development.pool.idle
+            max: config.databaseSettings.pool.max,
+            min: config.databaseSettings.pool.min,
+            acquire: config.databaseSettings.pool.acquire,
+            idle: config.databaseSettings.pool.idle
         }
     }
 );

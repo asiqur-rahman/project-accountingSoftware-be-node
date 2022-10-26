@@ -10,6 +10,7 @@ router.use('/', notification(),(req, res, next) => {
 });
 
 router.get('/income-statement', awaitHandlerFactory(reportController.incomeStatement));
+router.post('/income-statement-data', awaitHandlerFactory(reportController.incomeStatementData));
 router.get('/balance-sheet', awaitHandlerFactory(reportController.balanceSheet));
 
 module.exports = router;

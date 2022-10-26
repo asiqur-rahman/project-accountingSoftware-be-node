@@ -11,8 +11,9 @@ const accountBalanceService = require('./accountBalance.service');
 
 const service = {};
 
-service.getIncomeStatement = async () => {
+service.getIncomeStatement = async (req) => {
     return new Promise(async (resolve, reject) => {
+
         await db.Transaction.findAll({
             attributes: ['amount', 'isItIncome'],
             include: [
@@ -36,7 +37,12 @@ service.getIncomeStatement = async () => {
                     }
                 }
             }
-        ],
+            ],
+            where: {
+                dateTime: {
+                    [Op.between]: [moment(req.body.fromDate).format("MM/DD/yyyy"),moment(req.body.toDate).add(1,'d').format("MM/DD/yyyy")]
+                }
+            },
             raw: true
         }).then(data => {
             if (data) {
