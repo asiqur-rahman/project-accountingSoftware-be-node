@@ -131,10 +131,10 @@ input, label {
                 <input checked id='radio-2' data-tooltip='second level' name='test' type='radio' style="display: none;"/><label style="display: none;" for="radio-2">Second level</label>
                 <input id='radio-3' data-tooltip='third level' name='test' type='radio' style="display: none;"/><label style="display: none;" for="radio-3">Third level</label>
             
-                <!-- <div class="row">
+                <div class="row">
                     <div class="col-md-5">
                         <div class="mb-3 row">
-                            <label for="date" class="col-md-4 col-form-label">From Date</label>
+                            <label for="date" class="col-md-4 col-form-label" style="margin: auto;">From Date</label>
                             <div class="col-md-8">
                                 <div class="input-group" data-validate="From Date is required">
                                     <input class="form-control validate_this" type="date" name="fromDate" id="fromDate">
@@ -145,7 +145,7 @@ input, label {
                     
                     <div class="col-md-5">
                         <div class="mb-3 row">
-                            <label for="date" class="col-md-4 col-form-label">To Date</label>
+                            <label for="date" class="col-md-4 col-form-label" style="margin: auto;">To Date</label>
                             <div class="col-md-8">
                                 <div class="input-group" data-validate="To Date is required">
                                     <input class="form-control validate_this" type="date" name="toDate" id="toDate">
@@ -154,10 +154,10 @@ input, label {
                         </div>
                     </div>
                     <div class="col-md-2">
-                        <button class="btn btn-primary" type="submit" style="float: right;">See Report</button>
+                        <button class="btn btn-primary" type="submit" style="float: right; margin-top: 10px;">See Report</button>
                     </div>
                 </div>
-                <br/> -->
+                <br/>
                 <ol class="wtree">
                     <% if(locals.data) {%>
                         <li><span>Income<p>$ <%=data.income.total%></p></span>
