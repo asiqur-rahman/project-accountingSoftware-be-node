@@ -122,51 +122,45 @@ input, label {
     </div>
 </div>
 <!-- end page title -->
-
+<!-- 
 <div class="row">
     <div class="col-lg-12">
         <div class="card" id="printDiv">
-            <div class="card-body">
+            <div class="card-body"> -->
                 <input id='radio-1' data-tooltip='first level'  name='test' type='radio' style="display: none;"/><label style="display: none;" for="radio-1">First level</label>
                 <input checked id='radio-2' data-tooltip='second level' name='test' type='radio' style="display: none;"/><label style="display: none;" for="radio-2">Second level</label>
                 <input id='radio-3' data-tooltip='third level' name='test' type='radio' style="display: none;"/><label style="display: none;" for="radio-3">Third level</label>
-            
-                <div class="row">
-                    <div class="col-md-5">
-                        <div class="mb-3 row">
-                            <label for="date" class="col-md-4 col-form-label" style="margin: auto;">From Date</label>
-                            <div class="col-md-8">
-                                <div class="input-group" data-validate="From Date is required">
-                                    <input class="form-control validate_this" type="date" name="fromDate" id="fromDate">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-5">
-                        <div class="mb-3 row">
-                            <label for="date" class="col-md-4 col-form-label" style="margin: auto;">To Date</label>
-                            <div class="col-md-8">
-                                <div class="input-group" data-validate="To Date is required">
-                                    <input class="form-control validate_this" type="date" name="toDate" id="toDate">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <button class="btn btn-primary" type="submit" style="float: right; margin-top: 10px;">See Report</button>
-                    </div>
-                </div>
-                <br/>
-                <div id="incomeStatementDiv">
-                </div>
-            </div>
-            <!-- <button type="button" class="btn btn-sm waves-effect waves-light" onclick="printFunction('printDiv')">
-              <i class="fa fa-fw fa-bars"></i>
-          </button> -->
+                <ol class="wtree">
+                    <% if(locals.data) {%>
+                        <li><span>Income<p>$ <%=data.income.total%></p></span>
+                            <ol>
+                                <% for(var i=0; i<data.income.data.length; i++){%>
+                                    <li>
+                                        <span><%=data.income.data[i]['creditAccount.name']%> <p>$ <%=data.income.data[i].amount%></p></span>
+                                    </li>
+                                <%}%>
+                            </ol>
+                        </li>
+
+                        <li><span>Expense<p>$ <%=data.expense.total%></p></span>
+                            <ol>
+                                <% for(var i=0; i<data.expense.data.length; i++){%>
+                                    <li>
+                                        <span><%=data.expense.data[i]['debitAccount.name']%> <p>$ <%=data.expense.data[i].amount%></p></span>
+                                    </li>
+                                <%}%>
+                            </ol>
+                        </li>
+                    <%}%>
+
+                    <li style="font-weight: bold; font-size: 18px;">
+                        <span>Net Income<p>$ <%=data.income.total - data.expense.total%></p></span>
+                    </li>
+                </ol>
+            <!-- </div>
         </div>
     </div>
-</div>
+</div> -->
 <!-- end row -->
 
 <script>
