@@ -30,8 +30,8 @@ var sslOptions = {
 
 //#region Application Configuration
 app.use(compression()); // compress all responses
-app.use(minify());
-app.use(minifyHTML({ // minify all html responsesls
+// app.use(minify());
+app.use(minifyHTML({
     override:      true,
     exception_url: false,
     htmlMinifier: {

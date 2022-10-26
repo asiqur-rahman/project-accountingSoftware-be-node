@@ -14,7 +14,7 @@
         <div class="card">
             <div class="card-body">
                 <!-- <h4 class="card-title mb-4">Invoice Details</h4> enctype="multipart/form-data" --> 
-                <form class="repeater validate-this-form transactionForm" method="post" action="<%=lastVisitedUrl%>">
+                <form class="repeater validate-this-form transactionForm" method="post" action="<%=lastVisitedUrl%>" validationfor="transaction">
                     <div data-repeater-list="transactionDetails" class="row">
                         <input class="form-control" type="number" name="id" id="id" value="<%= typeof model!='undefined' ? model.id : '' %>" readonly hidden>
                         <input class="form-control" type="number" name="parentId" id="parentId" value="<%= typeof model!='undefined' ? model.parentId : '0' %>" readonly hidden>
@@ -135,7 +135,7 @@
                     
                     <div class="mt-3 col-md-12">
                         <div class="mt-3 text-end">
-                            <button class="btn btn-primary w-sm waves-effect waves-light" type="button" onclick="transactionFormSubmit()">Submit</button>
+                            <button class="btn btn-primary w-sm waves-effect waves-light" type="submit">Submit</button>
                         </div>
                     </div>
                 </form>
@@ -234,11 +234,4 @@
             $("input[name='transactionDetails[1][credit]']").val($("#amount").val())
         }
     }
-
-    var transactionFormSubmit = ( ) => {
-        if(validateThisForm(true)){
-             $(".transactionForm").submit();
-        }
-        
-    };
 </script>
