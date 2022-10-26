@@ -158,31 +158,31 @@ input, label {
                 <br/> -->
                 <ol class="wtree">
                     <% if(locals.data) {%>
-                        <li><span>Assets<p>$ <%=data.assets.total%></p></span>
+                        <li><span>Assets<p>BDT <%=data.assets.total%> Tk.</p></span>
                             <ol>
                                 <% for(var i=0; i<data.assets.data.length; i++){%>
                                     <li>
-                                        <span><%=data.assets.data[i].name%> <p>$ <%=data.assets.data[i]['accountBalances.amount']%></p></span>
+                                        <span><%=data.assets.data[i].name%> <p>BDT <%=data.assets.data[i]['accountBalances.amount']%> Tk.</p></span>
                                     </li>
                                 <%}%>
                             </ol>
                         </li>
 
-                        <li><span>Liabilities<p>$ <%=data.liabilities.total%></p></span>
+                        <li><span>Liabilities<p>BDT <%=data.liabilities.total%> Tk.</p></span>
                             <ol>
                                 <% for(var i=0; i<data.liabilities.data.length; i++){%>
                                     <li>
-                                        <span><%=data.liabilities.data[i].name%> <p>$ <%=data.liabilities.data[i]['accountBalances.amount']%></p></span>
+                                        <span><%=data.liabilities.data[i].name%> <p>BDT <%=data.liabilities.data[i]['accountBalances.amount']%> Tk.</p></span>
                                     </li>
                                 <%}%>
                             </ol>
                         </li>
 
-                        <li><span>Equity<p>$ <%=data.equities.total%></p></span>
+                        <li><span>Equity<p>BDT <%=data.equities.total%> Tk.</p></span>
                             <ol>
                                 <% for(var i=0; i<data.equities.data.length; i++){%>
                                     <li>
-                                        <span><%=data.equities.data[i].name%> <p>$ <%=data.equities.data[i]['accountBalances.amount']%></p></span>
+                                        <span><%=data.equities.data[i].name%> <p>BDT <%=data.equities.data[i]['accountBalances.amount']%> Tk.</p></span>
                                     </li>
                                 <%}%>
                             </ol>

@@ -117,21 +117,21 @@ input, label {
 <input id='radio-3' data-tooltip='third level' name='test' type='radio' style="display: none;"/><label style="display: none;" for="radio-3">Third level</label>
 <ol class="wtree">
     <% if(locals.data) {%>
-        <li><span>Income<p>$ <%=data.income.total%></p></span>
+        <li><span>Income<p>BDT <%=data.income.total%> Tk.</p></span>
             <ol>
                 <% for(var i=0; i<data.income.data.length; i++){%>
                     <li>
-                        <span><%=data.income.data[i]['creditAccount.name']%> <p>$ <%=data.income.data[i].amount%></p></span>
+                        <span><%=data.income.data[i]['creditAccount.name']%> <p>BDT <%=data.income.data[i].amount%> Tk.</p></span>
                     </li>
                 <%}%>
             </ol>
         </li>
 
-        <li><span>Expense<p>$ <%=data.expense.total%></p></span>
+        <li><span>Expense<p>BDT <%=data.expense.total%> Tk.</p></span>
             <ol>
                 <% for(var i=0; i<data.expense.data.length; i++){%>
                     <li>
-                        <span><%=data.expense.data[i]['debitAccount.name']%> <p>$ <%=data.expense.data[i].amount%></p></span>
+                        <span><%=data.expense.data[i]['debitAccount.name']%> <p>BDT <%=data.expense.data[i].amount%> Tk.</p></span>
                     </li>
                 <%}%>
             </ol>
@@ -139,7 +139,7 @@ input, label {
     <%}%>
 
     <li style="font-weight: bold; font-size: 18px;">
-        <span>Net Income<p>$ <%=data.income.total - data.expense.total%></p></span>
+        <span>Net Income<p>BDT <%=data.income.total - data.expense.total%> Tk.</p></span>
     </li>
 </ol>
 

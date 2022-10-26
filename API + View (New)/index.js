@@ -13,6 +13,7 @@ const bodyParser = require('body-parser');
 const flash = require('connect-flash');
 const i18n = require("i18n-express");
 var minifyHTML = require('express-minify-html-2');
+var minify = require('express-minify');
 const Logger = require('./src/externalService/console.log.service');
 const log = new Logger('index.js');
 //#endregion
@@ -29,6 +30,7 @@ var sslOptions = {
 
 //#region Application Configuration
 app.use(compression()); // compress all responses
+app.use(minify());
 app.use(minifyHTML({ // minify all html responsesls
     override:      true,
     exception_url: false,

@@ -87,6 +87,9 @@
             {
                 "data": "amount",
                 "title": "Amount",
+                "render": function (data, type, row, meta) {
+                    return `${row['amount']} Tk.`;
+                }
             },
             {
                 "data": "id",
