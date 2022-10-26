@@ -14,8 +14,8 @@ var options = {
         width: 3,
     },
     series: [{
-        name: 'Income',
-        data: [0]
+        name: 'Expense',
+        data: [1]
     }],
     colors: ['#5b73e8', '#f1b44c'],
     xaxis: {
@@ -62,7 +62,7 @@ var options = {
       height: 350,
       type: 'donut',
   }, 
-  series: [0],
+  series: [1],
   labels: ["Expense"],
 //   colors: ["#34c38f", "#5b73e8","#f1b44c", "#50a5f1", "#f46a6a"],
   legend: {
@@ -96,9 +96,10 @@ var chart = new ApexCharts(
 function changeDashboardEar(){
     // $("#apextChartDataFor").html(dataShowingFor+' <i class="mdi mdi-chevron-down ms-1"></i>');
     $.getJSON('/portal/dashboardEAR', function(response) {
+        debugger;
         chart.updateOptions({
-            labels: response.key,//['01/01/2003', '02/01/2003', '03/01/2003', '04/01/2003', '05/01/2003', '06/01/2003', '07/01/2003'],
-            series: response.value//[23, 11, 22, 27, 13, 22, 37],
+            labels: response.key.length>0 ? response.key :["Expense"],//['01/01/2003', '02/01/2003', '03/01/2003', '04/01/2003', '05/01/2003', '06/01/2003', '07/01/2003'],
+            series: response.value.length>0 ? response.value:[1]//[23, 11, 22, 27, 13, 22, 37],
          });
       });
 }

@@ -405,7 +405,7 @@ service.getByCodeAndLevel = async (value) => {
         await db.ChartOfAccount.findOne({
             where: {
                 [Op.and]: [{
-                    code: {
+                    baseCode: {
                         [Op.eq]: value.code
                     }
                 }, {

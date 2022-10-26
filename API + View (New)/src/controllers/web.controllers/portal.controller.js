@@ -333,7 +333,7 @@ module.exports.newTransaction_Post = async (req, res, next) => {
     req.body.debitAccountId = req.body.accountFromId;
     req.body.creditAccountId = req.body.accountToId;
   }
-
+  req.body.transactionNo=Date.now().toString();
   await transactionService.createWithDetails(req)
     .then(result => {
       // req.session.notification = [enumm.notification.Success, 'Transaction created successfully !'];
@@ -411,8 +411,8 @@ module.exports.bankAccount = async (req, res, next) => {
     if (req.params.id) {
       await bankAccountService.getById(req.params.id)
         .then(detailsInfo => {
-          res.locals.model = detailsInfo;
-          res.render('User/create', {
+          res.locals.detailsInfo = detailsInfo;
+          res.render('BankAccount/create', {
             layout: false
           });
         })
@@ -424,17 +424,32 @@ module.exports.bankAccount = async (req, res, next) => {
 }
 
 module.exports.bankAccount_Post = async (req, res, next) => {
-  bankAccountService.create(req).then(data => {
-    res.status(200).send({
-      msg: [enumm.notification.Success, 'Bank Account created successfully !'],
-      redirect:`/portal/bank-account-list`
+  if (req.body.id && req.body.id > 0) {
+    await bankAccountService.update(req)
+      .then(() => {
+        res.status(200).send({
+          msg: [enumm.notification.Success, 'Bank Account updated successfully ! '],
+          redirect:'/portal/bank-account-list'
+        });
+      }).catch(function (err) {
+        res.status(200).send({
+          msg: [enumm.notification.Error, 'Bank Account not updated ! '+err.message]
+        });
+        // re
+      });
+  } else {
+    await bankAccountService.create(req).then(data => {
+      res.status(200).send({
+        msg: [enumm.notification.Success, 'Bank Account created successfully !'],
+        redirect:`/portal/bank-account-list`
+      });
+    }).catch(e => {
+      res.status(200).send({
+        msg: [enumm.notification.Error, 'Bank Account not created !'],
+        redirect:`/portal/bank-account`
+      });
     });
-  }).catch(e => {
-    res.status(200).send({
-      msg: [enumm.notification.Error, 'Bank Account not created !'],
-      redirect:`/portal/bank-account`
-    });
-  });
+  }
 }
 
 module.exports.bankAccountList = async (req, res, next) => {
@@ -472,17 +487,32 @@ module.exports.chequeRecord = async (req, res, next) => {
 }
 
 module.exports.chequeRecord_Post = async (req, res, next) => {
-  chequeRecordService.create(req).then(data => {
-    res.status(200).send({
-      msg: [enumm.notification.Success, 'Cheque Record created successfully !'],
-      redirect:`/portal/cheque-record-list`
+  if (req.body.id && req.body.id > 0) {
+    await chequeRecordService.update(req)
+      .then(() => {
+        res.status(200).send({
+          msg: [enumm.notification.Success, 'Bank Account updated successfully ! '],
+          redirect:'/portal/cheque-record-list'
+        });
+      }).catch(function (err) {
+        res.status(200).send({
+          msg: [enumm.notification.Error, 'Bank Account not updated ! '+err.message]
+        });
+        // re
+      });
+  } else {
+    chequeRecordService.create(req).then(data => {
+      res.status(200).send({
+        msg: [enumm.notification.Success, 'Cheque Record created successfully !'],
+        redirect:`/portal/cheque-record-list`
+      });
+    }).catch(e => {
+      res.status(200).send({
+        msg: [enumm.notification.Error, 'Cheque Record not created !'],
+        redirect:`/portal/cheque-record`
+      });
     });
-  }).catch(e => {
-    res.status(200).send({
-      msg: [enumm.notification.Error, 'Cheque Record not created !'],
-      redirect:`/portal/cheque-record`
-    });
-  });
+  }
 }
 
 module.exports.chequeDelete = async (req, res, next) => {

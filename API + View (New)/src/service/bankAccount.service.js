@@ -131,12 +131,12 @@ service.update = async (req) => {
             }
         }).then(async (result) => {
                 if (result) {
-                    await accountBalanceService.updateByCoaId(req).then(() => {
+                    // await accountBalanceService.updateByCoaId(req).then(() => {
                         resolve({
                             status: 201,
                             message: 'Account was updated !'
                         });
-                    })
+                    // })
                 } else {
                     reject({
                         status: 200,

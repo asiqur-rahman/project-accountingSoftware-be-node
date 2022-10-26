@@ -6,6 +6,13 @@ module.exports = (sequelize, Sequelize) => {
       autoIncrement:true,
       primaryKey: true
     },
+    transactionNo: {
+      type: Sequelize.STRING(),
+      allowNull:false,
+      validate:{
+        notNull:{ args: true, msg: "Transaction No cannot be empty !!"}
+      }
+    },
     amount: {
       type: Sequelize.DOUBLE(),
       allowNull:false,
