@@ -249,6 +249,7 @@ function initial() {
       })
     });
 
+    console.log("Default data loaded !")
   }
 
 module.exports = db;

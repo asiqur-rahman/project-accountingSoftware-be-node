@@ -147,11 +147,12 @@
                     </div>
 
                     <div class="mt-2 text-center">
-                        <p>©
+                        <p>©&nbsp;
                             <script>
-                                document.write(new Date().getFullYear())
-                            </script> <%= typeof orgName=='undefined' ? 'N/A' : orgName%>.</br> Developed & Maintained
-                            by <a href="<%= typeof devOrgLink=='undefined' ? '#' : devOrgLink %>" target="_blank"
+                                document.write(new Date().getFullYear()) 
+                            </script>&nbsp;<%= typeof orgName=='undefined' ? 'N/A' : orgName%>.
+                            </br> 
+                            Developed & Maintained by <a href="<%= typeof devOrgLink=='undefined' ? '#' : devOrgLink %>" target="_blank"
                                 class="text-reset"><span
                                     style="color: #fd7014;"><%= typeof devOrgName=='undefined' ? 'N/A' : devOrgName %>.</span></a>
                         </p>
