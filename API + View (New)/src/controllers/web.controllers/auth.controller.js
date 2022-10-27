@@ -23,15 +23,15 @@ module.exports.login_Post = async (req, res, next) => {
   userService.getByName(username).then(async (user) => {
     if (!user) {
       req.session.notification = [enumm.notification.Error, 'Unable to login !'];
-      res.redirect('/auth/login');
+      return res.redirect('/auth/login');
     } else if (user.isActive != 1) {
       req.session.notification = [enumm.notification.Error, 'You access was revoked by admin! Please contact with admin.'];
-      res.redirect('/');
+      return res.redirect('/');
     } else {
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
         req.session.notification = [enumm.notification.Error, 'Incorrect password !'];
-        res.redirect('/');
+        return res.redirect('/');
       } else {
         // user matched!
         const secretKey = appConfig.appSettings.SECRET_JWT;
@@ -55,9 +55,9 @@ module.exports.login_Post = async (req, res, next) => {
           const returnUrl = req.session.returnUrl;
           if (returnUrl) {
             req.session.returnUrl = null;
-            res.redirect(returnUrl);
+            return res.redirect(returnUrl);
           } else {
-            res.redirect('/portal');
+            return res.redirect('/portal');
           }
         });
         
@@ -77,7 +77,7 @@ module.exports.logout = async (req, res, next) => {
   req.session.notification = notification;
   req.session.destroy();
   // res.status(302).send()
-  res.redirect('/auth/login');
+  return res.redirect('/auth/login');
   // res.render('Auth/auth-login', { 'message': req.flash('message'), 'error': req.flash('error') ,layout: false});
 };
 

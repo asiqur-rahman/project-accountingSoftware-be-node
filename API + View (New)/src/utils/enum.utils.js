@@ -35,4 +35,5 @@ var Enum = require('enum');
 
     module.exports.logFor={
         auth: {folderName:"auth",fileName:new Date().toDateString()},
+        route: {folderName:"route",fileName:new Date().toDateString()},
     }

@@ -154,7 +154,7 @@ module.exports.webAuth = (...roles) => {
             if (!req.session || !req.session.user) {
                 req.session.notification=[enumm.notification.Error,'Access denied. No credentials sent !'];
                 console.log('Access denied. No credentials sent !');
-                req.session.destroy();
+                // req.session.destroy();
                 return req.originalUrl == '/portal' ? res.redirect('/auth/logout'):res.status(302).send();
             }
             const token = req.session.user;
@@ -171,7 +171,7 @@ module.exports.webAuth = (...roles) => {
             // console.log(decoded);
 
             if (!decoded.user_id && !decoded.roleId) {
-                req.session.destroy();
+                // req.session.destroy();
                 return req.originalUrl == '/portal' ? res.redirect('/auth/logout'):res.status(302).send();
             }
 
@@ -179,7 +179,7 @@ module.exports.webAuth = (...roles) => {
             // if the user role don't have the permission to do this action.
             // the user will get this error
             if ( roles && roles.length && !roles.includes(decoded.role_id)) {
-                req.session.destroy();
+                // req.session.destroy();
                 return req.originalUrl == '/portal' ? res.redirect('/auth/logout'):res.status(302).send();
             }
             // if the user has permissions
@@ -212,46 +212,10 @@ module.exports.webAuth = (...roles) => {
     }
 }
 
-
-module.exports.notification = () => {
-    return function (req, res, next) {
-        //#region Notifications
-        if(req.session.notification){
-            const notification = req.session.notification;
-            res.locals.toast_Msg=notification;
-            // if(notification[0]==enumm.notification.Error){
-            //     res.locals.error_Msg= notification[1];
-            // }
-            // else if(notification[0]==enumm.notification.Warning){
-            //     res.locals.war_Msg= notification[1];
-            // }
-            // else if(notification[0]==enumm.notification.Info){
-            //     res.locals.info_Msg= notification[1];
-            // }
-            // else if(notification[0]==enumm.notification.Success){
-            //     res.locals.succ_Msg= notification[1];
-            // }
-            req.session.notification=null;
-        }else{
-            res.locals.error_Msg= undefined;
-            res.locals.info_Msg= undefined;
-            res.locals.war_Msg= undefined;
-            res.locals.succ_Msg= undefined;
-        }
-        //#endregion
-        next();
-    }
-}
-
-
 module.exports.isLogedIn = (...roles) => {
     return async function (req, res, next) {
         try {
-            res.locals.orgName = appConfig.organizationInfo.orgName;
-            res.locals.devOrgName = appConfig.organizationInfo.devOrgName;
-            res.locals.devOrgLink = appConfig.organizationInfo.devOrgLink;
-            res.locals.hostName= req.protocol + '://' + req.get('host');
-            
+
             var sess = req.session;
             if (!sess || !sess.user) {
                 req.currentUser = -1;
@@ -279,12 +243,12 @@ module.exports.isLogedIn = (...roles) => {
             req.roleCode = decoded.role_code;
             // //check Client IP
             var clientIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress || null;
-            if (clientIp.toString() == decoded.clientIp) {
+            // if (clientIp.toString() == decoded.clientIp) {
                 return res.redirect('/portal');
-            } else {
-                req.currentUser = -1;
-                next();
-            }
+            // } else {
+            //     req.currentUser = -1;
+            //     next();
+            // }
         } catch (e) {
             console.log("Catch : ",e)
             req.currentUser = -1;
