@@ -273,10 +273,9 @@ async function initial() {
         userId:1,
       })
 
-      var parentId=parentId;
+      var parentId=data.id;
       var lastParent={name:"Expense"};
-      var finalJsonData=[];
-      expenses.forEach(async element => {
+      expenses.forEach(element => {
         if(element.header)lastParent={name:`Expense:${element.name}`}
         let name=element.header?lastParent.name:`${lastParent.name}:${element.name}`;
         var jsonData={
@@ -292,11 +291,12 @@ async function initial() {
           "parentId" : parentId
         }
         db.ChartOfAccount.create(jsonData)
-          .then(async data=>{
-            parentId=element.header?data.id:parentId;
-            await db.AccountBalance.create({
+          .then(data2=>{
+            parentId=element.header?data2.id:parentId;
+            console.log(parentId);
+            db.AccountBalance.create({
               amount:0,
-              chartOfAccountId:data.id,
+              chartOfAccountId:data2.id,
               userId:1,
             });
       });

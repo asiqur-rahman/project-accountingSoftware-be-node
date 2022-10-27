@@ -49,18 +49,18 @@ module.exports.login_Post = async (req, res, next) => {
         const token = jwt.sign(detailsForToken,secretKey, {
           expiresIn: appConfig.appSettings.SessionTimeOut
         });
-        log.CreateLog(enumm.logFor.auth,"Login Successfull Details",JSON.stringify(detailsForToken), token);
         req.session.user = token;
         req.session.save(() => {
-          console.log(req.session);
+          log.CreateLog(enumm.logFor.auth,"Login Successfull Details",JSON.stringify(detailsForToken), req.session.user);
+          const returnUrl = req.session.returnUrl;
+          if (returnUrl) {
+            req.session.returnUrl = null;
+            res.redirect(returnUrl);
+          } else {
+            res.redirect('/portal');
+          }
         });
-        const returnUrl = req.session.returnUrl;
-        if (returnUrl) {
-          req.session.returnUrl = null;
-          res.redirect(returnUrl);
-        } else {
-          res.redirect('/portal');
-        }
+        
       }
     }
   })
