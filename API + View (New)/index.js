@@ -49,7 +49,7 @@ app.use(session({
   secret: config.appSettings.SECRET_JWT,
   resave: true,
   saveUninitialized: true,
-  httpOnly: true,  // dont let browser javascript access cookie ever
+  httpOnly: true,
   cookie: {
     // secure: true,
     expires: new Date(Date.now() + config.appSettings.SessionTimeOut),
