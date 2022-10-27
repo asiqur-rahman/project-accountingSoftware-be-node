@@ -44,9 +44,16 @@ module.exports.filterReport = async (req, res, next) => {
 }
 
 module.exports.filterReportData = async (req, res, next) => {
-  console.log(req.body)
   await reportingService.getFilterRecordData(req).then(data=>{
+    var totalDebit=0;
+    var totalCredit=0;
+    data.forEach(item => {
+      totalDebit+= item.debit;
+      totalCredit+= item.credit;
+    });
     res.locals.data = data;
+    res.locals.totalDebit = totalDebit;
+    res.locals.totalCredit = totalCredit;
     res.render('Report/filterReportDetails',{layout:false});
   });
 }

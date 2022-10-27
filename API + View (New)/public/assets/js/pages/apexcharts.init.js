@@ -61,7 +61,7 @@ var options = {
       height: 350,
       type: 'donut',
   }, 
-  series: [1],
+  series: [0],
   labels: ["Expense"],
 //   colors: ["#34c38f", "#5b73e8","#f1b44c", "#50a5f1", "#f46a6a"],
   legend: {

@@ -7,7 +7,6 @@ $('.validate-this-form').on('submit', function (e) {
     if (validateThisForm() && !validationFor) {
         canSubmitNow=true;
     } else if (validateThisForm() && validationFor == "transaction") {
-        Spinner.Hide();
         var debitAmount = 0;
         var creditAmount = 0;
         debugger;
@@ -106,7 +105,7 @@ var validateThisForm = (hasCallback = false) => {
     }
 
     if (check && !hasCallback) {
-        Spinner.Show();
+        // Spinner.Show();
     }
     return check;
 }
