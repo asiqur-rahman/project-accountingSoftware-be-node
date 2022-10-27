@@ -148,6 +148,7 @@ module.exports.webAuth = (...roles) => {
         try {
             // res.session.returnUrl = req.originalUrl;
             // sess = req.session;
+            console.log("Auth Token",req.session?.user);
             if (!req.session || !req.session.user) {
                 req.session.notification=[enumm.notification.Error,'Access denied. No credentials sent !'];
                 console.log('Access denied. No credentials sent !');

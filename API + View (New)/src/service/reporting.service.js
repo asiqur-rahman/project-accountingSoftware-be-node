@@ -224,11 +224,22 @@ service.getBalanceSheet = async () => {
 
 service.getFilterRecordData = async (req) => {
     return new Promise(async (resolve, reject) => {
-        console.log(new Date(req.body.toDate))
+        console.log(req.body.fromDate,req.body.toDate)
+        var formDate=moment().format("yyyy-MM-DD");
+        var toDate=moment().format("yyyy-MM-DD");
+        if(req.body.fromDate){
+            var splitdate=req.body.fromDate.split('/');
+            formDate=`${splitdate[2]}-${splitdate[0]}-${splitdate[1]}`
+        }
+        if(req.body.toDate){
+            var splitdate=req.body.toDate.split('/');
+            toDate=`${splitdate[2]}-${splitdate[0]}-${splitdate[1]}`
+        }
+        console.log(formDate,toDate)
     await db.sequelize.query('CALL SP_FilterRecord (:fromDate,:toDate,:charAccountId)', {
         replacements: {
-            fromDate: moment(req.body.fromdate).format("yyyy-MM-DD"),
-            toDate: moment(req.body.toDate).format("yyyy-MM-DD"),
+            fromDate: formDate,
+            toDate: toDate,
             charAccountId: req.body.charAccountId?req.body.charAccountId.toString():'0'
         }
     }).then(data => {

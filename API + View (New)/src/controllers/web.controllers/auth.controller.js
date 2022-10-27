@@ -35,18 +35,19 @@ module.exports.login_Post = async (req, res, next) => {
         const secretKey = appConfig.appSettings.SECRET_JWT;
         
         const fullName=`${user['userDetail.firstName']} ${user['userDetail.lastName']}`;
-        const token = jwt.sign({
+        const detailsForToken = {
           user_name: user.username,
           full_name: fullName,
           user_id: user.id.toString(),
           role_id: user['userDetail.role.id'].toString(),
           role_code: user['userDetail.role.code'].toString(),
           role_name: user['userDetail.role.name'].toString(),
-          force_change_password: user.forceChangePassword,
           clientIp: clientIp.toString()
-        }, secretKey, {
+        };
+        const token = jwt.sign(detailsForToken,secretKey, {
           expiresIn: appConfig.appSettings.SessionTimeOut
         });
+        console.log("Login Successfull Details",detailsForToken,token);
         req.session.user = token;
         const returnUrl = req.session.returnUrl;
         if (returnUrl) {

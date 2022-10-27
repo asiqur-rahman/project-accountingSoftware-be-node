@@ -133,7 +133,7 @@ service.indexData = async (req) => {
                 var count = req.query.start;
                 detailsInfo.rows.forEach(detail => {
                     detail.sl = ++count;
-                    detail.dateTime= moment.utc(detail.dateTime).format("DD-MM-yyyy hh:mm:ss A");
+                    detail.dateTime= moment.utc(detail.dateTime).format("DD-MM-yyyy");
                 })
                 resolve({draw:req.query.draw,recordsTotal:detailsInfo.count,recordsFiltered:detailsInfo.count,data:detailsInfo.rows});
             } else {
