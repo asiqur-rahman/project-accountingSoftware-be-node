@@ -1,6 +1,7 @@
 const config = require("../../config/config.json");
 const enumm = require('../utils/enum.utils');
 const Sequelize = require("sequelize");
+const expenses = require("../../jsondata/expense.json");
 const sequelize = new Sequelize(
     config.databaseSettings.database,
     config.databaseSettings.username,
@@ -20,7 +21,26 @@ const sequelize = new Sequelize(
 );
 sequelize.authenticate()
     .then(() => {
-        console.log('Database connection has been established successfully.');
+      // var parentId=1;
+      // var lastParent={name:"Expense"};
+      // var finalJsonData=[];
+      // expenses.forEach(async element => {
+      //   let name=`${lastParent.name}:${element.name}`;
+      //   finalJsonData.push({
+      //     "name" : name,
+      //     "code" : "301",
+      //     "baseCode" : null,
+      //     "level" : name.split(":").length-1,
+      //     "isActive" : 1,
+      //     "createdAt" : "2022-10-27 11:24:23",
+      //     "updatedAt" : "2022-10-27 11:24:23",
+      //     "userId" : 1,
+      //     "currencyId" : 1,
+      //     "parentId" : null
+      //   })
+      //   if(element.header)lastParent={name:`Expense:${element.name}`}
+      // });
+      console.log('Database connection has been established successfully.');
     })
     .catch(err => {
         console.error('Unable to connect to the database:', err);
@@ -132,26 +152,26 @@ db.BankAccount.hasMany(db.ChequeRecord);
 // });
 
 
-function initial() {
+async function initial() {
 
-    db.Branch.create({
+    await db.Branch.create({
       name: "Principal",
       description: "Main Branch",
       isActive:true
     });
   
-    // db.Role.create({
+    // await db.Role.create({
     //   name: "SuperUser",
     //   code: enumm.Role.SuperUser,
     //   isActive:true
     // });
-    db.Role.create({
+    await db.Role.create({
       name: "User",
       code: enumm.Role.User,
       isActive:true
     });
   
-    db.UserDetails.create({
+    await db.UserDetails.create({
         firstName: "Accounting",
         userId:1,
         roleId:1,
@@ -162,93 +182,191 @@ function initial() {
         address:"Dhaka, Bangladesh"
     });
 
-    db.User.create({
+    await db.User.create({
       username:'admin',
       password:'$2a$08$oDOBw2EEQ6UbtLLe0TuDguGez0rY4xJNt5KbMoVY659Kd4E3poZTi',
       userDetailId:1,
       isActive:true
     });
 
-    db.Currency.create({
+    await db.Currency.create({
       name:'BDT',
       isActive:true
     });
 
-    db.ChartOfAccount.create({
+    await db.ChartOfAccount.create({
       name:enumm.AccountHead.Assets.key,
       currencyId:1,
       userId:1,
       isActive:true,
       code:enumm.AccountHead.Assets.value,
-      // baseCode:enumm.AccountHead.Assets.value
-    }).then(data=>{
-      db.AccountBalance.create({
+    }).then(async coa=>{
+      await db.AccountBalance.create({
         amount:0,
-        chartOfAccountId:data.id,
+        chartOfAccountId:coa.id,
         userId:1,
-      })
+      });
+      //#region Bank
+      await db.ChartOfAccount.create({
+        name:'Assets:Bank',
+        currencyId:1,
+        userId:1,
+        level:1,
+        isActive:true,
+        parentId:coa.id,
+        baseCode:enumm.AccountHead.Assets.value,
+      }).then(async data=>{
+        await db.AccountBalance.create({
+          amount:0,
+          chartOfAccountId:data.id,
+          userId:1,
+        });
+
+        //#region Cheque
+        await db.ChartOfAccount.create({
+          name:'Assets:Bank:Cheque',
+          currencyId:1,
+          userId:1,
+          level:2,
+          isActive:true,
+          parentId:data.id,
+          baseCode:enumm.AccountHead.Assets.value,
+        }).then(async data=>{
+          await db.AccountBalance.create({
+            amount:0,
+            chartOfAccountId:data.id,
+            userId:1,
+          });
+        });
+      //#endregion
+
+      });
+      //#endregion
+
+      
     });
 
-    db.ChartOfAccount.create({
+    await db.ChartOfAccount.create({
       name:enumm.AccountHead.Equity.key,
       currencyId:1,
       userId:1,
       isActive:true,
       code:enumm.AccountHead.Equity.value,
-      // baseCode:enumm.AccountHead.Equity.value
-    }).then(data=>{
-      db.AccountBalance.create({
+    }).then(async data=>{
+      await db.AccountBalance.create({
         amount:0,
         chartOfAccountId:data.id,
         userId:1,
       })
     });
 
-    db.ChartOfAccount.create({
+    await db.ChartOfAccount.create({
       name:enumm.AccountHead.Expense.key,
       currencyId:1,
       userId:1,
       isActive:true,
       code:enumm.AccountHead.Expense.value,
-      // baseCode:enumm.AccountHead.Expense.value
-    }).then(data=>{
-      db.AccountBalance.create({
+    }).then(async data=>{
+      await db.AccountBalance.create({
         amount:0,
         chartOfAccountId:data.id,
         userId:1,
       })
+
+      var parentId=parentId;
+      var lastParent={name:"Expense"};
+      var finalJsonData=[];
+      expenses.forEach(async element => {
+        if(element.header)lastParent={name:`Expense:${element.name}`}
+        let name=element.header?lastParent.name:`${lastParent.name}:${element.name}`;
+        var jsonData={
+          "name" : name,
+          "baseCode" : "301",
+          "code" : null,
+          "level" : name.split(":").length-1,
+          "isActive" : 1,
+          "createdAt" : "2022-10-27 11:24:23",
+          "updatedAt" : "2022-10-27 11:24:23",
+          "userId" : 1,
+          "currencyId" : 1,
+          "parentId" : parentId
+        }
+        db.ChartOfAccount.create(jsonData)
+          .then(async data=>{
+            parentId=element.header?data.id:parentId;
+            await db.AccountBalance.create({
+              amount:0,
+              chartOfAccountId:data.id,
+              userId:1,
+            });
+      });
+
+      // finalJsonData.forEach(async element => {
+      //     await db.ChartOfAccount.create(element)
+      //     .then(async data=>{
+      //       await db.AccountBalance.create({
+      //         amount:0,
+      //         chartOfAccountId:data.id,
+      //         userId:1,
+      //       });
+      //   });
+        
+      })
+      // var parentId=data.id;
+      // var lastParent={name:"Expense"};
+      // expenses.forEach(async element => {
+      //   let name=`${lastParent.name}:${element.name}`;
+      //   var jsonBody={
+      //     name:name,
+      //     currencyId:1,
+      //     userId:1,
+      //     isActive:true,
+      //     code:enumm.AccountHead.Expense.value,
+      //     parentId:parentId,
+      //     level:name.split(":").length-1
+      //   };
+      //   await db.ChartOfAccount.create(jsonBody)
+      //   .then(async data=>{
+      //     await db.AccountBalance.create({
+      //       amount:0,
+      //       chartOfAccountId:data.id,
+      //       userId:1,
+      //     })
+      //     if(element.header){
+      //       parentId=data.id;
+      //       lastParent={name:`Expense:${element.name}`}
+      //     }
+      //   });
+      // });
     });
 
-    db.ChartOfAccount.create({
+    await db.ChartOfAccount.create({
       name:enumm.AccountHead.Income.key,
       currencyId:1,
       userId:1,
       isActive:true,
       code:enumm.AccountHead.Income.value,
-      // baseCode:enumm.AccountHead.Income.value
-    }).then(data=>{
-      db.AccountBalance.create({
+    }).then(async data=>{
+      await db.AccountBalance.create({
         amount:0,
         chartOfAccountId:data.id,
         userId:1,
       })
     });
 
-    db.ChartOfAccount.create({
+    await db.ChartOfAccount.create({
       name:enumm.AccountHead.Liabilities.key,
       currencyId:1,
       userId:1,
       isActive:true,
       code:enumm.AccountHead.Liabilities.value,
-      // baseCode:enumm.AccountHead.Liabilities.value
-    }).then(data=>{
-      db.AccountBalance.create({
+    }).then(async data=>{
+      await db.AccountBalance.create({
         amount:0,
         chartOfAccountId:data.id,
         userId:1,
       })
     });
-
     console.log("Default data loaded !")
   }
 

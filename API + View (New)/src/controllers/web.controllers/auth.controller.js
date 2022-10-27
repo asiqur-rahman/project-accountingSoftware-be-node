@@ -51,6 +51,9 @@ module.exports.login_Post = async (req, res, next) => {
         });
         log.CreateLog(enumm.logFor.auth,"Login Successfull Details",JSON.stringify(detailsForToken), token);
         req.session.user = token;
+        req.session.save(() => {
+          console.log(req.session);
+        });
         const returnUrl = req.session.returnUrl;
         if (returnUrl) {
           req.session.returnUrl = null;
