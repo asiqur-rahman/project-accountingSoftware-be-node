@@ -1,5 +1,5 @@
 const db = require('../models/model');
-const Logger = require('../externalService/console.log.service');
+const Logger = require('../externalService/log.service');
 var path = require('path');
 const log = new Logger(path.basename(__filename));
 const bcrypt = require('bcryptjs');

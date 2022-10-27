@@ -5,6 +5,8 @@ const Op = require('sequelize').Op;
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const userService = require('../../service/user.service');
+const Logger = require('../../externalService/log.service');
+const log = new Logger('index.js');
 
 module.exports.login_Get = async (req, res, next) => {
   res.render('Auth/auth-login', {
@@ -47,7 +49,7 @@ module.exports.login_Post = async (req, res, next) => {
         const token = jwt.sign(detailsForToken,secretKey, {
           expiresIn: appConfig.appSettings.SessionTimeOut
         });
-        console.log("Login Successfull Details",detailsForToken,token);
+        log.CreateLog(enumm.logFor.auth,"Login Successfull Details",JSON.stringify(detailsForToken), token);
         req.session.user = token;
         const returnUrl = req.session.returnUrl;
         if (returnUrl) {

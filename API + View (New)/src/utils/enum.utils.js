@@ -32,3 +32,7 @@ var Enum = require('enum');
         Income: 401,
         Liabilities: 501
     });
+
+    module.exports.logFor={
+        auth: {folderName:"auth",fileName:new Date().toDateString()},
+    }

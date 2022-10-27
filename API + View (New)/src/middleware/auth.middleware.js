@@ -2,6 +2,8 @@ const db = require('../models/model');
 const jwt = require('jsonwebtoken');
 const enumm = require('../utils/enum.utils');
 const appConfig = require('../../config/config.json');
+const Logger = require('../externalService/log.service');
+const log = new Logger('index.js');
 
 module.exports.apiAuth = (...roles) => {
     return async function (req, res, next) {
@@ -148,7 +150,7 @@ module.exports.webAuth = (...roles) => {
         try {
             // res.session.returnUrl = req.originalUrl;
             // sess = req.session;
-            console.log("Auth Token",req.session?.user);
+            log.CreateLog(enumm.logFor.auth,"Auth Purpose (TOKEN)",req.session?.user);
             if (!req.session || !req.session.user) {
                 req.session.notification=[enumm.notification.Error,'Access denied. No credentials sent !'];
                 console.log('Access denied. No credentials sent !');
