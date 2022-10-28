@@ -24,7 +24,7 @@ const EmailSideBar = () => {
   const [modal, setmodal] = useState(false)
 
   return (
-    <React.Fragment>
+    <>
       <Card className="email-leftbar">
         <Button
           type="button"
@@ -196,7 +196,7 @@ const EmailSideBar = () => {
           </ModalFooter>
         </div>
       </Modal>
-    </React.Fragment>
+    </>
   )
 }
 

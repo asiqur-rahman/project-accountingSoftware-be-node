@@ -41,7 +41,7 @@ const FormUpload = () => {
   }
 
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
 
         <Breadcrumbs title="Form" breadcrumbItem="Form File Upload" />
@@ -127,7 +127,7 @@ const FormUpload = () => {
         </Row>
 
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

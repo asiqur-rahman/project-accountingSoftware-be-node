@@ -15,7 +15,7 @@ import Breadcrumbs from "../../components/Common/Breadcrumb"
 
 const UiAlert = () => {
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
        
           <Breadcrumbs title="UI Elements" breadcrumbItem="Alerts" />
@@ -209,7 +209,7 @@ const UiAlert = () => {
             </Col>
           </Row>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

@@ -19,14 +19,14 @@ const stackedbarchart = () => {
     },
   }
   return (
-    <React.Fragment>
+    <>
       <ChartistGraph
         data={barChartData}
         style={{ height: "300px" }}
         options={barChartOptions}
         type={"Bar"}
       />
-    </React.Fragment>
+    </>
   )
 }
 

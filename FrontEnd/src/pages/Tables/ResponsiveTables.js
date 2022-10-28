@@ -8,7 +8,7 @@ import Breadcrumbs from "../../components/Common/Breadcrumb"
 
 const ResponsiveTables = () => {
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
 
         <Breadcrumbs title="Tables" breadcrumbItem="Responsive Table" />
@@ -561,7 +561,7 @@ const ResponsiveTables = () => {
         </Row>
       </div>
 
-    </React.Fragment>
+    </>
   )
 }
 

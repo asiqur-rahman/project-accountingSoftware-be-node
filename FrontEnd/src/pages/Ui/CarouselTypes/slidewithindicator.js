@@ -91,7 +91,7 @@ class Slidewithindicator extends Component {
     })
 
     return (
-      <React.Fragment>
+      <>
         <Carousel
           activeIndex={activeIndex}
           next={this.next}
@@ -114,7 +114,7 @@ class Slidewithindicator extends Component {
             onClickHandler={this.next}
           />
         </Carousel>
-      </React.Fragment>
+      </>
     )
   }
 }

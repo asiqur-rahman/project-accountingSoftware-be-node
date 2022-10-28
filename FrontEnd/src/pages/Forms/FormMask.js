@@ -146,7 +146,7 @@ const FormMask = () => {
   )
 
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
 
         <Breadcrumbs title="Form" breadcrumbItem="Form Mask" />
@@ -247,7 +247,7 @@ const FormMask = () => {
         </Row>
 
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

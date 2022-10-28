@@ -52,7 +52,7 @@ const UiSweetAlert = () => {
   }
 
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
        
           <Breadcrumbs title="UI Elements" breadcrumbItem="SweetAlert" />
@@ -567,7 +567,7 @@ const UiSweetAlert = () => {
             </CardBody>
           </Card>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

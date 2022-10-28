@@ -42,7 +42,7 @@ const Overview = () => {
     ]
 
     return (
-        <React.Fragment>
+        <>
             <Col lg={4}>
                 <Card>
                     <CardBody>
@@ -77,7 +77,7 @@ const Overview = () => {
                     </CardBody>
                 </Card>
             </Col>
-        </React.Fragment>
+        </>
     )
 }
 

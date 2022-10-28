@@ -90,9 +90,9 @@ const LineChartToast = props => {
   }
 
   return (
-    <React.Fragment>
+    <>
       <LineChart data={data} options={options} />
-    </React.Fragment>
+    </>
   )
 }
 export default LineChartToast

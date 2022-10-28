@@ -17,7 +17,7 @@ const UiButtons = () => {
   const [drp_link, setdrp_link] = useState(false)
 
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
         <Breadcrumbs title="UI Elements" breadcrumbItem="Buttons" />
 
@@ -733,7 +733,7 @@ const UiButtons = () => {
           </Col>
         </Row>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

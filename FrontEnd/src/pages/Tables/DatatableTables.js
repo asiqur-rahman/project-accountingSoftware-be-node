@@ -507,7 +507,7 @@ const DatatableTables = () => {
   }
 
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
 
         <Breadcrumbs title="Tables" breadcrumbItem="Data Tables" />
@@ -549,7 +549,7 @@ const DatatableTables = () => {
         </Row>
       </div>
 
-    </React.Fragment>
+    </>
   )
 }
 

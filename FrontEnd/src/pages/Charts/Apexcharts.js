@@ -18,7 +18,7 @@ import Breadcrumbs from "../../components/Common/Breadcrumb"
 
 const Apexchart = () => {
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
 
         <Breadcrumbs title="Charts" breadcrumbItem="Apex charts" />
@@ -125,7 +125,7 @@ const Apexchart = () => {
         </Row>
       </div>
 
-    </React.Fragment>
+    </>
   )
 }
 

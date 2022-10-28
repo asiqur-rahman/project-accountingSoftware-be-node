@@ -104,7 +104,7 @@ class UiImageCropper extends Component {
 
   render() {
     return (
-      <React.Fragment>
+      <>
         <div className="page-content">
           <div className="container-fluid">
             <Breadcrumbs title="UI Elements" breadcrumbItem="Image Cropper" />
@@ -767,7 +767,7 @@ class UiImageCropper extends Component {
             </Row>
           </div>
         </div>
-      </React.Fragment>
+      </>
     )
   }
 }

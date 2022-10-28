@@ -79,7 +79,7 @@ const Header = (props) => {
 }
 
   return (
-    <React.Fragment>
+    <>
       <header id="page-topbar">
         <div className="navbar-header">
           <Container fluid>
@@ -382,7 +382,7 @@ const Header = (props) => {
           </Container>
         </div>
       </header>
-    </React.Fragment>
+    </>
   );
 };
 

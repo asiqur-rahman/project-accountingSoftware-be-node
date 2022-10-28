@@ -11,14 +11,14 @@ const piechart = () => {
   }
 
   return (
-    <React.Fragment>
+    <>
       <ChartistGraph
         data={pieChartData}
         options={pieChartOptions}
         style={{ height: "300px" }}
         type={"Pie"}
       />
-    </React.Fragment>
+    </>
   )
 }
 export default piechart

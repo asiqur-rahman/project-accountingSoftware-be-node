@@ -3,7 +3,7 @@ import { Card, CardBody, CardTitle, Input } from 'reactstrap';
 
 function SocialSource() {
     return (
-        <React.Fragment>
+        <>
             <Card>
                 <CardBody>
                     <div className="float-end">
@@ -77,7 +77,7 @@ function SocialSource() {
 
                 </CardBody>
             </Card>
-        </React.Fragment>
+        </>
     );
 }
 

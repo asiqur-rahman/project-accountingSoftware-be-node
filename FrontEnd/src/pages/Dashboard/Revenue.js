@@ -7,7 +7,7 @@ const map = React.createRef(null)
 const Overview = () => {
     
     return (
-        <React.Fragment>
+        <>
             <Col lg={6}>
                 <Card>
                     <CardBody>
@@ -78,7 +78,7 @@ const Overview = () => {
                     </CardBody>
                 </Card>
             </Col>
-        </React.Fragment>
+        </>
     )
 }
 

@@ -52,7 +52,7 @@ const IconFontawesome = props => {
   })
 
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
        
           <Breadcrumbs title="Icons" breadcrumbItem="Font awesome" />
@@ -96,7 +96,7 @@ const IconFontawesome = props => {
             </Col>
           </Row>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

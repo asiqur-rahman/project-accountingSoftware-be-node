@@ -15,7 +15,7 @@ const Pages500 = () => {
   });
 
   return (
-    <React.Fragment>
+    <>
       <div className="account-pages my-5 pt-sm-5">
         <Container>
           <Row className="justify-content-center">
@@ -45,7 +45,7 @@ const Pages500 = () => {
           </Row>
         </Container>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

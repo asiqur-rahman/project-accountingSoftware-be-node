@@ -20,14 +20,14 @@ const dountchart = () => {
   }
 
   return (
-    <React.Fragment>
+    <>
       <ChartistGraph
         style={{ height: "300px" }}
         data={dountChartData}
         options={dountChartOptions}
         type={"Pie"}
       />
-    </React.Fragment>
+    </>
   )
 }
 export default dountchart

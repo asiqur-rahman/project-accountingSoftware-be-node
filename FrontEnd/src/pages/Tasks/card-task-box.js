@@ -9,7 +9,7 @@ import avatar5 from "../../assets/images/users/avatar-5.jpg"
 
 const CardTaskBox = props => {
   return (
-    <React.Fragment>
+    <>
       <Card className="task-box">
         <CardBody className="borad-width">
           <div className="float-end ms-2">
@@ -63,7 +63,7 @@ const CardTaskBox = props => {
           </div>
         </CardBody>
       </Card>
-    </React.Fragment>
+    </>
   )
 }
 

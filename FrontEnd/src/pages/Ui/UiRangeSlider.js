@@ -37,7 +37,7 @@ const UiRangeSlider = () => {
   }
 
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
        
           <Breadcrumbs title="UI Elements" breadcrumbItem="Range Slider" />
@@ -216,7 +216,7 @@ const UiRangeSlider = () => {
             </Col>
           </Row>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

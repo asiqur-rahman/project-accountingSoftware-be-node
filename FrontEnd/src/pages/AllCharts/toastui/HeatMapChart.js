@@ -112,9 +112,9 @@ const ProfileMenu = props => {
   }
 
   return (
-    <React.Fragment>
+    <>
       <HeatMapChart data={data} options={options} theme={theme} />
-    </React.Fragment>
+    </>
   )
 }
 export default HeatMapChart

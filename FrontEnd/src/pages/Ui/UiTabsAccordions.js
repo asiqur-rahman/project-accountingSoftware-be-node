@@ -56,7 +56,7 @@ const UiTabsAccordions = () => {
 
 
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
 
         <Breadcrumbs title="UI Elements" breadcrumbItem="Tabs & Accordions" />
@@ -681,7 +681,7 @@ const UiTabsAccordions = () => {
           </Col>
         </Row>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

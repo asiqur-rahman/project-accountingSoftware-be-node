@@ -14,7 +14,7 @@ import Breadcrumbs from "../../components/Common/Breadcrumb"
 
 const MapsVector = () => {
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
 
         <Breadcrumbs title="Maps" breadcrumbItem="Vector Maps" />
@@ -98,7 +98,7 @@ const MapsVector = () => {
           </Col>
         </Row>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

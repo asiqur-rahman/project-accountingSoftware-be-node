@@ -16,7 +16,7 @@ import Candlestick from "../AllCharts/echart/candlestickchart"
 
 const EChart = () => {
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
        
           {/* Render Breadcrumb */}
@@ -110,7 +110,7 @@ const EChart = () => {
             </Col>
           </Row>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

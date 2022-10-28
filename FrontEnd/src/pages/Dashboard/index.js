@@ -19,7 +19,7 @@ import Inbox  from './Inbox';
 const Dashboard = () => {
 
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
   
         <Row>
@@ -150,7 +150,7 @@ const Dashboard = () => {
         </Row>
 
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

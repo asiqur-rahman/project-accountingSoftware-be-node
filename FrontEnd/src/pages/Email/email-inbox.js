@@ -14,7 +14,7 @@ import EmailToolbar from "./email-toolbar"
 
 const EmailInbox = () => {
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
           {/* Render Breadcrumbs */}
           <Breadcrumbs title="Email" breadcrumbItem="Inbox" />
@@ -477,7 +477,7 @@ const EmailInbox = () => {
             </Col>
           </Row>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

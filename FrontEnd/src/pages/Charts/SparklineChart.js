@@ -14,7 +14,7 @@ import {
 
 const SparklineChart = () => {
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
         {/* Render Breadcrumb */}
         <Breadcrumbs title="Charts" breadcrumbItem="Sparkline charts" />
@@ -212,7 +212,7 @@ const SparklineChart = () => {
         </Row>
       </div>
 
-    </React.Fragment>
+    </>
   )
 }
 

@@ -30,14 +30,14 @@ const barchart = () => {
   }
 
   return (
-    <React.Fragment>
+    <>
       <ChartistGraph
         style={{ height: "300px" }}
         data={barChartData}
         options={barChartOptions}
         type={"Bar"}
       />
-    </React.Fragment>
+    </>
   )
 }
 

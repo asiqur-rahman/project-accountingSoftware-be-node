@@ -53,7 +53,7 @@ const Header = props => {
     }
   }
   return (
-    <React.Fragment>
+    <>
       <div className="navbar-header">
         <div className="d-flex">
           <div className="navbar-brand-box">
@@ -163,7 +163,7 @@ const Header = props => {
 
 
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

@@ -86,7 +86,7 @@ class Slide extends Component {
     })
 
     return (
-      <React.Fragment>
+      <>
         <Carousel
           activeIndex={activeIndex}
           next={this.next}
@@ -94,7 +94,7 @@ class Slide extends Component {
         >
           {slides}
         </Carousel>
-      </React.Fragment>
+      </>
     )
   }
 }

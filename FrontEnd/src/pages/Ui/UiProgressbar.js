@@ -6,7 +6,7 @@ import Breadcrumbs from "../../components/Common/Breadcrumb"
 
 const UiProgressbar = () => {
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
        
           <Breadcrumbs title="UI Elements" breadcrumbItem="Progress Bars" />
@@ -228,7 +228,7 @@ const UiProgressbar = () => {
             </Col>
           </Row>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

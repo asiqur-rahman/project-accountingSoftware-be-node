@@ -27,7 +27,7 @@ const ChartsKnob = () => {
   }
 
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
         
           <Breadcrumbs title="Charts" breadcrumbItem="Jquery Knob charts" />
@@ -189,7 +189,7 @@ const ChartsKnob = () => {
             </Col>
           </Row>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

@@ -49,7 +49,7 @@ const options= {
 
 const YearlySale = () => {
     return (
-        <React.Fragment>
+        <>
             <Card>
                 <CardBody>
                     <CardTitle className="h4 mb-4">Yearly sales</CardTitle>
@@ -64,7 +64,7 @@ const YearlySale = () => {
 
                 </CardBody>
             </Card>
-        </React.Fragment>
+        </>
     )
 }
 

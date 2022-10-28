@@ -3,7 +3,7 @@ import { Card, CardBody, CardTitle, Row, Col } from 'reactstrap';
 
 function PopularProduct() {
     return (
-        <React.Fragment>
+        <>
             <Card>
                 <CardBody>
                     <CardTitle className="h4 mb-4">Popular Products</CardTitle>
@@ -74,7 +74,7 @@ function PopularProduct() {
                     </div>
                 </CardBody>
             </Card>
-        </React.Fragment>
+        </>
     );
 }
 

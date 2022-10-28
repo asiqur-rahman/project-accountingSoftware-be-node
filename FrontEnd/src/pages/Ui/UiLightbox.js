@@ -45,7 +45,7 @@ const UiLightbox = () => {
   const [modal, setmodal] = useState(false)
 
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
 
         <Breadcrumbs title="UI Elements" breadcrumbItem="Lightbox" />
@@ -430,7 +430,7 @@ const UiLightbox = () => {
           </Col>
         </Row>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

@@ -19,7 +19,7 @@ import Breadcrumbs from "../../components/Common/Breadcrumb"
 
 const FormEditors = () => {
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
 
           <Breadcrumbs title="Form" breadcrumbItem="Form Editors" />
@@ -48,7 +48,7 @@ const FormEditors = () => {
           </Row>
       
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

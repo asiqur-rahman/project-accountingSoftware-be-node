@@ -15,7 +15,7 @@ import Breadcrumbs from "../../components/Common/Breadcrumb"
 
 const MapsLeaflet = () => {
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
 
         <Breadcrumbs title="Maps" breadcrumbItem="Leaflet" />
@@ -95,7 +95,7 @@ const MapsLeaflet = () => {
           </Col>
         </Row>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

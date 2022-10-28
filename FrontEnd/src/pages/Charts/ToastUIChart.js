@@ -27,7 +27,7 @@ const ToastUIChart = () => {
       : parseInt(window.innerWidth - 100)
 
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
        
           <Breadcrumbs title="Charts" breadcrumbItem="Toast Ui charts" />
@@ -179,7 +179,7 @@ const ToastUIChart = () => {
             </Col>
           </Row>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

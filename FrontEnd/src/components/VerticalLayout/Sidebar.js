@@ -11,7 +11,7 @@ import avatar2 from "../../assets/images/users/avatar-2.jpg"
 
 const Sidebar = props => {
   return (
-    <React.Fragment>
+    <>
       <div className="vertical-menu">
         <div className="h-100">
           <div className="user-wid text-center py-4">
@@ -29,7 +29,7 @@ const Sidebar = props => {
           </div>
           </div>
         </div>
-    </React.Fragment>
+    </>
   )
 }
 

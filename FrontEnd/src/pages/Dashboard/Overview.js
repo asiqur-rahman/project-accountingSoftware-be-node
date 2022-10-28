@@ -3,7 +3,7 @@ import { Card, CardBody, Col, Row } from 'reactstrap';
 
 const Overview = () => {
     return (
-        <React.Fragment>
+        <>
             <Col xl={3}>
                 <Card>
                     <CardBody>
@@ -75,7 +75,7 @@ const Overview = () => {
                     </CardBody>
                 </Card>
             </Col>
-        </React.Fragment>
+        </>
     )
 }
 

@@ -3,7 +3,7 @@ import { Container, Row, Col } from "reactstrap"
 
 const Footer = () => {
   return (
-    <React.Fragment>
+    <>
       <footer className="footer">
         <Container fluid={true}>
           <Row>
@@ -16,7 +16,7 @@ const Footer = () => {
           </Row>
         </Container>
       </footer>
-    </React.Fragment>
+    </>
   )
 }
 

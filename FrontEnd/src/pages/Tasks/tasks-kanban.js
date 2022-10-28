@@ -24,7 +24,7 @@ const TasksKanban = props => {
   data.length = Math.min(data.length, 3)
 
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
           {/* Render Breadcrumbs */}
           <Breadcrumbs title="Tasks" breadcrumbItem="Kanban Board" />
@@ -32,7 +32,7 @@ const TasksKanban = props => {
             <UncontrolledBoard board={{ columns: data }} content={tasks} />
           )}
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

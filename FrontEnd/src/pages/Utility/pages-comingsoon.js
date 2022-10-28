@@ -42,7 +42,7 @@ const PagesComingsoon = () => {
   }
 
   return (
-    <React.Fragment>
+    <>
       <div className="home-btn d-none d-sm-block">
         <a href="/" className="text-white"><i className="fas fa-home h2"></i></a>
       </div>
@@ -78,7 +78,7 @@ const PagesComingsoon = () => {
           </Row>
         </Container>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

@@ -6,7 +6,7 @@ import Breadcrumbs from "../../components/Common/Breadcrumb"
 
 const UiColors = () => {
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
 
         <Breadcrumbs title="UI Elements" breadcrumbItem="Colors" />
@@ -129,7 +129,7 @@ const UiColors = () => {
           </Col>
         </Row>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

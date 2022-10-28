@@ -67,7 +67,7 @@ class UiSessionTimeout extends Component {
   }
   render() {
     return (
-      <React.Fragment>
+      <>
         <div className="page-content">
          
             {this.state.timeralert}
@@ -115,7 +115,7 @@ class UiSessionTimeout extends Component {
               </Col>
             </Row>
         </div>
-      </React.Fragment>
+      </>
     )
   }
 }

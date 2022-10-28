@@ -87,9 +87,9 @@ const RadialChartToast = props => {
     },
   }
   return (
-    <React.Fragment>
+    <>
       <RadialChart data={data} options={options} theme={theme} />
-    </React.Fragment>
+    </>
   )
 }
 export default RadialChartToast

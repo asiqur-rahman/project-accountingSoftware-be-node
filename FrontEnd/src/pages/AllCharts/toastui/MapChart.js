@@ -245,9 +245,9 @@ const MapChartToast = () => {
     },
   }
   return (
-    <React.Fragment>
+    <>
       <MapChart data={data} options={options} theme={theme} />
-    </React.Fragment>
+    </>
   )
 }
 export default MapChartToast

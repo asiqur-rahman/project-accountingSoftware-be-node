@@ -5,7 +5,7 @@ import { Badge, Card, CardBody, CardTitle, Input, Label, Table } from "reactstra
 
 const CardTasks = props => {
   return (
-    <React.Fragment>
+    <>
       <Card>
         <CardBody>
           <CardTitle className="mb-4">{props.taskTitle}</CardTitle>
@@ -86,7 +86,7 @@ const CardTasks = props => {
           </div>
         </CardBody>
       </Card>
-    </React.Fragment>
+    </>
   )
 }
 

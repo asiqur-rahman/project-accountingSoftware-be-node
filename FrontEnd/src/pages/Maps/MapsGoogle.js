@@ -17,7 +17,7 @@ const MapsGoogle = props => {
   }
 
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
         <div className="container-fluid">
           <Breadcrumbs title="Maps" breadcrumbItem="Google Maps" />
@@ -160,7 +160,7 @@ const MapsGoogle = props => {
           </Row>
         </div>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

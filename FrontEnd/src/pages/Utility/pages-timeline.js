@@ -11,7 +11,7 @@ import img5 from "../../assets/images/small/img-5.jpg"
 const PagesTimeline = () => {
 
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
         {/* Render Breadcrumbs */}
         <Breadcrumbs title="Pages" breadcrumbItem="Timeline" />
@@ -168,7 +168,7 @@ const PagesTimeline = () => {
           </Col>
         </Row>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

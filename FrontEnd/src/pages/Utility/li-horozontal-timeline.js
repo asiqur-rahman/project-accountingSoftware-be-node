@@ -3,7 +3,7 @@ import React from "react"
 
 const LiHorizontalTimeline = props => {
   return (
-    <React.Fragment>
+    <>
       <div
         className={
           props.event.id === 3 ? "item event-list active" : "item event-list"
@@ -25,7 +25,7 @@ const LiHorizontalTimeline = props => {
           </div>
         </div>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

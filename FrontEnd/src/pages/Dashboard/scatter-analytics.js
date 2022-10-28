@@ -44,7 +44,7 @@ const scatterChart = () => {
     }
 
     return (
-        <React.Fragment>
+        <>
             <Card>
                 <CardBody>
                     <h4 className="card-title mb-4">Monthly Sales</h4>
@@ -61,7 +61,7 @@ const scatterChart = () => {
             </Card>
 
 
-        </React.Fragment>
+        </>
     )
 }
 

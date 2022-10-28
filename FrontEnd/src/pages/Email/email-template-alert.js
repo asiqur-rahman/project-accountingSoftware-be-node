@@ -8,7 +8,7 @@ import Breadcrumbs from "../../components/Common/Breadcrumb"
 
 const EmailAlertTemplte = () => {
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
           <Breadcrumbs title="Email Template" breadcrumbItem="Alert Email" />
 
@@ -377,7 +377,7 @@ const EmailAlertTemplte = () => {
             </Col>
           </Row>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

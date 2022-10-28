@@ -24,7 +24,7 @@ const TasksList = props => {
   const recentTasks = tasks.find(task => task.title === "Recent Tasks")
 
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
         
           <Breadcrumbs title="Tasks" breadcrumbItem="Task List" />
@@ -206,7 +206,7 @@ const TasksList = props => {
             </Col>
           </Row>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

@@ -114,9 +114,9 @@ const TreeMapChartToast = props => {
   }
 
   return (
-    <React.Fragment>
+    <>
       <TreeMapChart data={data} options={options} theme={theme} />
-    </React.Fragment>
+    </>
   )
 }
 export default TreeMapChartToast

@@ -13,7 +13,7 @@ const EmailToolbar = () => {
   const [more_Menu, setmore_Menu] = useState(false)
 
   return (
-    <React.Fragment>
+    <>
       <div className="btn-toolbar p-3" role="toolbar">
         <div className="btn-group me-2 mb-2 mb-sm-0">
           <Button
@@ -100,7 +100,7 @@ const EmailToolbar = () => {
           </DropdownMenu>
         </Dropdown>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

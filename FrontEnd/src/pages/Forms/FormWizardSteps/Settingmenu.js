@@ -14,7 +14,7 @@ class SettingMenu extends Component {
 
   render() {
     return (
-      <React.Fragment>
+      <>
         <Dropdown
           isOpen={this.state.setting_menu}
           toggle={() =>
@@ -43,7 +43,7 @@ class SettingMenu extends Component {
             </DropdownItem>
           </DropdownMenu>
         </Dropdown>
-      </React.Fragment>
+      </>
     )
   }
 }

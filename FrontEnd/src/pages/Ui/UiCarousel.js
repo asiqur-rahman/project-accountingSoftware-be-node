@@ -19,7 +19,7 @@ import Breadcrumbs from "../../components/Common/Breadcrumb"
 
 const UiCarousel = () => {
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
        
           <Breadcrumbs title="UI Elements" breadcrumbItem="Carousel" />
@@ -92,7 +92,7 @@ const UiCarousel = () => {
             </Col>
           </Row>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

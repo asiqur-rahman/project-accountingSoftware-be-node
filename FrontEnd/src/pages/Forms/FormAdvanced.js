@@ -322,7 +322,7 @@ const FormAdvanced = () => {
   };
 
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
         <Breadcrumbs title="Form" breadcrumbItem="Form Advanced" />
 
@@ -1331,7 +1331,7 @@ const FormAdvanced = () => {
           </Col>
         </Row>
       </div>
-    </React.Fragment>
+    </>
   );
 };
 

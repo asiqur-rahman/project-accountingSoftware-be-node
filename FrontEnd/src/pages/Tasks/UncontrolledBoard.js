@@ -8,7 +8,7 @@ import RenderCardTitle from "./render-card-title"
 const UncontrolledBoard = props => {
   const content = props.board
   return (
-    <React.Fragment>
+    <>
       <Row className="mb-4">
         <Col>
           <Board
@@ -28,7 +28,7 @@ const UncontrolledBoard = props => {
           />
         </Col>
       </Row>
-    </React.Fragment>
+    </>
   )
 }
 

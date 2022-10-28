@@ -47,7 +47,7 @@ const columns = [
 
 const EditableTables = () => {
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
 
         <Breadcrumbs title="Tables" breadcrumbItem="Editable Table" />
@@ -73,7 +73,7 @@ const EditableTables = () => {
         </Row>
       </div>
 
-    </React.Fragment>
+    </>
   )
 }
 

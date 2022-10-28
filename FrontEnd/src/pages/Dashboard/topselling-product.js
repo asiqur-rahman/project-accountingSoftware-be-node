@@ -37,7 +37,7 @@ const TopProduct = () => {
     ]
 
     return (
-        <React.Fragment>
+        <>
             <Card>
                 <CardBody>
                     <div className="float-end">
@@ -73,7 +73,7 @@ const TopProduct = () => {
                     ))}
                 </CardBody>
             </Card>
-        </React.Fragment>
+        </>
     )
 }
 

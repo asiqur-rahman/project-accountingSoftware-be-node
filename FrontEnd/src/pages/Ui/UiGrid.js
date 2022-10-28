@@ -5,7 +5,7 @@ import Breadcrumbs from "../../components/Common/Breadcrumb"
 
 const UiGrid = () => {
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
 
         <Breadcrumbs title="UI Elements" breadcrumbItem="Grid" />
@@ -110,7 +110,7 @@ const UiGrid = () => {
 
         </div>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

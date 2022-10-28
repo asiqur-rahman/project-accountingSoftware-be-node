@@ -43,7 +43,7 @@ const options= {
 
 const EarningChart = () => {
     return (
-        <React.Fragment>
+        <>
             <Card>
                 <CardBody>
                     <CardTitle className="h4 mb-4">Earning</CardTitle>
@@ -89,7 +89,7 @@ const EarningChart = () => {
                     </Row>
                 </CardBody>
             </Card>
-        </React.Fragment>
+        </>
     )
 }
 

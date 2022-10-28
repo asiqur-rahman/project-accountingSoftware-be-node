@@ -89,9 +89,9 @@ const DonutChartToast = props => {
   }
 
   return (
-    <React.Fragment>
+    <>
       <PieChart data={data} options={options} theme={theme} />
-    </React.Fragment>
+    </>
   )
 }
 export default DonutChartToast

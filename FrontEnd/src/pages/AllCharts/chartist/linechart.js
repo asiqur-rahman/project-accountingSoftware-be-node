@@ -18,14 +18,14 @@ const linechart = () => {
   }
 
   return (
-    <React.Fragment>
+    <>
       <ChartistGraph
         data={lineChartData}
         options={lineChartOptions}
         type={"Line"}
         style={{ height: "300px" }}
       />
-    </React.Fragment>
+    </>
   )
 }
 export default linechart

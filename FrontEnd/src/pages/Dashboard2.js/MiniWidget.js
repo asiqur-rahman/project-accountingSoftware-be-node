@@ -3,7 +3,7 @@ import { Card, CardBody, Row, Progress } from 'reactstrap';
 
 const MiniWidget = () => {
     return (
-        <React.Fragment>
+        <>
             <Card>
                 <CardBody>
                     <Row className="align-items-center">
@@ -79,7 +79,7 @@ const MiniWidget = () => {
                     </Row>
                 </CardBody>
             </Card>
-        </React.Fragment>
+        </>
     )
 }
 

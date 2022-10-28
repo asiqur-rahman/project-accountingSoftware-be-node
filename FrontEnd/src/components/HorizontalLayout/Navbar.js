@@ -65,7 +65,7 @@ const Navbar = props => {
   }
 
   return (
-    <React.Fragment>
+    <>
       <div className="topnav">
         <nav
           className="navbar navbar-light navbar-expand-lg topnav-menu"
@@ -520,7 +520,7 @@ const Navbar = props => {
           </Collapse>
         </nav>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

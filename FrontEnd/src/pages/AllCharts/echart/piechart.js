@@ -46,9 +46,9 @@ class Pie extends Component {
   }
   render() {
     return (
-      <React.Fragment>
+      <>
         <ReactEcharts style={{ height: "350px" }} option={this.getOption()} />
-      </React.Fragment>
+      </>
     )
   }
 }

@@ -91,7 +91,7 @@ class Slidewithfade extends Component {
     })
 
     return (
-      <React.Fragment>
+      <>
         <Carousel
           activeIndex={activeIndex}
           fade={true}
@@ -115,7 +115,7 @@ class Slidewithfade extends Component {
             onClickHandler={this.next}
           />
         </Carousel>
-      </React.Fragment>
+      </>
     )
   }
 }

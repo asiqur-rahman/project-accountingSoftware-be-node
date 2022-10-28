@@ -5,7 +5,7 @@ import { Card, CardBody, Col } from "reactstrap"
 
 const CardPricing = props => {
   return (
-    <React.Fragment>
+    <>
       <Col xl="3" md="6">
         <Card className="plan-box">
           <CardBody className="p-4">
@@ -42,7 +42,7 @@ const CardPricing = props => {
           </CardBody>
         </Card>
       </Col>
-    </React.Fragment>
+    </>
   )
 }
 

@@ -68,9 +68,9 @@ const PieChartToast = props => {
     },
   }
   return (
-    <React.Fragment>
+    <>
       <PieChart data={data} options={options} />
-    </React.Fragment>
+    </>
   )
 }
 export default PieChartToast

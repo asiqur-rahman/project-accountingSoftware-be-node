@@ -18,7 +18,7 @@ const BasicElements = () => {
   const [toggleSwitch, settoggleSwitch] = useState(true)
 
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
 
         <Breadcrumbs title="Form" breadcrumbItem="Form Elements" />
@@ -563,7 +563,7 @@ const BasicElements = () => {
 
 
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

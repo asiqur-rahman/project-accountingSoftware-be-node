@@ -14,7 +14,7 @@ import Breadcrumbs from "../../components/Common/Breadcrumb"
 
 const BasicTable = () => {
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
         <Breadcrumbs title="Tables" breadcrumbItem="Basic Tables" />
 
@@ -573,7 +573,7 @@ const BasicTable = () => {
         </Row>
       </div>
 
-    </React.Fragment>
+    </>
   )
 }
 

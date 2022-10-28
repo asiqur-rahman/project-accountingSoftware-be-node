@@ -8,7 +8,7 @@ import logolight from "../../assets/images/logo-light.png"
 
 const ConfirmMail = () => {
   return (
-    <React.Fragment>
+    <>
       <div className="account-pages my-5 pt-sm-5">
         <Container>
           <Row>
@@ -70,7 +70,7 @@ const ConfirmMail = () => {
           </Row>
         </Container>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

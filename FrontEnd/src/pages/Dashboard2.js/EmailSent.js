@@ -59,7 +59,7 @@ const options= {
 
 const Breadcrumb = props => {
     return (
-        <React.Fragment>
+        <>
             <Col lg={6}>
                 <Card>
                     <CardBody>
@@ -88,7 +88,7 @@ const Breadcrumb = props => {
                     </CardBody>
                 </Card>
             </Col>
-        </React.Fragment>
+        </>
     )
 }
 

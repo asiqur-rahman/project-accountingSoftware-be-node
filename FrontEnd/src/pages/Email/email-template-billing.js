@@ -7,7 +7,7 @@ import Breadcrumbs from "../../components/Common/Breadcrumb"
 
 const EmailTemplateBilling = () => {
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
         
           <Breadcrumbs
@@ -623,7 +623,7 @@ const EmailTemplateBilling = () => {
             </Col>
           </Row>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

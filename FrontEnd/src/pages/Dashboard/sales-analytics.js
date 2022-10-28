@@ -26,7 +26,7 @@ class SalesAnalytics extends Component {
   }
   render() {
     return (
-      <React.Fragment>
+      <>
         <Card>
           <CardBody>
             <h4 className="card-title mb-4">Sales Analytics</h4>
@@ -72,7 +72,7 @@ class SalesAnalytics extends Component {
             </Row>
           </CardBody>
         </Card>
-      </React.Fragment>
+      </>
     )
   }
 }

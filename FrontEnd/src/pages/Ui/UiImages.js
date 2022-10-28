@@ -21,7 +21,7 @@ import Breadcrumbs from "../../components/Common/Breadcrumb"
 
 const UiImages = () => {
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
        
           <Breadcrumbs title="UI Elements" breadcrumbItem="Images" />
@@ -161,7 +161,7 @@ const UiImages = () => {
             </Col>
           </Row>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

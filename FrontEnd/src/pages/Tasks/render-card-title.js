@@ -10,7 +10,7 @@ import {
 
 const RenderCardTitle = props => {
   return (
-    <React.Fragment>
+    <>
       <UncontrolledDropdown className="float-end">
         <DropdownToggle href="#" className="arrow-none" tag="i">
           <i className="mdi mdi-dots-vertical m-0 text-muted h5"/>
@@ -21,7 +21,7 @@ const RenderCardTitle = props => {
         </DropdownMenu>
       </UncontrolledDropdown>
       <CardTitle className="mb-4">{props.title}</CardTitle>
-    </React.Fragment>
+    </>
   )
 }
 

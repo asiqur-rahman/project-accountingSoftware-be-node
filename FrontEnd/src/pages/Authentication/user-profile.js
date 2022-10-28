@@ -54,7 +54,7 @@ const UserProfile = props => {
 
 
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
         
           {/* Render Breadcrumb */}
@@ -123,7 +123,7 @@ const UserProfile = props => {
             </CardBody>
           </Card>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

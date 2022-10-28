@@ -33,7 +33,7 @@ const UiGeneral = () => {
   const [tright, settright] = useState(false)
 
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
        
           <Breadcrumbs title="UI Elements" breadcrumbItem="General" />
@@ -633,7 +633,7 @@ const UiGeneral = () => {
             </Col>
           </Row>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

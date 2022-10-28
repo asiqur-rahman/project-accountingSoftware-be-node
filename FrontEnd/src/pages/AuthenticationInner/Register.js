@@ -31,7 +31,7 @@ const Register = props => {
   });
 
   return (
-    <React.Fragment>
+    <>
       <div className="home-btn d-none d-sm-block">
         <Link to="/" className="text-dark">
           <i className="fas fa-home h2"></i>
@@ -138,7 +138,7 @@ const Register = props => {
           </Row>
           </Container>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

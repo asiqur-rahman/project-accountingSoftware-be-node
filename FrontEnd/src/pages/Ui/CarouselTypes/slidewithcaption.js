@@ -96,7 +96,7 @@ class Slidewithcaption extends Component {
     })
 
     return (
-      <React.Fragment>
+      <>
         <Carousel
           activeIndex={activeIndex}
           next={this.next}
@@ -114,7 +114,7 @@ class Slidewithcaption extends Component {
             onClickHandler={this.next}
           />
         </Carousel>
-      </React.Fragment>
+      </>
     )
   }
 }

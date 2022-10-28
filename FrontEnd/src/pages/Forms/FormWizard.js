@@ -31,7 +31,7 @@ const FormWizard = () => {
   }
 
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
 
         <Breadcrumbs title="Forms" breadcrumbItem="Form Wizard" />
@@ -418,7 +418,7 @@ const FormWizard = () => {
          </Row>
 
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

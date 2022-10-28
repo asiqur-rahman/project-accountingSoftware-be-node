@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 
 const RenderCardColumn = () => {
   return (
-    <React.Fragment>
+    <>
       <div className="text-center">
         <Link
           to="#"
@@ -12,7 +12,7 @@ const RenderCardColumn = () => {
           <i className="mdi mdi-plus ms-1"/>
         </Link>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

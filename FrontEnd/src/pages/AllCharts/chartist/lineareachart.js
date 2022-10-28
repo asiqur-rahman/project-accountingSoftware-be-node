@@ -11,14 +11,14 @@ const lineareachart = () => {
     showArea: true
   }
   return (
-    <React.Fragment>
+    <>
       <ChartistGraph
         style={{ height: "300px" }}
         data={lineChartData}
         options={lineChartOptions}
         type={"Line"}
       />
-    </React.Fragment>
+    </>
   )
 }
 export default lineareachart

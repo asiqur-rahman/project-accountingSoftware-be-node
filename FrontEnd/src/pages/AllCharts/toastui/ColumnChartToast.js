@@ -95,9 +95,9 @@ const ColumnChartToast = props => {
   }
 
   return (
-    <React.Fragment>
+    <>
       <ColumnChart data={data} options={options} />
-    </React.Fragment>
+    </>
   )
 }
 export default ColumnChartToast

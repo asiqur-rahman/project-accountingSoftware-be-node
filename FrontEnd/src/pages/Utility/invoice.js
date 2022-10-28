@@ -11,7 +11,7 @@ import logoLight from "../../assets/images/logo-light.png";
 
 const invoice = () => {
     return (
-        <React.Fragment>
+        <>
             <div className="page-content">
                 <Breadcrumbs title="Pages" breadcrumbItem="Invoice" />
                 <Row>
@@ -125,7 +125,7 @@ const invoice = () => {
                     </Col>
                 </Row>
             </div>
-        </React.Fragment>
+        </>
     );
 }
 

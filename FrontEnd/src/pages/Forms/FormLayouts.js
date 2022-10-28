@@ -19,7 +19,7 @@ import Breadcrumbs from "../../components/Common/Breadcrumb"
 
 const FormLayouts = () => {
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
         <Container fluid={true}>
           <Breadcrumbs title="Form" breadcrumbItem="Form Layouts" />
@@ -346,7 +346,7 @@ const FormLayouts = () => {
         </Container>
         {/* container-fluid */}
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

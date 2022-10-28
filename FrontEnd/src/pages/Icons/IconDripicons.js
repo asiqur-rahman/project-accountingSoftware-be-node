@@ -7,7 +7,7 @@ import Breadcrumbs from "../../components/Common/Breadcrumb"
 
 const IconDripicons = () => {
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
         
           <Breadcrumbs title="Icons" breadcrumbItem="Dripicons" />
@@ -722,7 +722,7 @@ const IconDripicons = () => {
             </Col>
           </Row>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

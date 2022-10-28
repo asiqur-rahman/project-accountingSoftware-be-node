@@ -20,7 +20,7 @@ class NonAuthLayout extends Component {
       currentage + " | Brain Tech Solution - Responsive Bootstrap 5 Admin Dashboard"
   }
   render() {
-    return <React.Fragment>{this.props.children}</React.Fragment>
+    return <>{this.props.children}</>
   }
 }
 

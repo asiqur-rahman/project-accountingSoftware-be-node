@@ -23467,7 +23467,7 @@ const IconMaterialdesign = () => {
   })
 
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
         
           <Breadcrumbs title="Icons" breadcrumbItem="MDI" />
@@ -23586,7 +23586,7 @@ const IconMaterialdesign = () => {
             </Col>
           </Row>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

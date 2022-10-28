@@ -91,7 +91,7 @@ class Slideindividual extends Component {
     })
 
     return (
-      <React.Fragment>
+      <>
         <div className="carousel-inner">
           <Carousel
             activeIndex={activeIndex}
@@ -112,7 +112,7 @@ class Slideindividual extends Component {
           </Carousel>
         </div>
 
-      </React.Fragment>
+      </>
     )
   }
 }

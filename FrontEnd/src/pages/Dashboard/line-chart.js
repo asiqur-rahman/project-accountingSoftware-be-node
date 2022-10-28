@@ -59,7 +59,7 @@ const LineChart = () => {
     }
 
     return (
-        <React.Fragment>
+        <>
             <Card>
                 <CardBody>
                     <h4 className="card-title mb-4">Sales Report</h4>
@@ -73,7 +73,7 @@ const LineChart = () => {
                     />
                 </CardBody>
             </Card>
-        </React.Fragment>
+        </>
     )
 }
 

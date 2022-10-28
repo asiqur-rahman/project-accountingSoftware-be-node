@@ -10,7 +10,7 @@ class ActivityComp extends Component {
 
   render() {
     return (
-      <React.Fragment>
+      <>
         <Card>
           <CardBody>
             <CardTitle className="h4 mb-5">Activity</CardTitle>
@@ -106,7 +106,7 @@ class ActivityComp extends Component {
             </div>
           </CardBody>
         </Card>
-      </React.Fragment>
+      </>
     )
   }
 }

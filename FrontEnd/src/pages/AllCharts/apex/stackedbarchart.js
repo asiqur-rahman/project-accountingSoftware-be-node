@@ -94,14 +94,14 @@ class stackedbarchart extends Component {
   }
   render() {
     return (
-      <React.Fragment>
+      <>
         <ReactApexChart
           options={this.state.options}
           series={this.state.series}
           type="bar"
           height="290"
         />
-      </React.Fragment>
+      </>
     )
   }
 }

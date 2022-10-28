@@ -80,7 +80,7 @@ const FormValidations = () => {
   }
 
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
         
           <Breadcrumbs title="Form" breadcrumbItem="Form Validation" />
@@ -615,7 +615,7 @@ const FormValidations = () => {
           </Row>
         
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

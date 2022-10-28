@@ -66,7 +66,7 @@ const UiModal = () => {
   }
 
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
 
         <Breadcrumbs title="UI Elements" breadcrumbItem="Modals" />
@@ -714,7 +714,7 @@ const UiModal = () => {
           </Col>
         </Row>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

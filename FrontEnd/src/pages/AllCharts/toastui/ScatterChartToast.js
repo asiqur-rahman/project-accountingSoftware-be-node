@@ -609,9 +609,9 @@ const ScatterChartToast = props => {
     },
   }
   return (
-    <React.Fragment>
+    <>
       <ScatterChart data={data} options={options} />
-    </React.Fragment>
+    </>
   )
 }
 export default ScatterChartToast

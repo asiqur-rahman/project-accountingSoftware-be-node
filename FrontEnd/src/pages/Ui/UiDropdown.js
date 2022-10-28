@@ -44,7 +44,7 @@ const UiDropdown = () => {
   const [infodrp_up1111, setInfodrp_up1111] = useState(false)
 
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
 
           <Breadcrumbs title="UI Elements" breadcrumbItem="Dropdowns" />
@@ -645,7 +645,7 @@ const UiDropdown = () => {
           </Row>
         
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

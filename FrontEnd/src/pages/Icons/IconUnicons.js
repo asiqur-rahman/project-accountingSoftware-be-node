@@ -7,7 +7,7 @@ import Breadcrumbs from "../../components/Common/Breadcrumb"
 
 const IconBoxicons = props => {
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
        
           <Breadcrumbs title="Icons" breadcrumbItem="Boxicons" />
@@ -3229,7 +3229,7 @@ const IconBoxicons = props => {
             </Col>
           </Row>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

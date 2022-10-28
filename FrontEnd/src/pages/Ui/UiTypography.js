@@ -12,7 +12,7 @@ import Breadcrumbs from "../../components/Common/Breadcrumb"
 
 const UiTypography = () => {
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
 
         <Breadcrumbs title="UI Elements" breadcrumbItem="Typography" />
@@ -325,7 +325,7 @@ const UiTypography = () => {
           </Col>
         </Row>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

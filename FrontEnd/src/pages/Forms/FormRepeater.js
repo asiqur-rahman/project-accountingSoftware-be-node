@@ -37,7 +37,7 @@ const FormRepeater = () => {
   }
 
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
 
         <Breadcrumbs title="Forms" breadcrumbItem="Form Repeater" />
@@ -291,7 +291,7 @@ const FormRepeater = () => {
         </Row>
 
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

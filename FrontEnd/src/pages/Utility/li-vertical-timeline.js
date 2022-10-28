@@ -3,7 +3,7 @@ import React from "react"
 
 const LiVerticalTimeline = props => {
   return (
-    <React.Fragment>
+    <>
       <li className="event-list">
         <div className="event-timeline-dot">
           <i
@@ -28,7 +28,7 @@ const LiVerticalTimeline = props => {
           </div>
         </div>
       </li>
-    </React.Fragment>
+    </>
   )
 }
 

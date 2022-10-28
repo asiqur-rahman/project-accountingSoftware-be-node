@@ -12,7 +12,7 @@ import RadarChart from "../AllCharts/chartjs/radarchart"
 
 const ChartjsChart = () => {
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
 
         <Breadcrumbs title="Charts" breadcrumbItem="Chartjs charts" />
@@ -135,7 +135,7 @@ const ChartjsChart = () => {
           </Col>
         </Row>{" "}
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

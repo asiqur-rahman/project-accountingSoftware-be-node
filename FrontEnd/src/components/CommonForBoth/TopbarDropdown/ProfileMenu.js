@@ -38,7 +38,7 @@ const ProfileMenu = props => {
   }, [props.success])
 
   return (
-    <React.Fragment>
+    <>
       <Dropdown
         isOpen={menu}
         toggle={() => setMenu(!menu)}
@@ -83,7 +83,7 @@ const ProfileMenu = props => {
           </Link>
         </DropdownMenu>
       </Dropdown>
-    </React.Fragment>
+    </>
   )
 }
 

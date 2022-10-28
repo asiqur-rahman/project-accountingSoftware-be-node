@@ -15,7 +15,7 @@ import avatar8 from "../../assets/images/users/avatar-8.jpg"
 
 const TopUser = () => {
     return (
-        <React.Fragment>
+        <>
             <Card>
                 <CardBody>
                     <div className="float-end">
@@ -119,7 +119,7 @@ const TopUser = () => {
                     </SimpleBar>
                 </CardBody>
             </Card>
-        </React.Fragment>
+        </>
     )
 }
 

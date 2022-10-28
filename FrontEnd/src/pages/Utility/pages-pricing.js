@@ -79,7 +79,7 @@ const PagesPricing = () => {
     },
   ]
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
           {/* Render Breadcrumbs */}
           <Breadcrumbs title="Pages" breadcrumbItem="Pricing" />
@@ -103,7 +103,7 @@ const PagesPricing = () => {
             ))}
           </Row>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 export default PagesPricing

@@ -74,7 +74,7 @@ const options1 = {
 
 const Dashboard2 = () => {
     return (
-        <React.Fragment>
+        <>
             <div className="page-content">
                 <Breadcrumbs title="Dashboard" breadcrumbItem="Dashboard 2" />
                 <Row>
@@ -166,7 +166,7 @@ const Dashboard2 = () => {
                     </Col>
                 </Row>
             </div>
-        </React.Fragment>
+        </>
     )
 }
 

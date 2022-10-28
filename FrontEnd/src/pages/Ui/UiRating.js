@@ -32,7 +32,7 @@ const UiRating = () => {
   const tooltipContentStep = ["2", "4", "6", "8", "10"]
 
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
 
         <Breadcrumbs title="UI Elements" breadcrumbItem="Rating" />
@@ -369,7 +369,7 @@ const UiRating = () => {
         </Row>
 
       </div>
-    </React.Fragment>
+    </>
   )
 }
 export default UiRating

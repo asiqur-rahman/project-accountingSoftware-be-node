@@ -21,7 +21,7 @@ const PagesFaqs = () => {
   const [activeTab, setactiveTab] = useState("1")
 
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
         {/* Render Breadcrumbs */}
         <Breadcrumbs title="Pages" breadcrumbItem="FAQs" />
@@ -311,7 +311,7 @@ const PagesFaqs = () => {
         </div>
 
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

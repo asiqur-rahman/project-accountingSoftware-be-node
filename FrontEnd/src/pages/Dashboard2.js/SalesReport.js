@@ -33,7 +33,7 @@ const options = {
 
 const Breadcrumb = props => {
     return (
-        <React.Fragment>
+        <>
             <Card>
                 <CardBody>
                     <h4 className="card-title mb-4">Sales Report</h4>
@@ -62,7 +62,7 @@ const Breadcrumb = props => {
                     </Row>
                 </CardBody>
             </Card>
-        </React.Fragment>
+        </>
     )
 }
 export default Breadcrumb

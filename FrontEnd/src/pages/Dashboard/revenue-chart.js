@@ -52,7 +52,7 @@ const RevenueChart = (props) => {
     const width = props.layoutWidth === "boxed" ? 260 : 296.828;
     
     return (
-        <React.Fragment>
+        <>
             <Card>
                 <CardBody>
                     <h4 className="card-title mb-4">Revenue</h4>
@@ -68,7 +68,7 @@ const RevenueChart = (props) => {
                     </div>
                 </CardBody>
             </Card>
-        </React.Fragment>
+        </>
     )
 }
 

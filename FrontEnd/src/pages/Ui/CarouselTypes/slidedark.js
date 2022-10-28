@@ -102,7 +102,7 @@ class SlideDark extends Component {
     })
 
     return (
-      <React.Fragment>
+      <>
         <div className="carousel-inner carousel-dark">
           <Carousel
             activeIndex={activeIndex}
@@ -127,7 +127,7 @@ class SlideDark extends Component {
             />
           </Carousel>
         </div>
-      </React.Fragment>
+      </>
     )
   }
 }

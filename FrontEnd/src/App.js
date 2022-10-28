@@ -41,7 +41,7 @@ const App = props => {
 
   const Layout = getLayout()
   return (
-    <React.Fragment>
+    <>
       <Router>
 
         <Switch>
@@ -68,7 +68,7 @@ const App = props => {
         </Switch>
 
       </Router>
-    </React.Fragment>
+    </>
   )
 }
 

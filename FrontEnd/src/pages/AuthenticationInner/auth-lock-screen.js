@@ -12,7 +12,7 @@ import avatar1 from "../../assets/images/users/avatar-1.jpg"
 
 const LockScreen = () => {
   return (
-    <React.Fragment>
+    <>
       <div className="home-btn d-none d-sm-block">
         <Link to="/" className="text-dark">
           <i className="fas fa-home h2" />
@@ -80,7 +80,7 @@ const LockScreen = () => {
           </Row>
         </Container>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 export default LockScreen

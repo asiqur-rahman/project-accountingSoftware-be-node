@@ -153,7 +153,7 @@ const Calender = props => {
   }
 
   return (
-    <React.Fragment>
+    <>
       <DeleteModal
         show={deleteModal}
         onDeleteClick={handleDeleteEvent}
@@ -369,7 +369,7 @@ const Calender = props => {
             </Col>
           </Row>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 Calender.propTypes = {

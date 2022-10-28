@@ -32,7 +32,7 @@ import Breadcrumbs from "../../components/Common/Breadcrumb"
 
 const UiCards = props => {
   return (
-    <React.Fragment>
+    <>
       <div className="page-content">
 
         <Breadcrumbs title="UI Elements" breadcrumbItem="Cards" />
@@ -690,7 +690,7 @@ const UiCards = props => {
           </Col>
         </Row>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 export default UiCards
