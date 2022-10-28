@@ -46,7 +46,7 @@ const Login = (props) => {
                   <div className="bg-login-overlay"></div>
                   <div className="position-relative">
                     <h5 className="text-white font-size-20">Welcome Back !</h5>
-                    <p className="text-white-50 mb-0">Sign in to continue to Qovex.</p>
+                    <p className="text-white-50 mb-0">Sign in to continue to Brain Tech Solution.</p>
                     <Link to="/" className="logo logo-admin mt-4">
                       <img src={logo} alt="" height="30" />
                     </Link>
@@ -122,8 +122,8 @@ const Login = (props) => {
               <div className="mt-5 text-center">
                 <p>Don't have an account ? <Link to="/pages-register"
                   className="fw-medium text-primary"> Signup now </Link> </p>
-                <p>© {new Date().getFullYear()} Qovex. Crafted with <i
-                  className="mdi mdi-heart text-danger"></i> by Themesbrand
+                <p>© {new Date().getFullYear()} Brain Tech Solution. Crafted with <i
+                  className="mdi mdi-heart text-danger"></i> by Brain Tech Solution
                         </p>
               </div>
             </Col>

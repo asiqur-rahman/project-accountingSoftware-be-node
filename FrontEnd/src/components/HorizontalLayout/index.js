@@ -44,7 +44,7 @@ class Layout extends Component {
     let currentage = title.charAt(1).toUpperCase() + title.slice(2)
 
     document.title =
-      currentage + " | Qovex - Responsive Bootstrap 5 Admin Dashboard"
+      currentage + " | Brain Tech Solution - Responsive Bootstrap 5 Admin Dashboard"
 
     this.props.changeLayout("horizontal")
     if (this.props.topbarTheme) {

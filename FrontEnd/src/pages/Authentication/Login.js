@@ -31,13 +31,8 @@ const Login = (props) => {
   }
 
   return (
-    <React.Fragment>
-      <div className="home-btn d-none d-sm-block">
-        <Link to="/" className="text-dark">
-          <i className="fas fa-home h2" />
-        </Link>
-      </div>
-      <div className="account-pages my-5 pt-sm-5">
+    <>
+      <div className="account-pages pt-sm-5">
         <Container>
           <Row className="justify-content-center">
             <Col md={8} lg={6} xl={5}>
@@ -46,7 +41,7 @@ const Login = (props) => {
                   <div className="bg-login-overlay"></div>
                   <div className="position-relative">
                     <h5 className="text-white font-size-20">Welcome Back !</h5>
-                    <p className="text-white-50 mb-0">Sign in to continue to Qovex.</p>
+                    <p className="text-white-50 mb-0">Sign in to continue to Brain Tech Solution.</p>
                     <Link to="/" className="logo logo-admin mt-4">
                       <img src={logo} alt="" height="30" />
                     </Link>
@@ -122,8 +117,8 @@ const Login = (props) => {
               <div className="mt-5 text-center">
                 <p>Don't have an account ? <Link to="/register"
                   className="fw-medium text-primary"> Signup now </Link> </p>
-                <p>© {new Date().getFullYear()} Qovex. Crafted with <i
-                  className="mdi mdi-heart text-danger"></i> by Themesbrand
+                <p>© {new Date().getFullYear()} Brain Tech Solution. Crafted with <i
+                  className="mdi mdi-heart text-danger"></i> by Brain Tech Solution
                         </p>
               </div>
             </Col>
@@ -131,7 +126,7 @@ const Login = (props) => {
 
         </Container>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

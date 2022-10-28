@@ -46,7 +46,7 @@ const Register = props => {
                   <div className="bg-login-overlay"></div>
                   <div className="position-relative">
                     <h5 className="text-white font-size-20">Free Register</h5>
-                    <p className="text-white-50 mb-0">Get your free Qovex account now</p>
+                    <p className="text-white-50 mb-0">Get your free Brain Tech Solution account now</p>
                     <Link to="/" className="logo logo-admin mt-4">
                       <img src={logo} alt="" height="30" />
                     </Link>
@@ -116,7 +116,7 @@ const Register = props => {
 
                       <div className="mt-4 text-center">
                         <p className="mb-0">
-                          By registering you agree to the Qovex{" "}
+                          By registering you agree to the Brain Tech Solution{" "}
                           <Link to="#" className="text-primary">
                             Terms of Use
                           </Link>
@@ -130,8 +130,8 @@ const Register = props => {
               <div className="mt-5 text-center">
                 <p>Already have an account ? <a href="/pages-login" className="fw-medium text-primary">
                   Login</a> </p>
-                <p>© {new Date().getFullYear()} Qovex. Crafted with <i
-                    className="mdi mdi-heart text-danger"></i> by Themesbrand
+                <p>© {new Date().getFullYear()} Brain Tech Solution. Crafted with <i
+                    className="mdi mdi-heart text-danger"></i> by Brain Tech Solution
                         </p>
               </div>
             </Col>

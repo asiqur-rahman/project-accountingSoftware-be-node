@@ -306,7 +306,7 @@ const EmailAlertTemplte = () => {
                                         }}
                                         valign="top"
                                       >
-                                        Thanks for choosing <b>Qovex</b>{" "}
+                                        Thanks for choosing <b>Brain Tech Solution</b>{" "}
                                           Admin.
                                         </td>
                                     </tr>
@@ -332,7 +332,7 @@ const EmailAlertTemplte = () => {
                                         }}
                                         valign="top"
                                       >
-                                        <b>Qovex</b>
+                                        <b>Brain Tech Solution</b>
                                         <p>Support Team</p>
                                       </td>
                                     </tr>
@@ -360,7 +360,7 @@ const EmailAlertTemplte = () => {
                                         }}
                                         valign="top"
                                       >
-                                        © {new Date().getFullYear()} Qovex
+                                        © {new Date().getFullYear()} Brain Tech Solution
                                         </td>
                                     </tr>
                                   </tbody>

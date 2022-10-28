@@ -278,7 +278,7 @@ const EmailBasicTemplte = () => {
                                         }}
                                         valign="top"
                                       >
-                                        <b>Qovex</b>
+                                        <b>Brain Tech Solution</b>
                                         <p>Support Team</p>
                                       </td>
                                     </tr>
@@ -306,7 +306,7 @@ const EmailBasicTemplte = () => {
                                         }}
                                         valign="top"
                                       >
-                                        © {new Date().getFullYear()} Qovex
+                                        © {new Date().getFullYear()} Brain Tech Solution
                                         </td>
                                     </tr>
                                   </tbody>

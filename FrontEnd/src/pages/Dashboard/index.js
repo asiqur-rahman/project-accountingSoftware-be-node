@@ -29,7 +29,7 @@ const Dashboard = () => {
 
               <div className="page-title-right">
                 <ol className="breadcrumb m-0">
-                  <li className="breadcrumb-item active">Welcome to Qovex Dashboard</li>
+                  <li className="breadcrumb-item active">Welcome to Brain Tech Solution Dashboard</li>
                 </ol>
               </div>
 

@@ -58,7 +58,7 @@ const UserProfile = props => {
       <div className="page-content">
         
           {/* Render Breadcrumb */}
-          <Breadcrumb title="Qovex" breadcrumbItem="Profile" />
+          <Breadcrumb title="Brain Tech Solution" breadcrumbItem="Profile" />
 
           <Row>
             <Col lg="12">

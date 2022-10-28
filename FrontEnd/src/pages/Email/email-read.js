@@ -38,7 +38,7 @@ const EmailRead = () => {
                       <img
                         className="d-flex me-3 rounded-circle avatar-sm"
                         src={avatar2}
-                        alt="Qovex"
+                        alt="Brain Tech Solution"
                       />
                       <div className="flex-1">
                         <h5 className="font-size-14 mt-1">
@@ -77,7 +77,7 @@ const EmailRead = () => {
                           <img
                             className="card-img-top img-fluid"
                             src={img3}
-                            alt="Qovex"
+                            alt="Brain Tech Solution"
                           />
                           <div className="py-2 text-center">
                             <Link to="" className="fw-medium">
@@ -91,7 +91,7 @@ const EmailRead = () => {
                           <img
                             className="card-img-top img-fluid"
                             src={img4}
-                            alt="Qovex"
+                            alt="Brain Tech Solution"
                           />
                           <div className="py-2 text-center">
                             <Link to="" className="fw-medium">

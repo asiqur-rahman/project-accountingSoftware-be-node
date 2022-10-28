@@ -76,13 +76,13 @@ const invoice = () => {
                                         <tbody>
                                             <tr>
                                                 <td>01</td>
-                                                <td>Qovex - Admin & Dashboard Template</td>
+                                                <td>Brain Tech Solution - Admin & Dashboard Template</td>
                                                 <td className="text-end">$499.00</td>
                                             </tr>
 
                                             <tr>
                                                 <td>02</td>
-                                                <td>Qovex - Responsive Landing Template</td>
+                                                <td>Brain Tech Solution - Responsive Landing Template</td>
                                                 <td className="text-end">$399.00</td>
                                             </tr>
 

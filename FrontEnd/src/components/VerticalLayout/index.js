@@ -48,7 +48,7 @@ class Layout extends Component {
     let currentage = this.capitalizeFirstLetter(this.props.location.pathname)
 
     document.title =
-      currentage + " | Qovex - Responsive Bootstrap 5 Admin Dashboard"
+      currentage + " | Brain Tech Solution - Responsive Bootstrap 5 Admin Dashboard"
     if (this.props.leftSideBarTheme) {
       this.props.changeSidebarTheme(this.props.leftSideBarTheme)
     }

@@ -35,7 +35,7 @@ const Recoverpw = props => {
                   <div className="bg-login-overlay"></div>
                   <div className="position-relative">
                     <h5 className="text-white font-size-20">Reset Password</h5>
-                    <p className="text-white-50 mb-0">Re-Password with Qovex.</p>
+                    <p className="text-white-50 mb-0">Re-Password with Brain Tech Solution.</p>
 
                     <a href="/" className="logo logo-admin mt-4">
                       <img src={logo} alt="" height="30" />
@@ -87,8 +87,8 @@ const Recoverpw = props => {
                 <p>Remember It ? <Link href="/pages-login" className="fw-medium text-primary"> Sign In
                                 here</Link> </p>
                 <p>
-                  © {new Date().getFullYear()} Qovex. Crafted with{" "}
-                  <i className="mdi mdi-heart text-danger" /> by Themesbrand
+                  © {new Date().getFullYear()} Brain Tech Solution. Crafted with{" "}
+                  <i className="mdi mdi-heart text-danger" /> by Brain Tech Solution
                 </p>
               </div>
             </Col>

@@ -173,7 +173,7 @@ const EmailTemplateBilling = () => {
                                           Thanks for using{" "}
                                           <b style={{ fontWeight: "600" }}>
                                             {" "}
-                                            Qovex
+                                            Brain Tech Solution
                                             </b>
                                             .
                                           </h2>
@@ -578,7 +578,7 @@ const EmailTemplateBilling = () => {
                                         align="center"
                                         valign="top"
                                       >
-                                        Qovex Inc. 2896 Howell Rd,
+                                        Brain Tech Solution Inc. 2896 Howell Rd,
                                         Russellville, AR, 72823
                                         </td>
                                     </tr>
@@ -606,7 +606,7 @@ const EmailTemplateBilling = () => {
                                         }}
                                         valign="top"
                                       >
-                                        © {new Date().getFullYear()} Qovex
+                                        © {new Date().getFullYear()} Brain Tech Solution
                                         </td>
                                     </tr>
                                   </tbody>

@@ -13,7 +13,7 @@ const tasks = [
     tasks: [
       {
         id: 11,
-        description: "Create a Qovex Dashboard UI",
+        description: "Create a Brain Tech Solution Dashboard UI",
         name:'Topnav layout design',
         date:'14 Oct, 2019',
         members: [
@@ -54,9 +54,9 @@ const tasks = [
       },
       {
         id: 13,
-        name:'Create a Qovex Logo',
+        name:'Create a Brain Tech Solution Logo',
         date:'15 Oct, 2019',
-        description: "Create a Qovex Logo",
+        description: "Create a Brain Tech Solution Logo",
         members: [
           {
             username: "Fransis",
@@ -118,7 +118,7 @@ const tasks = [
       {
         id: 31,
         description: "Redesign - Landing page",
-        name:'Qovex Dashboard UI',
+        name:'Brain Tech Solution Dashboard UI',
         date:'13 Oct, 2019',
         members: [
           {
@@ -179,7 +179,7 @@ const tasks = [
       {
         id: 41,
         description: " Brand logo design",
-        name:'Qovex landing Psd',
+        name:'Brain Tech Solution landing Psd',
         date:'15 Oct, 2019',
         members: [
           {
