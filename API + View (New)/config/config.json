@@ -1,8 +1,8 @@
 {
     "databaseSettings": {
-        "username": "drtechma_test",
-        "password": "drtechma_test",
-        "database": "drtechma_test",
+        "username": "drtechma_acPro",
+        "password": "drtechma_acPro",
+        "database": "drtechma_acPro",
         "host": "braintechsolution.com",
         "dialect": "mysql",
         "logging": true,
