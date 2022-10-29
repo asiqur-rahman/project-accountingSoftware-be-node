@@ -1,0 +1,85 @@
+<!-- start page title -->
+<div class="row">
+  <div class="col-12">
+    <div class="page-title-box d-flex align-items-center justify-content-between">
+      <h4 class="mb-0">Filter Report</h4>
+
+
+    </div>
+  </div>
+</div>
+<!-- end page title -->
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <form class="repeater validate-this-form row" method="post" action="/report/filter-report-data" area="filterRecordDiv">
+            <div class="col-md-3">
+              <div class="mb-3 row">
+                <label for="date" class="col-md-4 col-form-label" style="margin: auto;">From</label>
+                <div class="col-md-8" id="datepicker1" >
+                  <div class="input-group" id="datepicker2" data-validate="From Date is required">
+                    <!-- <input class="form-control validate_this" placeholder="Date" type="date" name="date" id="date" value="<%= typeof model!='undefined' ? model.date : '' %>"> -->
+                    <input style="margin: auto;" type="text" class="form-control validate_this" placeholder="From Date"
+                      data-date-format="mm/dd/yyyy" data-date-container='#datepicker2' data-provide="datepicker"
+                      data-date-autoclose="true" autocomplete="off" name="fromDate" id="fromDate"
+                      value="<%= typeof model!='undefined' ? model.date : locals.todayDate %>">
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="mb-3 row">
+                <label for="date" class="col-md-4 col-form-label" style="margin: auto;">To</label>
+                <div class="col-md-8" id="datepicker1">
+                  <div class="input-group" id="datepicker2" data-validate="To Date is required">
+                    <!-- <input class="form-control validate_this" placeholder="Date" type="date" name="date" id="date" value="<%= typeof model!='undefined' ? model.date : '' %>"> -->
+                    <input style="margin: auto;" type="text" class="form-control validate_this" placeholder="To Date"
+                      data-date-format="mm/dd/yyyy" data-date-container='#datepicker2' data-provide="datepicker"
+                      data-date-autoclose="true" autocomplete="off" name="toDate" id="toDate"
+                      value="<%= typeof model!='undefined' ? model.date : locals.todayDate %>">
+
+                    <!-- <span class="input-group-text"><i class="mdi mdi-calendar"></i></span> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="mb-3 row">
+                  <label for="detailsInfoId" class="col-md-4 col-form-label">Account</label>
+                  <div class="col-md-8">
+                      <div class="input-group" data-validate="Transaction Type is required">
+                        <select class="select2 form-control select2-multiple" multiple="multiple" data-placeholder="All Account" name="charAccountId" id="charAccountId">
+                          <% if(locals.coaAll) {for(var i=0; i<coaAll.length; i++){%>
+                            <option value="<%=coaAll[i].id%>"><%=coaAll[i].name%></option>
+                        <%}}%>
+                      </select>
+                      </div>
+                  </div>
+              </div>
+          </div>
+            <div class="col-md-2">
+              <button class="btn btn-primary" type="submit" style="float: right;">See Report</button>
+            </div>
+          </form>
+        </div>
+      </br>
+      <hr/>
+        <div class="filterRecordDiv">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end row -->
+
+<script src="/public/assets/js/custom-validation.js"></script>
+<script>
+  $(function () {
+    loadPartial('/report/filter-report-data', '.filterRecordDiv',false,'POST',false,false);
+  });
+</script>
