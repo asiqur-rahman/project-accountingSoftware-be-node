@@ -217,7 +217,9 @@ module.exports.webAuth = (...roles) => {
 module.exports.isLogedIn = (...roles) => {
     return async function (req, res, next) {
         try {
-
+            res.locals.orgName = appConfig.organizationInfo.orgName;
+            res.locals.devOrgName = appConfig.organizationInfo.devOrgName;
+            res.locals.devOrgLink = appConfig.organizationInfo.devOrgLink;
             var sess = req.session;
             if (!sess || !sess.user) {
                 req.currentUser = -1;
