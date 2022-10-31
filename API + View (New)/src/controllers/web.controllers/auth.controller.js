@@ -6,7 +6,9 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const userService = require('../../service/user.service');
 const Logger = require('../../externalService/log.service');
-const log = new Logger('index.js');
+
+var path = require('path');
+const log = new Logger(path.basename(__filename));
 
 module.exports.login_Get = async (req, res, next) => {
   res.render('Auth/auth-login', {

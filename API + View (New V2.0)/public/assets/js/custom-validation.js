@@ -40,13 +40,9 @@ $('.validate-this-form').on('submit', function (e) {
     if(canSubmitNow){
         const loadingArea = $(this).attr('area');
         if ($(this).attr('action')) {
-            const url= urlParams.get('token')?
-                    `${$(this).attr('action')}?token=${urlParams.get('token')}`:
-                    `${$(this).attr('action')}`;
-
             $.ajax({
                 type: 'POST',
-                url: url,
+                url: $(this).attr('action'),
                 data: formData,
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader('authorization', `bearer ${localStorage.getItem('AcPro_Token')}`);

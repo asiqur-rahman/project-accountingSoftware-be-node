@@ -14,7 +14,9 @@ const flash = require('connect-flash');
 const i18n = require("i18n-express");
 var minifyHTML = require('express-minify-html-2');
 const Logger = require('./src/externalService/console.log.service');
-const log = new Logger('index.js');
+
+var path = require('path');
+const log = new Logger(path.basename(__filename));
 //#endregion
 
 //#region SSL

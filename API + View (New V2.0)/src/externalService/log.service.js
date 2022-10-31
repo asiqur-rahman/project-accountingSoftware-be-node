@@ -118,6 +118,39 @@ module.exports = class Logger {
             });
         }
     }
+
+    CreateSession(req,token,preSession=[]) {
+        var clientIp= req.headers['x-forwarded-for'] || req.socket.remoteAddress || null;
+        console.log(clientIp)
+        if(clientIp){
+            const logPath = path.join(__dirname, '..', '..', 'logs', 'session' , 'data.json');
+
+            fs.readFile(logPath,"utf8", (err, data) => {
+                if (err) return [];
+                var preSession = data?JSON.parse(data):[];
+                var notFound=true;
+                preSession.map((item)=>{
+                    if(item.IP===clientIp){
+                        item.token=token;
+                        notFound=false;
+                    }
+                })
+                if(notFound)preSession.push({IP:clientIp,token:token});
+                const logText = JSON.stringify(preSession, null, 2);
+                fs.mkdir(getDirName(logPath), { recursive: true}, function (err) {
+                    if (err) return cb(err);
+                    fs.writeFileSync(logPath, logText, 'utf8', function (error) {
+                        if (error) {
+                            console.log(this.getDateAsText() + ' ' + error);
+                        }
+                    });
+                });
+            });
+            
+            
+        }
+    }
+
     isJsonString(str) {
         try {
             JSON.parse(str);

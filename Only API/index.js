@@ -16,7 +16,9 @@ const enumm = require('./src/utils/enum.utils');
 const RouteService = require('./src/routes/routes');
 const config = require('./config/config.json');
 const Logger = require('./src/externalService/console.log.service');
-const log = new Logger('index.js');
+
+var path = require('path');
+const log = new Logger(path.basename(__filename));
 //#endregion
 
 //#region SSL

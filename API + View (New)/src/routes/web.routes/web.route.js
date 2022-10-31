@@ -6,7 +6,9 @@ const authRouter = require('./auth.route');
 const portalRouter = require('./portal.route');
 const reportRouter = require('./report.route');
 const Logger = require('../../externalService/log.service');
-const log = new Logger('index.js');
+
+var path = require('path');
+const log = new Logger(path.basename(__filename));
 
 router.use('/', (req, res, next) => {
   log.CreateLog(enumm.logFor.route,"Route ",req.protocol + '://' + req.get('host') + req.originalUrl);

@@ -6,10 +6,12 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const userService = require('../../service/user.service');
 const Logger = require('../../externalService/log.service');
-const log = new Logger('index.js');
+var path = require('path');
+const log = new Logger(path.basename(__filename));
 const axios = require('axios');
 
 module.exports.login_Get = async (req, res, next) => {
+  // console.log(res.locals)
   res.render('Auth/auth-login', {
     layout: false
   });
@@ -18,7 +20,7 @@ module.exports.login_Get = async (req, res, next) => {
 module.exports.login_Post = async (req, res, next) => {
   await axios.post(`http://localhost:3332/api/auth/login`, req.body)
   .then((response) => {
-    console.log(response.data)
+    log.CreateSession(req,response.data.token);
     req.session.user=response.data.token;
     // res.locals.title = 'Dashboard';
     // res.render('Dashboard/portal');

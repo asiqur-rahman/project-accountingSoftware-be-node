@@ -553,6 +553,6 @@ module.exports.logout = async (req, res, next) => {
   req.session.user = null;
   req.session.notification = notification;
   req.session.destroy();
-  res.redirect('/auth/login');
+  res.redirect('/');
   // res.render('Auth/auth-login', { 'message': req.flash('message'), 'error': req.flash('error') ,layout: false});
 };

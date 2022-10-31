@@ -6,7 +6,9 @@ const authRouter = require('./auth.route');
 const portalRouter = require('./portal.route');
 const reportRouter = require('./report.route');
 const Logger = require('../../externalService/log.service');
-const log = new Logger('index.js');
+
+var path = require('path');
+const log = new Logger(path.basename(__filename));
 
 router.use('/', (req, res, next) => {
   log.CreateLog(enumm.logFor.route,"Route ",req.protocol + '://' + req.get('host') + req.originalUrl);
@@ -14,8 +16,8 @@ router.use('/', (req, res, next) => {
 });
 
 router.use('/auth', isLogedIn(), authRouter);
-router.use('/portal', webAuth(), portalRouter);
-router.use('/report', webAuth(), reportRouter);
+router.use('/portal', portalRouter);
+router.use('/report', reportRouter);
 
 // Route all to login page
 router.get('/', (req, res, next) => {

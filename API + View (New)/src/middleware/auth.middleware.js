@@ -3,7 +3,9 @@ const jwt = require('jsonwebtoken');
 const enumm = require('../utils/enum.utils');
 const appConfig = require('../../config/config.json');
 const Logger = require('../externalService/log.service');
-const log = new Logger('index.js');
+
+var path = require('path');
+const log = new Logger(path.basename(__filename));
 
 module.exports.apiAuth = (...roles) => {
     return async function (req, res, next) {

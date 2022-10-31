@@ -3,7 +3,9 @@ const jwt = require('jsonwebtoken');
 const enumm = require('../utils/enum.utils');
 const appConfig = require('../../config/config.json');
 const Logger = require('../externalService/log.service');
-const log = new Logger('index.js');
+const fs = require('fs');
+var path = require('path');
+const log = new Logger(path.basename(__filename));
 
 module.exports.apiAuth = (...roles) => {
     return async function (req, res, next) {
@@ -13,7 +15,7 @@ module.exports.apiAuth = (...roles) => {
             if (!authHeader || !authHeader.startsWith(bearer)) {
                 return res.status(200).json({
                     status:401,
-                    message:"Access denied. No credentials sent !"
+                    message:"Api Auth - Access denied. No credentials sent !"
                 });
             }
 
@@ -149,56 +151,67 @@ module.exports.webAuth = (...roles) => {
     return async function (req, res, next) {
         try {
             log.CreateLog(enumm.logFor.auth,"Auth Purpose (TOKEN)","Session : ",req.session.user==null,"Header : ",req.headers.authorization==null, "Query : ",req.query.token==null);
-            const bearerToken = req.headers.authorization ?
+            var bearerToken = req.headers.authorization ?
                 req.headers.authorization : req.query.token ?
-                req.query.token : req.session.user;
+                req.query.token : req.session.user ;
             if (!bearerToken) {
-                console.log('Access denied. No credentials sent !');
-                return req.originalUrl == '/portal' ? res.redirect('/auth/logout'):res.status(302).send();
+                const logPath = path.join(__dirname, '..', '..', 'logs', 'session' , 'data.json');
+                fs.readFile(logPath,"utf8", (err, data) => {
+                    if (err) return [];
+                    let result = data?JSON.parse(data):[];
+                    var token=result.find(x=>{return x.IP === clientIp});
+                    console.log(clientIp,token)
+                    if(!token){
+                        console.log('Web Auth - Access denied. No credentials sent !');
+                        return req.originalUrl == '/portal' ? res.redirect('/auth/logout'):res.status(302).send();
+                    }
+                    else{
+                        bearerToken=token.token;
+                    }
+                });
             }
-            const token = bearerToken.replace('bearer ', '');
-            const secretKey = appConfig.appSettings.SECRET_JWT;
+            else{
+                const token = bearerToken.replace('bearer ', '');
+                const secretKey = appConfig.appSettings.SECRET_JWT;
 
-            // Verify Token
-            const decoded = jwt.verify(token, secretKey);
+                // Verify Token
+                const decoded = jwt.verify(token, secretKey);
 
-            console.log(decoded)
+                if (!decoded.user_id && !decoded.roleId) {
+                    // req.session.destroy();
+                    return req.originalUrl == '/portal' ? res.redirect('/auth/logout'):res.status(302).send();
+                }
 
-            if (!decoded.user_id && !decoded.roleId) {
-                // req.session.destroy();
-                return req.originalUrl == '/portal' ? res.redirect('/auth/logout'):res.status(302).send();
+                // if the current user is not the owner and
+                // if the user role don't have the permission to do this action.
+                // the user will get this error
+                if ( roles && roles.length && !roles.includes(decoded.role_id)) {
+                    // req.session.destroy();
+                    return req.originalUrl == '/portal' ? res.redirect('/auth/logout'):res.status(302).send();
+                }
+                // if the user has permissions
+                req.currentUser = decoded.user_id;
+                req.currentBranchId = decoded.branchId;
+                req.currentRoleId = decoded.role_id;
+                
+                //check Client IP
+                // console.log(decoded.clientIp);
+                var clientIp= req.headers['x-forwarded-for'] || req.socket.remoteAddress || null;
+                // console.log(clientIp);
+                // if(clientIp.toString()==decoded.clientIp){
+                    res.locals.roleCode = decoded?decoded.role_code:undefined;
+                    res.locals.userName = decoded?decoded.user_name:undefined;
+                    res.locals.roleName = decoded?decoded.role_name:undefined;
+                    res.locals.orgName = appConfig.organizationInfo.orgName;
+                    res.locals.devOrgName = appConfig.organizationInfo.devOrgName;
+                    res.locals.devOrgLink = appConfig.organizationInfo.devOrgLink;
+                    res.locals.hostName= req.protocol + '://' + req.get('host');
+                    res.locals.lastVisitedUrl= req.originalUrl
+                    next();
+                // }else{
+                //     return res.redirect('/auth/logout');
+                // }
             }
-
-            // if the current user is not the owner and
-            // if the user role don't have the permission to do this action.
-            // the user will get this error
-            if ( roles && roles.length && !roles.includes(decoded.role_id)) {
-                // req.session.destroy();
-                return req.originalUrl == '/portal' ? res.redirect('/auth/logout'):res.status(302).send();
-            }
-            // if the user has permissions
-            req.currentUser = decoded.user_id;
-            req.currentBranchId = decoded.branchId;
-            req.currentRoleId = decoded.role_id;
-            
-            //check Client IP
-            // console.log(decoded.clientIp);
-            var clientIp= req.headers['x-forwarded-for'] || req.socket.remoteAddress || null;
-            // console.log(clientIp);
-            // if(clientIp.toString()==decoded.clientIp){
-                res.locals.roleCode = decoded?decoded.role_code:undefined;
-                res.locals.userName = decoded?decoded.user_name:undefined;
-                res.locals.roleName = decoded?decoded.role_name:undefined;
-                res.locals.orgName = appConfig.organizationInfo.orgName;
-                res.locals.devOrgName = appConfig.organizationInfo.devOrgName;
-                res.locals.devOrgLink = appConfig.organizationInfo.devOrgLink;
-                res.locals.hostName= req.protocol + '://' + req.get('host');
-                res.locals.lastVisitedUrl= req.originalUrl
-                next();
-            // }else{
-            //     return res.redirect('/auth/logout');
-            // }
-
         } catch (e) {
             e.status = 401;
             next(e);
@@ -209,7 +222,13 @@ module.exports.webAuth = (...roles) => {
 module.exports.isLogedIn = (...roles) => {
     return async function (req, res, next) {
         try {
-
+            
+            res.locals.orgName = appConfig.organizationInfo.orgName;
+            res.locals.devOrgName = appConfig.organizationInfo.devOrgName;
+            res.locals.devOrgLink = appConfig.organizationInfo.devOrgLink;
+            res.locals.hostName= req.protocol + '://' + req.get('host');
+            res.locals.lastVisitedUrl= req.originalUrl
+            
             var sess = req.session;
             if (!sess || !sess.user) {
                 req.currentUser = -1;
@@ -248,5 +267,27 @@ module.exports.isLogedIn = (...roles) => {
             req.currentUser = -1;
             next();
         }
+    }
+}
+
+GetSession = async (req,forAll=false) => {
+    var clientIp= req.headers['x-forwarded-for'] || req.socket.remoteAddress || null;
+    if(clientIp){
+        const logPath = path.join(__dirname, '..', '..', 'logs', 'session' , 'data.json');
+        fs.readFile(logPath,"utf8", (err, data) => {
+            if (err) return [];
+            let result = JSON.parse(data);
+            if(forAll){
+                return result;
+            }else{
+                // return result.filter(x=>x.IP === clientIp);
+                var token=result.find(x=>{return x.IP === clientIp});
+                if(!token)token={token:null}
+                console.log("token",token.token)
+                return token.token;
+            }
+        });
+    }else{
+        return [];
     }
 }
