@@ -327,7 +327,7 @@ module.exports.transactionListData = async (req, res, next) => {
 }
 
 module.exports.newTransaction_Post = async (req, res, next) => {
-  if (req.body.isItIncome == '1') {
+  if (req.body.isItIncome == '0') {
     req.body.debitAccountId = req.body.accountToId;
     req.body.creditAccountId = req.body.accountFromId;
   } else {
