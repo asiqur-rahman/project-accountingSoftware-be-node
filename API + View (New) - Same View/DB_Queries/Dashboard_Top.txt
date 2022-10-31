@@ -1,0 +1,37 @@
+CREATE OR REPLACE  PROCEDURE `Dashboard_Top`()
+BEGIN
+	DECLARE todayTotalSale INT DEFAULT 0;
+	DECLARE preTotalSale INT DEFAULT 0;
+	DECLARE totalSmsMonth INT DEFAULT 0;
+	DECLARE totalSms INT DEFAULT 0;
+	DECLARE todayTotalOrder INT DEFAULT 0;
+	DECLARE preTotalOrder INT DEFAULT 0;
+	DECLARE todayCompleteOrder INT DEFAULT 0;
+	DECLARE preCompleteOrder INT DEFAULT 0;
+	-- DROP PROCEDURE IF EXISTS `Dashboard`;
+	
+	select IFNULL(sum(subTotal),0) INTO todayTotalSale from invoiceDetails id where invoiceNo in (select t.invoiceNo  from tallies t where t.`date`=CURDATE());
+
+	select IFNULL(sum(subTotal),0) INTO preTotalSale from invoiceDetails id where invoiceNo in (select t.invoiceNo  from tallies t where t.`date`=DATE_SUB(CURDATE(), INTERVAL 1 DAY));
+	
+	select count(*) INTO totalSms from SendSms ss;
+
+	select count(*) INTO totalSmsMonth from SendSms ss where MONTH(ss.`date`)=MONTH(CURDATE());
+
+	select count(*) INTO preTotalOrder from tallies t left join invoiceDetails id on t.invoiceNo = id.invoiceNo where  t.status = 0 OR t.status = 1 ;
+
+	select count(*) INTO todayTotalOrder from tallies t left join invoiceDetails id on t.invoiceNo = id.invoiceNo where t.`date` = CURRENT_DATE() and ( t.status = 0 OR t.status = 1 ) ;
+
+	select count(*) INTO preCompleteOrder from tallies t left join invoiceDetails id on t.invoiceNo = id.invoiceNo where  t.status = 2 ;
+
+	select count(*) INTO todayCompleteOrder from tallies t left join invoiceDetails id on t.invoiceNo = id.invoiceNo where t.`date` = CURRENT_DATE() and  t.status = 2 ;
+
+    select  todayTotalSale AS Total_Sales,
+			preTotalSale AS Today_Sales_Pre,
+			totalSms AS Total_Sms,
+			preTotalOrder AS Today_Orders_Pre,
+			todayTotalOrder AS Today_Orders,
+			preCompleteOrder AS Today_Complete_Orders_Pre,
+			totalSmsMonth AS Total_Sms_Month,
+			todayCompleteOrder AS Today_Complete_Orders;
+END

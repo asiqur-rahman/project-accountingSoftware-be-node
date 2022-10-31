@@ -1,0 +1,243 @@
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <h4 class="mb-0">Dashboard</h4>
+
+            <div class="page-title-right">
+                <!-- <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Index</li>
+                </ol> -->
+                <div class="float-end">
+                    <div class="dropdown">
+                        <a class="dropdown-toggle text-reset" href="#" id="dropdownMenuButton5"
+                            data-bs-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            <span class="fw-semibold">Sort Data For :</span> <span class="text-muted" id="apextChartDataFor">Last 7 Days <i class="mdi mdi-chevron-down ms-1"></i></span>
+                        </a>
+        
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton5">
+                            <a class="dropdown-item" href="#" onclick="changeApexData(7, '7 days')">Last 7 Days</a>
+                            <a class="dropdown-item" href="#" onclick="changeApexData(30, '1 Month')">Last 1 Month</a>
+                            <a class="dropdown-item" href="#" onclick="changeApexData(180, '6 Month')">Last 6 Month</a>
+                            <a class="dropdown-item" href="#" onclick="changeApexData(365, '1 Year')">Last 1 Year</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- end page title -->
+
+<div class="row">
+    <div class="col-md-6 col-xl-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="float-end mt-2">
+                    <div id="total-revenue-chart"></div>
+                </div>
+                <div>
+                    <h4 class="mb-1 mt-1"> <span data-plugin="counterup"><%= typeof dashboardData!='undefined' ? dashboardData.IncomeToday : '0' %> Tk.</span></h4>
+                    <p class="text-muted mb-0">Income Today (BDT)</p>
+                </div>
+            </div>
+        </div>
+    </div> <!-- end col-->
+
+    <div class="col-md-6 col-xl-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="float-end mt-2">
+                    <div id="total-revenue-chart"></div>
+                </div>
+                <div>
+                    <h4 class="mb-1 mt-1"><span data-plugin="counterup"><%= typeof dashboardData!='undefined' ? dashboardData.IncomeThisMonth : '0' %> Tk.</span></h4>
+                    <p class="text-muted mb-0">Income this Month (BDT)</p>
+                </div>
+            </div>
+        </div>
+    </div> <!-- end col-->
+
+    <div class="col-md-6 col-xl-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="float-end mt-2">
+                    <div id="customers-chart"> </div>
+                </div>
+                <div>
+                    <h4 class="mb-1 mt-1"><span data-plugin="counterup"><%= typeof dashboardData!='undefined' ? dashboardData.ExpenseToday : '0' %> Tk.</span></h4>
+                    <p class="text-muted mb-0">Today Expense (BDT)</p>
+                </div>
+            </div>
+        </div>
+    </div> <!-- end col-->
+
+    <div class="col-md-6 col-xl-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="float-end mt-2">
+                    <div id="customers-chart"> </div>
+                </div>
+                <div>
+                    <h4 class="mb-1 mt-1"><span data-plugin="counterup"><%= typeof dashboardData!='undefined' ? dashboardData.ExpenseThisMonth : '0' %> Tk.</span></h4>
+                    <p class="text-muted mb-0">Expense this Month (BDT)</p>
+                </div>
+            </div>
+        </div>
+    </div> <!-- end col-->
+</div>
+
+<div>
+<div class="row">
+    <div class="col-xl-8">
+        <div class="card">
+            <div class="card-body">
+                <div class="float-end">
+                    <div class="dropdown">
+                        <a class="dropdown-toggle text-reset" href="#" id="dropdownMenuButton5"
+                            data-bs-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            <span class="fw-semibold">Sort By :</span> <span class="text-muted" id="apextChartDataFor">Last 7 Days <i class="mdi mdi-chevron-down ms-1"></i></span>
+                        </a>
+        
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton5">
+                            <a class="dropdown-item" href="#" onclick="changeApexData(7, '7 days')">Last 7 Days</a>
+                            <a class="dropdown-item" href="#" onclick="changeApexData(30, '1 Month')">Last 1 Month</a>
+                            <!-- <a class="dropdown-item" href="#" onclick="changeApexData(180, '6 Month')">Last 6 Month</a>
+                            <a class="dropdown-item" href="#" onclick="changeApexData(365, '1 Year')">Last 1 Year</a> -->
+                        </div>
+                    </div>
+                </div>
+                <h4 class="card-title mb-4">Expense</h4>
+                
+                <div id="spline_area" class="apex-charts" dir="ltr"></div>                      
+            </div>
+        </div><!--end card-->
+    </div>
+
+    <div class="col-xl-4">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title mb-4">Expenses Overview</h4>
+                
+                <div id="donut_chart" class="apex-charts"  dir="ltr"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- end row -->
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title mb-4">Latest 7 Transaction (<a href="javascript: void(0);" onclick="loadPartial('/portal/transaction-list')">See All</a>)</h4>
+                <div class="table-responsive">
+                    <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap"
+                        style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                        <thead></thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <!-- end table-responsive -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end row -->
+<div class="modal fade bs-custom-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mt-0" id="myLargeModalLabel">Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+<!-- apexcharts -->
+<script defer src="/public/assets/libs/apexcharts/apexcharts.min.js"></script>
+
+<!-- apexcharts init -->
+<script defer src="/public/assets/js/pages/apexcharts.init.js"></script>
+
+
+<!-- Required datatable js -->
+<script defer src="/public/assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+<script defer src="/public/assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<!-- Buttons examples -->
+<!-- <script defer src="/public/assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js"></script> -->
+<!-- <script defer src="/public/assets/libs/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script> -->
+<!-- <script defer src="/public/assets/libs/jszip/jszip.min.js"></script> -->
+<!-- <script defer src="/public/assets/libs/pdfmake/build/pdfmake.min.js"></script> -->
+<!-- <script defer src="/public/assets/libs/pdfmake/build/vfs_fonts.js"></script> -->
+<!-- <script defer src="/public/assets/libs/datatables.net-buttons/js/buttons.html5.min.js"></script> -->
+<!-- <script defer src="/public/assets/libs/datatables.net-buttons/js/buttons.print.min.js"></script> -->
+<!-- <script defer src="/public/assets/libs/datatables.net-buttons/js/buttons.colVis.min.js"></script> -->
+
+<!-- Responsive examples -->
+<script defer src="/public/assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script defer src="/public/assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+<!-- Datatable init js -->
+<script defer src="/public/assets/js/pages/datatables.init.js"></script>
+
+<script>
+    $(document).ready(function () {
+        const coloum=[
+            {
+                "data": "sl",
+                "title": "#SL",
+            },
+            {
+                "data": "dateTime",
+                "title": "Date Time",
+            },
+            {
+                "data": "sl",
+                "title": "Credit Account",
+                "render": function (data, type, row, meta) {
+                    return `${row['creditAccount.name']}`;
+                }
+            },
+            {
+                "data": "sl",
+                "title": "Debit Account",
+                "render": function (data, type, row, meta) {
+                    return `${row['debitAccount.name']}`;
+                }
+            },
+            {
+                "data": "amount",
+                "title": "Amount",
+                "render": function (data, type, row, meta) {
+                    return `${row['amount']} Tk.`;
+                }
+            },
+            {
+                "data": "id",
+                "title": "Action",
+                "render": function (data, type, row, meta) {
+                        return `<button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light" onclick=showResponseInModals('/portal/transaction-details/${row['id']}')>
+                                            View Details
+                                        </button>`
+                }
+            }
+        ]
+        get_table_data("datatable-buttons","portal/dashboardLTFD",coloum,[],false,true,false,false);
+        changeDashboardEar();
+        changeApexData(7,'7 days')
+    });
+
+    // <button class="btn btn-sm btn-danger btn-soft-danger waves-effect waves-light" onclick='deleteEmployeeFaces("/portal-user-delete/${data}",${data})'>Delete</button>
+    
+</script>

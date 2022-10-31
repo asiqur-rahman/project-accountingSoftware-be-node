@@ -1,0 +1,100 @@
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <h4 class="mb-0">Bank Account <%= typeof detailsInfo=='undefined' ? 'Create' : 'Update' %></h4>
+
+        </div>
+    </div>
+</div>
+<!-- end page title -->
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <form class="validate-this-form" method="post" action="<%=lastVisitedUrl%>">
+                    <div class="row">
+                        <input class="form-control" type="number" name="id" id="id" value="<%= typeof detailsInfo!='undefined' ? detailsInfo.id : '' %>" readonly hidden>
+                        <div class="col-md-6">
+                            <div class="mb-3 row">
+                                <label for="firstName" class="col-md-4 col-form-label">Bank Name</label>
+                                <div class="col-md-8" data-validate="First Name is required">
+                                    <input class="form-control validate_this" type="text" name="name" id="name" value="<%= typeof detailsInfo!='undefined' ? detailsInfo.name : '' %>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3 row">
+                                <label for="lastName" class="col-md-4 col-form-label">Account Title</label>
+                                <div class="col-md-8" data-validate="Last Name is required">
+                                    <input class="form-control validate_this" type="text" name="accountTitle" id="accountTitle" value="<%= typeof detailsInfo!='undefined' ? detailsInfo.accountTitle : '' %>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3 row">
+                                <label for="name" class="col-md-4 col-form-label">Account Number</label>
+                                <div class="col-md-8" data-validate="Username is required">
+                                    <input class="form-control validate_this" type="text" name="accountNumber" id="accountNumber" value="<%= typeof detailsInfo!='undefined' ? detailsInfo.accountNumber : '' %>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3 row">
+                                <label for="address" class="col-md-4 col-form-label">Description</label>
+                                <div class="col-md-8">
+                                    <input class="form-control" type="text" name="description" id="description" value="<%= typeof detailsInfo!='undefined' ? detailsInfo.description : '' %>">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <a class="btn btn-danger" style="float: right; margin-left: 2%;" type="button" data-bs-dismiss="modal">Cancel</a>
+                        <button class="btn btn-primary" style="float: right;" type="submit" ><%= typeof detailsInfo=='undefined' ? 'Create' : 'Update' %></button>
+                        <!-- <button class="btn btn-primary" type="button" id="faceScanBtn" style="display: none;">Face Scan</button> -->
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- end card -->
+    </div> <!-- end col -->
+</div>
+<!-- end row -->
+
+<script src="/public/assets/js/custom-validation.js"></script>
+
+<script>
+    $("#username").change(async function(){
+        const username=$("#username").val();
+        if(username.trim()!=''){
+            await $.ajax({
+                type: 'get',
+                url: "/portal/username-check/" + username,
+                beforeSend: function () {
+                    // Spinner.Show();
+                },
+                complete: function () {
+                    // Spinner.Hide();
+                },
+                success: function (jsondata) {
+                    debugger;
+                    if(jsondata.id && jsondata.id!=$("#id").val()){
+                        $("#username").val('');
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Username already used !'
+                        });
+                    }
+                },
+                error: function (request, status, error) {
+                    // Spinner.Hide();
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Duplicate username checking failed !'
+                    })
+                }
+            });
+        }
+    })
+</script>
