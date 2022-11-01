@@ -9,7 +9,6 @@ $('.validate-this-form').on('submit', function (e) {
     } else if (validateThisForm() && validationFor == "transaction") {
         var debitAmount = 0;
         var creditAmount = 0;
-        debugger;
         for (var i = 0; i < formDataArray.length; i++) {
             if (formDataArray[i].name.includes('[debit]')) {
                 const value=formDataArray[i].value;//$(`input[name='transactionDetails[${i}][debit]']`).val();
@@ -21,7 +20,6 @@ $('.validate-this-form').on('submit', function (e) {
             }
         }
         const mainAmount=formDataArray.filter(x=>x.name=="amount")[0].value;
-        debugger;
         if (debitAmount == creditAmount && debitAmount == mainAmount) {
             canSubmitNow=true;
         } 
@@ -39,7 +37,7 @@ $('.validate-this-form').on('submit', function (e) {
         }
     }
     if(canSubmitNow){
-        const loadingArea = $(this).attr('area');
+        const loadingArea = $(this).attr('area')? $(this).attr('area'):"areaToShow";
         if ($(this).attr('action')) {
             $.ajax({
                 type: 'POST',
@@ -52,6 +50,7 @@ $('.validate-this-form').on('submit', function (e) {
                     Spinner.Hide();
                 },
                 success: function (response) {
+                    debugger;
                     if (response.msg) {
                         toastr[response.msg[0]](response.msg[1]);
                         if (response.redirect) loadPartial(response.redirect);

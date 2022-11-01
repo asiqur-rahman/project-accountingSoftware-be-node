@@ -20,7 +20,7 @@ const chequeRecordService = require('../../service/chequeRecords.service');
 //#region Dashboard
 module.exports.portal = async (req, res, next) => {
   res.locals.title = 'Dashboard';
-  res.render('Dashboard/portal');
+  res.render('Dashboard/portal',{layout:false});
 }
 
 module.exports.dashboard = async (req, res, next) => {

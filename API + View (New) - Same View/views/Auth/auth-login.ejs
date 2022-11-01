@@ -23,16 +23,16 @@
                         </div>
                         <div class="card-body p-4">
                             <div class="p-2">
-                                <form method="post" autocomplete="off">
+                                <form class="validate-this-form" method="post" action="<%=lastVisitedUrl%>">
                                     <div class="mb-3">
                                         <label class="form-label" for="username">Username</label>
                                         <input type="text" class="form-control" id="username" name="username"
-                                            placeholder="Enter username">
+                                            placeholder="Enter username" required>
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label" for="userpassword">Password</label>
                                         <input type="password" class="form-control" id="userpassword" name="password"
-                                            placeholder="Enter password">
+                                            placeholder="Enter password" required>
                                     </div>
                                     <div class="form-check">
                                         <input type="checkbox" class="form-check-input" id="showPassword">
@@ -60,7 +60,7 @@
             </div>
         </div>
     </div>
-
+    <script src="/public/assets/js/custom-validation.js"></script>
     <script>
         $(window).on('load', function () {
             $("#showPassword").click(function () {
