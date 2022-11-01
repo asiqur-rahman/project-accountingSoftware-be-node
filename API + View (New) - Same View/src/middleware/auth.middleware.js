@@ -129,11 +129,6 @@ module.exports.webAuth_ = (...roles) => {
                 res.locals.roleCode = decoded?decoded.role_code:undefined;
                 res.locals.userName = decoded?decoded.user_name:undefined;
                 res.locals.roleName = decoded?decoded.role_name:undefined;
-                res.locals.orgName = appConfig.organizationInfo.orgName;
-                res.locals.devOrgName = appConfig.organizationInfo.devOrgName;
-                res.locals.devOrgLink = appConfig.organizationInfo.devOrgLink;
-                res.locals.hostName= req.protocol + '://' + req.get('host');
-                res.locals.lastVisitedUrl= req.originalUrl
                 next();
             // }else{
             //     return res.redirect('/auth/logout');
@@ -197,11 +192,6 @@ module.exports.webAuth = (...roles) => {
                 res.locals.roleCode = decoded?decoded.role_code:undefined;
                 res.locals.userName = decoded?decoded.user_name:undefined;
                 res.locals.roleName = decoded?decoded.role_name:undefined;
-                res.locals.orgName = appConfig.organizationInfo.orgName;
-                res.locals.devOrgName = appConfig.organizationInfo.devOrgName;
-                res.locals.devOrgLink = appConfig.organizationInfo.devOrgLink;
-                res.locals.hostName= req.protocol + '://' + req.get('host');
-                res.locals.lastVisitedUrl= req.originalUrl
                 next();
             // }else{
             //     return res.redirect('/auth/logout');
@@ -217,9 +207,6 @@ module.exports.webAuth = (...roles) => {
 module.exports.isLogedIn = (...roles) => {
     return async function (req, res, next) {
         try {
-            res.locals.orgName = appConfig.organizationInfo.orgName;
-            res.locals.devOrgName = appConfig.organizationInfo.devOrgName;
-            res.locals.devOrgLink = appConfig.organizationInfo.devOrgLink;
             var sess = req.session;
             if (!sess || !sess.user) {
                 req.currentUser = -1;

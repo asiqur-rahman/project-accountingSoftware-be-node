@@ -449,3 +449,7 @@
 [2022.11.01, 07:09:43:358] [web.route.js] Route  || http://localhost:3332/auth/login
 [2022.11.01, 07:09:44:829] [web.route.js] Route  || http://localhost:3332/
 [2022.11.01, 07:09:45:216] [web.route.js] Route  || http://localhost:3332/auth/login
+[2022.11.01, 07:09:57:444] [web.route.js] Route  || http://localhost:3332/
+[2022.11.01, 07:09:57:866] [web.route.js] Route  || http://localhost:3332/auth/login
+[2022.11.01, 07:10:30:640] [web.route.js] Route  || http://localhost:3332/
+[2022.11.01, 07:10:31:104] [web.route.js] Route  || http://localhost:3332/auth/login
