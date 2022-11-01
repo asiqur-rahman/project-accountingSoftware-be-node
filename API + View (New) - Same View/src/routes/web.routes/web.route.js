@@ -23,6 +23,8 @@ router.use('/report', reportRouter);
 router.get('/', (req, res, next) => {
   // res.redirect('/auth/login');
   res.locals.title = 'Dashboard';
+  res.locals.redirectTo="/auth/login";
+  res.locals.areaToShow="areaToShow";
   res.render('Dashboard/portal');
 });
 
