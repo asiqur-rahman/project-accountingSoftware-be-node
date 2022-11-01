@@ -147,14 +147,22 @@ module.exports.webAuth = (...roles) => {
         try {
             // res.session.returnUrl = req.originalUrl;
             // sess = req.session;
-            log.CreateLog(enumm.logFor.auth,"Auth Purpose (TOKEN)",req.session?req.session.user:null);
-            if (!req.session || !req.session.user) {
+            // log.CreateLog(enumm.logFor.auth,"Auth Purpose (TOKEN)",req.session?req.session.user:null);
+            // var bearerToken = req.headers.authorization ?
+            //     req.headers.authorization : req.query.token ?
+            //     req.query.token : req.session.user ;
+
+            const bearerToken = req.headers.authorization ;
+            const bearer = 'bearer ';
+            console.log('bearerToken',bearerToken);
+
+            if (!bearerToken) {
                 req.session.notification=[enumm.notification.Error,'Access denied. No credentials sent !'];
                 console.log('Access denied. No credentials sent !');
                 // req.session.destroy();
                 return req.originalUrl == '/portal' ? res.redirect('/auth/logout'):res.status(302).send();
             }
-            const token = req.session.user;
+            const token = bearerToken.replace(bearer, '');
             const secretKey = appConfig.appSettings.SECRET_JWT;
 
             // Verify Token

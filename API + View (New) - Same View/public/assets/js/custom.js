@@ -16,7 +16,8 @@ async function loadPartial(url,contentDiv=null,modal=false,method=false,showSpin
     await $.ajax({
         type: method?method:'GET',
         url: url,
-        beforeSend: function () {
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader('authorization', `bearer ${localStorage.getItem('AcPro_Token')}`);
             if(showSpin)Spinner.Show();
         },
         complete: function () {

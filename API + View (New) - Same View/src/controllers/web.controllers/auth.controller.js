@@ -53,13 +53,14 @@ module.exports.login_Post = async (req, res, next) => {
         });
         req.session.user = token;
         req.session.save(() => {
-          log.CreateLog(enumm.logFor.auth,"Login Successfull Details",JSON.stringify(detailsForToken), req.session.user);
+          // log.CreateLog(enumm.logFor.auth,"Login Successfull Details",JSON.stringify(detailsForToken), req.session.user);
           const returnUrl = req.session.returnUrl;
           if (returnUrl) {
             req.session.returnUrl = null;
             return res.redirect(returnUrl);
           } else {
-            return res.redirect('/portal');
+            // return res.redirect('/portal');
+            return res.send({token:token, redirect:'/portal'})
           }
         });
         

@@ -5,7 +5,7 @@
         "database": "drtechma_acPro",
         "host": "braintechsolution.com",
         "dialect": "mysql",
-        "logging": true,
+        "logging": false,
         "pool": {
             "max": 5,
             "min": 0,

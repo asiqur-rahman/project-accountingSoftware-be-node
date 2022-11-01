@@ -130,7 +130,8 @@ function get_table_data(id, url, columns, footer = [], paging = true, serverSide
             "contentType": 'application/json; charset=utf-8',
             "url": `/${url}`,
             "dataSrc": serverSide?"data":"",
-            beforeSend: function(data) {
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('authorization', `bearer ${localStorage.getItem('AcPro_Token')}`);
                 // $("table").hide();
                 $(".card-body").attr("style", "pointer-events:none;");
                 $('.card-body').css({ 'opacity' : 0.5 });

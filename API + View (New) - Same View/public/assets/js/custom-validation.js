@@ -43,18 +43,27 @@ $('.validate-this-form').on('submit', function (e) {
                 type: 'POST',
                 url: $(this).attr('action'),
                 data: formData,
-                beforeSend: function () {
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('authorization', `bearer ${localStorage.getItem('AcPro_Token')}`);
                     Spinner.Show();
                 },
                 complete: function () {
                     Spinner.Hide();
                 },
                 success: function (response) {
+                    if(response.token){
+                        localStorage.setItem('AcPro_Token', response.token);
+                    }
                     debugger;
                     if (response.msg) {
                         toastr[response.msg[0]](response.msg[1]);
-                        if (response.redirect) loadPartial(response.redirect);
-                    } else if (loadingArea) $(`.${loadingArea}`).html(response);
+                    } 
+                    else if (response.redirect){
+                         loadPartial(response.redirect,loadingArea);
+                    }
+                    else if (loadingArea) {
+                        $(`.${loadingArea}`).html(response);
+                    }
 
                     else toastr['error']('Something Wrong ! Please try again.');
                 }
