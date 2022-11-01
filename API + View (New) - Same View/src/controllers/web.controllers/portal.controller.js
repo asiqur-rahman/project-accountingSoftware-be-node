@@ -36,7 +36,7 @@ module.exports.dashboard = async (req, res, next) => {
       res.locals.title = 'Dashboard';
       res.locals.dashboardData = dashboardData[0];
       res.locals.lTFD = []; //data.rows;//lastTransactionsForDashboard
-      res.render('Dashboard/index', {
+      res.render('Auth/auth-login', {
         layout: false
       });
       // });
