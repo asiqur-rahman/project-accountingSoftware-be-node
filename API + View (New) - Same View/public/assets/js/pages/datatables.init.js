@@ -241,7 +241,7 @@ function get_table_data(id, url, columns, footer = [], paging = true, serverSide
     }
 
     async function getBase64FromImageUrl(url) {
-        debugger;
+        
         if(!url){
             url=$(".logo-lg img").attr('src');
         }
@@ -254,7 +254,7 @@ function get_table_data(id, url, columns, footer = [], paging = true, serverSide
             var ctx = canvas.getContext("2d");
             ctx.drawImage(this, 0, 0);
             var dataURL = canvas.toDataURL("image/png");
-            debugger;
+            
             return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
         };
         img.src = url;

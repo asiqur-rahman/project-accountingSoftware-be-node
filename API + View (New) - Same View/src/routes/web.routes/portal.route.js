@@ -5,9 +5,8 @@ const portalController = require('../../controllers/web.controllers/portal.contr
 const awaitHandlerFactory = require('../../middleware/awaitHandlerFactory.middleware');
 
 router.get('/', webAuth(), awaitHandlerFactory(portalController.portal));
-router.get('/dashboard', webAuth(), awaitHandlerFactory(portalController.dashboard));
 router.get('/dashboardLTFD', awaitHandlerFactory(portalController.dashboardLTFD));
-router.get('/dashboardEAR', awaitHandlerFactory(portalController.dashboardEAR));
+router.get('/dashboardEAR',  awaitHandlerFactory(portalController.dashboardEAR));
 router.get('/dashboardApex/:days',  awaitHandlerFactory(portalController.dashboardApex));
 
 router.get(['/new-user','/new-user/:id'], webAuth(), awaitHandlerFactory(portalController.newUser));

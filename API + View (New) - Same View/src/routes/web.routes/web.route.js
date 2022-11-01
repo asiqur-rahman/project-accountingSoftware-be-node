@@ -28,7 +28,7 @@ router.use('/report', reportRouter);
 // Route all to login page
 router.get('/', (req, res, next) => {
   // res.redirect('/auth/login');
-  res.locals.title = 'Dashboard';
+  res.locals.title = 'Accounting Pro';
   res.locals.redirectTo="/auth/login";
   res.locals.areaToShow="areaToShow";
   res.render('Dashboard/portal');

@@ -19,28 +19,19 @@ const chequeRecordService = require('../../service/chequeRecords.service');
 
 //#region Dashboard
 module.exports.portal = async (req, res, next) => {
-  res.locals.title = 'Dashboard';
-  res.render('Dashboard/portal',{layout:false});
-}
-
-module.exports.dashboard = async (req, res, next) => {
   db.sequelize.query('CALL DashboardData (:days,:incomeCode,:expenseCode)', {
-      replacements: {
-        days: 7,
-        incomeCode: '401',
-        expenseCode: '301'
-      }
-    })
-    .then(async function (dashboardData) {
-      // await transactionService.lastTransactionsForDashboard().then(data=>{
-      res.locals.title = 'Dashboard';
-      res.locals.dashboardData = dashboardData[0];
-      res.locals.lTFD = []; //data.rows;//lastTransactionsForDashboard
-      res.render('Dashboard/index', {
-        layout: false
-      });
-      // });
-    })
+    replacements: {
+      days: 7,
+      incomeCode: '401',
+      expenseCode: '301'
+    }
+  })
+  .then(async function (dashboardData) {
+    // await transactionService.lastTransactionsForDashboard().then(data=>{
+    res.locals.dashboardData = dashboardData[0];
+    res.render('Dashboard/portal',{layout:false});
+    // });
+  });
 }
 
 module.exports.dashboardApex = async (req, res, next) => {

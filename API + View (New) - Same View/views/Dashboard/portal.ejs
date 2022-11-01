@@ -343,7 +343,7 @@
                                 <div>
                                     <h4 class="mb-1 mt-1"> <span
                                             data-plugin="counterup"><%= typeof dashboardData!='undefined' ? dashboardData.IncomeToday : '0' %>
-                                            Tk.</span></h4>
+                                        </span> Tk.</h4>
                                     <p class="text-muted mb-0">Income Today (BDT)</p>
                                 </div>
                             </div>
@@ -359,7 +359,7 @@
                                 <div>
                                     <h4 class="mb-1 mt-1"><span
                                             data-plugin="counterup"><%= typeof dashboardData!='undefined' ? dashboardData.IncomeThisMonth : '0' %>
-                                            Tk.</span></h4>
+                                        </span> Tk.</h4>
                                     <p class="text-muted mb-0">Income this Month (BDT)</p>
                                 </div>
                             </div>
@@ -375,7 +375,7 @@
                                 <div>
                                     <h4 class="mb-1 mt-1"><span
                                             data-plugin="counterup"><%= typeof dashboardData!='undefined' ? dashboardData.ExpenseToday : '0' %>
-                                            Tk.</span></h4>
+                                        </span> Tk.</h4>
                                     <p class="text-muted mb-0">Today Expense (BDT)</p>
                                 </div>
                             </div>
@@ -391,7 +391,7 @@
                                 <div>
                                     <h4 class="mb-1 mt-1"><span
                                             data-plugin="counterup"><%= typeof dashboardData!='undefined' ? dashboardData.ExpenseThisMonth : '0' %>
-                                            Tk.</span></h4>
+                                            </span> Tk.</h4>
                                     <p class="text-muted mb-0">Expense this Month (BDT)</p>
                                 </div>
                             </div>
@@ -576,6 +576,7 @@
 
 <script>
     $(document).ready(function () {
+        
         const coloum=[
             {
                 "data": "sl",

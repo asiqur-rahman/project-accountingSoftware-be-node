@@ -130,7 +130,7 @@ function confirmationCheck_ajax(url, method = 'GET', msg, tableId, showSpin=true
                     if(showSpin)Spinner.Hide();
                 },
                 success: function (jsondata) {
-                    debugger;
+                    
                     if (jsondata.status == true || jsondata.status == 200 ) {
                         // if(method=="DELETE")
                         $('#' + tableId).DataTable().ajax.reload();

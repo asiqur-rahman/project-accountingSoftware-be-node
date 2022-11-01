@@ -54,7 +54,7 @@ $('.validate-this-form').on('submit', function (e) {
                     if(response.token){
                         localStorage.setItem('AcPro_Token', response.token);
                     }
-                    debugger;
+                    
                     if (response.msg) {
                         toastr[response.msg[0]](response.msg[1]);
                     } 
