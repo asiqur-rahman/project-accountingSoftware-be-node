@@ -36,7 +36,6 @@ service.create = async (req) => {
                 })
             })
         }).catch(function (err) {
-            console.log(err)
             reject({
                 status: 502,
                 message: err.message
@@ -125,7 +124,6 @@ service.indexData = async (req) => {
                 detailsInfo.rows.forEach(detail => {
                     detail.sl = ++count;
                 })
-                // console.log(detailsInfo);
                 resolve({draw:req.query.draw,recordsTotal:detailsInfo.count,recordsFiltered:detailsInfo.count,data:detailsInfo.rows});
             } else {
                 resolve({count: 0,rows:[]});

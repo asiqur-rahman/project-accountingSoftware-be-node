@@ -264,7 +264,6 @@ module.exports.transactionDetails = async (req, res, next) => {
     res.locals = {
       data: data
     };
-    console.log(data)
     res.render('Transaction/details', {
       layout: false
     });

@@ -43,7 +43,7 @@
     },
     "organizationInfo": {
         "orgName": "e-Accounting360",
-        "orgPhone": "+880 17990 89893",
+        "orgPhone": "+880 17000 00000",
         "devOrgName": "DataCo Systems Limited",
         "devOrgLink": "https://datacosys.com"
     },
@@ -55,7 +55,7 @@
         "password": "@no-reply@22"
     },
     "emailSettings": {
-        "name": "Brain Tech Solution",
+        "name": "Accounting Pro",
         "host": "mail.chickenman.net.au",
         "port": 465,
         "email": "no-reply@ims.braintechsolution.com",

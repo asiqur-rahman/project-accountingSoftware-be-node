@@ -186,13 +186,11 @@ service.indexData = async (req) => {
             order: order,
             raw: true
         }).then(detailsInfo => {
-            console.log(detailsInfo)
             if (detailsInfo.rows) {
                 var count = req.query.start;
                 detailsInfo.rows.forEach(detail => {
                     detail.sl = ++count;
                 })
-                // console.log(detailsInfo);
                 resolve({draw:req.query.draw,recordsTotal:detailsInfo.count,recordsFiltered:detailsInfo.count,data:detailsInfo.rows});
             } else {
                 resolve({count: 0,rows:[]});
@@ -231,7 +229,6 @@ service.create = async (req) => {
                 var customerData = {};
                 const password=(Date.now() % 100000000).toString();
                 req.body.password = await bcrypt.hash(password, 8);
-                console.log("create",req.body)
                 await db.UserDetails.create(req.body)
                     .then(customer => {
                         customerData = customer;
@@ -300,7 +297,6 @@ service.resetPassword = async (req) => {
                                 MailSubject: "Accounting Pro Reset User Portal Credentials.",
                                 MailBody: `Hi ${userInfo.username.toUpperCase()}, <br/><br/>Welcome to Accounting Pro. Here is your new portal login credentials.<br/><br/>UserName : <b>${userInfo.username}</b><br/>Password : <b>${passwordNotHashed}</b><br/><br/> Thank you for joining Accounting Pro.<br/><br/>This is auto generated mail.<br/>Please don't reply.<br/>`
                             }, req).then((result) => {
-                                console.log(result)
                                 // res.status(200).send({status:true,result:result});
                                 if(result.status==200){
                                     resolve({

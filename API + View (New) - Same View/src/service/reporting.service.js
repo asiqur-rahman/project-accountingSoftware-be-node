@@ -243,7 +243,6 @@ service.getFilterRecordData = async (req) => {
     }).then(data => {
         resolve(data);
     }).catch(function (err) {
-        console.log(err)
         reject({
             status: 502,
             message: err.message

@@ -293,7 +293,6 @@ async function initial() {
         db.ChartOfAccount.create(jsonData)
           .then(data2=>{
             parentId=element.header?data2.id:parentId;
-            console.log(parentId);
             db.AccountBalance.create({
               amount:0,
               chartOfAccountId:data2.id,
@@ -367,7 +366,6 @@ async function initial() {
         userId:1,
       })
     });
-    console.log("Default data loaded !")
   }
 
 module.exports = db;

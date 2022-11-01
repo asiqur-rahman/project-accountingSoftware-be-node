@@ -145,16 +145,8 @@ module.exports.webAuth_ = (...roles) => {
 module.exports.webAuth = (...roles) => {
     return async function (req, res, next) {
         try {
-            // res.session.returnUrl = req.originalUrl;
-            // sess = req.session;
-            // log.CreateLog(enumm.logFor.auth,"Auth Purpose (TOKEN)",req.session?req.session.user:null);
-            // var bearerToken = req.headers.authorization ?
-            //     req.headers.authorization : req.query.token ?
-            //     req.query.token : req.session.user ;
-
             const bearerToken = req.headers.authorization ;
             const bearer = 'bearer ';
-            console.log('bearerToken',bearerToken);
 
             if (!bearerToken) {
                 req.session.notification=[enumm.notification.Error,'Access denied. No credentials sent !'];
@@ -167,13 +159,6 @@ module.exports.webAuth = (...roles) => {
 
             // Verify Token
             const decoded = jwt.verify(token, secretKey);
-            // const user = await UserModel.findOne({ id: decoded.user_id });
-            // const user = await db.user.scope('authPurpose').findOne({ 
-            //     where:{id:decoded.user_id},
-            //     include:db.role,
-            //     raw:true
-            //  });
-            // console.log(decoded);
 
             if (!decoded.user_id && !decoded.roleId) {
                 // req.session.destroy();

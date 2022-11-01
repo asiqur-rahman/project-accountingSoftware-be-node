@@ -114,7 +114,6 @@ service.indexData = async (req) => {
                 detailsInfo.rows.forEach(detail => {
                     detail.sl = ++count;
                 })
-                // console.log(detailsInfo);
                 resolve({draw:req.query.draw,recordsTotal:detailsInfo.count,recordsFiltered:detailsInfo.count,data:detailsInfo.rows});
             } else {
                 resolve({count: 0,rows:[]});

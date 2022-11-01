@@ -223,7 +223,6 @@ service.chartOfAccountDDByBaseCode =async (code)=> {
         attributes: ['name', 'id'],
         raw: true
     }).then(data => {
-        console.log(data)
         return data;
     });
 };
@@ -240,7 +239,6 @@ service.transactionTypeWithRef = async ()=> {
 
 service.getById = async (id) => {
     return new Promise(async (resolve, reject) => {
-        console.log("called")
         await db.ChartOfAccount.findOne({
             where: {
                 id: id
