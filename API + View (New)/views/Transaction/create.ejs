@@ -226,7 +226,7 @@
 
     var calculateTransaction =()=>{
         const totalTransactions=$(".transactionDetailsPart").length;
-        if($("#isItIncome").val()==0){
+        if($("#isItIncome").val()==1){
             $("input[name='transactionDetails[0][credit]']").val($("#amount").val())
             $("input[name='transactionDetails[1][debit]']").val($("#amount").val())
         }else{

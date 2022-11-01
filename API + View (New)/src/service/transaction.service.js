@@ -273,7 +273,7 @@ service.transactionDetailsByTransactionId = async (req) => {
                 },
                 {
                     model: db.Transaction,
-                    attributes: ['dateTime','description']
+                    attributes: ['dateTime']
                 }
             ],
             raw: true
