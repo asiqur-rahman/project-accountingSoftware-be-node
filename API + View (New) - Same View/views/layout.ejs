@@ -507,7 +507,7 @@
 
   <script>
     $(function(){
-        loadPartial("/portal/dashboard");
+        loadPartial("<%=typeof redirectTo!='undefined' ? redirectTo:'/portal/dashboard'%>");
     });
 
     toastr.options = {

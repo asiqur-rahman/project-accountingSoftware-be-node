@@ -16,12 +16,14 @@ router.use('/', (req, res, next) => {
 });
 
 router.use('/auth', isLogedIn(), authRouter);
-router.use('/portal', webAuth(), portalRouter);
-router.use('/report', webAuth(), reportRouter);
+router.use('/portal', portalRouter);
+router.use('/report', reportRouter);
 
 // Route all to login page
 router.get('/', (req, res, next) => {
-  res.redirect('/auth/login');
+  // res.redirect('/auth/login');
+  res.locals.title = 'Dashboard';
+  res.render('Dashboard/portal');
 });
 
 // 404 error
