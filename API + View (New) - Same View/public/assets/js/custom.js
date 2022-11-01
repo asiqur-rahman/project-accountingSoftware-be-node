@@ -9,8 +9,13 @@ const Spinner = {
         $('#preloader').fadeOut();
     }
 };
+function logOut() {
+    localStorage.removeItem('AcPro_Token');
+    loadPartial('/auth/login','areaToShow');
+}
 
 async function loadPartial(url,contentDiv=null,modal=false,method=false,showSpin=true){
+    debugger;
     // $("#sidebar-menu mm-active active").removeClass("active");
     if(document.querySelector("#sidebar-menu .mm-active .active"))document.querySelector("#sidebar-menu .mm-active .active").classList.remove("active")
     await $.ajax({
@@ -24,7 +29,10 @@ async function loadPartial(url,contentDiv=null,modal=false,method=false,showSpin
             if(showSpin)Spinner.Hide();
         },
         success: function (result,textStatus, xhr) {
-            if(xhr.status==302)window.location.replace('/');
+            if(xhr.status==302){
+                localStorage.removeItem('AcPro_Token');
+                window.location.replace('/');
+            }
             else {
                 if(!modal)$(`.${contentDiv?contentDiv:"main-container"}`).html(result);
                 else{
@@ -34,10 +42,11 @@ async function loadPartial(url,contentDiv=null,modal=false,method=false,showSpin
                     else $("#customModal .modal-footer").hide();
                     $('#customModal').modal('toggle');
                 }
-            }
+            }   
         },
         error: function (request, status, error) {
-            window.location.replace('/');
+            localStorage.removeItem('AcPro_Token');
+            // window.location.replace('/');
         }
     })
 }
@@ -162,6 +171,9 @@ async function showResponseInModals(url,method){
     await $.ajax({
         type: method??'GET',
         url: url,
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader('authorization', `bearer ${localStorage.getItem('AcPro_Token')}`);
+        },
         success: function (result) {
             $('.bs-custom-modal-lg .modal-body').html(result);
             $('.bs-custom-modal-lg').modal('toggle');

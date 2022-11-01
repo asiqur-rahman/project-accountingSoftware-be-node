@@ -21,13 +21,14 @@ router.use('/', (req, res, next) => {
   next();
 });
 
-router.use('/auth', isLogedIn(), authRouter);
+router.use('/auth', authRouter);
 router.use('/portal', portalRouter);
 router.use('/report', reportRouter);
 
 // Route all to login page
 router.get('/', (req, res, next) => {
   // res.redirect('/auth/login');
+  console.log("/ Route")
   res.locals.title = 'Accounting Pro';
   res.locals.redirectTo="/auth/login";
   res.locals.areaToShow="areaToShow";
