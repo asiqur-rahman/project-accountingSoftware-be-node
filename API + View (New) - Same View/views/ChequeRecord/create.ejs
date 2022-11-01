@@ -1,0 +1,108 @@
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <h4 class="mb-0">Cheque Record <%= typeof detailsInfo=='undefined' ? 'Create' : 'Update' %></h4>
+        </div>
+    </div>
+</div>
+<!-- end page title -->
+
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <form class="validate-this-form" method="post" action="<%=lastVisitedUrl%>">
+                    <div class="row">
+                        <input class="form-control" type="number" name="id" id="id" value="<%= typeof detailsInfo!='undefined' ? detailsInfo.id : '' %>" readonly hidden>
+                        <div class="col-md-6">
+                            <div class="mb-3 row">
+                                <label for="detailsInfoId" class="col-md-4 col-form-label">Bank</label>
+                                <div class="col-md-8">
+                                    <div class="input-group" data-validate="Bank is required">
+                                        <select class="form-select validate_this select2" name="bankAccountId" id="bankAccountId">
+                                            <option value="" disabled selected>Select</option>
+                                            <% if(locals.bankAccountDD) {for(var i=0; i<bankAccountDD.length; i++){%>
+                                                <option value="<%=bankAccountDD[i].id%>" <%=typeof detailsInfo!="undefined" ? bankAccountDD[i].id==detailsInfo.bankAccountId? 'selected':'' : ''%>><%=bankAccountDD[i].name%></option>
+                                            <%}}%>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3 row">
+                                <label for="amount" class="col-md-4 col-form-label">Amount</label>
+                                <div class="col-md-8" data-validate="Amount is required">
+                                    <input class="form-control validate_this" type="text" name="amount" id="amount" value="<%= typeof detailsInfo!='undefined' ? detailsInfo.amount : '' %>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3 row">
+                                <label for="number" class="col-md-4 col-form-label">Cheque Number</label>
+                                <div class="col-md-8" data-validate="Cheque Number is required">
+                                    <input class="form-control validate_this" type="text" name="number" id="number" value="<%= typeof detailsInfo!='undefined' ? detailsInfo.number : '' %>">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="mb-3 row">
+                                <label for="description" class="col-md-4 col-form-label">Description</label>
+                                <div class="col-md-8">
+                                    <input class="form-control" type="text" name="description" id="description" value="<%= typeof detailsInfo!='undefined' ? detailsInfo.description : '' %>">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <a class="btn btn-danger" style="float: right; margin-left: 2%;" type="button" href="javascript: void(0);" onclick="loadPartial('/portal/cheque-record-list')">Cancel</a>
+                        <button class="btn btn-primary" style="float: right;" type="submit" id="formSubmitBtn" ><%= typeof detailsInfo=='undefined' ? 'Create' : 'Update' %></button>
+                        <!-- <button class="btn btn-primary" type="button" id="faceScanBtn" style="display: none;">Face Scan</button> -->
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- end card -->
+    </div> <!-- end col -->
+</div>
+<!-- end row -->
+
+<script src="/public/assets/js/custom-validation.js"></script>
+
+<script>
+    $("#username").change(async function(){
+        const username=$("#username").val();
+        if(username.trim()!=''){
+            await $.ajax({
+                type: 'get',
+                url: "/portal/username-check/" + username,
+                beforeSend: function () {
+                    // Spinner.Show();
+                },
+                complete: function () {
+                    // Spinner.Hide();
+                },
+                success: function (jsondata) {
+                    debugger;
+                    if(jsondata.id && jsondata.id!=$("#id").val()){
+                        $("#username").val('');
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Username already used !'
+                        });
+                    }
+                },
+                error: function (request, status, error) {
+                    // Spinner.Hide();
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Duplicate username checking failed !'
+                    })
+                }
+            });
+        }
+    })
+</script>
