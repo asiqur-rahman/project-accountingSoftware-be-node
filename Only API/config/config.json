@@ -28,7 +28,7 @@
         }
     },
     "appSettings": {
-        "httpPort": 3332,
+        "httpPort": 3335,
         "httpsPort": false,
         "SECRET_KEY": "Asiq Application",
         "SECRET_JWT": "Asiq Application",

@@ -12,6 +12,7 @@ const session = require('express-session');
 const bodyParser = require('body-parser');
 const flash = require('connect-flash');
 const i18n = require("i18n-express");
+const cors = require('cors');
 var minifyHTML = require('express-minify-html-2');
 const Logger = require('./src/externalService/log.service');
 const log = new Logger(path.basename(__filename));
@@ -26,6 +27,8 @@ var sslOptions = {
     }).split('-----END CERTIFICATE-----\r\n').map(cert => cert + '-----END CERTIFICATE-----\r\n')
 };
 //#endregion
+
+app.use(cors());
 
 //#region Application Configuration
 app.use(compression()); // compress all responses
