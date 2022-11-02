@@ -6,6 +6,13 @@ module.exports = (sequelize, Sequelize) => {
       autoIncrement:true,
       primaryKey: true
     },
+    transactionNo: {
+      type: Sequelize.STRING(),
+      allowNull:false,
+      validate:{
+        notNull:{ args: true, msg: "Transaction No cannot be empty !!"}
+      }
+    },
     amount: {
       type: Sequelize.DOUBLE(),
       allowNull:false,
@@ -18,16 +25,16 @@ module.exports = (sequelize, Sequelize) => {
       allowNull:true
     },
     dateTime: {
-      type: Sequelize.DATE(),
+      type: Sequelize.DATEONLY(),
       allowNull:false,
       validate:{
         notNull:{ args: true, msg: "DateTime cannot be empty !!"}
       }
     },
-    isActive: {
+    isItIncome: {
       type: Sequelize.BOOLEAN(),
-      allowNull:false,
-      defaultValue: true
+      allowNull:true,
+      defaultValue: null
     } 
   },{
     defaultScope: {

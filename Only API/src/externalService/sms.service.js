@@ -17,7 +17,6 @@ module.exports.sendSms = async (mobileNo,smsBody) => {
         ApiKey: config.smsSettings.apiKey,
         ClientId: config.smsSettings.clientId
       };
-      console.log(body)
       await axios.post('https://api.smsq.global/api/v2/SendSMS',body).then(function (response) {
         Log.CreateLog('Sms Send Request (To - '+mobileNo+'). Request: '+ JSON.stringify(body),'sms');
         Log.CreateLog('Sms Send Response (To - '+mobileNo+'). Response: '+ JSON.stringify(response.data.Data),'sms');

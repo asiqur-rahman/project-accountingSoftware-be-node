@@ -1,0 +1,102 @@
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <h4 class="mb-0">List of Transactions</h4>
+
+        </div>
+    </div>
+</div>
+<!-- end page title -->
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap"
+                    style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                    <thead></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div> <!-- end col -->
+</div> <!-- end row -->
+
+<div class="modal fade bs-custom-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mt-0" id="myLargeModalLabel">Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Required datatable js -->
+<script src="/public/assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="/public/assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<!-- Buttons examples -->
+<script src="/public/assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="/public/assets/libs/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
+<script src="/public/assets/libs/jszip/jszip.min.js"></script>
+<script src="/public/assets/libs/pdfmake/build/pdfmake.min.js"></script>
+<script src="/public/assets/libs/pdfmake/build/vfs_fonts.js"></script>
+<script src="/public/assets/libs/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="/public/assets/libs/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script src="/public/assets/libs/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+
+<!-- Responsive examples -->
+<script src="/public/assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="/public/assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+<!-- Datatable init js -->
+<script src="/public/assets/js/pages/datatables.init.js"></script>
+
+<script>
+    $(document).ready(function () {
+        const coloum=[
+            {
+                "data": "sl",
+                "title": "#SL",
+            },
+            {
+                "data": "dateTime",
+                "title": "Date",
+            },
+            {
+                "data": "sl",
+                "title": "Description",
+                "render": function (data, type, row, meta) {
+                    return `${row['description']}`;
+                }
+            },
+            {
+                "data": "amount",
+                "title": "Amount",
+                "render": function (data, type, row, meta) {
+                    return `${row['amount']} Tk.`;
+                }
+            },
+            {
+                "data": "id",
+                "title": "Action",
+                "render": function (data, type, row, meta) {
+                        return `
+                        <button class="btn btn-sm btn-primary btn-soft-primary waves-effect waves-light" onclick=showResponseInModals('/portal/transaction-details/${row['id']}')>Details</button> 
+                        <button class="btn btn-sm btn-danger btn-soft-danger waves-effect waves-light" onclick='confirmationCheck_ajax("/portal/transaction-delete/${row['id']}","DELETE","Are you sure about the transaction deletion.","datatable-buttons",false)'>Delete</button>`
+                }
+            }
+        ]
+        get_table_data("datatable-buttons","portal/transaction-list-data",coloum,[],true,true);
+    });
+
+    // <button class="btn btn-sm btn-danger btn-soft-danger waves-effect waves-light" onclick='deleteEmployeeFaces("/portal-user-delete/${data}",${data})'>Delete</button>
+    
+</script>

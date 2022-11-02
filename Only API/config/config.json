@@ -1,10 +1,25 @@
 {
-    "development": {
-        "username": "drtechma_test",
-        "password": "drtechma_test",
-        "database": "drtechma_test",
+    "databaseSettings": {
+        "username": "drtechma_acPro",
+        "password": "drtechma_acPro",
+        "database": "drtechma_acPro",
         "host": "braintechsolution.com",
         "dialect": "mysql",
+        "logging": false,
+        "pool": {
+            "max": 5,
+            "min": 0,
+            "acquire": 30000,
+            "idle": 10000
+        }
+    },
+    "databaseSettings_": {
+        "username": "haordlsc_ac",
+        "password": "haordlsc_ac",
+        "database": "haordlsc_ac",
+        "host": "51.210.52.244",
+        "dialect": "mysql",
+        "logging": true,
         "pool": {
             "max": 5,
             "min": 0,
@@ -14,38 +29,33 @@
     },
     "appSettings": {
         "httpPort": 3332,
-        "httpsPort": 3333,
+        "httpsPort": false,
         "SECRET_KEY": "Asiq Application",
         "SECRET_JWT": "Asiq Application",
         "SessionTimeOut": 3600000,
-        "UniquePublicIpFiltration": false,
         "DebugOn": false,
-        "ConsoleLog": true
+        "ConsoleLog": true,
+        "BankingGlCode":"101",
+        "BankingGlLevel":2
     },
     "logSettings": {
         "DebugLog": true
     },
-    "serverSettings": {
-        "Mode_Production": false,
-        "HTTP_PORT": 3000,
-        "API_KEY_SECRET": "BTS_Secret_By_Asiq",
-        "TURN_URLS": [
-            "turn:ss-turn1.xirsys.com:80?transport=udp",
-            "turn:ss-turn1.xirsys.com:80?transport=udp"
-        ],
-        "TURN_USERNAME": "SJ8gV3mjmH00ay9K51k8xCOCA18d5XgjvKRDhULdXZ8iKC5WePZmhMVybSzcfbtKAAAAAGIVwe1wZWZpcmFiNTIz",
-        "TURN_PASSWORD": "033335be-9467-11ec-81c6-0242ac120004"
-    },
     "organizationInfo": {
-        "orgName": "Datasoft",
-        "orgPhone": "+880 17990 89893",
-        "orgEmail": "info@braintechsolution.com",
-        "orgAddress": "Dhaka, Bangladesh, 1216",
-        "devOrgName": "Datasoft",
-        "devOrgLink": "https://braintechsolution.com/"
+        "orgName": "e-Accounting360",
+        "orgPhone": "+880 17000 00000",
+        "devOrgName": "DataCo Systems Limited",
+        "devOrgLink": "https://datacosys.com"
+    },
+    "emailSettings_": {
+        "name": "Datacosys",
+        "host": "mail.datacosys.com",
+        "port": 465,
+        "email": "no-reply@datacosys.com",
+        "password": "@no-reply@22"
     },
     "emailSettings": {
-        "name": "Brain Tech Solution",
+        "name": "Accounting Pro",
         "host": "mail.chickenman.net.au",
         "port": 465,
         "email": "no-reply@ims.braintechsolution.com",

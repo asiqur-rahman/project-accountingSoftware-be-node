@@ -3,10 +3,10 @@ const joi = require('@hapi/joi');
 const schema = {
     accountCreate:joi.object({
         name:joi.string().max(100).required(),
-        decimalPlaces:joi.number().required(),
+        amount:joi.number().required(),
         isActive:joi.number().required(),
         currencyId:joi.number().required(),
-        parentId:joi.number()
+        parentId:joi.number().required()
     }),
 }
 

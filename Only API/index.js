@@ -4,20 +4,16 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const compression = require('compression')
-const session = require('express-session');
-const bodyParser = require('body-parser');
-const {
-    Server
-} = require('socket.io');
-const _config = require('./config/config.json');
 const http = require('http');
 const https = require('https');
-const enumm = require('./src/utils/enum.utils');
 const RouteService = require('./src/routes/routes');
 const config = require('./config/config.json');
-const Logger = require('./src/externalService/console.log.service');
-
-var path = require('path');
+const session = require('express-session');
+const bodyParser = require('body-parser');
+const flash = require('connect-flash');
+const i18n = require("i18n-express");
+var minifyHTML = require('express-minify-html-2');
+const Logger = require('./src/externalService/log.service');
 const log = new Logger(path.basename(__filename));
 //#endregion
 
@@ -33,18 +29,40 @@ var sslOptions = {
 
 //#region Application Configuration
 app.use(compression()); // compress all responses
-
-app.use(session({
-    key: config.appSettings.SECRET_KEY,
-    secret: config.appSettings.SECRET_JWT,
-    resave: true,
-    saveUninitialized: false,
-    httpOnly: true, // dont let browser javascript access cookie ever
-    cookie: {
-        expires: new Date(Date.now() + config.appSettings.SessionTimeOut)
+app.use(minifyHTML({
+    override:      true,
+    exception_url: false,
+    htmlMinifier: {
+        removeComments:            true,
+        collapseWhitespace:        true,
+        collapseBooleanAttributes: true,
+        removeAttributeQuotes:     true,
+        removeEmptyAttributes:     true,
+        minifyJS:                  true
     }
 }));
 
+app.use(session({
+  key: config.appSettings.SECRET_KEY,
+  secret: config.appSettings.SECRET_JWT,
+  resave: true,
+  saveUninitialized: true,
+  httpOnly: true,
+  cookie: {
+    // secure: true,
+    expires: new Date(Date.now() + config.appSettings.SessionTimeOut),
+    // maxAge : config.appConfig.SessionTimeOut
+  }
+}));
+
+app.use(flash());
+app.use(i18n({
+  translationsPath: path.join(__dirname, 'i18n'), // <--- use here. Specify translations files path.
+  siteLangs: ["en", "ind"],
+  textsVarName: 'translation'
+}));
+
+// parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({
     extended: true
 }));
@@ -84,25 +102,6 @@ app.use((err, req, res, next) => {
 
 //#region Server Start and Routing
 
-// Turn config
-const turnUrls = config.serverSettings.Mode_Production ? config.serverSettings.TURN_URLS : 'turn:numb.viagenie.ca';
-const turnUsername = config.serverSettings.Mode_Production ? config.serverSettings.TURN_USERNAME : 'webrtc@live.com';
-const turnCredential = config.serverSettings.Mode_Production ? config.serverSettings.TURN_PASSWORD : 'muazkh';
-
-const iceServers = [];
-
-iceServers.push({
-    urls: 'stun:stun.l.google.com:19302',
-}, {
-    urls: turnUrls,
-    username: turnUsername,
-    credential: turnCredential,
-}, );
-
-//#region Server Start
-log.debug('Server IceServers ', {
-    iceServers: iceServers,
-});
 if(config.appSettings.httpPort){
     const httpPort = Number(process.env.PORT || config.appSettings.httpPort);
     http.createServer(app).listen(httpPort, function () {
@@ -114,10 +113,6 @@ if(config.appSettings.httpPort){
   }
   if(config.appSettings.httpsPort){
     const httpsServer = https.createServer(sslOptions, app);
-    io = require('socket.io')(httpsServer, {
-        maxHttpBufferSize: 1e7,
-        transports: ['polling'] //['polling','websocket'] // Only using polling for auto re-connection
-    });
     httpsServer.listen(Number(process.env.PORT || config.appSettings.httpsPort), () => {
         log.debug('HTTPS Server Ready ', {
             port: config.appSettings.httpsPort,
@@ -125,9 +120,6 @@ if(config.appSettings.httpPort){
         });
     });
   }
-//#endregion
 
 RouteService(app);
 //#endregion
-
-require('./src/socketEvent/socketEvent')(io,iceServers); 
