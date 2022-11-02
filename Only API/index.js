@@ -104,7 +104,6 @@ app.use((err, req, res, next) => {
 //#endregion
 
 //#region Server Start and Routing
-
 if(config.appSettings.httpPort){
     const httpPort = Number(process.env.PORT || config.appSettings.httpPort);
     http.createServer(app).listen(httpPort, function () {
