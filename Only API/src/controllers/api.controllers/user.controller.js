@@ -31,6 +31,15 @@ module.exports.delete = async(req, res, next) => {
     
 };
 
+module.exports.list = async(req, res, next) => {
+    await userService.indexData(req)
+    .then(result=>{
+        return res.status(200).send(result);
+    }).catch(e=>{
+        return res.status(e.status).send(e);
+    })
+};
+
 hashPassword = async (req) => {
     if (req.body.password) {
         req.body.password = await bcrypt.hash(req.body.password, 8);

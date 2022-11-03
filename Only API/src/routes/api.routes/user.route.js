@@ -5,9 +5,10 @@ const userController = require('../../controllers/api.controllers/user.controlle
 const awaitHandlerFactory = require('../../middleware/awaitHandlerFactory.middleware');
 const { userCreateValidator } = require('../../middleware/validators/userValidator.middleware');
 
-router.get('/:id', awaitHandlerFactory(userController.getById));
+router.get('/id/:id', awaitHandlerFactory(userController.getById));
+router.get('/list', awaitHandlerFactory(userController.list));
 router.post('/', userCreateValidator, awaitHandlerFactory(userController.create));
-router.patch('/:id', awaitHandlerFactory(userController.update));
-router.delete('/:id', awaitHandlerFactory(userController.delete));
+router.patch('/id/:id', awaitHandlerFactory(userController.update));
+router.delete('/id/:id', awaitHandlerFactory(userController.delete));
 
 module.exports = router;

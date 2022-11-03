@@ -77,6 +77,32 @@ service.getById = async (id) => {
 
 service.indexData = async (req) => {
     return new Promise(async (resolve, reject) => {
+        
+        await db.ChequeRecord.findAndCountAll({
+            include: [
+                {
+                    model: db.BankAccount,
+                    attributes: ['name','accountTitle','accountNumber']
+                }
+            ],
+            raw: true
+        }).then(detailsInfo => {
+            if (detailsInfo.rows) {
+                var count = 0;
+                detailsInfo.rows.forEach(detail => {
+                    detail.sl = ++count;
+                })
+                resolve({status:200,recordsTotal:detailsInfo.count,data:detailsInfo.rows});
+            } else {
+                resolve({count: 0,rows:[]});
+            }
+        });
+    });
+};
+
+
+service.ss_indexData = async (req) => {
+    return new Promise(async (resolve, reject) => {
         //-----------------Server side pagination----------------------
         const order = req.query.columns[req.query.order[0].column].data=='sl'?[]:sequelize.literal(req.query.columns[req.query.order[0].column].data+" "+req.query.order[0].dir);//req.query.order[0].column=='0'?[]:[[req.query.columns[req.query.order[0].column].data,req.query.order[0].dir]];
         var searchQuery=[];

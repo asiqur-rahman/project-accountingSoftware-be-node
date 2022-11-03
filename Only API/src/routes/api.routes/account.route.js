@@ -5,10 +5,11 @@ const accountController = require('../../controllers/api.controllers/account.con
 const awaitHandlerFactory = require('../../middleware/awaitHandlerFactory.middleware');
 const { accountCreateValidator } = require('../../middleware/validators/accountingHeadValidator.middleware');
 
-router.get('/:id',  awaitHandlerFactory(accountController.getById));
+router.get('/id/:id',  awaitHandlerFactory(accountController.getById));
 router.post('/', accountCreateValidator, awaitHandlerFactory(accountController.create));
-router.patch('/:id',  awaitHandlerFactory(accountController.update));
-router.delete('/:id',  awaitHandlerFactory(accountController.delete));
+router.patch('/id/:id',  awaitHandlerFactory(accountController.update));
+router.delete('/id/:id',  awaitHandlerFactory(accountController.delete));
+router.get('/list', awaitHandlerFactory(accountController.list));
 router.get('/byParentId/:id', awaitHandlerFactory(accountController.byParentId));
 router.get('/byBaseCode/:code', awaitHandlerFactory(accountController.byBaseCode));
 
