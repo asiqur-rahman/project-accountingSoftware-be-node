@@ -1,9 +1,0 @@
-CREATE OR REPLACE  PROCEDURE `Sales_Dashboard`(
-	days INT
-)
-BEGIN
-	-- DROP PROCEDURE IF EXISTS `Sales_Dashboard`;
-	
-	select t.totalPrice,id.vat ,id.subTotal  from tallies t left join invoiceDetails id on t.invoiceNo = id.invoiceNo where (t.`date` BETWEEN  DATE_SUB(CURDATE(), INTERVAL days DAY) AND CURDATE()) and  t.status = 2 ;
-
-END;

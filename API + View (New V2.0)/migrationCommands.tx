@@ -1,2 +1,0 @@
-npx sequelize-cli migration:create --name Add Total Field to Bazar
-npx sequelize-cli db:migrate
