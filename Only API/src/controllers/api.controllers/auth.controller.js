@@ -4,6 +4,7 @@ const appConfig = require('../../../config/config.json');
 const Op = require('sequelize').Op;
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const userService = require('../../service/user.service');
 
 module.exports.login = async (req, res, next) => {
   var clientIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress || null;
@@ -11,70 +12,44 @@ module.exports.login = async (req, res, next) => {
     username,
     password
   } = req.body;
-  const user = await db.User.scope('loginPurpose').findOne({
-    where: {
-      username: username
-    },
-    // where:{[Op.and]: [{Username:username}, {Status:1}]},
-    include: [{
-      model: db.UserDetails,
-      attributes: ['firstName', 'lastName'],
-      include: {
-        model: db.Role,
-        as: "role",
-        attributes: ['code']
-      }
-    }],
-    raw: true
-  });
-  if (!user) {
-    res.status(200).send({
-      status: 401,
-      message: "Username not found !"
-    });
-  } else if (user.isActive != 1) {
-    res.status(200).send({
-      status: 401,
-      message: "User Permission revoked by admin ! Please Contact with admin immediately."
-    });
-  } else {
-    const roleId = user['userDetail.role.code'];
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      res.status(200).send({
-        status: 401,
-        message: "Incorrect password !"
-      });
+  userService.getByName(username).then(async (user) => {
+    if (!user) {
+      req.session.notification = [enumm.notification.Error, 'Unable to login !'];
+      return res.redirect('/auth/login');
+    } else if (user.isActive != 1) {
+      req.session.notification = [enumm.notification.Error, 'You access was revoked by admin! Please contact with admin.'];
+      return res.redirect('/');
     } else {
-      for (var key in user) {
-        if (key.includes(".")) {
-          var newKey = key.replace('.', '');
-          user[newKey] = user[key];
-          delete user[key];
-        }
+      const isMatch = await bcrypt.compare(password, user.password);
+      if (!isMatch) {
+        req.session.notification = [enumm.notification.Error, 'Incorrect password !'];
+        return res.redirect('/');
+      } else {
+        // user matched!
+        const secretKey = appConfig.appSettings.SECRET_JWT;
+        
+        const fullName=`${user['userDetail.firstName']} ${user['userDetail.lastName']}`;
+        const detailsForToken = {
+          user_name: user.username,
+          full_name: fullName,
+          user_id: user.id.toString(),
+          role_id: user['userDetail.role.id'].toString(),
+          role_code: user['userDetail.role.code'].toString(),
+          role_name: user['userDetail.role.name'].toString(),
+          clientIp: clientIp.toString()
+        };
+        const token = jwt.sign(detailsForToken,secretKey, {
+          expiresIn: appConfig.appSettings.SessionTimeOut
+        });
+        res.send({
+          status:200,
+          token,
+          details:JSON.stringify(detailsForToken),
+          sessionTime: appConfig.appSettings.SessionTimeOut
+        });
       }
-      // user matched!
-      const secretKey = appConfig.appSettings.SECRET_JWT;
-
-      const token = jwt.sign({
-        user_id: user.id.toString(),
-        role_id: roleId.toString(),
-        clientIp: clientIp.toString()
-      }, secretKey, {
-        expiresIn: appConfig.appSettings.SessionTimeOut
-      });
-      const {
-        password,
-        ...userWithoutPassword
-      } = user;
-      res.send({
-        status:200,
-        token,
-        role: user.RoleName,
-        sessionTime: appConfig.appSettings.SessionTimeOut
-      });
     }
-  }
+  })
 };
 
 
