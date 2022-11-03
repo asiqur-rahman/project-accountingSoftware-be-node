@@ -33,6 +33,15 @@ module.exports.list = async(req, res, next) => {
     })
 };
 
+module.exports.sslist = async(req, res, next) => {
+    await transactionService.ss_indexData(req)
+    .then(result=>{
+        return res.status(200).send(result);
+    }).catch(e=>{
+        return res.status(e.status).send(e);
+    })
+};
+
 module.exports.lastTransactionsForDashboard = async(req, res, next) => {
     await transactionService.lastTransactionsForDashboard()
     .then(result=>{

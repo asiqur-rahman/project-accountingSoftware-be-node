@@ -77,7 +77,7 @@ service.delete = async (req) => {
 };
 
 
-service.indexData = async (req) => {
+service.ss_indexData = async (req) => {
     return new Promise(async (resolve, reject) => {
         //-----------------Server side pagination----------------------
         const order = req.query.columns[req.query.order[0].column].data=='sl'?[]:sequelize.literal(req.query.columns[req.query.order[0].column].data+" "+req.query.order[0].dir);//req.query.order[0].column=='0'?[]:[[req.query.columns[req.query.order[0].column].data,req.query.order[0].dir]];
@@ -142,6 +142,28 @@ service.indexData = async (req) => {
         });
     });
 };
+
+
+service.indexData = async (req) => {
+    return new Promise(async (resolve, reject) => {
+        await db.Transaction.findAndCountAll({
+            attributes: ['id','amount','datetime','description','transactionNo'],
+            raw: true
+        }).then(detailsInfo => {
+            if (detailsInfo.rows) {
+                var count = 0;
+                detailsInfo.rows.forEach(detail => {
+                    detail.sl = ++count;
+                    detail.datetime= moment.utc(detail.datetime).format("DD-MM-yyyy");
+                })
+                resolve({status:200,recordsTotal:detailsInfo.count,data:detailsInfo.rows});
+            } else {
+                resolve({count: 0,rows:[]});
+            }
+        });
+    });
+};
+
 
 
 service.lastTransactionsForDashboard = async (req) => {
