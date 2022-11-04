@@ -15,7 +15,7 @@ const service = {};
 
 service.create = async (req) => {
     return new Promise(async (resolve, reject) => {
-        req.body.dateTime=Date.now();
+        req.body.dateTime=req.body.dateTime?req.body.dateTime:Date.now();
         await db.ChequeRecord.create(req.body).then(async data => {
             // await accountBalanceService.updateByCoaId(req).then(() => {
             //     resolve({
@@ -54,7 +54,7 @@ service.getById = async (id) => {
             raw: true
         }).then(data => {
             if (data) {
-                resolve(data);
+                resolve({status:200,data:data});
             } else {
                 resolve({
                     status: 404,
@@ -168,14 +168,14 @@ service.update = async (req) => {
                 if (result) {
                     await accountBalanceService.updateByCoaId(req).then(() => {
                         resolve({
-                            status: 201,
+                            status: 200,
                             message: 'Account was updated !'
                         });
                     })
                 } else {
                     reject({
-                        status: 200,
-                        message: 'Account not created'
+                        status: 204,
+                        message: 'Account not updated'
                     });
                 }
             });

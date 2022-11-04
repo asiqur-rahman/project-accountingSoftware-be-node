@@ -3,15 +3,14 @@ const router = express.Router();
 const {apiAuth} = require('../../middleware/auth.middleware');
 const bankAccountController = require('../../controllers/api.controllers/bankAccount.controller');
 const awaitHandlerFactory = require('../../middleware/awaitHandlerFactory.middleware');
-const { accountCreateValidator } = require('../../middleware/validators/accountingHeadValidator.middleware');
+const { createValidator } = require('../../middleware/validators/bankingAccountValidator.middleware');
 
 router.get('/id/:id',  awaitHandlerFactory(bankAccountController.getById));
-router.post('/', accountCreateValidator, awaitHandlerFactory(bankAccountController.create));
+router.post('/', createValidator, awaitHandlerFactory(bankAccountController.create));
 router.patch('/id/:id',  awaitHandlerFactory(bankAccountController.update));
 router.delete('/id/:id',  awaitHandlerFactory(bankAccountController.delete));
 router.get('/list', awaitHandlerFactory(bankAccountController.list));
-router.get('/byParentId/:id', awaitHandlerFactory(bankAccountController.byParentId));
-router.get('/byBaseCode/:code', awaitHandlerFactory(bankAccountController.byBaseCode));
+router.get('/dropdown', awaitHandlerFactory(bankAccountController.dropdown));
 
 
 module.exports = router;

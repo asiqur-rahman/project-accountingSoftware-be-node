@@ -15,16 +15,20 @@ module.exports.getById = async(req, res, next) => {
 };
 
 module.exports.create = async(req, res, next) => {
-    await bankAccountService.getById(req.body.parentId).then(async data=>{
-        req.body.name=`${data.name}:${req.body.name}`;
-        req.body.level=data.name.split(':').length;
-        req.body.baseCode=req.body.level>1 ? data.baseCode:data.code;
-        await bankAccountService.create(req)
-        .then(result=>{
-            return res.status(200).send(result);
-        }).catch(e=>{
-            return res.status(e.status).send(e);
-        })
+    await bankAccountService.create(req)
+    .then(result=>{
+        return res.status(200).send(result);
+    }).catch(e=>{
+        return res.status(e.status).send(e);
+    });
+};
+
+module.exports.dropdown = async(req, res, next) => {
+    await bankAccountService.getBankAccountDD(req)
+    .then(result=>{
+        return res.status(200).send(result);
+    }).catch(e=>{
+        return res.status(e.status).send(e);
     });
 };
 

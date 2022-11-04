@@ -55,19 +55,33 @@ service.getById = async (id) => {
 };
 
 service.getBankAccountDD =async ()=> {
-    return await db.BankAccount.findAll({
-        where: {
-            [Op.and]: [{
-                isActive: {
-                    [Op.eq]: true
-                }
-            }]
-        },
-        attributes: ['id','name'],
-        raw: true
-    }).then(data => {
-        return data;
-    })
+    return new Promise(async (resolve, reject) => {
+        return await db.BankAccount.findAll({
+            where: {
+                [Op.and]: [{
+                    isActive: {
+                        [Op.eq]: true
+                    }
+                }]
+            },
+            attributes: ['id','name'],
+            raw: true
+        })
+        .then(data => {
+            let dd =[];
+            data.map(item=>{
+                dd.push({label:item.name,value:item.id});
+            })
+            resolve({status:200,data:dd});
+        })
+        .catch(function (err) {
+            reject({
+                status: 502,
+                message: err.message
+            })
+        });
+    });
+    
 };
 
 
