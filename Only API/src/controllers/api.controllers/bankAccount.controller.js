@@ -8,7 +8,7 @@ const bankAccountService = require('../../service/bankAccount.service');
 module.exports.getById = async(req, res, next) => {
     await bankAccountService.getById(req.params.id)
     .then(result=>{
-        return res.status(200).send(result);
+        return res.send(result);
     }).catch(e=>{
         return res.status(e.status).send(e);
     })
@@ -21,6 +21,15 @@ module.exports.create = async(req, res, next) => {
     }).catch(e=>{
         return res.status(e.status).send(e);
     });
+};
+
+module.exports.update = async(req, res, next) => {
+    await bankAccountService.update(req)
+    .then(result=>{
+        return res.send(result);
+    }).catch(e=>{
+        return res.status(e.status).send(e);
+    })
 };
 
 module.exports.dropdown = async(req, res, next) => {

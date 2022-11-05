@@ -33,7 +33,7 @@ service.getById = async (id) => {
             raw: true
         }).then(data => {
             if (data) {
-                resolve(data);
+                resolve({status:200,data:data});
             } else {
                 resolve({
                     status: 404,
