@@ -14,28 +14,27 @@ module.exports.login = async (req, res, next) => {
   } = req.body;
   userService.getByName(username).then(async (user) => {
     if (!user) {
-      req.session.notification = [enumm.notification.Error, 'Unable to login !'];
-      return res.redirect('/auth/login');
-    } else if (user.isActive != 1) {
-      req.session.notification = [enumm.notification.Error, 'You access was revoked by admin! Please contact with admin.'];
-      return res.redirect('/');
-    } else {
-      const isMatch = await bcrypt.compare(password, user.password);
+      return res.send({status:0,message:"Unable to login !"});
+    } 
+    // else if (user.isActive != 1) {
+    //   return res.send({status:0,message:'You access was revoked by admin! Please contact with admin.'});
+    // } 
+    else {
+      const isMatch = await bcrypt.compare(password, user.data.password);
       if (!isMatch) {
-        req.session.notification = [enumm.notification.Error, 'Incorrect password !'];
-        return res.redirect('/');
+        return res.send({status:0,message:'Incorrect password !'});
       } else {
         // user matched!
         const secretKey = appConfig.appSettings.SECRET_JWT;
         
         const fullName=`${user['userDetail.firstName']} ${user['userDetail.lastName']}`;
         const detailsForToken = {
-          user_name: user.username,
+          user_name: user.data.username,
           full_name: fullName,
-          user_id: user.id.toString(),
-          role_id: user['userDetail.role.id'].toString(),
-          role_code: user['userDetail.role.code'].toString(),
-          role_name: user['userDetail.role.name'].toString(),
+          user_id: user.data.id.toString(),
+          role_id: user.data['userDetail.role.id'].toString(),
+          role_code: user.data['userDetail.role.code'].toString(),
+          role_name: user.data['userDetail.role.name'].toString(),
           clientIp: clientIp.toString()
         };
         const token = jwt.sign(detailsForToken,secretKey, {

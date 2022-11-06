@@ -192,7 +192,7 @@ module.exports.webAuth = (...roles) => {
 
         } catch (e) {
             e.status = 401;
-            res.status(302).send();
+            res.status(e.status).send();
         }
     }
 }
