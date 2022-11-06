@@ -8,7 +8,7 @@ const userService = require('../../service/user.service');
 module.exports.getById = async(req, res, next) => {
     await userService.getById(req.params.id)
     .then(user=>{
-        return res.status(200).send(user);
+        return res.send(user);
     }).catch(e=>{
         return res.status(e.status).send(e);
     })
@@ -17,24 +17,38 @@ module.exports.getById = async(req, res, next) => {
 module.exports.create = async(req, res, next) => {
     await userService.create(req)
     .then(user=>{
-        return res.status(200).send(user);
+        return res.send(user);
     }).catch(e=>{
         return res.status(e.status).send(e);
     })
 };
 
 module.exports.update = async(req, res, next) => {
-    
+    await userService.update(req)
+    .then(user=>{
+        return res.send(user);
+    }).catch(e=>{
+        return res.status(e.status).send(e);
+    })
 };
 
 module.exports.delete = async(req, res, next) => {
     
 };
 
+module.exports.roleDropdown = async(req, res, next) => {
+    await userService.getRoleDD()
+    .then(result=>{
+        return res.send(result);
+    }).catch(e=>{
+        return res.status(e.status).send(e);
+    });
+};
+
 module.exports.list = async(req, res, next) => {
     await userService.indexData(req)
     .then(result=>{
-        return res.status(200).send(result);
+        return res.send(result);
     }).catch(e=>{
         return res.status(e.status).send(e);
     })

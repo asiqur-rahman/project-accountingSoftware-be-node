@@ -33,7 +33,7 @@ service.getById = async (id) => {
             raw: true
         }).then(data => {
             if (data) {
-                resolve(data);
+                resolve({status:200,data:data});
             } else {
                 resolve({
                     status: 404,
@@ -74,7 +74,7 @@ service.getByName = async (value) => {
             raw: true
         }).then(data => {
             if (data) {
-                resolve(data);
+                resolve({status:200,data:data});
             } else {
                 resolve({
                     status: 404,
@@ -96,6 +96,36 @@ service.getByName = async (value) => {
     });
 };
 
+
+service.getRoleDD =async ()=> {
+    return new Promise(async (resolve, reject) => {
+        return await db.Role.findAll({
+            where: {
+                [Op.and]: [{
+                    isActive: {
+                        [Op.eq]: true
+                    }
+                }]
+            },
+            attributes: ['id','name'],
+            raw: true
+        })
+        .then(data => {
+            let dd =[];
+            data.map(item=>{
+                dd.push({label:item.name,value:item.id});
+            })
+            resolve({status:200,data:dd});
+        })
+        .catch(function (err) {
+            reject({
+                status: 502,
+                message: err.message
+            })
+        });
+    });
+    
+};
 
 service.changeStatus = async (req) => {
     return new Promise(async (resolve, reject) => {
@@ -229,23 +259,6 @@ service.ss_indexData = async (req) => {
     });
 };
 
-
-service.getRoleDD =async ()=> {
-    return await db.Role.findAll({
-        where: {
-            [Op.and]: [{
-                isActive: {
-                    [Op.eq]: true
-                }
-            }]
-        },
-        attributes: ['id','name'],
-        raw: true
-    }).then(data => {
-        return data;
-    })
-};
-
 service.create = async (req) => {
     return new Promise(async (resolve, reject) => {
         await service.getByName(req.body.username)
@@ -371,13 +384,13 @@ service.update = async (req) => {
                 }
             }).then(() => {
                 resolve({
-                    status: 201,
+                    status: 200,
                     message: 'User was updated.'
                 });
             });
         }).catch(function (err) {
             reject({
-                status: 200,
+                status: 0,
                 message: 'User was not updated.'
             });
         });
