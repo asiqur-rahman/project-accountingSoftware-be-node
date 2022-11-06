@@ -1,6 +1,5 @@
 //#region Library
 const app = require('express')();
-const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const compression = require('compression')
@@ -8,12 +7,8 @@ const http = require('http');
 const https = require('https');
 const RouteService = require('./src/routes/routes');
 const config = require('./config/config.json');
-const session = require('express-session');
 const bodyParser = require('body-parser');
-const flash = require('connect-flash');
-const i18n = require("i18n-express");
 const cors = require('cors');
-var minifyHTML = require('express-minify-html-2');
 const Logger = require('./src/externalService/log.service');
 const log = new Logger(path.basename(__filename));
 //#endregion
@@ -32,38 +27,6 @@ app.use(cors());
 
 //#region Application Configuration
 app.use(compression()); // compress all responses
-app.use(minifyHTML({
-    override:      true,
-    exception_url: false,
-    htmlMinifier: {
-        removeComments:            true,
-        collapseWhitespace:        true,
-        collapseBooleanAttributes: true,
-        removeAttributeQuotes:     true,
-        removeEmptyAttributes:     true,
-        minifyJS:                  true
-    }
-}));
-
-app.use(session({
-  key: config.appSettings.SECRET_KEY,
-  secret: config.appSettings.SECRET_JWT,
-  resave: true,
-  saveUninitialized: true,
-  httpOnly: true,
-  cookie: {
-    // secure: true,
-    expires: new Date(Date.now() + config.appSettings.SessionTimeOut),
-    // maxAge : config.appConfig.SessionTimeOut
-  }
-}));
-
-app.use(flash());
-app.use(i18n({
-  translationsPath: path.join(__dirname, 'i18n'), // <--- use here. Specify translations files path.
-  siteLangs: ["en", "ind"],
-  textsVarName: 'translation'
-}));
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({
@@ -72,14 +35,6 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json({
     limit: '10mb'
 }));
-
-app.use('/public', express.static(path.join(__dirname, 'public')));
-
-//For set layouts of html view
-var expressLayouts = require('express-ejs-layouts');
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
-app.use(expressLayouts);
 
 // Remove trailing slashes in url handle bad requests
 app.use((err, req, res, next) => {
