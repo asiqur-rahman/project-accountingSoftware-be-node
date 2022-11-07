@@ -5,6 +5,7 @@ const awaitHandlerFactory = require('../../middleware/awaitHandlerFactory.middle
 const { userCreateValidator } = require('../../middleware/validators/userValidator.middleware');
 
 router.get('/id/:id', awaitHandlerFactory(transactionController.getById));
+router.get('/details/:id', awaitHandlerFactory(transactionController.getTransactionDetailsByTransactionId));
 router.post('/', awaitHandlerFactory(transactionController.create));
 router.post('/withDetails', awaitHandlerFactory(transactionController.createWithDetails));
 router.patch('/id/:id', awaitHandlerFactory(transactionController.patch));

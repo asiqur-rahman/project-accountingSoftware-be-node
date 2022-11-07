@@ -313,7 +313,7 @@ service.transactionDetailsByTransactionId = async (req) => {
                     detail.sl = ++count;
                     detail.dateTime=moment.utc(detail.dateTime).format("DD-MM-yyyy");
                 })
-                resolve(data.rows);
+                resolve({status:200,data:data.rows});
             } else {
                 resolve([]);
             }
