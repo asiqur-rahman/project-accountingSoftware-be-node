@@ -21,6 +21,7 @@ service.create = async (req) => {
 
 service.updateByCoaId = async (req) => {
     return new Promise(async (resolve, reject) => {
+        console.log(req.body)
         if(req.body.amount>0){
             await db.AccountBalance.increment({
                 amount: req.body.amount

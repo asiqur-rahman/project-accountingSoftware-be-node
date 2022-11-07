@@ -1,7 +1,8 @@
 CREATE OR REPLACE  PROCEDURE `DashboardData`(
 	days INT,
 	incomeCode VARCHAR(5),
-	expenseCode VARCHAR(5)
+	expenseCode VARCHAR(5),
+	todayDate VARCHAR(10)
 )
 BEGIN
 	-- DROP PROCEDURE IF EXISTS `Sales_Apex`;
@@ -13,12 +14,12 @@ BEGIN
 	DECLARE expenseThisMonth INT DEFAULT 0;
 
 	-- select * from transactions t where creditAccountId in (select id from chartOfAccounts coa where baseCode='301') and  DATE(t.dateTime)=CURDATE();
-	select IFNULL(sum(amount),0) INTO incomeToday from transactions t where t.isItIncome=1 and DATE(t.dateTime)=CURDATE();
+	select IFNULL(sum(amount),0) INTO incomeToday from transactions t where t.isItIncome=1 and DATE(t.dateTime)=DATE(todayDate);
 	-- select IFNULL(sum(amount),0) from transactions t where creditAccountId in (select id from chartOfAccounts coa where baseCode='301') and DATE(t.dateTime) BETWEEN DATE_SUB(CURDATE(), INTERVAL 30 DAY) AND CURDATE()
-	select IFNULL(sum(amount),0) INTO incomeThisMonth from transactions t where t.isItIncome=1 and DATE(t.dateTime) BETWEEN DATE_SUB(CURDATE(), INTERVAL 30 DAY) AND CURDATE();
+	select IFNULL(sum(amount),0) INTO incomeThisMonth from transactions t where t.isItIncome=1 and DATE(t.dateTime) BETWEEN DATE_SUB(DATE(todayDate), INTERVAL 30 DAY) AND DATE(todayDate);
 	
-	select IFNULL(sum(amount),0) INTO expenseToday from transactions t where t.isItIncome=0 and DATE(t.dateTime)=CURDATE();
-	select IFNULL(sum(amount),0) INTO expenseThisMonth from transactions t where t.isItIncome=0 and DATE(t.dateTime) BETWEEN DATE_SUB(CURDATE(), INTERVAL 30 DAY) AND CURDATE();
+	select IFNULL(sum(amount),0) INTO expenseToday from transactions t where t.isItIncome=0 and DATE(t.dateTime)=DATE(todayDate);
+	select IFNULL(sum(amount),0) INTO expenseThisMonth from transactions t where t.isItIncome=0 and DATE(t.dateTime) BETWEEN DATE_SUB(DATE(todayDate), INTERVAL 30 DAY) AND DATE(todayDate);
 
 	select  incomeToday AS IncomeToday,
 			incomeThisMonth AS IncomeThisMonth,

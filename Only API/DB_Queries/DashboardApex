@@ -1,9 +1,10 @@
 CREATE OR REPLACE  PROCEDURE DashboardApex(
-	days INT
+	days INT,
+	todayDate VARCHAR(10)
 )
 BEGIN
 	select GROUP_CONCAT(DATE_FORMAT(t.`dateTime`, "%d/%m/%Y") ORDER BY t.`dateTime` ASC  SEPARATOR ',') as dates,
 		GROUP_CONCAT(t.amount ORDER BY t.`dateTime` ASC SEPARATOR ',') as sales
-from (select sum(t.amount) as amount, t.`dateTime` from transactions t where t.`dateTime` BETWEEN  DATE_SUB(CURDATE(), INTERVAL days DAY) AND CURDATE() group by t.`dateTime` order by DATE(t.`dateTime`)) as t;
+from (select sum(t.amount) as amount, t.`dateTime` from transactions t where t.`dateTime` BETWEEN  DATE_SUB(DATE(todayDate), INTERVAL days DAY) AND DATE(todayDate) group by t.`dateTime` order by DATE(t.`dateTime`)) as t;
 END;
 

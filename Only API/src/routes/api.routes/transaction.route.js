@@ -6,6 +6,7 @@ const { userCreateValidator } = require('../../middleware/validators/userValidat
 
 router.get('/id/:id', awaitHandlerFactory(transactionController.getById));
 router.post('/', awaitHandlerFactory(transactionController.create));
+router.post('/withDetails', awaitHandlerFactory(transactionController.createWithDetails));
 router.patch('/id/:id', awaitHandlerFactory(transactionController.patch));
 router.delete('/id/:id', awaitHandlerFactory(transactionController.delete));
 router.get('/list', awaitHandlerFactory(transactionController.list));

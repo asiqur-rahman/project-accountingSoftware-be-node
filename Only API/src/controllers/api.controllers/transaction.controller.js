@@ -20,6 +20,16 @@ module.exports.create = async(req, res, next) => {
     })
 };
 
+module.exports.createWithDetails = async(req, res, next) => {
+    // return res.send({status:200});
+    await transactionService.createWithDetails(req)
+    .then(result=>{
+        return res.status(200).send(result);
+    }).catch(e=>{
+        return res.status(e.status).send(e);
+    })
+};
+
 module.exports.list = async(req, res, next) => {
     await transactionService.indexData(req)
     .then(result=>{

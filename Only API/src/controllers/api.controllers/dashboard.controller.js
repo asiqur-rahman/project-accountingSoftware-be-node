@@ -3,29 +3,33 @@ const StatusEnum = require('../../utils/enum.utils');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Op = require('sequelize').Op;
+const sequelize = require('sequelize');
+const moment = require('moment');
 const transactionService = require('../../service/transaction.service');
 
 module.exports.topData = async (req, res, next) => {
-    db.sequelize.query('CALL DashboardData (:days,:incomeCode,:expenseCode)', {
+    await db.sequelize.query('CALL DashboardData (:days,:incomeCode,:expenseCode,:todayDate)', {
       replacements: {
         days: 7,
         incomeCode: '401',
-        expenseCode: '301'
+        expenseCode: '301',
+        todayDate: moment().format('YYYY-MM-DD')
       }
     })
-    .then(async function (data) {
-      res.status(200).send(data);
+    .then(function (result) {
+      res.send(result);
     });
   }
 
 module.exports.dashboardApex = async (req, res, next) => {
-    db.sequelize.query('CALL DashboardApex (:days)', {
+    db.sequelize.query('CALL DashboardApex (:days,:todayDate)', {
         replacements: {
           days: req.params.days,
+          todayDate: moment().format('YYYY-MM-DD')
         }
       })
       .then(async function (data) {
-        res.status(200).send(data);
+        res.send(data);
       })
   }
   

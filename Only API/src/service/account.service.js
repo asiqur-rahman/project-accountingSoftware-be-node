@@ -311,12 +311,12 @@ service.transactionTypeDD = async ()=> {
                     }
                 }]
             },
-            attributes: ['name', 'id'],
+            attributes: ['name', 'code'],
             raw: true
         }).then(data => {
             let dd =[];
             data.map(item=>{
-                dd.push({label:item.name,value:item.id});
+                dd.push({label:item.name,value:item.code});
             })
             resolve({status:200,data:dd});
         }).catch(function (err) {

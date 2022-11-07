@@ -7,6 +7,7 @@ const bcrypt = require('bcryptjs');
 const moment = require('moment');
 const Op = require('sequelize').Op;
 const enumm = require('../utils/enum.utils');
+const accountBalanceService = require('./accountBalance.service');
 
 const service = {};
 
@@ -164,8 +165,6 @@ service.indexData = async (req) => {
     });
 };
 
-
-
 service.lastTransactionsForDashboard = async (req) => {
     return new Promise(async (resolve, reject) => {
         
@@ -250,13 +249,20 @@ service.dashboardEAR = async (req) => {
 service.createWithDetails = async (req) => {
     return new Promise(async (resolve, reject) => {
         req.body.userId=req.currentUser;
-        await db.Transaction.create(req.body,{isNewRecord:true}).then(async data => {
+        const {transactionDetails,...transaction} = req.body;
+        console.log(transaction,transactionDetails);
+        await db.Transaction.create(transaction,{isNewRecord:true}).then(async data => {
             const details = [];
-
-            req.body.transactionDetails.forEach(item=>{
+            // // if(transaction.isItIncome){
+            //     accountBalanceService.updateByCoaId({body:{amount:transaction.amount,id:transaction.creditAccountId}});
+            //     accountBalanceService.updateByCoaId({body:{amount:transaction.amount*(-1),id:transaction.debitAccountId}});
+            // // }else{
+            // //     accountBalanceService.updateByCoaId({amount:transaction.amount*-1,chartOfAccountId:transaction.creditAccountId});
+            // //     accountBalanceService.updateByCoaId({amount:transaction.amount,chartOfAccountId:transaction.debitAccountId});
+            // // }
+            transactionDetails.forEach(item=>{
                 details.push({
                     chartOfAccountId:item.chartOfAccountId,
-                    taxId:item.taxId,
                     debit:item.debit,
                     credit:item.credit,
                     transactionId:data.id
@@ -272,8 +278,9 @@ service.createWithDetails = async (req) => {
                 });
             });
         }).catch(function (err) {
+            console.log(err.message)
             reject({
-                status: 502,
+                status: 0,
                 message: err.message
             });
         });
