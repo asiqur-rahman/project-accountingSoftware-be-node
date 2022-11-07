@@ -141,31 +141,33 @@ service.update = async (req) => {
 };
 
 service.chartOfAccountDD =async (withHeaders=true)=> {
-    return await db.ChartOfAccount.findAll({
-        where: {
-            [Op.and]: [{
-                isActive: {
-                    [Op.eq]: true
-                }
-            }]
-        },
-        order: [
-            ['name', 'ASC'],
-        ],
-        attributes: ['id','name','parentId'],
-        raw: true
-    }).then(data => {
-        // var finalDD=[];
-        // var mothers=data.filter(x=>x.parentId === null);
-        // mothers.forEach(mother => {
-        //     finalDD.push(mother);
-        //     data.filter(x=>x.parentId === mother.id).forEach(item=>{
-        //         item.name=`${mother.name}:${item.name}`
-        //         finalDD.push(item);
-        //     })
-        // });
-        return data;
-    })
+    return new Promise(async (resolve, reject) => {
+        return await db.ChartOfAccount.findAll({
+            where: {
+                [Op.and]: [{
+                    isActive: {
+                        [Op.eq]: true
+                    }
+                }]
+            },
+            order: [
+                ['name', 'ASC'],
+            ],
+            attributes: ['id','name','parentId'],
+            raw: true
+        }).then(data => {
+            let dd =[];
+            data.map(item=>{
+                dd.push({label:item.name,value:item.id});
+            })
+            resolve({status:200,data:dd});
+        }).catch(function (err) {
+            reject({
+                status: 502,
+                message: err.message
+            })
+        });
+    }); 
 };
 
 
@@ -187,43 +189,66 @@ service.currencyDD =async ()=> {
 
 
 service.chartOfAccountDDByParentId =async (parentId)=> {
-    return await db.ChartOfAccount.findAll({
-        where: {
-            [Op.and]: [{
-                isActive: {
-                    [Op.eq]: true
-                },
-                parentId: {
-                    [Op.eq]: parentId
-                }
-            }]
-        },
-        attributes: ['name', 'id'],
-        raw: true
-    }).then(data => {
-        return data;
+    return new Promise(async (resolve, reject) => {
+        return await db.ChartOfAccount.findAll({
+            where: {
+                [Op.and]: [{
+                    isActive: {
+                        [Op.eq]: true
+                    },
+                    parentId: {
+                        [Op.eq]: parentId
+                    }
+                }]
+            },
+            attributes: ['name', 'id'],
+            raw: true
+        }).then(data => {
+            let dd =[];
+            data.map(item=>{
+                dd.push({label:item.name,value:item.id});
+            })
+            resolve({status:200,data:dd});
+        }).catch(function (err) {
+            reject({
+                status: 502,
+                message: err.message
+            })
+        });
     });
 };
 
 service.chartOfAccountDDByBaseCode =async (code)=> {
-    return await db.ChartOfAccount.findAll({
-        where: {
-            [Op.and]: [{
-                isActive: {
-                    [Op.eq]: true
-                },
-                baseCode: {
-                    [Op.eq]: code
-                },
-                code: {
-                    [Op.eq]: null
-                }
-            }]
-        },
-        attributes: ['name', 'id'],
-        raw: true
-    }).then(data => {
-        return data;
+    return new Promise(async (resolve, reject) => {
+        return await db.ChartOfAccount.findAll({
+            where: {
+                [Op.and]: [{
+                    isActive: {
+                        [Op.eq]: true
+                    },
+                    baseCode: {
+                        [Op.eq]: code
+                    },
+                    code: {
+                        [Op.eq]: null
+                    }
+                }]
+            },
+            attributes: ['name', 'id'],
+            raw: true
+        }).then(data => {
+            let dd =[];
+            data.map(item=>{
+                dd.push({label:item.name,value:item.id});
+            })
+            resolve({status:200,data:dd});
+        })
+        .catch(function (err) {
+            reject({
+                status: 502,
+                message: err.message
+            })
+        });
     });
 };
 
@@ -272,23 +297,39 @@ service.getById = async (id) => {
     });
 };
 
-service.transactionType = async ()=> {
-    return await db.ChartOfAccount.findAll({
-        where: {
-            [Op.or]: [{
-                code: {
-                    [Op.eq]: enumm.AccountHead.Expense.value
-                }
-            }, {
-                code: {
-                    [Op.eq]: enumm.AccountHead.Income.value
-                }
-            }]
-        },
-        attributes: ['name', 'code'],
-        raw: true
-    }).then(data => {
-        return data;
+service.transactionTypeDD = async ()=> {
+    return new Promise(async (resolve, reject) => {
+        await db.ChartOfAccount.findAll({
+            where: {
+                [Op.or]: [{
+                    code: {
+                        [Op.eq]: enumm.AccountHead.Expense.value
+                    }
+                }, {
+                    code: {
+                        [Op.eq]: enumm.AccountHead.Income.value
+                    }
+                }]
+            },
+            attributes: ['name', 'id'],
+            raw: true
+        }).then(data => {
+            let dd =[];
+            data.map(item=>{
+                dd.push({label:item.name,value:item.id});
+            })
+            resolve({status:200,data:dd});
+        }).catch(function (err) {
+            reject({
+                status: 502,
+                message: err.message
+            })
+        });
+    }).catch(function (err) {
+        log.debug('Error', {
+            error: err.message,
+        });
+        throw err;
     });
 };
 

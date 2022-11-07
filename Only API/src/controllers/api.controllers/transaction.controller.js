@@ -1,8 +1,4 @@
-const db = require('../../models/model');
-const StatusEnum = require('../../utils/enum.utils');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const Op = require('sequelize').Op;
+const enumm = require('../../utils/enum.utils');
 const accountService = require('../../service/account.service');
 const transactionService = require('../../service/transaction.service');
 
@@ -26,6 +22,24 @@ module.exports.create = async(req, res, next) => {
 
 module.exports.list = async(req, res, next) => {
     await transactionService.indexData(req)
+    .then(result=>{
+        return res.status(200).send(result);
+    }).catch(e=>{
+        return res.status(e.status).send(e);
+    })
+};
+
+module.exports.transactionTypeDD = async(req, res, next) => {
+    await accountService.transactionTypeDD()
+    .then(result=>{
+        return res.status(200).send(result);
+    }).catch(e=>{
+        return res.status(e.status).send(e);
+    })
+};
+
+module.exports.allAssetsDD = async(req, res, next) => {
+    await accountService.chartOfAccountDDByBaseCode(enumm.AccountHead.Assets.value)
     .then(result=>{
         return res.status(200).send(result);
     }).catch(e=>{

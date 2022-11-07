@@ -28,10 +28,19 @@ module.exports.create = async(req, res, next) => {
     });
 };
 
+module.exports.chartOfAccountDD = async (req, res, next) => {
+    await accountService.chartOfAccountDD()
+    .then(data=>{
+        return res.send(data);
+    }).catch(e=>{
+        return res.status(e.status).send(e);
+    })
+};
+
 module.exports.byParentId = async (req, res, next) => {
     await accountService.chartOfAccountDDByParentId(req.params.id)
     .then(data=>{
-        return res.status(200).send(data);
+        return res.send(data);
     }).catch(e=>{
         return res.status(e.status).send(e);
     })
