@@ -15,21 +15,25 @@ module.exports.getById = async(req, res, next) => {
 };
 
 module.exports.create = async(req, res, next) => {
-    await accountService.getById(req.body.parentId).then(async data=>{
-        req.body.name=`${data.name}:${req.body.name}`;
-        req.body.level=data.name.split(':').length;
-        req.body.baseCode=req.body.level>1 ? data.baseCode:data.code;
-        await accountService.create(req)
-        .then(result=>{
-            return res.status(200).send(result);
-        }).catch(e=>{
-            return res.status(e.status).send(e);
-        })
-    });
+    await accountService.create(req)
+    .then(result=>{
+        return res.status(200).send(result);
+    }).catch(e=>{
+        return res.status(e.status).send(e);
+    })
 };
 
 module.exports.chartOfAccountDD = async (req, res, next) => {
     await accountService.chartOfAccountDD()
+    .then(data=>{
+        return res.send(data);
+    }).catch(e=>{
+        return res.status(e.status).send(e);
+    })
+};
+
+module.exports.currencyDD = async (req, res, next) => {
+    await accountService.currencyDD()
     .then(data=>{
         return res.send(data);
     }).catch(e=>{

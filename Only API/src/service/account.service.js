@@ -172,18 +172,24 @@ service.chartOfAccountDD =async (withHeaders=true)=> {
 
 
 service.currencyDD =async ()=> {
-    return await db.Currency.findAll({
-        where: {
-            [Op.and]: [{
-                isActive: {
-                    [Op.eq]: true
-                }
-            }]
-        },
-        attributes: ['id','name'],
-        raw: true
-    }).then(data => {
-        return data;
+    return new Promise(async (resolve, reject) => {
+        return await db.Currency.findAll({
+            where: {
+                [Op.and]: [{
+                    isActive: {
+                        [Op.eq]: true
+                    }
+                }]
+            },
+            attributes: ['id','name'],
+            raw: true
+        }).then(data => {
+            let dd =[];
+            data.map(item=>{
+                dd.push({label:item.name,value:item.id});
+            })
+            resolve({status:200,data:dd});
+        })
     })
 };
 
