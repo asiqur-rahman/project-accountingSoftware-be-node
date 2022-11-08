@@ -16,9 +16,10 @@ module.exports.incomeStatement = async(req, res, next) => {
 };
 
 module.exports.balanceSheet = async(req, res, next) => {
-    await reportingService.getBalanceSheet()
-    .then(user=>{
-        return res.status(200).send(user);
+    return await reportingService.getBalanceSheet()
+    .then(data=>{
+        console.log(data)
+        return res.send(data);
     }).catch(e=>{
         return res.status(e.status).send(e);
     })

@@ -160,10 +160,12 @@ service.getBalanceSheet = async () => {
                 });
                 result.assets = {
                     total: total,
-                    data: finalAssets
+                    data: JSON.stringify(finalAssets)
                 };
                 //#endregion
                 total=0;
+                
+
                 //#region Assets calculation
                 const liabilities = data.filter(x => x.baseCode === enumm.AccountHead.Liabilities.value.toString());
                 var finalLiabilities=[];
@@ -205,7 +207,7 @@ service.getBalanceSheet = async () => {
                     data: finalEquities
                 };
                 //#endregion
-                resolve(result);
+                resolve({status:200,data:result});
             } else {
                 resolve({
                     status: 404,

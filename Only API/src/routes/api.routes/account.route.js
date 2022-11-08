@@ -11,6 +11,7 @@ router.patch('/id/:id',  awaitHandlerFactory(accountController.update));
 router.delete('/id/:id',  awaitHandlerFactory(accountController.delete));
 router.get('/list', awaitHandlerFactory(accountController.list));
 router.get('/allDD', awaitHandlerFactory(accountController.chartOfAccountDD));
+router.get('/treeWiseData', awaitHandlerFactory(accountController.getTreeWiseData));
 router.get('/currency/dropdown', awaitHandlerFactory(accountController.currencyDD));
 router.get('/byParentId/:id', awaitHandlerFactory(accountController.byParentId));
 router.get('/byBaseCode/:code', awaitHandlerFactory(accountController.byBaseCode));

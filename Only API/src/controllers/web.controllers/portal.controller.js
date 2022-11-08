@@ -206,7 +206,7 @@ module.exports.chartOfAccountByBaseCode = async (req, res, next) => {
 }
 
 module.exports.newchartOfAccount_Post = async (req, res, next) => {
-  const area = "Chart of Account"
+  const area = "Chart of Account";
   req.body.userId = req.currentUser;
   if (req.body.id && req.body.id > 0) {
     accountService.update(req)

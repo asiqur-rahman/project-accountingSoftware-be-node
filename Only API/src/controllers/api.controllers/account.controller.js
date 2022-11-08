@@ -23,6 +23,15 @@ module.exports.create = async(req, res, next) => {
     })
 };
 
+module.exports.update = async(req, res, next) => {
+    await accountService.update(req)
+    .then(result=>{
+        return res.status(200).send(result);
+    }).catch(e=>{
+        return res.status(e.status).send(e);
+    })
+};
+
 module.exports.chartOfAccountDD = async (req, res, next) => {
     await accountService.chartOfAccountDD()
     .then(data=>{
@@ -43,6 +52,15 @@ module.exports.currencyDD = async (req, res, next) => {
 
 module.exports.byParentId = async (req, res, next) => {
     await accountService.chartOfAccountDDByParentId(req.params.id)
+    .then(data=>{
+        return res.send(data);
+    }).catch(e=>{
+        return res.status(e.status).send(e);
+    })
+};
+
+module.exports.getTreeWiseData = async (req, res, next) => {
+    await accountService.getTreeWiseData()
     .then(data=>{
         return res.send(data);
     }).catch(e=>{
