@@ -141,7 +141,7 @@ service.getBalanceSheet = async () => {
             raw: true
         }).then(data => {
             if (data) {
-                var result = [];
+                var result = {};
                 var total = 0;
                 //#region Assets calculation
                 const assets = data.filter(x => x.baseCode === enumm.AccountHead.Assets.value.toString());
@@ -158,10 +158,16 @@ service.getBalanceSheet = async () => {
                     }
                     total += element['accountBalances.amount'];
                 });
-                result.assets = {
-                    total: total,
-                    data: JSON.stringify(finalAssets)
-                };
+                console.log(finalAssets)
+                result.assetsTotal= total
+                result.assetsData= finalAssets
+                // result.assetsData= [{
+                //     name: 'Assets:Bank',
+                //     code: null,
+                //     baseCode: '101',
+                //     level: 1,
+                //     'accountBalances.amount': 0
+                //   }]
                 //#endregion
                 total=0;
                 
@@ -181,10 +187,8 @@ service.getBalanceSheet = async () => {
                     }
                     total += element['accountBalances.amount'];
                 });
-                result.liabilities = {
-                    total: total,
-                    data: finalLiabilities
-                };
+                result.liabilitiesTotal= total
+                result.liabilitiesData= finalLiabilities
                 //#endregion
                 total=0;
                 //#region Assets calculation
@@ -202,10 +206,8 @@ service.getBalanceSheet = async () => {
                     }
                     total += element['accountBalances.amount'];
                 });
-                result.equities = {
-                    total: total,
-                    data: finalEquities
-                };
+                result.equitiesTotal= total
+                result.equitiesData= finalEquities
                 //#endregion
                 resolve({status:200,data:result});
             } else {

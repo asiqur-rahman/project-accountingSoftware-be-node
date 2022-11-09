@@ -17,7 +17,7 @@ module.exports.getById = async(req, res, next) => {
 module.exports.create = async(req, res, next) => {
     await accountService.create(req)
     .then(result=>{
-        return res.status(200).send(result);
+        return res.send(result);
     }).catch(e=>{
         return res.status(e.status).send(e);
     })
