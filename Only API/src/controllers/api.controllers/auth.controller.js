@@ -27,7 +27,7 @@ module.exports.login = async (req, res, next) => {
         // user matched!
         const secretKey = appConfig.appSettings.SECRET_JWT;
         
-        const fullName=`${user['userDetail.firstName']} ${user['userDetail.lastName']}`;
+        const fullName=`${user.data['userDetail.firstName']} ${user.data['userDetail.lastName']}`;
         const detailsForToken = {
           user_name: user.data.username,
           full_name: fullName,
