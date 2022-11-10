@@ -13,7 +13,6 @@ const service = {};
 
 service.getIncomeStatement = async (req) => {
     return new Promise(async (resolve, reject) => {
-
         await db.Transaction.findAll({
             attributes: ['amount', 'isItIncome'],
             include: [
@@ -46,7 +45,7 @@ service.getIncomeStatement = async (req) => {
             raw: true
         }).then(data => {
             if (data) {
-                var result = [];
+                var result = {};
                 var total = 0;
                 //#region Income calculation
                 const income = data.filter(x => x.isItIncome === 1);
@@ -63,10 +62,9 @@ service.getIncomeStatement = async (req) => {
                     }
                     total += element.amount;
                 });
-                result.income = {
-                    total: total,
-                    data: finalIncome
-                };
+                result.incomeTotal= total
+                result.incomeData= finalIncome
+
                 //#endregion
                 
                 total = 0;
@@ -86,12 +84,11 @@ service.getIncomeStatement = async (req) => {
                     }
                     total += element.amount;
                 });
-                result.expense = {
-                    total: total,
-                    data: finalExpense
-                }
+                result.expenseTotal= total
+                result.expenseData= finalExpense
                 //#endregion
-                resolve(result);
+                console.log(result)
+                resolve({status:200,data:result});
             } else {
                 resolve({
                     status: 404,
@@ -158,7 +155,6 @@ service.getBalanceSheet = async () => {
                     }
                     total += element['accountBalances.amount'];
                 });
-                console.log(finalAssets)
                 result.assetsTotal= total
                 result.assetsData= finalAssets
                 // result.assetsData= [{
@@ -170,7 +166,6 @@ service.getBalanceSheet = async () => {
                 //   }]
                 //#endregion
                 total=0;
-                
 
                 //#region Assets calculation
                 const liabilities = data.filter(x => x.baseCode === enumm.AccountHead.Liabilities.value.toString());
@@ -191,7 +186,8 @@ service.getBalanceSheet = async () => {
                 result.liabilitiesData= finalLiabilities
                 //#endregion
                 total=0;
-                //#region Assets calculation
+
+                //#region Equity calculation
                 const equities = data.filter(x => x.baseCode === enumm.AccountHead.Liabilities.value.toString());
                 var finalEquities=[];
                 equities.forEach(element => {
@@ -209,6 +205,7 @@ service.getBalanceSheet = async () => {
                 result.equitiesTotal= total
                 result.equitiesData= finalEquities
                 //#endregion
+                
                 resolve({status:200,data:result});
             } else {
                 resolve({
@@ -226,7 +223,7 @@ service.getBalanceSheet = async () => {
 };
 
 
-service.getFilterRecordData = async (req) => {
+service.getCustomReport = async (req) => {
     return new Promise(async (resolve, reject) => {
         var formDate=moment().format("yyyy-MM-DD");
         var toDate=moment().format("yyyy-MM-DD");
@@ -238,21 +235,30 @@ service.getFilterRecordData = async (req) => {
             var splitdate=req.body.toDate.split('/');
             toDate=`${splitdate[2]}-${splitdate[0]}-${splitdate[1]}`
         }
-    await db.sequelize.query('CALL SP_FilterRecord (:fromDate,:toDate,:charAccountId)', {
-        replacements: {
-            fromDate: formDate,
-            toDate: toDate,
-            charAccountId: req.body.charAccountId?req.body.charAccountId.toString():'0'
-        }
-    }).then(data => {
-        resolve(data);
-    }).catch(function (err) {
-        reject({
-            status: 502,
-            message: err.message
-        })
+        await db.sequelize.query('CALL SP_FilterRecord (:fromDate,:toDate,:charAccountId)', {
+            replacements: {
+                fromDate: formDate,
+                toDate: toDate,
+                charAccountId: req.body.charAccountId?req.body.charAccountId.toString():'0'
+            }
+        }).then(data => {
+            var totalDebit=0;
+            var totalCredit=0;
+            var count=0;
+            data.map(item => {
+                item.sl= ++count;
+                totalDebit+= item.debit;
+                totalCredit+= item.credit;
+            });
+            data.push({name:"Total",debit:totalDebit,credit:totalCredit});
+            resolve({status:200,data:data});
+        }).catch(function (err) {
+            reject({
+                status: 502,
+                message: err.message
+            })
+        });
     });
-});
 };
 
 module.exports = service;
