@@ -8,6 +8,7 @@ const { createValidator } = require('../../middleware/validators/bankingAccountV
 router.get('/id/:id',  awaitHandlerFactory(bankAccountController.getById));
 router.post('/', createValidator, awaitHandlerFactory(bankAccountController.create));
 router.patch('/id/:id',  awaitHandlerFactory(bankAccountController.update));
+router.patch('/changeStatus/:id/:status',  awaitHandlerFactory(bankAccountController.changeStatus));
 router.delete('/id/:id',  awaitHandlerFactory(bankAccountController.delete));
 router.get('/list', awaitHandlerFactory(bankAccountController.list));
 router.get('/dropdown', awaitHandlerFactory(bankAccountController.dropdown));

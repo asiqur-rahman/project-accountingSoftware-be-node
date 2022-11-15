@@ -32,6 +32,15 @@ module.exports.update = async(req, res, next) => {
     })
 };
 
+module.exports.changeStatus = async(req, res, next) => {
+    await bankAccountService.changeStatus(req)
+    .then(result=>{
+        return res.send(result);
+    }).catch(e=>{
+        return res.status(e.status).send(e);
+    })
+};
+
 module.exports.dropdown = async(req, res, next) => {
     await bankAccountService.getBankAccountDD(req)
     .then(result=>{

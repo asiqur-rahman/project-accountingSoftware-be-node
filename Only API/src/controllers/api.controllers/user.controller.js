@@ -45,6 +45,12 @@ module.exports.roleDropdown = async(req, res, next) => {
     });
 };
 
+module.exports.changeStatus = async (req, res, next) => {
+    await userService.changeStatus(req).then(data => {
+      res.status(200).send(data);
+    });
+}
+
 module.exports.list = async(req, res, next) => {
     await userService.indexData(req)
     .then(result=>{

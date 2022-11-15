@@ -32,6 +32,15 @@ module.exports.update = async(req, res, next) => {
     })
 };
 
+module.exports.changeStatus = async(req, res, next) => {
+    await chequeService.changeStatus(req)
+    .then(result=>{
+        return res.send(result);
+    }).catch(e=>{
+        return res.status(e.status).send(e);
+    })
+};
+
 module.exports.byParentId = async (req, res, next) => {
     await chequeService.chartOfAccountDDByParentId(req.params.id)
     .then(data=>{

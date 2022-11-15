@@ -1,10 +1,9 @@
-const db = require('../models/model');
-const Logger = require('../externalService/log.service');
-var path = require('path');
-const log = new Logger(path.basename(__filename));
-const sequelize = require('sequelize');
-const Op = require('sequelize').Op;
-
+const db = require('../models/model')
+const Logger = require('../externalService/log.service')
+var path = require('path')
+const log = new Logger(path.basename(__filename))
+const sequelize = require('sequelize')
+const Op = require('sequelize').Op
 const service = {};
 
 service.create = async (req) => {
@@ -64,13 +63,13 @@ service.getBankAccountDD =async ()=> {
                     }
                 }]
             },
-            attributes: ['id','name'],
+            attributes: ['id','accountNumber','accountTitle'],
             raw: true
         })
         .then(data => {
             let dd =[];
             data.map(item=>{
-                dd.push({label:item.name,value:item.id});
+                dd.push({label:`${item.accountNumber} (${item.accountTitle})`,value:item.id});
             })
             resolve({status:200,data:dd});
         })
@@ -87,8 +86,10 @@ service.getBankAccountDD =async ()=> {
 
 service.indexData = async (req) => {
     return new Promise(async (resolve, reject) => {
-        
         await db.BankAccount.findAndCountAll({
+            where: {
+                isActive: true
+            },
             raw: true
         }).then(detailsInfo => {
             if (detailsInfo.rows) {
@@ -195,6 +196,31 @@ service.delete = async (req) => {
                 status: 502,
                 message: err.message
             });
+        });
+    });
+};
+
+
+service.changeStatus = async (req) => {
+    return new Promise(async (resolve, reject) => {
+        await db.BankAccount.update({
+            isActive: req.params.status,
+        }, {
+            where: {
+                id: req.params.id
+            }
+        })
+        .then(async () => {
+            resolve({
+                status: 200,
+                message: "Bank Account status updated successfully"
+            })
+        })
+        .catch(function (err) {
+            log.debug('Error', {
+                error: err.message,
+            });
+            throw err;
         });
     });
 };
