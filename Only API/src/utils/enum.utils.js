@@ -7,8 +7,7 @@ var Enum = require('enum');
     }
 
     module.exports.Role={
-        SuperUser: '1',
-        Admin: '2',
+        Admin: '1',
         User:'5'
     }
 

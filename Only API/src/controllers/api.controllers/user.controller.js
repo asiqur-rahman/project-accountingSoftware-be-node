@@ -36,6 +36,12 @@ module.exports.delete = async(req, res, next) => {
     
 };
 
+module.exports.passwordReset = async (req, res, next) => {
+    await userService.resetPassword(req).then(data => {
+        return res.send(data);
+    });
+  }
+
 module.exports.roleDropdown = async(req, res, next) => {
     await userService.getRoleDD()
     .then(result=>{

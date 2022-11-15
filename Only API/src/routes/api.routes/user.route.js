@@ -8,6 +8,7 @@ const { userCreateValidator,userUpdateWithoutPassValidator } = require('../../mi
 router.get('/id/:id', awaitHandlerFactory(userController.getById));
 router.get('/list', awaitHandlerFactory(userController.list));
 router.post('/', userCreateValidator, awaitHandlerFactory(userController.create));
+router.post('/password-reset/:id', awaitHandlerFactory(userController.passwordReset));
 router.patch('/changeStatus/:id', awaitHandlerFactory(userController.changeStatus));
 router.patch('/id/:id', userUpdateWithoutPassValidator, awaitHandlerFactory(userController.update));
 router.delete('/id/:id', awaitHandlerFactory(userController.delete));

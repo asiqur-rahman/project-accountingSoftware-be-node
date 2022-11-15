@@ -160,11 +160,12 @@ async function initial() {
       isActive:true
     });
   
-    // await db.Role.create({
-    //   name: "SuperUser",
-    //   code: enumm.Role.SuperUser,
-    //   isActive:true
-    // });
+    await db.Role.create({
+      name: "Admin",
+      code: enumm.Role.Admin,
+      isActive:true
+    });
+    
     await db.Role.create({
       name: "User",
       code: enumm.Role.User,
