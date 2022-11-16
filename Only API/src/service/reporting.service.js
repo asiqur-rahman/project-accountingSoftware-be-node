@@ -225,21 +225,21 @@ service.getBalanceSheet = async () => {
 
 service.getCustomReport = async (req) => {
     return new Promise(async (resolve, reject) => {
-        var formDate=moment().format("yyyy-MM-DD");
-        var toDate=moment().format("yyyy-MM-DD");
-        if(req.body.fromDate){
-            var splitdate=req.body.fromDate.split('/');
-            formDate=`${splitdate[2]}-${splitdate[0]}-${splitdate[1]}`
-        }
-        if(req.body.toDate){
-            var splitdate=req.body.toDate.split('/');
-            toDate=`${splitdate[2]}-${splitdate[0]}-${splitdate[1]}`
-        }
+        // var formDate=moment().format("yyyy-MM-DD");
+        // var toDate=moment().format("yyyy-MM-DD");
+        // if(req.body.fromDate){
+        //     var splitdate=req.body.fromDate.split('/');
+        //     formDate=`${splitdate[2]}-${splitdate[0]}-${splitdate[1]}`
+        // }
+        // if(req.body.toDate){
+        //     var splitdate=req.body.toDate.split('/');
+        //     toDate=`${splitdate[2]}-${splitdate[0]}-${splitdate[1]}`
+        // }
         await db.sequelize.query('CALL SP_FilterRecord (:fromDate,:toDate,:charAccountId)', {
             replacements: {
-                fromDate: formDate,
-                toDate: toDate,
-                charAccountId: req.body.charAccountId?req.body.charAccountId.toString():'0'
+                fromDate: req.body.fromDate,
+                toDate: req.body.toDate,
+                charAccountId: req.body.accounts
             }
         }).then(data => {
             var totalDebit=0;

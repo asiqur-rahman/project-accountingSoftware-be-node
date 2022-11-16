@@ -25,6 +25,7 @@ module.exports.balanceSheet = async(req, res, next) => {
 };
 
 module.exports.getCustomReport = async (req, res, next) => {
+    console.log(req.body)
     await reportingService.getCustomReport(req)
     .then(data=>{
         return res.send(data);
