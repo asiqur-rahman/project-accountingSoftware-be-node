@@ -22,7 +22,7 @@ module.exports.topData = async (req, res, next) => {
   }
 
 module.exports.dashboardApex = async (req, res, next) => {
-    db.sequelize.query('CALL DashboardApex (:days,:todayDate)', {
+    await db.sequelize.query('CALL DashboardApex (:days,:todayDate)', {
         replacements: {
           days: req.params.days,
           todayDate: moment().format('YYYY-MM-DD')
@@ -35,9 +35,15 @@ module.exports.dashboardApex = async (req, res, next) => {
   
   //expenseAccountReview
   module.exports.expenseAccountReview = async (req, res, next) => {
-    await transactionService.dashboardEAR().then(data => {
-      res.status(200).send(data);
-    });
+    await db.sequelize.query('CALL ExpenseOverview (:days,:todayDate)', {
+      replacements: {
+        days: req.params.days,
+        todayDate: moment().format('YYYY-MM-DD')
+      }
+    })
+    .then(async function (data) {
+      res.send(data);
+    })
   }
     
   //lastTransactionsForDashboard
