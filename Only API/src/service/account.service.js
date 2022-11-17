@@ -92,7 +92,7 @@ service.create = async (req) => {
                             body:{
                                 transactionNo:Date.now().toString(),
                                 amount:amount,
-                                description:"New Cheque Entry Transaction",
+                                description:"New Chart of Account Entry Transaction",
                                 dateTime:Date.now(),
                                 userId:req.currentUser,
                                 creditAccountId:result.id,
