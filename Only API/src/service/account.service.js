@@ -5,7 +5,8 @@ const log = new Logger(path.basename(__filename));
 const bcrypt = require('bcryptjs');
 const Op = require('sequelize').Op;
 const enumm = require('../utils/enum.utils');
-const accountBalanceService = require('./accountBalance.service');
+const accountBalanceService = require('./accountBalance.service')
+const transactionService = require('../service/transaction.service')
 
 const service = {};
 
@@ -86,16 +87,37 @@ service.create = async (req) => {
             await db.ChartOfAccount.create(req.body)
                 .then(async (result) => {
                     if (result) {
-                        await accountBalanceService.create({body:{
-                            amount: req.body.amount,
-                            userId: req.currentUser,
-                            chartOfAccountId: result.id,
-                        }}).then(() => {
-                            resolve({
-                                status: 201,
-                                message: 'Account was created, Id:' + result.id
-                            });
+                        const amount=parseFloat(req.body.amount);
+                        const transactionBody={
+                            body:{
+                                transactionNo:Date.now().toString(),
+                                amount:amount,
+                                description:"New Cheque Entry Transaction",
+                                dateTime:Date.now(),
+                                userId:req.currentUser,
+                                creditAccountId:result.id,
+                                transactionDetails:[{
+                                    credit:amount,
+                                    chartOfAccountId:result.id
+                                }]
+                            }
+                        }
+                        await transactionService.createWithDetails(transactionBody)
+                        .then(async response => {
+                            if(response.status===201){
+                                await accountBalanceService.create({body:{
+                                    amount: amount,
+                                    userId: req.currentUser,
+                                    chartOfAccountId: result.id,
+                                }}).then(() => {
+                                    resolve({
+                                        status: 201,
+                                        message: 'Account was created, Id:' + result.id
+                                    });
+                                })
+                            }
                         })
+                        
                     } else {
                         reject({
                             status: 200,

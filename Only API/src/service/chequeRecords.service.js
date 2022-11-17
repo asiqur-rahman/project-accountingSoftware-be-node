@@ -17,20 +17,26 @@ service.create = async (req) => {
         await db.ChequeRecord.create(req.body).then(async data => {
             await accountService.getByCodeAndLevel({code:config.appSettings.BankingGlCode,level:config.appSettings.BankingGlLevel}).then(async coa=>{
                 if(req.body.amount>0){
+                    const amount=parseFloat(req.body.amount);
                     const transactionBody={
                         body:{
-                            transactionNo:Date.now(),
-                            amount:req.body.amount,
+                            transactionNo:Date.now().toString(),
+                            amount:amount,
                             description:"New Cheque Entry Transaction",
                             dateTime:req.body.dateTime,
                             userId:req.currentUser,
-                            debitAccountId:1,
-                            creditAccountId:coa.id
+                            creditAccountId:amount>0?coa.id:null,
+                            debitAccountId:amount<0?coa.id:null,
+                            transactionDetails:[{
+                                credit:amount>0?amount:0,
+                                debit:amount<0?amount:0,
+                                chartOfAccountId:coa.id
+                            }]
                         }
                     }
-                    await transactionService.create(transactionBody)
+                    await transactionService.createWithDetails(transactionBody)
                     .then(async result => {
-                        if(result===201){
+                        if(result.status===201){
                             await accountBalanceService.updateByCoaId({body:{
                                 amount: req.body.amount,
                                 userId: req.currentUser,

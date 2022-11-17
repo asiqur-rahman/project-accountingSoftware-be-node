@@ -1,10 +1,6 @@
-const db = require('../models/model');
-const Logger = require('../externalService/log.service');
-var path = require('path');
-const log = new Logger(path.basename(__filename));
-const bcrypt = require('bcryptjs');
-const Op = require('sequelize').Op;
-const enumm = require('../utils/enum.utils');
+const db = require('../models/model')
+const Logger = require('../externalService/log.service')
+const TransactionService = require('./transaction.service')
 
 const service = {};
 
