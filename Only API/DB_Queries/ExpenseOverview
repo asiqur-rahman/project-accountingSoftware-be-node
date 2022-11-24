@@ -1,0 +1,15 @@
+
+CREATE OR REPLACE  PROCEDURE ExpenseOverview(
+	days INT,
+	todayDate VARCHAR(10)
+)
+BEGIN
+	select 
+	GROUP_CONCAT(names ORDER BY t.`dateTime` ASC  SEPARATOR ',') as names,
+	GROUP_CONCAT(amount ORDER BY t.`dateTime` ASC SEPARATOR ',') as amount
+	from (select coa.name as names,t.`dateTime`,sum(t.amount) as amount from  transactions t 
+	left join chartOfAccounts coa on coa.id = t.creditAccountId
+	where t.isItIncome=0
+	and t.`dateTime` BETWEEN  DATE_SUB(DATE(todayDate), INTERVAL days DAY) AND DATE(todayDate)
+	group by coa.name ) as t;
+END;

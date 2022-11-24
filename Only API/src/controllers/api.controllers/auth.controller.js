@@ -12,13 +12,13 @@ module.exports.login = async (req, res, next) => {
     username,
     password
   } = req.body;
-  userService.getByName(username).then(async (user) => {
+    userService.getByName(username).then(async (user) => {
     if (!user) {
       return res.send({status:0,message:"Unable to login !"});
     } 
-    // else if (user.isActive != 1) {
-    //   return res.send({status:0,message:'You access was revoked by admin! Please contact with admin.'});
-    // } 
+    else if (user.data.isActive != 1) {
+      return res.send({status:0,message:'You access was revoked by admin! Please contact with admin.'});
+    } 
     else {
       const isMatch = await bcrypt.compare(password, user.data.password);
       if (!isMatch) {

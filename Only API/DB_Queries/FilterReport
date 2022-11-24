@@ -1,4 +1,4 @@
-CREATE DEFINER=`drtechma`@`%.%.%.%` PROCEDURE `drtechma_test`.`SP_FilterRecord`(
+CREATE OR REPLACE PROCEDURE `SP_FilterRecord`(
 	fromDate DATE,
 	toDate DATE,
 	chartOfAccountId VARCHAR(255)
@@ -10,11 +10,11 @@ BEGIN
 		select td.chartOfAccountId ,coa.name , t.`dateTime`, td.debit ,td.credit  from transactionDetails td 
 		left join transactions t on td.transactionId = t.id 
 		left join chartOfAccounts coa on td.chartOfAccountId =coa.id 
-		where t.`dateTime` BETWEEN fromDate and todate and FIND_IN_SET(td.chartOfAccountId , chartOfAccountId);
+		where t.`dateTime` BETWEEN DATE(fromDate) and DATE(todate) and FIND_IN_SET(td.chartOfAccountId , chartOfAccountId);
 	ELSE
 		select td.chartOfAccountId ,coa.name , t.`dateTime`, td.debit ,td.credit  from transactionDetails td 
 		left join transactions t on td.transactionId = t.id 
 		left join chartOfAccounts coa on td.chartOfAccountId =coa.id 
-		where t.`dateTime` BETWEEN fromDate and todate;
+		where t.`dateTime` BETWEEN DATE(fromDate) and DATE(todate);
 	END IF;
 END

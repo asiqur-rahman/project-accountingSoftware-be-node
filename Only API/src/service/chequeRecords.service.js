@@ -1,15 +1,13 @@
-const db = require('../models/model');
-const Logger = require('../externalService/log.service');
-var path = require('path');
-const log = new Logger(path.basename(__filename));
-const sequelize = require('sequelize');
-const bcrypt = require('bcryptjs');
-const moment = require('moment');
-const Op = require('sequelize').Op;
-const enumm = require('../utils/enum.utils');
-const accountBalanceService = require('./accountBalance.service');
-const accountService = require('./account.service');
+const db = require('../models/model')
+const Logger = require('../externalService/log.service')
+var path = require('path')
+const log = new Logger(path.basename(__filename))
+const sequelize = require('sequelize')
+const Op = require('sequelize').Op
+const accountBalanceService = require('./accountBalance.service')
+const accountService = require('./account.service')
 const config= require('../../config/config.json')
+const transactionService = require('../service/transaction.service')
 
 const service = {};
 
@@ -17,23 +15,48 @@ service.create = async (req) => {
     return new Promise(async (resolve, reject) => {
         req.body.dateTime=req.body.dateTime?req.body.dateTime:Date.now();
         await db.ChequeRecord.create(req.body).then(async data => {
-            // await accountBalanceService.updateByCoaId(req).then(() => {
-            //     resolve({
-            //         status: 201,
-            //         message: 'Account was updated !'
-            //     });
-            // })
             await accountService.getByCodeAndLevel({code:config.appSettings.BankingGlCode,level:config.appSettings.BankingGlLevel}).then(async coa=>{
-                await accountBalanceService.updateByCoaId({body:{
-                    amount: req.body.amount,
-                    userId: req.currentUser,
-                    id: coa.id,
-                }}).then(() => {
-                    resolve({
-                        status: 201,
-                        message: 'Cheque Record was created, Id:' + data.id
-                    });
-                })
+                if(req.body.amount>0){
+                    const amount=parseFloat(req.body.amount);
+                    const transactionBody={
+                        body:{
+                            transactionNo:Date.now().toString(),
+                            amount:amount,
+                            description:"New Cheque Entry Transaction",
+                            dateTime:req.body.dateTime,
+                            userId:req.currentUser,
+                            creditAccountId:amount>0?coa.id:null,
+                            debitAccountId:amount<0?coa.id:null,
+                            transactionDetails:[{
+                                credit:amount>0?amount:0,
+                                debit:amount<0?amount:0,
+                                chartOfAccountId:coa.id
+                            }]
+                        }
+                    }
+                    await transactionService.createWithDetails(transactionBody)
+                    .then(async result => {
+                        if(result.status===201){
+                            await accountBalanceService.updateByCoaId({body:{
+                                amount: req.body.amount,
+                                userId: req.currentUser,
+                                id: coa.id,
+                            }}).then(() => {
+                                resolve({
+                                    status: 201,
+                                    message: 'Cheque Record was created, Id:' + data.id
+                                });
+                            })
+                        }
+                        else{
+                            resolve({
+                                status: 0,
+                                message: 'Create Created Successfully but Initial Transaction failed !'
+                            });
+                        }
+                    })
+                }
+                
             })
         }).catch(function (err) {
             reject({
@@ -79,6 +102,9 @@ service.indexData = async (req) => {
     return new Promise(async (resolve, reject) => {
         
         await db.ChequeRecord.findAndCountAll({
+            where: {
+                isActive: true
+            },
             include: [
                 {
                     model: db.BankAccount,
@@ -180,6 +206,31 @@ service.update = async (req) => {
                 }
             });
         });
+};
+
+
+service.changeStatus = async (req) => {
+    return new Promise(async (resolve, reject) => {
+        await db.ChequeRecord.update({
+            isActive: req.params.status,
+        }, {
+            where: {
+                id: req.params.id
+            }
+        })
+        .then(async () => {
+            resolve({
+                status: 200,
+                message: "Cheque status updated successfully"
+            })
+        })
+        .catch(function (err) {
+            log.debug('Error', {
+                error: err.message,
+            });
+            throw err;
+        });
+    });
 };
 
 service.delete = async (req) => {

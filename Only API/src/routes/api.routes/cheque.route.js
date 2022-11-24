@@ -8,6 +8,7 @@ const { createValidator } = require('../../middleware/validators/chequeValidator
 router.get('/id/:id',  awaitHandlerFactory(chequeController.getById));
 router.post('/', createValidator, awaitHandlerFactory(chequeController.create));
 router.patch('/id/:id',  awaitHandlerFactory(chequeController.update));
+router.patch('/changeStatus/:id/:status',  awaitHandlerFactory(chequeController.changeStatus));
 router.delete('/id/:id',  awaitHandlerFactory(chequeController.delete));
 router.get('/list', awaitHandlerFactory(chequeController.list));
 router.get('/byParentId/:id', awaitHandlerFactory(chequeController.byParentId));
