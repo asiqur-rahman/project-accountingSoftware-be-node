@@ -488,6 +488,29 @@ service.getByCodeAndLevel = async (value) => {
 
 service.delete = async (req) => {
     return new Promise(async (resolve, reject) => {
+        await db.ChartOfAccount.update({
+            isActive: false,
+        }, {
+            where: {
+                id: req.params.id
+            }
+        }).then(async (result) => {
+                resolve({
+                    status: 200,
+                    message: 'Account deleted successfully.'
+                });
+            })
+        }).catch(function (err) {
+            reject({
+                status: 502,
+                message: err.message
+            });
+        });
+};
+
+
+service.delete_ = async (req) => {
+    return new Promise(async (resolve, reject) => {
         await db.ChartOfAccount.destroy({
             where: {
                 id: req.params.id

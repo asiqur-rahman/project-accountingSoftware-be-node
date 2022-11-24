@@ -149,6 +149,7 @@ service.indexData = async (req) => {
     return new Promise(async (resolve, reject) => {
         await db.Transaction.findAndCountAll({
             attributes: ['id','amount','datetime','description','transactionNo'],
+            order:[['id', 'DESC']],
             raw: true
         }).then(detailsInfo => {
             if (detailsInfo.rows) {

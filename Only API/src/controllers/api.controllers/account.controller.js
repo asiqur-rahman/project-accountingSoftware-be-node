@@ -80,7 +80,7 @@ module.exports.byBaseCode = async (req, res, next) => {
 module.exports.delete = async(req, res, next) => {
     await accountService.delete(req)
     .then(result=>{
-        return res.status(200).send(result);
+        return res.send(result);
     }).catch(e=>{
         return res.status(e.status).send(e);
     })
