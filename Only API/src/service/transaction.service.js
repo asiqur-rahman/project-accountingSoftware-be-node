@@ -250,8 +250,8 @@ service.dashboardEAR = async (req) => {
 service.createWithDetails = async (req) => {
     return new Promise(async (resolve, reject) => {
         const {transactionDetails,...transaction} = req.body;
-        console.log(transaction);
-        console.log(transactionDetails);
+        // console.log(transaction);
+        // console.log(transactionDetails);
         await db.Transaction.create(transaction,{isNewRecord:true}).then(async data => {
             const details = [];
             // // if(transaction.isItIncome){

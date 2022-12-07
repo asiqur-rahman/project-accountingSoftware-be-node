@@ -148,11 +148,40 @@ service.update = async (req) => {
                 }
             }).then(async (result) => {
                     if (result) {
-                        await accountBalanceService.updateByCoaId(req).then(() => {
-                            resolve({
-                                status: 201,
-                                message: 'Account was updated !'
-                            });
+                        const amount=parseFloat(req.body.amount);
+                        const transactionBody={
+                            body:{
+                                transactionNo:Date.now().toString(),
+                                amount:amount,
+                                // description:`New Deposit Transaction (${req.body.name})`,
+                                description:`New Deposit Transaction`,
+                                dateTime:req.body.dateTime,
+                                userId:req.currentUser,
+                                creditAccountId:req.body.id,
+                                debitAccountId:null,
+                                transactionDetails:[{
+                                    credit:amount>0?amount:0,
+                                    debit:amount<0?amount:0,
+                                    chartOfAccountId:req.body.id
+                                }]
+                            }
+                        }
+                        await transactionService.createWithDetails(transactionBody)
+                        .then(async result => {
+                            if(result.status===201){
+                                await accountBalanceService.updateByCoaId(req).then(() => {
+                                    resolve({
+                                        status: 201,
+                                        message: 'Account was updated !'
+                                    });
+                                })
+                            }
+                            else{
+                                resolve({
+                                    status: 0,
+                                    message: 'Create Created Successfully but Initial Transaction failed !'
+                                });
+                            }
                         })
                     } else {
                         reject({

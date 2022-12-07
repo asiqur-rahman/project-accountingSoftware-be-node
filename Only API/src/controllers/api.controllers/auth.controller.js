@@ -13,7 +13,7 @@ module.exports.login = async (req, res, next) => {
     password
   } = req.body;
     userService.getByName(username).then(async (user) => {
-    if (!user) {
+    if (user.status===404) {
       return res.send({status:0,message:"Unable to login !"});
     } 
     else if (user.data.isActive != 1) {
