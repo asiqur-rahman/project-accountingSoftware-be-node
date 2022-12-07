@@ -18,7 +18,8 @@ service.create = async (req) => {
 service.updateByCoaId = async (req) => {
     return new Promise(async (resolve, reject) => {
         console.log(req.body)
-        if(req.body.amount>0){
+        let amount = parseInt(req.body.amount)
+        if(amount>0){
             await db.AccountBalance.increment({
                 amount: req.body.amount
             }, {
@@ -34,7 +35,7 @@ service.updateByCoaId = async (req) => {
         }
         else{
             await db.AccountBalance.decrement({
-                amount: req.body.amount*(-1)
+                amount: amount*(-1)
             }, {
                 where: {
                     chartOfAccountId: req.body.id

@@ -151,6 +151,7 @@ service.update = async (req) => {
                         const amount=parseFloat(req.body.amount);
                         const transactionBody={
                             body:{
+                                deposit:true,
                                 transactionNo:Date.now().toString(),
                                 amount:amount,
                                 // description:`New Deposit Transaction (${req.body.name})`,
@@ -169,12 +170,12 @@ service.update = async (req) => {
                         await transactionService.createWithDetails(transactionBody)
                         .then(async result => {
                             if(result.status===201){
-                                await accountBalanceService.updateByCoaId(req).then(() => {
+                                // await accountBalanceService.updateByCoaId(req).then(() => {
                                     resolve({
                                         status: 201,
                                         message: 'Account was updated !'
                                     });
-                                })
+                                // })
                             }
                             else{
                                 resolve({
