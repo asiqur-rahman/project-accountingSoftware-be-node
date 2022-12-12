@@ -32,5 +32,14 @@ module.exports.getCustomReport = async (req, res, next) => {
     }).catch(e=>{
         return res.status(e.status).send(e);
     })
-  }
+}
   
+module.exports.getChequeReport = async (req, res, next) => {
+    console.log(req.body)
+    await reportingService.getChequeReport(req)
+    .then(data=>{
+        return res.send(data);
+    }).catch(e=>{
+        return res.status(e.status).send(e);
+    })
+}

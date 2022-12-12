@@ -6,5 +6,6 @@ const awaitHandlerFactory = require('../../middleware/awaitHandlerFactory.middle
 router.post('/income-statement', awaitHandlerFactory(reportController.incomeStatement));
 router.get('/balance-sheet', awaitHandlerFactory(reportController.balanceSheet));
 router.post('/custom-report', awaitHandlerFactory(reportController.getCustomReport));
+router.post('/cheque-report', awaitHandlerFactory(reportController.getChequeReport));
 
 module.exports = router;

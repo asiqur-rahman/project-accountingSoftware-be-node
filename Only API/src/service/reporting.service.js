@@ -8,6 +8,7 @@ const moment = require('moment');
 const Op = require('sequelize').Op;
 const enumm = require('../utils/enum.utils');
 const accountBalanceService = require('./accountBalance.service');
+const chequeRecordService = require('./chequeRecords.service');
 
 const service = {};
 
@@ -257,6 +258,33 @@ service.getCustomReport = async (req) => {
                 status: 502,
                 message: err.message
             })
+        });
+    });
+};
+
+service.getChequeReport = async (req) => {
+    return new Promise(async (resolve, reject) => {
+        await db.ChequeRecord.findAndCountAll({
+            where: {
+                dateTime:{ [Op.between]: [new Date(req.body.fromDate), new Date(req.body.toDate)] }
+            },
+            include: [
+                {
+                    model: db.BankAccount,
+                    attributes: ['name','accountTitle','accountNumber']
+                }
+            ],
+            raw: true
+        }).then(detailsInfo => {
+            if (detailsInfo.rows) {
+                var count = 0;
+                detailsInfo.rows.forEach(detail => {
+                    detail.sl = ++count;
+                })
+                resolve({status:200,recordsTotal:detailsInfo.count,data:detailsInfo.rows});
+            } else {
+                resolve({count: 0,rows:[]});
+            }
         });
     });
 };
