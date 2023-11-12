@@ -1,0 +1,20 @@
+CREATE OR REPLACE PROCEDURE `SP_FilterRecord`(
+	fromDate DATE,
+	toDate DATE,
+	chartOfAccountId VARCHAR(255)
+)
+BEGIN
+	-- DROP PROCEDURE IF EXISTS `FilterRecord`;
+	-- CALL SP_FilterRecord ('2022-10-10','2022-10-26', '0')
+	IF chartOfAccountId > 0 THEN
+		select td.chartOfAccountId ,coa.name , t.`dateTime`, td.debit ,td.credit  from transactionDetails td 
+		left join transactions t on td.transactionId = t.id 
+		left join chartOfAccounts coa on td.chartOfAccountId =coa.id 
+		where t.`dateTime` BETWEEN DATE(fromDate) and DATE(todate) and FIND_IN_SET(td.chartOfAccountId , chartOfAccountId);
+	ELSE
+		select td.chartOfAccountId ,coa.name , t.`dateTime`, td.debit ,td.credit  from transactionDetails td 
+		left join transactions t on td.transactionId = t.id 
+		left join chartOfAccounts coa on td.chartOfAccountId =coa.id 
+		where t.`dateTime` BETWEEN DATE(fromDate) and DATE(todate);
+	END IF;
+END

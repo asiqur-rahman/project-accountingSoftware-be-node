@@ -70,7 +70,7 @@ module.exports.login = async (req, res, next) => {
                     expiresIn: appConfig.appSettings.SessionTimeOut
                 });
                 const { password, ...userWithoutPassword } = user;
-                res.status(200).send({ token,role:user.RoleName, sessionTime: appConfig.appSettings.SessionTimeOut});
+                res.status(200).send({ status:200, token,role:user.RoleName, details:detailsForToken, sessionTime: appConfig.appSettings.SessionTimeOut});
             }
         }
 };
