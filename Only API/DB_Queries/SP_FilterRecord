@@ -1,4 +1,4 @@
-CREATE DEFINER=`drtechma`@`%.%.%.%` PROCEDURE `drtechma_test`.`SP_FilterRecord`(
+CREATE PROCEDURE `SP_FilterRecord`(
 	fromDate DATE,
 	toDate DATE,
 	chartOfAccountId VARCHAR(255)

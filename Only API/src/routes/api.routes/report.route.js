@@ -7,5 +7,6 @@ const { userCreateValidator } = require('../../middleware/validators/userValidat
 
 router.get('/income-statement', awaitHandlerFactory(reportController.incomeStatement));
 router.get('/balance-sheet', awaitHandlerFactory(reportController.balanceSheet));
+router.get('/cheque-report', awaitHandlerFactory(reportController.chequeReport));
 
 module.exports = router;
