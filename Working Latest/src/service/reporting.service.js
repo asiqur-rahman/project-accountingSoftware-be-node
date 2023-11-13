@@ -13,6 +13,7 @@ const service = {};
 
 service.getIncomeStatement = async (req) => {
     return new Promise(async (resolve, reject) => {
+        console.log(req.body)
         await db.Transaction.findAll({
             attributes: ['amount', 'isItIncome'],
             include: [
@@ -39,7 +40,7 @@ service.getIncomeStatement = async (req) => {
             ],
             where: {
                 dateTime: {
-                    [Op.between]: [moment(req.body.fromDate).format("MM/DD/yyyy"),moment(req.body.toDate).add(1,'d').format("MM/DD/yyyy")]
+                    [Op.between]: [moment(req.body.fromDate).format("MM/DD/yyyy"),moment(req.body.toDate??req.body.todate).add(1,'d').format("MM/DD/yyyy")]
                 }
             },
             raw: true
